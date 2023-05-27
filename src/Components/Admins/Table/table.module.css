@@ -16,3 +16,13 @@ th, td {
 th {
   background-color: #f2f2f2;
 }
+
+.trash_edit:hover{
+  cursor: pointer;
+}
+.add_admin{
+  background-color: #AACE9B33;
+}
+.add_admin:hover{
+  cursor: pointer;
+}
