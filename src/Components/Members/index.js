@@ -16,7 +16,7 @@ function Members() {
 
   useEffect(() => {
     getMembers();
-  }, []);
+  }, [members]);
 
   return (
     <section className={styles.container}>

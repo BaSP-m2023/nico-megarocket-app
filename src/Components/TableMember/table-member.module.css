@@ -21,3 +21,7 @@
 .rowBackground2 {
   background-color: #FFFFFF;
 }
+
+.rowActions {
+  display: flex;
+}
