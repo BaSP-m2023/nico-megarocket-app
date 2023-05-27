@@ -1,0 +1,23 @@
+.container {
+  width: 80%;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(55, 56, 103, 0.1);
+  color: #373867;
+}
+
+.table tr td, .table tr th {
+  padding: 10px;
+  text-align: left;
+}
+
+.rowBackground1 {
+  background-color: #AACE9B33;
+}
+
+.rowBackground2 {
+  background-color: #FFFFFF;
+}
