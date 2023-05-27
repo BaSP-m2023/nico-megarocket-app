@@ -1,12 +1,7 @@
 // import React, { useState } from 'react';
 import styles from './table.module.css';
 
-function index({ admins }) {
-  const deleteion = () => {
-    console.log('se borra pero no se como xd');
-    console.log(admins);
-  };
-
+function index({ admins, deleteAdm }) {
   return (
     <div className={styles.container}>
       <table className={styles.table}>
@@ -41,7 +36,7 @@ function index({ admins }) {
                 </td>
                 <td>
                   <img
-                    onClick={deleteion}
+                    onClick={() => deleteAdm(item._id)}
                     className={styles.trash_edit}
                     src={`${process.env.PUBLIC_URL}/assets/images/trash-delete.svg`}
                     alt="delete icon"

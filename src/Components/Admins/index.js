@@ -19,10 +19,22 @@ function Admins() {
     }
   };
 
+  const deleteAdmin = async (id) => {
+    try {
+      await fetch(process.env.REACT_APP_API_URL + '/admins/' + id, {
+        method: 'DELETE'
+      });
+      const newAdmins = admins.filter((admin) => admin._id !== id);
+      setAdmins(newAdmins);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <section className={styles.container}>
       <h2>Admins</h2>
-      <Table admins={admins} />
+      <Table admins={admins} deleteAdm={deleteAdmin} />
     </section>
   );
 }
