@@ -31,14 +31,22 @@ function Trainers() {
     setTrainers([...trainers, newItem]);
   };
 
-  const deleteItem = (id) => {
-    setTrainers([...trainers.filter((trainer) => trainer.id !== id)]);
+  const deleteTrainer = async (id) => {
+    try {
+      await fetch(process.env.REACT_APP_API_URL + '/trainer/' + id, {
+        method: 'DELETE'
+      });
+      const newTrainers = trainers.filter((trainer) => trainer._id !== id);
+      setTrainers(newTrainers);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <section className={styles.container}>
       <h2>Trainers</h2>
-      <Table data={trainers} deleteItem={deleteItem} />
+      <Table data={trainers} deleteTrain={deleteTrainer} />
       <Form addItem={addItem} />
     </section>
   );

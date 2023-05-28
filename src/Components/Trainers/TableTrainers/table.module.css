@@ -6,6 +6,10 @@
   align-items: center;
 }
 
+.trash_edit:hover{
+  cursor: pointer;
+}
+
 th {
   padding: 20px;
 }

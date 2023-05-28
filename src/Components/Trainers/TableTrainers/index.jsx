@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './table.module.css';
 
-const Table = ({ data }) => {
+const Table = ({ data, deleteTrain }) => {
   console.log(data);
   return (
     <table>
@@ -21,7 +21,7 @@ const Table = ({ data }) => {
       <tbody>
         {data.map((item) => {
           return (
-            <tr key={item.id}>
+            <tr key={item._id}>
               <td>{item.firstName}</td>
               <td>{item.lastName}</td>
               <td>{item.dni}</td>
@@ -38,6 +38,7 @@ const Table = ({ data }) => {
               </td>
               <td>
                 <img
+                  onClick={() => deleteTrain(item._id)}
                   className={styles.trash_edit}
                   src={`${process.env.PUBLIC_URL}/assets/images/trash-delete.svg`}
                   alt="delete icon"
