@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './modal.module.css';
 
-// eslint-disable-next-line no-unused-vars
 function Modal({ show, confirmDelete, closeModal }) {
   if (!show) {
     return null;
   }
+
   return (
     <div className={styles.container}>
       <div className={styles.modal}>

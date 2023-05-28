@@ -21,9 +21,9 @@ function Admins() {
 
   const deleteAdmin = async (id) => {
     try {
-      await fetch(process.env.REACT_APP_API_URL + '/admins/' + id, {
-        method: 'DELETE'
-      });
+      // await fetch(process.env.REACT_APP_API_URL + '/admins/' + id, {
+      //   method: 'DELETE'
+      // });
       const newAdmins = admins.filter((admin) => admin._id !== id);
       setAdmins(newAdmins);
     } catch (error) {
