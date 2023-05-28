@@ -1,9 +1,28 @@
-// import React, { useState } from 'react';
+import React, { useState } from 'react';
 import styles from './table.module.css';
+import Modal from '../Modal/Modal';
 
 function index({ admins, deleteAdm }) {
+  const [showModal, setShowModal] = useState(false);
+  const [adminToDeleteId, setAdminToDeleteId] = useState('');
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const handleDeleteClick = (id) => {
+    setShowModal(true);
+    setAdminToDeleteId(id);
+  };
+
+  const confirmDelete = () => {
+    deleteAdm(adminToDeleteId);
+    closeModal();
+  };
+
   return (
     <div className={styles.container}>
+      <Modal show={showModal} confirmDelete={confirmDelete} closeModal={closeModal} />
       <table className={styles.table}>
         <thead>
           <tr>
@@ -12,11 +31,18 @@ function index({ admins, deleteAdm }) {
             <th>Phone</th>
             <th>E-Mail</th>
             <th>City</th>
-            <th>Modify</th>
-            <th>Delete</th>
+            <th> </th>
+            <th> </th>
           </tr>
         </thead>
         <tbody>
+          {admins.length === 0 && (
+            <tr>
+              <td className={styles.noneAdmin} colSpan={7}>
+                0 admins created
+              </td>
+            </tr>
+          )}
           {admins.map((item) => {
             return (
               <tr key={item._id}>
@@ -36,7 +62,7 @@ function index({ admins, deleteAdm }) {
                 </td>
                 <td>
                   <img
-                    onClick={() => deleteAdm(item._id)}
+                    onClick={() => handleDeleteClick(item._id)}
                     className={styles.trash_edit}
                     src={`${process.env.PUBLIC_URL}/assets/images/trash-delete.svg`}
                     alt="delete icon"
