@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './members.module.css';
-import TableMember from '../TableMember';
+import TableMember from './TableMember';
 
 function Members() {
   const [members, setMembers] = useState([]);
@@ -16,12 +16,37 @@ function Members() {
 
   useEffect(() => {
     getMembers();
-  }, [members]);
+  }, []);
+
+  const memberDelete = async (memberId) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/member/${memberId}`, {
+        method: 'DELETE'
+      });
+      console.log(response);
+      setMembers([...members.filter((member) => member._id !== memberId)]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <section className={styles.container}>
-      <h2>Members</h2>
-      <TableMember members={members} />
+      <div className={styles.titleContainer}>
+        <h2 className={styles.letterColour}>Members</h2>
+        <div className={styles.addContainer}>
+          <img
+            className={styles.imgSize}
+            src={`${process.env.PUBLIC_URL}/assets/images/btn-add.png`}
+          />
+          <p>Add Member</p>
+        </div>
+      </div>
+      {members.length === 0 ? (
+        <p>No active Members</p>
+      ) : (
+        <TableMember members={members} onDeleteMember={memberDelete} />
+      )}
     </section>
   );
 }

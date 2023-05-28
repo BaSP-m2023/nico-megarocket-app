@@ -5,3 +5,26 @@
   align-items: center;
   flex-direction: column;
 }
+
+.letterColour {
+  color: #373867;;
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+}
+
+.addContainer {
+  display: flex;
+  align-items: center;
+  color: #373867;
+  cursor: pointer;
+}
+
+.imgSize {
+  height: 15px;
+  width: 15px;
+  margin: 0 10px;
+}

@@ -3,17 +3,7 @@ import styles from './table-member.module.css';
 import DeleteMember from '../DeleteMember';
 import EditMember from '../EditMember';
 
-const TableMember = ({ members }) => {
-  const memberDelete = async (memberId) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/member/${memberId}`, {
-        method: 'DELETE'
-      });
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const TableMember = ({ members, onDeleteMember }) => {
   return (
     <div className={styles.container}>
       <table className={styles.table}>
@@ -42,7 +32,7 @@ const TableMember = ({ members }) => {
               <td>{member.membership}</td>
               <td className={styles.rowActions}>
                 <EditMember memberId={member._id} />
-                <DeleteMember memberId={member._id} onDeleteMember={memberDelete} />
+                <DeleteMember memberId={member._id} onDeleteMember={onDeleteMember} />
               </td>
             </tr>
           );
