@@ -1,9 +1,16 @@
 import { useState, useEffect } from 'react';
 import styles from './admins.module.css';
 import Table from './Table';
+import Form from './Form';
 
 function Admins() {
   const [admins, setAdmins] = useState([]);
+
+  const [showForm, setShowform] = useState(false);
+
+  const closeForm = () => {
+    setShowform(false);
+  };
 
   useEffect(() => {
     getAdmins();
@@ -19,10 +26,24 @@ function Admins() {
     }
   };
 
+  const addAdmin = ({ firstName, lastName, phone, email, city, dni, password }) => {
+    const newAdmin = {
+      firstName,
+      lastName,
+      phone,
+      email,
+      city,
+      dni,
+      password
+    };
+    setAdmins([...admins, newAdmin]);
+  };
+
   return (
     <section className={styles.container}>
       <h2>Admins</h2>
-      <Table admins={admins} />
+      <Table admins={admins} setShowform={setShowform} />
+      {showForm && <Form addAdmin={addAdmin} closedForm={closeForm} />}
     </section>
   );
 }

@@ -1,0 +1,20 @@
+.form {
+    margin-bottom: 40px;
+}
+
+.subContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    border: 1px solid black;
+    padding: 8px;
+    height: 100px;
+}
+
+.input {
+    margin-left: 10px;
+    width: 200px;
+    height: 20px;
+}
