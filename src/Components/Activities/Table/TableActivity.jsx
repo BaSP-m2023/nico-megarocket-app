@@ -2,40 +2,48 @@ import style from './tableActivity.module.css';
 
 const TableActivity = ({ activity, deleteActivity }) => {
   return (
-    <div className={style.container}>
-      <div>
-        <button>+ Add activity</button>
-      </div>
-      {activity.length < 1 ? (
-        <section className={style.containerListEmpty}>
-          <div>
-            <h3>This list is empty</h3>
+    <section className={style.containerTableActivity}>
+      <button className={style.addActivityButton}>+ Add activity</button>
+      <table className={style.containerTable}>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Modify</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        {activity.length < 1 ? (
+          <div className={style.containerTableEmpty}>
+            <div>
+              <h3>This list is empty</h3>
+            </div>
           </div>
-        </section>
-      ) : (
-        <div className={style.containerOneActivity}>
-          {activity.map((act, index) => {
-            return (
-              <div key={index} className={style.containerEachActivity}>
-                <div className={style.containerNameDescription}>
-                  <p>{act.name}</p>
-                  <p>{act.description}</p>
-                </div>
-                <div className={style.containerIcons}>
-                  <img src={`${process.env.PUBLIC_URL}/assets/images/edit.png`} alt="icon edit" />
-                  <img
-                    src={`${process.env.PUBLIC_URL}/assets/images/trash.png`}
-                    alt="icon trash"
-                    onClick={() => deleteActivity(act._id)}
-                  />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-      ;
-    </div>
+        ) : (
+          <tbody className={style.containerEachOneActivity}>
+            {activity.map((act, index) => (
+              <tr key={index}>
+                <td>{act.name}</td>
+                <td>{act.description}</td>
+                <td>
+                  <button className={style.iconsTable}>
+                    <img src={`${process.env.PUBLIC_URL}/assets/images/edit.png`} alt="icon edit" />
+                  </button>
+                </td>
+                <td>
+                  <button className={style.iconsTable} onClick={() => deleteActivity(act._id)}>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/assets/images/trash.png`}
+                      alt="icon trash"
+                    />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        )}
+      </table>
+    </section>
   );
 };
 

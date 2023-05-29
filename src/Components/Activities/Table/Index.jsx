@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import TableActivity from './TableActivity';
+import style from './tableActivity.module.css';
 
 const ActivitiesTable = () => {
   const [activity, setActivity] = useState([]);
@@ -37,7 +38,7 @@ const ActivitiesTable = () => {
   };
 
   return (
-    <section>
+    <section className={style.containerTables}>
       <TableActivity activity={activity} deleteActivity={deleteActivity} />
     </section>
   );

@@ -1,48 +1,61 @@
-.container {
-  width: 70rem;
-  border: solid black;
-}
-
-.containerListEmpty {
-  width: 80%;
-  background-color: violet;
-}
-
-.containerOneActivity {
+.containerTableActivity {
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  align-items: center;
-  background-color: aquamarine;
+  width: 60rem;
+  margin: 2rem;
+  color: #32326a;
 }
 
-.containerEachActivity {
+.addActivityButton {
   display: flex;
-  justify-content: space-around;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  border: solid black;
-  background-color: rgb(208, 255, 239);
-}
-
-.containerNameDescription {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  gap: 6rem;
-  width: 4rem;
-}
-
-.containerIcons {
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  width: 3rem;
-}
-
-.containerIcons img {
-  width: 1.1rem;
-  height: 1.1rem;
+  align-self:flex-end;
+  background-color: #32326a00;
+  border: none;
+  margin: 0 2rem 2rem 0;
+  width: 8rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #32326a;
   cursor: pointer;
+}
+
+.containerTable {
+  border-radius: 0.2rem;
+  box-shadow: rgba(0, 0, 0, 0.37) 0 0.4rem 0.9rem;
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.containerTable thead {
+  background-color: #37386710;
+  border-radius: 0.2rem;
+  height: 3.5rem;
+}
+
+.containerTable thead tr {
+  background-color: #37386710;
+}
+
+.containerEachOneActivity tr {
+  height: 3.5rem;
+}
+
+.containerEachOneActivity tr:nth-child(even) {
+  background-color: #aace9b3f;
+}
+
+.iconsTable {
+  background-color: #32326a00;
+  border: none;
+  cursor: pointer;
+}
+
+.containerTableEmpty {
+  position: relative;
+  left: 25em;
+}
+
+.containerTableEmpty div {
+  width: 100%;
 }
