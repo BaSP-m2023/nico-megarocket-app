@@ -1,0 +1,30 @@
+.container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form{
+  display:grid;
+  gap:40px;
+}
+
+.inputGroups{
+  display:flex;
+  gap:20px;
+}
+
+.inputGroup{
+  display:flex;
+  flex-direction:column;
+}
+
+.submitButton{
+  display:inline;
+}
+
+.inputContainer{
+  display:flex;
+  flex-direction:column;
+}

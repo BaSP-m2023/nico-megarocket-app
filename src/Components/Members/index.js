@@ -1,25 +1,90 @@
 import { useEffect, useState } from 'react';
 import styles from './members.module.css';
+import { Form } from './Form/MembersForm';
+import { MembersEditForm } from './EditForm/MembersEditForm';
 
 function Members() {
   const [members, setMembers] = useState([]);
+  const [member, setMember] = useState({
+    firstName: '',
+    lastName: '',
+    dni: '',
+    birthday: '',
+    phone: '',
+    email: '',
+    city: '',
+    postalCode: '',
+    isActive: false,
+    membership: ''
+  });
+  const [showForm, setShowForm] = useState(false);
+  const [showEditForm, setEditForm] = useState(false);
 
+  const getMembers = async () => {
+    try {
+      const response = await fetch(process.env.REACT_APP_API_URL + '/member');
+      const data = await response.json();
+      setMembers(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/users`)
-      .then((response) => response.json())
-      .then((response) => {
-        setMembers(response);
-      });
+    getMembers();
   }, []);
+
+  const handleToggle = () => {
+    setShowForm((current) => !current);
+    setEditForm(false);
+  };
+
+  const handleEditToggle = () => {
+    setEditForm((current) => !current);
+    setShowForm(false);
+  };
+
+  const updateMember = async (id, memberUpdated) => {
+    let memberToUpdateIndex = members.findIndex((member) => member.id === id);
+    try {
+      const response = await fetch(process.env.REACT_APP_API_URL + `/member/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(memberUpdated)
+      });
+
+      const { error, data } = await response.json();
+      if (!error) {
+        const currentsMembers = [...members];
+        currentsMembers[memberToUpdateIndex] = data;
+        setMembers(currentsMembers);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <section className={styles.container}>
       <h2>Members</h2>
-      <div>
-        {members.map((employee) => {
-          return <div key={employee.id}>{employee.name}</div>;
-        })}
-      </div>
+      <button className={styles.button} onClick={handleToggle}>
+        Add
+      </button>
+      <button className={styles.button} onClick={handleEditToggle}>
+        Edit
+      </button>
+      {!showForm ? 'List' : <Form member={member} setMember={setMember} setMembers={setMembers} />}
+      {!showEditForm ? (
+        'List'
+      ) : (
+        <MembersEditForm
+          member={member}
+          members={members}
+          setMember={setMember}
+          updateMember={updateMember}
+        />
+      )}
     </section>
   );
 }
