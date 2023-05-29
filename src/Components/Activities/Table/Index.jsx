@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import TableActivity from './Index';
+import TableActivity from './TableActivity';
 
 const ActivitiesTable = () => {
   const [activity, setActivity] = useState([]);
