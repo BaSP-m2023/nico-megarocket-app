@@ -39,7 +39,11 @@ const ActivitiesTable = () => {
 
   return (
     <section className={style.containerTables}>
-      <TableActivity activity={activity} deleteActivity={deleteActivity} />
+      <TableActivity
+        activity={activity}
+        setActivity={setActivity}
+        deleteActivity={deleteActivity}
+      />
     </section>
   );
 };
