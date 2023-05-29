@@ -1,12 +1,14 @@
 import React from 'react';
+import styles from './modalConfirm.module.css';
 
 const ModalConfirm = ({ message, method, fn, setModalConfirmOpen }) => {
   return (
-    <div>
-      <div>
-        <p>Attention</p>
-        <p>{message}</p>
+    <div className={styles.modalAlert}>
+      <div className={styles.modalStyles}>
+        <p className={styles.titleModal}>Attention</p>
+        <p className={styles.textModal}>{message}</p>
         <button
+          className={styles.btnAccept}
           onClick={() => {
             fn();
             setModalConfirmOpen(false);
@@ -15,6 +17,7 @@ const ModalConfirm = ({ message, method, fn, setModalConfirmOpen }) => {
           {method}
         </button>
         <button
+          className={styles.btnCancel}
           onClick={() => {
             setModalConfirmOpen(false);
           }}
