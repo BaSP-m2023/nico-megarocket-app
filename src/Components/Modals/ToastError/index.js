@@ -1,12 +1,12 @@
 import React from 'react';
-import styles from './modalError.module.css';
+import styles from './toastError.module.css';
 
-const ModalError = ({ setModalErroOpen, message }) => {
+const ToastError = ({ setToastErroOpen, message }) => {
   return (
     <div className={styles.modalAlert}>
       <div className={styles.headerModal}>
         <p className={styles.titleModal}>ERROR</p>
-        <button className={styles.btnClose} onClick={() => setModalErroOpen(false)}>
+        <button className={styles.btnClose} onClick={() => setToastErroOpen(false)}>
           X
         </button>
       </div>
@@ -15,4 +15,4 @@ const ModalError = ({ setModalErroOpen, message }) => {
   );
 };
 
-export default ModalError;
+export default ToastError;
