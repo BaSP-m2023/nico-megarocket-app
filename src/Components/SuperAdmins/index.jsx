@@ -15,10 +15,25 @@ const SuperAdmins = () => {
     getSuperAdmins();
   }, []);
 
+  const deleteItem = async (id) => {
+    try {
+      await fetch(`${process.env.REACT_APP_API_URL}/${id}`, {
+        method: 'DELETE'
+      });
+      const updatedSuperAdmins = superAdmins.filter((superAdmin) => superAdmin._id !== id);
+      setSuperAdmins(updatedSuperAdmins);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <section className={styles.container}>
-      <Table data={superAdmins}></Table>
-    </section>
+    <div className={styles.content}>
+      <section className={styles.container}>
+        <button className={styles.containerBtn}>Add</button>
+        <Table data={superAdmins} deleteItem={deleteItem}></Table>
+      </section>
+    </div>
   );
 };
 
