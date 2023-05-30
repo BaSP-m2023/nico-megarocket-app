@@ -1,6 +1,23 @@
 import style from './tableActivity.module.css';
+import ModalDelete from '../../Modals/ModalConfirm';
+import ModalSuccess from '../../Modals/ModalSuccess';
+import { useState } from 'react';
 
 const TableActivity = ({ activity, deleteActivity }) => {
+  const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
+  const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
+  const [getId, setGetId] = useState('');
+
+  const confirmDelete = () => {
+    setModalConfirmOpen(true);
+  };
+
+  const deleted = () => {
+    deleteActivity(getId);
+    setModalConfirmOpen(false);
+    setModalSuccessOpen(true);
+  };
+
   return (
     <section className={style.containerTableActivity}>
       <button className={style.addActivityButton}>+ Add activity</button>
@@ -30,8 +47,30 @@ const TableActivity = ({ activity, deleteActivity }) => {
                     <img src={`${process.env.PUBLIC_URL}/assets/images/edit.png`} alt="icon edit" />
                   </button>
                 </td>
+                {modalConfirmOpen && (
+                  <ModalDelete
+                    method="Delete"
+                    onConfirm={() => {
+                      deleted();
+                    }}
+                    message="Do you sure you want delete this activity?"
+                    setModalConfirmOpen={setModalConfirmOpen}
+                  />
+                )}
+                {modalSuccessOpen && (
+                  <ModalSuccess
+                    message="Succesfully deleted"
+                    setModalSuccessOpen={setModalSuccessOpen}
+                  />
+                )}
                 <td>
-                  <button className={style.iconsTable} onClick={() => deleteActivity(act._id)}>
+                  <button
+                    className={style.iconsTable}
+                    onClick={() => {
+                      confirmDelete();
+                      setGetId(act._id);
+                    }}
+                  >
                     <img
                       src={`${process.env.PUBLIC_URL}/assets/images/trash.png`}
                       alt="icon trash"
