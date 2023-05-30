@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styles from './form.module.css';
+import ModalConfirm from '../../Modals/ModalConfirm';
+import ModalSuccess from '../../Modals/ModalSuccess';
 
 const Form = ({ addItem, closeForm }) => {
   const [trainer, setTrainer] = useState({
@@ -21,6 +23,9 @@ const Form = ({ addItem, closeForm }) => {
     city: '',
     salary: ''
   });
+
+  const [modalConfirmAdd, setModalConfirmAdd] = useState(false);
+  const [modalSucessOpen, setModalSucessOpen] = useState(false);
 
   const validateForm = () => {
     let isValid = true;
@@ -74,7 +79,7 @@ const Form = ({ addItem, closeForm }) => {
   };
 
   // eslint-disable-next-line no-unused-vars
-  const addTrainer = async () => {
+  const addTrainer = async (trainer) => {
     try {
       await fetch(`${process.env.REACT_APP_API_URL}/trainer`, {
         method: 'POST',
@@ -97,9 +102,9 @@ const Form = ({ addItem, closeForm }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-
+    setModalConfirmAdd(false);
     if (validateForm()) {
-      addTrainer();
+      addTrainer(trainer);
       addItem(trainer);
       setTrainer({
         firstName: '',
@@ -119,7 +124,13 @@ const Form = ({ addItem, closeForm }) => {
         city: '',
         salary: ''
       });
+      setModalSucessOpen(true);
     }
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    setModalConfirmAdd(true);
   };
 
   const formClose = (e) => {
@@ -162,98 +173,117 @@ const Form = ({ addItem, closeForm }) => {
   };
 
   return (
-    <form className={styles.form}>
-      <div className={styles.subContainer}>
-        <div className={styles.container}>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>First Name</label>
-            <input
-              className={styles.input} //{styles.inputError}
-              name="firstName"
-              type="text"
-              value={trainer.firstName}
-              onChange={onChargeInput}
-              onBlur={handleBlur}
-            />
-            {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
+    <div>
+      <form className={styles.form}>
+        <div className={styles.subContainer}>
+          <div className={styles.container}>
+            <div className={styles.inputContainer}>
+              <label className={styles.label}>First Name</label>
+              <input
+                className={styles.input}
+                name="firstName"
+                type="text"
+                value={trainer.firstName}
+                onChange={onChargeInput}
+                onBlur={handleBlur}
+              />
+              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
+            </div>
+            <div className={styles.inputContainer}>
+              <label className={styles.label}>Last Name</label>
+              <input
+                className={styles.input}
+                name="lastName"
+                type="text"
+                value={trainer.lastName}
+                onChange={onChargeInput}
+              />
+              {errors.lastName && <span className={styles.error}>{errors.lastName}</span>}
+            </div>
           </div>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>Last Name</label>
-            <input
-              className={styles.input}
-              name="lastName"
-              type="text"
-              value={trainer.lastName}
-              onChange={onChargeInput}
-            />
+          <div className={styles.container}>
+            <div className={styles.inputContainer}>
+              <label className={styles.label}>DNI</label>
+              <input
+                className={styles.input}
+                name="dni"
+                type="number"
+                value={trainer.dni}
+                onChange={onChargeInput}
+              />
+              {errors.dni && <span className={styles.error}>{errors.dni}</span>}
+            </div>
+            <div className={styles.inputContainer}>
+              <label className={styles.label}>Phone</label>
+              <input
+                className={styles.input}
+                name="phone"
+                type="number"
+                value={trainer.phone}
+                onChange={onChargeInput}
+              />
+              {errors.phone && <span className={styles.error}>{errors.phone}</span>}
+            </div>
+          </div>
+          <div className={styles.container}>
+            <div className={styles.inputContainer}>
+              <label className={styles.label}>Email</label>
+              <input
+                className={styles.input}
+                name="email"
+                type="text"
+                value={trainer.email}
+                onChange={onChargeInput}
+              />
+              {errors.email && <span className={styles.error}>{errors.email}</span>}
+            </div>
+            <div className={styles.inputContainer}>
+              <label className={styles.label}>City</label>
+              <input
+                className={styles.input}
+                name="city"
+                type="text"
+                value={trainer.city}
+                onChange={onChargeInput}
+              />
+              {errors.city && <span className={styles.error}>{errors.city}</span>}
+            </div>
+          </div>
+          <div className={styles.container}>
+            <div className={styles.inputContainer}>
+              <label className={styles.label}>Salary</label>
+              <input
+                className={styles.input}
+                name="salary"
+                type="number"
+                value={trainer.salary}
+                onChange={onChargeInput}
+              />
+              {errors.salary && <span className={styles.error}>{errors.salary}</span>}
+            </div>
           </div>
         </div>
         <div className={styles.container}>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>DNI</label>
-            <input
-              className={styles.input}
-              name="dni"
-              type="number"
-              value={trainer.dni}
-              onChange={onChargeInput}
-            />
-          </div>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>Phone</label>
-            <input
-              className={styles.input}
-              name="phone"
-              type="number"
-              value={trainer.phone}
-              onChange={onChargeInput}
-            />
-          </div>
+          <button className={styles.buttonCancel} onClick={formClose}>
+            Cancel
+          </button>
+          <button className={styles.buttonAdd} type="submit" onClick={handleClick}>
+            Add trainer
+          </button>
         </div>
-        <div className={styles.container}>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>Email</label>
-            <input
-              className={styles.input}
-              name="email"
-              type="text"
-              value={trainer.email}
-              onChange={onChargeInput}
-            />
-          </div>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>City</label>
-            <input
-              className={styles.input}
-              name="city"
-              type="text"
-              value={trainer.city}
-              onChange={onChargeInput}
-            />
-          </div>
-        </div>
-        <div className={styles.container}>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>Salary</label>
-            <input
-              className={styles.input}
-              name="salary"
-              type="number"
-              value={trainer.salary}
-              onChange={onChargeInput}
-            />
-          </div>
-        </div>
-      </div>
-      <div className={styles.container}>
-        <button className={styles.buttonCancel} onClick={formClose}>
-          Cancel
-        </button>
-        <button className={styles.buttonAdd} type="submit" onClick={onSubmit}>
-          Add trainer
-        </button>
-      </div>
-    </form>
+      </form>
+      {modalConfirmAdd && (
+        <ModalConfirm
+          onConfirm={onSubmit}
+          method="add"
+          message="Are you sure to add a new trainer?"
+          setModalConfirmOpen={setModalConfirmAdd}
+        />
+      )}
+      {modalSucessOpen && (
+        <ModalSuccess message="Trainer added" setModalSuccessOpen={setModalSucessOpen} />
+      )}
+    </div>
   );
 };
 

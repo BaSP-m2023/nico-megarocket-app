@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import styles from './form.module.css';
+import ModalConfirm from '../../Modals/ModalConfirm';
+import ModalSuccess from '../../Modals/ModalSuccess';
 
-const FormEdit = ({ trainerModify, closeForm }) => {
-  // eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line no-unused-vars
+const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
   const [trainerEdited, setTrainer] = useState({
     firstName: '',
     lastName: '',
@@ -13,22 +15,33 @@ const FormEdit = ({ trainerModify, closeForm }) => {
     salary: ''
   });
 
+  const [errors, setErrors] = useState({
+    firstName: '',
+    lastName: '',
+    dni: '',
+    phone: '',
+    email: '',
+    city: '',
+    salary: ''
+  });
+
+  const [modalConfirmAdd, setModalConfirmAdd] = useState(false);
+  const [modalSucessOpen, setModalSucessOpen] = useState(false);
+
   const editTrainer = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/trainer/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/trainer/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(trainerEdited)
       });
+      const responseData = await response.json();
+      return responseData;
     } catch (error) {
       console.error(error);
     }
-    console.log(id);
-    console.log(trainerModify._id);
-    console.log(trainerEdited);
-    console.log(trainerEdited._id);
   };
 
   const onChargeInput = (e) => {
@@ -39,9 +52,18 @@ const FormEdit = ({ trainerModify, closeForm }) => {
     }));
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    editTrainer(trainerModify._id);
+    setModalConfirmAdd(false);
+    const edTrainer = await editTrainer(trainerModify._id);
+    const updatedTrainers = [...trainers];
+    const index = updatedTrainers.findIndex((trainer) => trainer._id === edTrainer._id);
+    if (index !== -1) {
+      updatedTrainers[index] = edTrainer;
+      setTrainers(updatedTrainers);
+    }
+    console.log(edTrainer);
+    console.log(trainers);
     setTrainer({
       firstName: '',
       lastName: '',
@@ -51,8 +73,22 @@ const FormEdit = ({ trainerModify, closeForm }) => {
       city: '',
       salary: ''
     });
+    setErrors({
+      firstName: '',
+      lastName: '',
+      dni: '',
+      phone: '',
+      email: '',
+      city: '',
+      salary: ''
+    });
+    setModalSucessOpen(true);
     closeForm();
-    window.location.reload();
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    setModalConfirmAdd(true);
   };
 
   const formClose = (e) => {
@@ -60,104 +96,165 @@ const FormEdit = ({ trainerModify, closeForm }) => {
     closeForm();
   };
 
+  const handleBlur = () => {
+    let othersErrors = {};
+
+    if (trainerEdited.firstName.trim() === '') {
+      othersErrors.firstName = 'First Name is required';
+    }
+
+    if (trainerEdited.lastName.trim() === '') {
+      othersErrors.lastName = 'Last Name is required';
+    }
+
+    if (trainerEdited.dni.trim() === '') {
+      othersErrors.dni = 'DNI is required';
+    }
+
+    if (trainerEdited.phone.trim() === '') {
+      othersErrors.phone = 'Phone is required';
+    }
+
+    if (trainerEdited.email.trim() === '') {
+      othersErrors.email = 'Email is required';
+    }
+
+    if (trainerEdited.city.trim() === '') {
+      othersErrors.city = 'City is required';
+    }
+
+    if (trainerEdited.salary.trim() === '') {
+      othersErrors.city = 'City is required';
+    }
+
+    setErrors(othersErrors);
+  };
+
   return (
-    <form className={styles.form}>
-      <div className={styles.subContainer}>
-        <div className={styles.container}>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>First Name</label>
-            <input
-              className={styles.input}
-              name="firstName"
-              type="text"
-              placeholder={trainerModify.firstName}
-              value={trainerEdited.firstName}
-              onChange={onChargeInput}
-            />
+    <div>
+      <form className={styles.form}>
+        <div className={styles.subContainer}>
+          <div className={styles.container}>
+            <div className={styles.inputContainer}>
+              <label className={styles.label}>First Name</label>
+              <input
+                className={styles.input}
+                name="firstName"
+                type="text"
+                placeholder={trainerModify.firstName}
+                value={trainerEdited.firstName}
+                onChange={onChargeInput}
+                onBlur={handleBlur}
+              />
+              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
+            </div>
+            <div className={styles.inputContainer}>
+              <label className={styles.label}>Last Name</label>
+              <input
+                className={styles.input}
+                name="lastName"
+                type="text"
+                placeholder={trainerModify.lastName}
+                value={trainerEdited.lastName}
+                onChange={onChargeInput}
+                onBlur={handleBlur}
+              />
+              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
+            </div>
           </div>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>Last Name</label>
-            <input
-              className={styles.input}
-              name="lastName"
-              type="text"
-              //placeholder={trainerModify.lastName}
-              //value={trainerEdited.lastName}
-              onChange={onChargeInput}
-            />
+          <div className={styles.container}>
+            <div className={styles.inputContainer}>
+              <label className={styles.label}>DNI</label>
+              <input
+                className={styles.input}
+                name="dni"
+                type="number"
+                placeholder={trainerModify.dni}
+                value={trainerEdited.dni}
+                onChange={onChargeInput}
+                onBlur={handleBlur}
+              />
+              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
+            </div>
+            <div className={styles.inputContainer}>
+              <label className={styles.label}>Phone</label>
+              <input
+                className={styles.input}
+                name="phone"
+                type="number"
+                placeholder={trainerModify.phone}
+                value={trainerEdited.phone}
+                onChange={onChargeInput}
+                onBlur={handleBlur}
+              />
+              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
+            </div>
+          </div>
+          <div className={styles.container}>
+            <div className={styles.inputContainer}>
+              <label className={styles.label}>Email</label>
+              <input
+                className={styles.input}
+                name="email"
+                type="text"
+                placeholder={trainerModify.email}
+                value={trainerEdited.email}
+                onChange={onChargeInput}
+                onBlur={handleBlur}
+              />
+              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
+            </div>
+            <div className={styles.inputContainer}>
+              <label className={styles.label}>City</label>
+              <input
+                className={styles.input}
+                name="city"
+                type="text"
+                placeholder={trainerModify.city}
+                value={trainerEdited.city}
+                onChange={onChargeInput}
+                onBlur={handleBlur}
+              />
+              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
+            </div>
+          </div>
+          <div className={styles.container}>
+            <div className={styles.inputContainer}>
+              <label className={styles.label}>Salary</label>
+              <input
+                className={styles.input}
+                name="salary"
+                type="number"
+                placeholder={trainerModify.salary}
+                value={trainerEdited.salary}
+                onChange={onChargeInput}
+                onBlur={handleBlur}
+              />
+              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
+            </div>
           </div>
         </div>
         <div className={styles.container}>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>DNI</label>
-            <input
-              className={styles.input}
-              name="dni"
-              type="number"
-              //placeholder={trainerModify.dni}
-              //value={trainerEdited.dni}
-              onChange={onChargeInput}
-            />
-          </div>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>Phone</label>
-            <input
-              className={styles.input}
-              name="phone"
-              type="number"
-              //placeholder={trainerModify.phone}
-              //value={trainerEdited.phone}
-              onChange={onChargeInput}
-            />
-          </div>
+          <button className={styles.buttonCancel} onClick={formClose}>
+            Cancel
+          </button>
+          <button className={styles.buttonSave} type="submit" onClick={handleClick}>
+            Save
+          </button>
         </div>
-        <div className={styles.container}>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>Email</label>
-            <input
-              className={styles.input}
-              name="email"
-              type="text"
-              //placeholder={trainerModify.email}
-              //value={trainerEdited.email}
-              onChange={onChargeInput}
-            />
-          </div>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>City</label>
-            <input
-              className={styles.input}
-              name="city"
-              type="text"
-              //placeholder={trainerModify.city}
-              //value={trainerEdited.city}
-              onChange={onChargeInput}
-            />
-          </div>
-        </div>
-        <div className={styles.container}>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>Salary</label>
-            <input
-              className={styles.input}
-              name="salary"
-              type="number"
-              //placeholder={trainerModify.salary}
-              //value={trainerEdited.salary}
-              onChange={onChargeInput}
-            />
-          </div>
-        </div>
-      </div>
-      <div className={styles.container}>
-        <button className={styles.buttonCancel} onClick={formClose}>
-          Cancel
-        </button>
-        <button className={styles.buttonSave} type="submit" onClick={onSubmit}>
-          Save
-        </button>
-      </div>
-    </form>
+      </form>
+      {modalConfirmAdd && (
+        <ModalConfirm
+          onConfirm={onSubmit}
+          method="edit"
+          message="Are you sure to edit this trainer?"
+          setModalConfirmOpen={setModalConfirmAdd}
+        />
+      )}
+      {modalSucessOpen && (
+        <ModalSuccess message="Trainer edited" setModalSuccessOpen={setModalSucessOpen} />
+      )}
+    </div>
   );
 };
 

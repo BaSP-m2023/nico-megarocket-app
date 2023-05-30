@@ -3,7 +3,7 @@ import styles from './table.module.css';
 import FormEdit from '../FormEditTrainers/FormEditTrainer';
 
 // eslint-disable-next-line no-unused-vars
-const Table = ({ data, setTrainerToEdit }) => {
+const Table = ({ data, setTrainerToEdit, setTrainers, trainers }) => {
   const [trainerModify, setTrainerModify] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
@@ -64,7 +64,14 @@ const Table = ({ data, setTrainerToEdit }) => {
           })}
         </tbody>
       </table>
-      {showForm && <FormEdit trainerModify={trainerModify} closeForm={closeForm} />}
+      {showForm && (
+        <FormEdit
+          trainerModify={trainerModify}
+          closeForm={closeForm}
+          setTrainers={setTrainers}
+          trainers={trainers}
+        />
+      )}
     </div>
   );
 };

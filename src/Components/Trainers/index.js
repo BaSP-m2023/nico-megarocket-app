@@ -54,7 +54,12 @@ function Trainers() {
         />
         Add trainer
       </button>
-      <Table data={trainers} deleteItem={deleteItem} />
+      <Table
+        data={trainers}
+        deleteItem={deleteItem}
+        setTrainers={setTrainers}
+        trainers={trainers}
+      />
       {showForm && <Form addItem={addItem} closeForm={closeForm} />}
     </section>
   );

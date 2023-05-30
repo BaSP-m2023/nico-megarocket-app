@@ -61,3 +61,12 @@
   margin-right: 100px;
   border: 1px solid;
 }
+
+.error {
+  color: #FF0000;
+  font-size: 15px;
+}
+
+.inputError {
+  border: 1px solid #FF0000;
+}
