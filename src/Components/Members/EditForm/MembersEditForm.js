@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../Form/form.module.css';
 
-export const MembersEditForm = ({ member, updateMember }) => {
-  const memberID = '647624575e293edbc67fb748';
+export const MembersEditForm = ({ member, updateMember, memberID, setModalEditConfirmOpen }) => {
   const {
     firstName,
     lastName,
@@ -35,6 +34,7 @@ export const MembersEditForm = ({ member, updateMember }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setModalEditConfirmOpen(true);
     updateMember(memberID, memberUpdated);
   };
 

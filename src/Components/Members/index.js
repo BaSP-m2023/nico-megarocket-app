@@ -1,34 +1,20 @@
 import { useEffect, useState } from 'react';
 import styles from './members.module.css';
-import { Form } from './Form/MembersForm';
-import { MembersEditForm } from './EditForm/MembersEditForm';
-import ModalConfirm from '../../Components/Modals/ModalConfirm/index';
-import ModalSuccess from '../Modals/ModalSuccess';
+import TableMember from './TableMember';
+import ModalConfirm from '../Modals/ModalConfirm/index';
+import ModalSuccess from '../Modals/ModalSuccess/index';
 
 function Members() {
   const [members, setMembers] = useState([]);
-  const [member, setMember] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    birthday: '',
-    phone: '',
-    email: '',
-    city: '',
-    postalCode: '',
-    isActive: false,
-    membership: ''
-  });
   const [showForm, setShowForm] = useState(false);
   const [showEditForm, setEditForm] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
   const [modalEditConfirmOpen, setModalEditConfirmOpen] = useState(false);
 
   const getMembers = async () => {
     try {
-      const response = await fetch(process.env.REACT_APP_API_URL + '/member');
-      const data = await response.json();
+      const reponse = await fetch(`${process.env.REACT_APP_API_URL}/member`);
+      const data = await reponse.json();
       setMembers(data.data);
     } catch (error) {
       console.log(error);
@@ -38,19 +24,10 @@ function Members() {
     getMembers();
   }, []);
 
-  const handleToggle = () => {
-    setShowForm((current) => !current);
-    setEditForm(false);
-  };
-
-  const handleEditToggle = () => {
-    setModalEditConfirmOpen(true);
-    setEditForm((current) => !current);
-    setShowForm(false);
-  };
-
   const updateMember = async (id, memberUpdated) => {
     let memberToUpdateIndex = members.findIndex((member) => member.id === id);
+    console.log(id);
+    console.log(memberUpdated);
     try {
       const response = await fetch(process.env.REACT_APP_API_URL + `/member/${id}`, {
         method: 'PUT',
@@ -65,12 +42,32 @@ function Members() {
         const currentsMembers = [...members];
         currentsMembers[memberToUpdateIndex] = data;
         setMembers(currentsMembers);
-        setModalSuccessOpen(true);
-        setSuccessMessage('Member edited successfully');
       }
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const memberDelete = async (memberId) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/member/${memberId}`, {
+        method: 'DELETE'
+      });
+      console.log(response);
+      setMembers([...members.filter((member) => member._id !== memberId)]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleToggle = () => {
+    setShowForm((current) => !current);
+    setEditForm(false);
+  };
+
+  const handleEditToggle = () => {
+    setEditForm((current) => !current);
+    setShowForm(false);
   };
 
   return (
@@ -86,18 +83,36 @@ function Members() {
         )}
 
         {modalSuccessOpen && (
-          <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
+          <ModalSuccess
+            setModalSuccessOpen={setModalSuccessOpen}
+            message="Member updated successfully"
+          />
         )}
       </div>
-      <h2 className={styles.title}>Members</h2>
-      <button className={styles.button} onClick={handleToggle}>
-        Add
-      </button>
-      <button className={styles.button} onClick={handleEditToggle}>
-        Edit
-      </button>
-      {showEditForm && <MembersEditForm member={member} updateMember={updateMember} />}
-      {showForm && <Form member={member} setMember={setMember} setMembers={setMembers} />}
+      <div className={styles.titleContainer}>
+        <h2 className={styles.letterColour}>Members</h2>
+        <div className={styles.addContainer} onClick={handleToggle}>
+          <img
+            className={styles.imgSize}
+            src={`${process.env.PUBLIC_URL}/assets/images/btn-add.png`}
+          />
+          <p>Add Member</p>
+        </div>
+      </div>
+      {!members.length ? (
+        <p>No active Members</p>
+      ) : (
+        <TableMember
+          onUpdateMember={updateMember}
+          members={members}
+          onDeleteMember={memberDelete}
+          showForm={showForm}
+          showEditForm={showEditForm}
+          handleEditToggle={handleEditToggle}
+          setEditForm={setEditForm}
+          setModalEditConfirmOpen={setModalEditConfirmOpen}
+        />
+      )}
     </section>
   );
 }
