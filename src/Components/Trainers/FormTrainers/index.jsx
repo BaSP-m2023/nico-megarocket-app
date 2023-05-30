@@ -40,7 +40,6 @@ const Form = ({ addItem }) => {
           <label className={styles.label}> First Name</label>
           <input
             className={styles.input}
-            //firstName="firstName"
             type="text"
             value={trainer.firstName}
             onChange={onChargeInput}
@@ -50,7 +49,6 @@ const Form = ({ addItem }) => {
           <label className={styles.label}> Last Name</label>
           <input
             className={styles.input}
-            //lastName="lastName"
             type="text"
             value={trainer.lastName}
             onChange={onChargeInput}
@@ -60,7 +58,6 @@ const Form = ({ addItem }) => {
           <label className={styles.label}>DNI</label>
           <input
             className={styles.input}
-            //dni="dni"
             type="number"
             value={trainer.dni}
             onChange={onChargeInput}
@@ -70,7 +67,6 @@ const Form = ({ addItem }) => {
           <label className={styles.label}>Phone</label>
           <input
             className={styles.input}
-            //phone="phone"
             type="number"
             value={trainer.phone}
             onChange={onChargeInput}
@@ -80,7 +76,6 @@ const Form = ({ addItem }) => {
           <label className={styles.label}>Email</label>
           <input
             className={styles.input}
-            //email="email"
             type="text"
             value={trainer.email}
             onChange={onChargeInput}
@@ -90,7 +85,6 @@ const Form = ({ addItem }) => {
           <label className={styles.label}>City</label>
           <input
             className={styles.input}
-            //city="city"
             type="text"
             value={trainer.city}
             onChange={onChargeInput}
@@ -100,7 +94,6 @@ const Form = ({ addItem }) => {
           <label className={styles.label}>Salary</label>
           <input
             className={styles.input}
-            //salary="salary"
             type="number"
             value={trainer.salary}
             onChange={onChargeInput}
