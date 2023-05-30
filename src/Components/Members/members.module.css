@@ -1,9 +1,19 @@
+:root {
+  --Green:#AACE9B;
+  --Blue:#373867;
+}
+
 .container {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom:20px;
+}
+
+.title{
+  color: var(--Blue);
 }
 
 .button {
@@ -11,6 +21,8 @@
   background-color:var(--Green);
   cursor:pointer;
   border:none;
+  border-radius:5px;
+  margin-bottom:10px;
 }
 
 .button:hover{

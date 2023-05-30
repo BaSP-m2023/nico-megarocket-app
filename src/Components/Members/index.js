@@ -67,24 +67,15 @@ function Members() {
 
   return (
     <section className={styles.container}>
-      <h2>Members</h2>
+      <h2 className={styles.title}>Members</h2>
       <button className={styles.button} onClick={handleToggle}>
         Add
       </button>
       <button className={styles.button} onClick={handleEditToggle}>
         Edit
       </button>
-      {!showForm ? 'List' : <Form member={member} setMember={setMember} setMembers={setMembers} />}
-      {!showEditForm ? (
-        'List'
-      ) : (
-        <MembersEditForm
-          member={member}
-          members={members}
-          setMember={setMember}
-          updateMember={updateMember}
-        />
-      )}
+      {showEditForm && <MembersEditForm member={member} updateMember={updateMember} />}
+      {showForm && <Form member={member} setMember={setMember} setMembers={setMembers} />}
     </section>
   );
 }

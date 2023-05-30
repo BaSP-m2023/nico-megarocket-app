@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './form.module.css';
 
 export const Form = ({ member, setMember }) => {
+  const [validationsOk, setValidationsOk] = useState(false);
+
   const handleChange = (e) => {
     setMember({
       ...member,
       [e.target.name]: e.target.value,
       isActive: true
     });
+    setValidationsOk(true);
   };
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+      // eslint-disable-next-line no-unused-vars
       const response = await fetch(`${process.env.REACT_APP_API_URL}/member/`, {
         method: 'POST',
         headers: {
@@ -31,7 +35,7 @@ export const Form = ({ member, setMember }) => {
           membership: member.membership
         })
       });
-      console.log(response);
+
       setMember({
         firstName: '',
         lastName: '',
@@ -51,13 +55,14 @@ export const Form = ({ member, setMember }) => {
 
   return (
     <div className={styles.container}>
+      <h3 className={styles.title}>Add Member</h3>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.inputGroups}>
+        <section className={styles.inputGroups}>
           <div className={styles.inputGroup}>
             <div className={styles.inputContainer}>
               <label>FirstName</label>
               <input
-                className="input"
+                className={styles.input}
                 name="firstName"
                 type="text"
                 value={member.firstName}
@@ -67,7 +72,7 @@ export const Form = ({ member, setMember }) => {
             <div className={styles.inputContainer}>
               <label>LastName</label>
               <input
-                className="input"
+                className={styles.input}
                 name="lastName"
                 type="text"
                 value={member.lastName}
@@ -77,7 +82,7 @@ export const Form = ({ member, setMember }) => {
             <div className={styles.inputContainer}>
               <label>DNI</label>
               <input
-                className="input"
+                className={styles.input}
                 name="dni"
                 type="number"
                 value={member.dni}
@@ -87,7 +92,7 @@ export const Form = ({ member, setMember }) => {
             <div className={styles.inputContainer}>
               <label>Birthday</label>
               <input
-                className="input"
+                className={styles.input}
                 name="birthday"
                 type="date"
                 value={member.birthday}
@@ -99,7 +104,7 @@ export const Form = ({ member, setMember }) => {
             <div className={styles.inputContainer}>
               <label>Phone</label>
               <input
-                className="input"
+                className={styles.input}
                 name="phone"
                 type="number"
                 value={member.phone}
@@ -109,7 +114,7 @@ export const Form = ({ member, setMember }) => {
             <div className={styles.inputContainer}>
               <label>Email</label>
               <input
-                className="input"
+                className={styles.input}
                 name="email"
                 type="email"
                 value={member.email}
@@ -119,7 +124,7 @@ export const Form = ({ member, setMember }) => {
             <div className={styles.inputContainer}>
               <label>City</label>
               <input
-                className="input"
+                className={styles.input}
                 name="city"
                 type="text"
                 value={member.city}
@@ -129,7 +134,7 @@ export const Form = ({ member, setMember }) => {
             <div className={styles.inputContainer}>
               <label>Postal Code</label>
               <input
-                className="input"
+                className={styles.input}
                 name="postalCode"
                 type="number"
                 value={member.postalCode}
@@ -139,7 +144,7 @@ export const Form = ({ member, setMember }) => {
             <div className={styles.inputContainer}>
               <label>Membership</label>
               <input
-                className="input"
+                className={styles.input}
                 name="membership"
                 type="text"
                 value={member.membership}
@@ -147,10 +152,16 @@ export const Form = ({ member, setMember }) => {
               />
             </div>
           </div>
-        </div>
-        <button className={styles.submitButton} type="submit">
-          Submit
-        </button>
+        </section>
+        {validationsOk ? (
+          <button className={styles.submitButton} type="submit">
+            Submit
+          </button>
+        ) : (
+          <button className={styles.submitButton} type="submit" disabled>
+            Submit
+          </button>
+        )}
       </form>
     </div>
   );
