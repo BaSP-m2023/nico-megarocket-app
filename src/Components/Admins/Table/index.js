@@ -42,8 +42,8 @@ function index({ admins, deleteAdm }) {
             <th>Phone</th>
             <th>E-Mail</th>
             <th>City</th>
-            <th> </th>
-            <th> </th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
