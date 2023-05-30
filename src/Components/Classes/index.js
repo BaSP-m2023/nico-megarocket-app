@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './classes.module.css';
+import Table from './Table/index';
 import Form from './Form/index';
 
 function Projects() {
@@ -10,7 +11,8 @@ function Projects() {
   const getClasses = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/class`);
     const data = await response.json();
-    setClasses(data);
+    setClasses(data.data);
+    console.log(data.data);
   };
 
   useEffect(() => {
@@ -66,6 +68,7 @@ function Projects() {
       >
         Edit
       </button>
+      <Table data={classes} />
       {show && (
         <Form
           createCLass={createClass}
