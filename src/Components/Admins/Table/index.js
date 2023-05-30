@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import styles from './table.module.css';
-import Modal from '../Modal/Modal';
+import Modal from '../Modals/ModalDelete/ModalDelete';
+import ModalDeleteConfirmation from '../Modals/ModalDeleteConfirmation/ModalDeleteConfirmation';
 
 function index({ admins, deleteAdm }) {
   const [showModal, setShowModal] = useState(false);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [adminToDeleteId, setAdminToDeleteId] = useState('');
+  const [adminFullName, setAdminFullName] = useState('');
 
   const closeModal = () => {
     setShowModal(false);
@@ -18,11 +21,19 @@ function index({ admins, deleteAdm }) {
   const confirmDelete = () => {
     deleteAdm(adminToDeleteId);
     closeModal();
+    setShowConfirmationModal(true);
   };
 
   return (
     <div className={styles.container}>
       <Modal show={showModal} confirmDelete={confirmDelete} closeModal={closeModal} />
+      {showConfirmationModal && (
+        <ModalDeleteConfirmation
+          show={showConfirmationModal}
+          setShowConfirmationModal={setShowConfirmationModal}
+          adminFullName={adminFullName}
+        />
+      )}
       <table className={styles.table}>
         <thead>
           <tr>
@@ -62,7 +73,10 @@ function index({ admins, deleteAdm }) {
                 </td>
                 <td>
                   <img
-                    onClick={() => handleDeleteClick(item._id)}
+                    onClick={() => {
+                      handleDeleteClick(item._id);
+                      setAdminFullName(item.firstName + ' ' + item.lastName);
+                    }}
                     className={styles.trash_edit}
                     src={`${process.env.PUBLIC_URL}/assets/images/trash-delete.svg`}
                     alt="delete icon"

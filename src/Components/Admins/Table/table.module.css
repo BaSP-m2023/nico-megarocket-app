@@ -1,7 +1,6 @@
 .container{
   margin-bottom:50px;
 }
-
 table {
   border-collapse: separate;
   border-spacing: 0;
@@ -13,12 +12,10 @@ thead tr th:first-child,
 tbody tr td:first-child{
   padding-left: 10px;
 }
-
 thead tr th:nth-child(1),
 tbody tr td:nth-child(1){
   width: 15%;
 }
-
 thead tr th:nth-child(2),
 tbody tr td:nth-child(2){
   width: 10%;
@@ -33,7 +30,6 @@ tbody tr td:nth-child(4){
   width: 30%;
   padding-left: 15px;
 }
-
 thead tr th:nth-last-child(-n+2),
 tbody tr td:nth-last-child(-n+2){
   width: 25px;
@@ -58,7 +54,6 @@ th {
   background-color:rgba(33, 33, 68, 0.301);
   color: #373867;
 }
-
 .trash_edit{
   width: 25px;
   height: 25px;
@@ -72,7 +67,6 @@ th {
 .add_admin:hover{
   cursor: pointer;
 }
-
 .noneAdmin{
   text-align: center;
 }
