@@ -1,7 +1,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -34,7 +34,7 @@
   width: 100%;
 }
 
-.buttonAdd {
+.buttonSave {
   background-color: #373867;
   border-radius: 5px;
   padding: 10px;
@@ -45,7 +45,6 @@
   border: none;
   margin-bottom: 30px;
   margin-top: 30px;
-  margin-right: 20px;
 }
 
 .buttonCancel {
@@ -59,15 +58,6 @@
   border: none;
   margin-bottom: 30px;
   margin-top: 30px;
-  margin-right: 200px;
+  margin-right: 100px;
   border: 1px solid;
-}
-
-.error {
-  color: #FF0000;
-  font-size: 15px;
-}
-
-.inputError {
-  border: 1px solid #FF0000;
 }

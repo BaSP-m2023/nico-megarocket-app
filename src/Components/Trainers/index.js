@@ -5,6 +5,11 @@ import Form from './FormTrainers';
 
 function Trainers() {
   const [trainers, setTrainers] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+
+  const handleToggle = () => {
+    setShowForm((current) => !current);
+  };
 
   const getTrainers = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/trainer`);
@@ -18,7 +23,6 @@ function Trainers() {
 
   const addItem = ({ firstName, lastName, dni, phone, email, city, salary, isActive }) => {
     const newItem = {
-      id: Math.floor(Math.random() * 1000),
       firstName,
       lastName,
       dni,
@@ -31,6 +35,10 @@ function Trainers() {
     setTrainers([...trainers, newItem]);
   };
 
+  const closeForm = () => {
+    setShowForm((current) => !current);
+  };
+
   const deleteItem = (id) => {
     setTrainers([...trainers.filter((trainer) => trainer.id !== id)]);
   };
@@ -38,8 +46,16 @@ function Trainers() {
   return (
     <section className={styles.container}>
       <h2>Trainers</h2>
+      <button className={styles.button} onClick={handleToggle}>
+        <img
+          className={styles.add_btn}
+          src={`${process.env.PUBLIC_URL}/assets/images/btn-add.png`}
+          alt="add icon"
+        />
+        Add trainer
+      </button>
       <Table data={trainers} deleteItem={deleteItem} />
-      <Form addItem={addItem} />
+      {showForm && <Form addItem={addItem} closeForm={closeForm} />}
     </section>
   );
 }
