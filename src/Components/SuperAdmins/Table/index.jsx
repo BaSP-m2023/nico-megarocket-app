@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './table.module.css';
+import ModalsConfirmation from '../../Modals/ModalConfirm';
 
 const Table = ({ data, deleteItem }) => {
+  const [modalDeleteConfirmOpen, setModalDeleteConfirmOpen] = useState(false);
+  const [selectedItemId, setSelectedItemId] = useState('');
+
+  const handleDeleteButtonClick = (id) => {
+    setSelectedItemId(id);
+    setModalDeleteConfirmOpen(true);
+  };
+
+  const handleModalConfirmation = () => {
+    deleteItem(selectedItemId);
+    setModalDeleteConfirmOpen(false);
+  };
+
   return (
     <table>
       <thead>
@@ -19,7 +33,10 @@ const Table = ({ data, deleteItem }) => {
               <td className={styles.tableContainerTitle}>{item.email}</td>
               <td className={styles.tableContainerTitle}>{item.password}</td>
               <td className={styles.tableContainerBtn}>
-                <button className={styles.tableBtn} onClick={() => deleteItem(item._id)}>
+                <button
+                  className={styles.tableBtn}
+                  onClick={() => handleDeleteButtonClick(item._id)}
+                >
                   <img
                     className={styles.tableBtnImg}
                     src="../../../assets/images/trash-delete.svg"
@@ -40,6 +57,14 @@ const Table = ({ data, deleteItem }) => {
           );
         })}
       </tbody>
+      {modalDeleteConfirmOpen && (
+        <ModalsConfirmation
+          method="Delete"
+          onConfirm={handleModalConfirmation}
+          setModalConfirmOpen={setModalDeleteConfirmOpen}
+          message="Are you sure you want to delete this?"
+        />
+      )}
     </table>
   );
 };
