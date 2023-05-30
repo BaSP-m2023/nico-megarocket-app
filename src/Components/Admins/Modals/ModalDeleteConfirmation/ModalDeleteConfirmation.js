@@ -6,7 +6,7 @@ function ModalDeleteConfirmation({ show, setShowConfirmationModal, adminFullName
     return null;
   }
 
-  const cerrar = () => {
+  const closeModal = () => {
     setShowConfirmationModal(false);
   };
 
@@ -15,7 +15,7 @@ function ModalDeleteConfirmation({ show, setShowConfirmationModal, adminFullName
       <div className={styles.modal}>
         <img
           className={styles.close_icon}
-          onClick={cerrar}
+          onClick={closeModal}
           src={`${process.env.PUBLIC_URL}/assets/images/Delete.svg`}
           alt="cancel icon"
         />
@@ -24,7 +24,7 @@ function ModalDeleteConfirmation({ show, setShowConfirmationModal, adminFullName
           <p className={styles.modal_desc}>{adminFullName} has been deleted</p>
         </div>
         <div className={styles.buttons}>
-          <button className={styles.confirm_button} onClick={cerrar}>
+          <button className={styles.confirm_button} onClick={closeModal}>
             OK
           </button>
         </div>
