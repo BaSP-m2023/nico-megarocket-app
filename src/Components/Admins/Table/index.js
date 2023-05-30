@@ -1,9 +1,16 @@
 // import React, { useState } from 'react';
 import styles from './table.module.css';
 
-function index({ admins, setShowform }) {
+function index({ admins, setShowform, setAdminToEditId, setEditMode, adminEditedId }) {
   const handleCreateClick = () => {
     setShowform(true);
+  };
+
+  const handleEditClick = (id) => {
+    setShowform(true);
+    setEditMode(true);
+    adminEditedId(id);
+    setAdminToEditId(id);
   };
 
   return (
@@ -21,9 +28,9 @@ function index({ admins, setShowform }) {
           </tr>
         </thead>
         <tbody>
-          {admins.map((item) => {
+          {admins.map((item, index) => {
             return (
-              <tr key={item._id}>
+              <tr key={index}>
                 <td>
                   {item.firstName} {item.lastName}
                 </td>
@@ -36,6 +43,9 @@ function index({ admins, setShowform }) {
                     className={styles.trash_edit}
                     src={`${process.env.PUBLIC_URL}/assets/images/pencil-edit.svg`}
                     alt="modify icon"
+                    onClick={() => {
+                      handleEditClick(item._id);
+                    }}
                   />
                 </td>
                 <td>
