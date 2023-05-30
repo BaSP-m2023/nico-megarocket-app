@@ -1,43 +1,58 @@
+import style from './TableSubscriptions.module.css';
+
 const TableSubscriptions = ({ subscription, deleteSubscription }) => {
   return (
-    <div>
-      <div>
-        <button>Add subscription</button>
-      </div>
-      {subscription.length < 1 ? (
-        <section>
-          <div>
-            <h3>This is empty</h3>
-          </div>
-        </section>
-      ) : (
-        subscription.map((sub, index) => {
-          return (
-            <div key={index}>
-              <div>
-                <p>{sub.name}</p>
-                <p>{sub.description}</p>
-              </div>
-              <div>
-                <img
-                  src={`${process.env.PUBLIC_URL}public/assets/images/pencil-edit.svg`}
-                  height="20px"
-                  width="20px"
-                  alt="edit icon"
-                />
-                <img
-                  src={`${process.env.PUBLIC_URL}public/assets/images/trash-delete.svg`}
-                  height="20px"
-                  width="20px"
-                  alt="trash can icon"
-                  onClick={() => deleteSubscription(sub._id)}
-                />
-              </div>
+    <section className={style.containerTableSubscription}>
+      <button className={style.addButton}>Add subscription</button>
+      <table className={style.containerTable}>
+        <thead>
+          <tr>
+            <th>Classes</th>
+            <th>Member</th>
+            <th>Date</th>
+            <th>Modify</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        {subscription.length < 1 ? (
+          <div className={style.containerEmpty}>
+            <div>
+              <h3>This is empty</h3>
             </div>
-          );
-        })
-      )}
-    </div>
+          </div>
+        ) : (
+          <tbody className={style.containerEachSubscription}>
+            {subscription.map((sub, index) => {
+              return (
+                <tr key={index}>
+                  <td>{sub.name}</td>
+                  <td>{sub.description}</td>
+                  <td>
+                    <button className={style.tableIcons}>
+                      <img
+                        src={`${process.env.PUBLIC_URL}assets/images/pencil-edit.svg`}
+                        alt="edit icon"
+                      />
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      className={style.tableIcons}
+                      onClick={() => deleteSubscription(sub._id)}
+                    >
+                      <img
+                        src={`${process.env.PUBLIC_URL}assets/images/trash-delete.svg`}
+                        alt="trash can icon"
+                      />
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        )}
+      </table>
+    </section>
   );
 };
 

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import TableSubscriptions from './Index';
+import TableSubscriptions from './TableSubscription';
+import style from './TableSubscriptions.module.css';
 
 const SubscriptionsTable = () => {
   const [subscription, setSubscription] = useState([]);
@@ -37,7 +38,7 @@ const SubscriptionsTable = () => {
   };
 
   return (
-    <section>
+    <section className={style.containerTable}>
       <TableSubscriptions subscription={subscription} deleteSubscription={deleteSubscription} />
     </section>
   );
