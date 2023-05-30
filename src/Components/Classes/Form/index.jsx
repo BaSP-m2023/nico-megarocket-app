@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import formStyles from '../Form/form.module.css';
 
-const Form = ({ addItem, show }) => {
+const Form = ({ updateClass, createCLass, addItem, show, updateToggle }) => {
   // eslint-disable-next-line prettier/prettier
   const [ klass, setKlass ] = useState({
     hour: '',
@@ -19,15 +19,10 @@ const Form = ({ addItem, show }) => {
     body: JSON.stringify(klass)
   };
 
-  const createClass = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/class`, classBody);
-    const data = await response.json();
-    console.log(data);
-  };
-
   const onChangeHour = (e) => {
     setKlass({
       ...klass,
+      // eslint-disable-next-line prettier/prettier
       hour: e.target.value
     });
   };
@@ -65,8 +60,11 @@ const Form = ({ addItem, show }) => {
     e.preventDefault();
 
     addItem();
-
-    createClass();
+    if (updateToggle.updateMode) {
+      updateClass(classBody);
+    } else {
+      createCLass(classBody);
+    }
 
     setKlass({
       hour: '',
@@ -75,6 +73,7 @@ const Form = ({ addItem, show }) => {
       activity: '',
       slots: ''
     });
+    updateToggle.setUpdateMode(false);
   };
 
   return (
