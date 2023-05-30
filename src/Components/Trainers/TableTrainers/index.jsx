@@ -1,7 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './table.module.css';
+import ModalConfirm from '../../Modals/ModalConfirm/index';
+import ModalSuccess from '../../Modals/ModalSuccess/index';
+// import ToastError from '../Modals/ToastError/index';
 
 const Table = ({ data, deleteTrain }) => {
+  const [modalDeleteConfirmOpen, setModalDeleteConfirmOpen] = useState(false);
+  const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(false);
+  const [idTrainer, setIdTrainer] = useState('');
+
+  const somefunction = (id) => {
+    setModalDeleteConfirmOpen(true);
+    setIdTrainer(id);
+  };
+
+  const onConfirm = () => {
+    deleteTrain(idTrainer);
+    setModalDeleteConfirmOpen(false);
+    setModalSuccessOpen(true);
+    setSuccessMessage('Deleted succesffully');
+  };
+
   return (
     <div className={styles.container}>
       <table>
@@ -45,7 +65,9 @@ const Table = ({ data, deleteTrain }) => {
                 </td>
                 <td>
                   <img
-                    onClick={() => deleteTrain(item._id)}
+                    onClick={() => {
+                      somefunction(item._id);
+                    }}
                     className={styles.trash_edit}
                     src={`${process.env.PUBLIC_URL}/assets/images/trash-delete.svg`}
                     alt="delete icon"
@@ -56,6 +78,17 @@ const Table = ({ data, deleteTrain }) => {
           })}
         </tbody>
       </table>
+      {modalDeleteConfirmOpen && (
+        <ModalConfirm
+          method="Delete"
+          onConfirm={onConfirm}
+          setModalConfirmOpen={setModalDeleteConfirmOpen}
+          message="Are you sure you want to delete this?"
+        />
+      )}
+      {modalSuccessOpen && (
+        <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
+      )}
     </div>
   );
 };
