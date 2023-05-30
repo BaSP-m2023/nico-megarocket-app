@@ -6,7 +6,7 @@ import ModalSuccess from '../../Modals/ModalSuccess';
 const DeleteMember = ({ memberId, onDeleteMember }) => {
   const [modalDeleteConfirmOpen, setModalDeleteConfirmOpen] = useState(false);
   const [modalSuccessConfirmOpen, setModalSuccessConfirmOpen] = useState(false);
-  const [idToDelete, setIdToDelete] = useState('');
+  const [idToDelete, setIdToDelete] = useState(null);
 
   const handleClick = (memberId) => {
     setIdToDelete(memberId);

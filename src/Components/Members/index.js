@@ -43,7 +43,7 @@ function Members() {
           <p>Add Member</p>
         </div>
       </div>
-      {members.length === 0 ? (
+      {!members.length ? (
         <p>No active Members</p>
       ) : (
         <TableMember members={members} onDeleteMember={memberDelete} />
