@@ -1,0 +1,10 @@
+
+
+.tableEmpty {
+  position: relative;
+  left: 30em;
+}
+
+.tableEmpty div {
+  width: 100%;
+}
