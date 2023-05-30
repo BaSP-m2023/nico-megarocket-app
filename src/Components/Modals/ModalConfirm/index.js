@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './modalConfirm.module.css';
 
-const ModalConfirm = ({ message, method, fn, setModalConfirmOpen }) => {
+const ModalConfirm = ({ message, method, onConfirm, setModalConfirmOpen }) => {
   return (
     <div className={styles.modalAlert}>
       <div className={styles.modalStyles}>
@@ -10,7 +10,7 @@ const ModalConfirm = ({ message, method, fn, setModalConfirmOpen }) => {
         <button
           className={styles.btnAccept}
           onClick={() => {
-            fn();
+            onConfirm();
             setModalConfirmOpen(false);
           }}
         >
