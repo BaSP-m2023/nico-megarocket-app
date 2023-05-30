@@ -75,6 +75,7 @@ const TableMember = ({
           memberID={memberId}
           member={member}
           updateMember={onUpdateMember}
+          setEditForm={setEditForm}
         />
       )}
       {showForm && <Form member={member} setMember={setMember} />}

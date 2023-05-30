@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import styles from '../Form/form.module.css';
+import ModalConfirm from '../../Modals/ModalConfirm/index';
+import ModalSuccess from '../../Modals/ModalSuccess/index';
 
-export const MembersEditForm = ({ member, updateMember, memberID, setModalEditConfirmOpen }) => {
+export const MembersEditForm = ({ member, updateMember, memberID, setEditForm }) => {
+  const [modalEditConfirmOpen, setModalEditConfirmOpen] = useState(false);
+  const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const {
     firstName,
     lastName,
@@ -32,10 +36,16 @@ export const MembersEditForm = ({ member, updateMember, memberID, setModalEditCo
     setMemberUpdated((data) => ({ ...data, [e.target.name]: e.target.value }));
   };
 
+  const prueba = () => {
+    updateMember(memberID, memberUpdated);
+    setModalEditConfirmOpen(false);
+    setEditForm(false);
+    setModalSuccessOpen(true);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setModalEditConfirmOpen(true);
-    updateMember(memberID, memberUpdated);
   };
 
   return (
@@ -142,6 +152,23 @@ export const MembersEditForm = ({ member, updateMember, memberID, setModalEditCo
           Submit
         </button>
       </form>
+      <div>
+        {modalEditConfirmOpen && (
+          <ModalConfirm
+            method="Edit"
+            onConfirm={prueba}
+            setModalConfirmOpen={setModalEditConfirmOpen}
+            message="Are you sure you want to edit this member?"
+          />
+        )}
+
+        {modalSuccessOpen && (
+          <ModalSuccess
+            setModalSuccessOpen={setModalSuccessOpen}
+            message="Member updated successfully"
+          />
+        )}
+      </div>
     </div>
   );
 };

@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react';
 import styles from './members.module.css';
 import TableMember from './TableMember';
-import ModalConfirm from '../Modals/ModalConfirm/index';
-import ModalSuccess from '../Modals/ModalSuccess/index';
 
 function Members() {
   const [members, setMembers] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [showEditForm, setEditForm] = useState(false);
-  const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
-  const [modalEditConfirmOpen, setModalEditConfirmOpen] = useState(false);
 
   const getMembers = async () => {
     try {
@@ -25,11 +21,11 @@ function Members() {
   }, []);
 
   const updateMember = async (id, memberUpdated) => {
-    let memberToUpdateIndex = members.findIndex((member) => member.id === id);
+    let memberToUpdateIndex = members.findIndex((member) => member._id === id);
     console.log(id);
     console.log(memberUpdated);
     try {
-      const response = await fetch(process.env.REACT_APP_API_URL + `/member/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/member/${id}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json'
@@ -37,10 +33,10 @@ function Members() {
         body: JSON.stringify(memberUpdated)
       });
 
-      const { error, data } = await response.json();
+      const { error } = await response.json();
       if (!error) {
         const currentsMembers = [...members];
-        currentsMembers[memberToUpdateIndex] = data;
+        currentsMembers[memberToUpdateIndex] = memberUpdated;
         setMembers(currentsMembers);
       }
     } catch (error) {
@@ -72,23 +68,6 @@ function Members() {
 
   return (
     <section className={styles.container}>
-      <div>
-        {modalEditConfirmOpen && (
-          <ModalConfirm
-            method="Edit"
-            onConfirm={updateMember}
-            setModalConfirmOpen={setModalEditConfirmOpen}
-            message="Are you sure you want to edit this member?"
-          />
-        )}
-
-        {modalSuccessOpen && (
-          <ModalSuccess
-            setModalSuccessOpen={setModalSuccessOpen}
-            message="Member updated successfully"
-          />
-        )}
-      </div>
       <div className={styles.titleContainer}>
         <h2 className={styles.letterColour}>Members</h2>
         <div className={styles.addContainer} onClick={handleToggle}>
@@ -110,7 +89,6 @@ function Members() {
           showEditForm={showEditForm}
           handleEditToggle={handleEditToggle}
           setEditForm={setEditForm}
-          setModalEditConfirmOpen={setModalEditConfirmOpen}
         />
       )}
     </section>
