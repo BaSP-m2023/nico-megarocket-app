@@ -30,7 +30,7 @@ const SuperAdmins = () => {
   return (
     <div className={styles.content}>
       <section className={styles.container}>
-        <button className={styles.containerBtn}>Add</button>
+        <button className={styles.containerBtn}>Create Super Admin</button>
         <Table data={superAdmins} deleteItem={deleteItem}></Table>
       </section>
     </div>
