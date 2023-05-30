@@ -37,6 +37,10 @@
   background-color: #37386710;
 }
 
+.containerTable thead tr th{
+  padding-left: 5rem;
+}
+
 .containerEachOneActivity tr {
   height: 3.5rem;
   font-size: 1.1rem;
@@ -44,6 +48,7 @@
 }
 
 .containerEachOneActivity tr td {
+  padding-left: 5rem;
   max-width: 20px;
   white-space: nowrap;
   overflow: hidden;

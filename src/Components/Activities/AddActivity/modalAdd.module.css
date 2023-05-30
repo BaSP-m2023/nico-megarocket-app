@@ -72,3 +72,7 @@
 .containerForm .containerAddButton button:hover {
   background-color: rgba(0, 0, 0, 0.157);
 }
+
+.containerForm .containerAddButton .buttonDisabled {
+  background-color: #c3ccbe !important;
+}

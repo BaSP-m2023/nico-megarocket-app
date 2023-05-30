@@ -1,7 +1,18 @@
 import { useState } from 'react';
 import style from './modalAdd.module.css';
 
-const ModalAddActivity = ({ setModalAdd, activity, setActivity, setTable }) => {
+const ModalAddActivity = ({
+  setModalAdd,
+  activity,
+  setActivity,
+  setTable,
+  editActivities,
+  setEditActivities,
+  editId,
+  editActivity,
+  editMode
+}) => {
+  const [active, setActive] = useState(true);
   const [bodyActivity, setBodyActivity] = useState({
     name: '',
     description: '',
@@ -13,6 +24,24 @@ const ModalAddActivity = ({ setModalAdd, activity, setActivity, setTable }) => {
       ...bodyActivity,
       [e.target.name]: e.target.value
     });
+
+    const allFieldsValid = Object.values(bodyActivity).every((field) => field.length >= 3);
+
+    setActive(!allFieldsValid);
+  };
+
+  const changeInputEdit = (e) => {
+    setEditActivities({
+      name: bodyActivity.name || editActivities.name,
+      description: bodyActivity.description || editActivities.description,
+      isActive: bodyActivity.isActive || editActivities.isActive,
+
+      [e.target.name]: e.target.value
+    });
+
+    const allFieldsValid = Object.values(editActivities).every((field) => field.length >= 3);
+
+    setActive(!allFieldsValid);
   };
 
   const createActivityDB = async (bodyActivity) => {
@@ -43,21 +72,17 @@ const ModalAddActivity = ({ setModalAdd, activity, setActivity, setTable }) => {
 
   const submitActivity = (e) => {
     e.preventDefault();
-    addActivity(bodyActivity);
-    setBodyActivity({
-      name: '',
-      description: '',
-      isActive: ''
-    });
-  };
-
-  // eslint-disable-next-line no-unused-vars
-  const editActivity = (id) => {
-    const findActivity = bodyActivity.find((act) => act._id === id);
-
-    findActivity.name = findActivity.name || bodyActivity.name;
-    findActivity.description = findActivity.description || bodyActivity.description;
-    findActivity.isActive = findActivity.isActive || bodyActivity.isActive;
+    if (editMode) {
+      editActivity(editId);
+      window.location.reload();
+    } else {
+      addActivity(bodyActivity);
+      setBodyActivity({
+        name: '',
+        description: '',
+        isActive: ''
+      });
+    }
   };
 
   return (
@@ -66,20 +91,47 @@ const ModalAddActivity = ({ setModalAdd, activity, setActivity, setTable }) => {
         <h3>Add</h3>
         <div>
           <label>Name:</label>
-          <input type="text" value={bodyActivity.name} name="name" onChange={changeInput} />
+          {editMode ? (
+            <input type="text" value={editActivities.name} name="name" onChange={changeInputEdit} />
+          ) : (
+            <input type="text" value={bodyActivity.name} name="name" onChange={changeInput} />
+          )}
         </div>
         <div>
           <label>Description:</label>
-          <input
-            type="text"
-            value={bodyActivity.description}
-            name="description"
-            onChange={changeInput}
-          />
+          {editMode ? (
+            <input
+              type="text"
+              value={editActivities.description}
+              name="description"
+              onChange={changeInputEdit}
+            />
+          ) : (
+            <input
+              type="text"
+              value={bodyActivity.description}
+              name="description"
+              onChange={changeInput}
+            />
+          )}
         </div>
         <div>
           <label>isActive</label>
-          <input type="text" value={bodyActivity.isActive} name="isActive" onChange={changeInput} />
+          {editMode ? (
+            <input
+              type="text"
+              value={editActivities.isActive}
+              name="isActive"
+              onChange={changeInputEdit}
+            />
+          ) : (
+            <input
+              type="text"
+              value={bodyActivity.isActive}
+              name="isActive"
+              onChange={changeInput}
+            />
+          )}
         </div>
         <div className={style.containerAddButton}>
           <button
@@ -90,7 +142,13 @@ const ModalAddActivity = ({ setModalAdd, activity, setActivity, setTable }) => {
           >
             Cancel
           </button>
-          <button>Save</button>
+          {!active ? (
+            <button>Save</button>
+          ) : (
+            <button disabled className={style.buttonDisabled}>
+              Save
+            </button>
+          )}
         </div>
       </form>
     </section>
