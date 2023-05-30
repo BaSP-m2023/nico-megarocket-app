@@ -4,6 +4,7 @@ import TableMember from './TableMember';
 
 function Members() {
   const [members, setMembers] = useState([]);
+
   const getMembers = async () => {
     try {
       const reponse = await fetch(`${process.env.REACT_APP_API_URL}/member`);

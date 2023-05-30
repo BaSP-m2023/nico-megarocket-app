@@ -7,13 +7,7 @@ const ModalConfirm = ({ message, method, onConfirm, setModalConfirmOpen }) => {
       <div className={styles.modalStyles}>
         <p className={styles.titleModal}>Attention</p>
         <p className={styles.textModal}>{message}</p>
-        <button
-          className={styles.btnAccept}
-          onClick={() => {
-            onConfirm();
-            setModalConfirmOpen(false);
-          }}
-        >
+        <button className={styles.btnAccept} onClick={onConfirm}>
           {method}
         </button>
         <button
