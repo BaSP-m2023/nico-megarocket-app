@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import styles from './form.module.css';
+import ModalSuccess from '../../Modals/ModalSuccess';
+import ModalConfirm from '../../Modals/ModalConfirm';
 
 export const Form = ({ member, setMember }) => {
   const [validationsOk, setValidationsOk] = useState(false);
+  const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [modalAddConfirmOpen, setModalAddConfirmOpen] = useState(false);
 
   const handleChange = (e) => {
     setMember({
@@ -16,7 +21,6 @@ export const Form = ({ member, setMember }) => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      // eslint-disable-next-line no-unused-vars
       const response = await fetch(`${process.env.REACT_APP_API_URL}/member/`, {
         method: 'POST',
         headers: {
@@ -35,7 +39,9 @@ export const Form = ({ member, setMember }) => {
           membership: member.membership
         })
       });
-
+      console.log(response);
+      setModalSuccessOpen(true);
+      setSuccessMessage('Member added successfully!');
       setMember({
         firstName: '',
         lastName: '',
@@ -55,6 +61,19 @@ export const Form = ({ member, setMember }) => {
 
   return (
     <div className={styles.container}>
+      <div>
+        {modalAddConfirmOpen && (
+          <ModalConfirm
+            method="Add"
+            onConfirm={handleSubmit}
+            setModalConfirmOpen={setModalAddConfirmOpen}
+            message="Are you sure you want to edit this member?"
+          />
+        )}
+        {modalSuccessOpen && (
+          <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
+        )}
+      </div>
       <h3 className={styles.title}>Add Member</h3>
       <form className={styles.form} onSubmit={handleSubmit}>
         <section className={styles.inputGroups}>
@@ -67,6 +86,7 @@ export const Form = ({ member, setMember }) => {
                 type="text"
                 value={member.firstName}
                 onChange={handleChange}
+                required
               />
             </div>
             <div className={styles.inputContainer}>
@@ -77,6 +97,7 @@ export const Form = ({ member, setMember }) => {
                 type="text"
                 value={member.lastName}
                 onChange={handleChange}
+                required
               />
             </div>
             <div className={styles.inputContainer}>
@@ -87,6 +108,7 @@ export const Form = ({ member, setMember }) => {
                 type="number"
                 value={member.dni}
                 onChange={handleChange}
+                required
               />
             </div>
             <div className={styles.inputContainer}>
@@ -97,6 +119,7 @@ export const Form = ({ member, setMember }) => {
                 type="date"
                 value={member.birthday}
                 onChange={handleChange}
+                required
               />
             </div>
           </div>
@@ -109,6 +132,7 @@ export const Form = ({ member, setMember }) => {
                 type="number"
                 value={member.phone}
                 onChange={handleChange}
+                required
               />
             </div>
             <div className={styles.inputContainer}>
@@ -119,6 +143,7 @@ export const Form = ({ member, setMember }) => {
                 type="email"
                 value={member.email}
                 onChange={handleChange}
+                required
               />
             </div>
             <div className={styles.inputContainer}>
@@ -129,6 +154,7 @@ export const Form = ({ member, setMember }) => {
                 type="text"
                 value={member.city}
                 onChange={handleChange}
+                required
               />
             </div>
             <div className={styles.inputContainer}>
@@ -139,6 +165,7 @@ export const Form = ({ member, setMember }) => {
                 type="number"
                 value={member.postalCode}
                 onChange={handleChange}
+                required
               />
             </div>
             <div className={styles.inputContainer}>
@@ -149,6 +176,7 @@ export const Form = ({ member, setMember }) => {
                 type="text"
                 value={member.membership}
                 onChange={handleChange}
+                required
               />
             </div>
           </div>

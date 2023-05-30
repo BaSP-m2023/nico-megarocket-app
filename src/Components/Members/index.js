@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import styles from './members.module.css';
 import { Form } from './Form/MembersForm';
 import { MembersEditForm } from './EditForm/MembersEditForm';
+import ModalConfirm from '../../Components/Modals/ModalConfirm/index';
+import ModalSuccess from '../Modals/ModalSuccess';
 
 function Members() {
   const [members, setMembers] = useState([]);
@@ -19,6 +21,9 @@ function Members() {
   });
   const [showForm, setShowForm] = useState(false);
   const [showEditForm, setEditForm] = useState(false);
+  const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [modalEditConfirmOpen, setModalEditConfirmOpen] = useState(false);
 
   const getMembers = async () => {
     try {
@@ -39,6 +44,7 @@ function Members() {
   };
 
   const handleEditToggle = () => {
+    setModalEditConfirmOpen(true);
     setEditForm((current) => !current);
     setShowForm(false);
   };
@@ -59,6 +65,8 @@ function Members() {
         const currentsMembers = [...members];
         currentsMembers[memberToUpdateIndex] = data;
         setMembers(currentsMembers);
+        setModalSuccessOpen(true);
+        setSuccessMessage('Member edited successfully');
       }
     } catch (error) {
       console.log(error);
@@ -67,6 +75,20 @@ function Members() {
 
   return (
     <section className={styles.container}>
+      <div>
+        {modalEditConfirmOpen && (
+          <ModalConfirm
+            method="Edit"
+            onConfirm={updateMember}
+            setModalConfirmOpen={setModalEditConfirmOpen}
+            message="Are you sure you want to edit this member?"
+          />
+        )}
+
+        {modalSuccessOpen && (
+          <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
+        )}
+      </div>
       <h2 className={styles.title}>Members</h2>
       <button className={styles.button} onClick={handleToggle}>
         Add
