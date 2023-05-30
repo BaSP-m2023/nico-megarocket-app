@@ -1,0 +1,43 @@
+.modalAlert {
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #d25050;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 10px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  border-radius: 20px;
+}
+
+.headerModal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.titleModal {
+  margin: 5px 0;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #000000;
+}
+
+.textModal {
+  margin: 5px 0;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #000000;
+}
+
+.btnClose {
+  padding: 5px;
+  background-color: transparent;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+}
