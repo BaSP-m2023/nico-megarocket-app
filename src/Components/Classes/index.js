@@ -19,7 +19,6 @@ function Projects() {
   useEffect(() => {
     getClasses();
   }, []);
-  console.log(classes);
 
   const deleteClassfromDB = async (id) => {
     try {
