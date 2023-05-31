@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import style from './modalAdd.module.css';
+import ModalEdit from '../../Modals/ModalConfirm';
+import ModalSuccess from '../../Modals/ModalSuccess';
 
 const ModalAddActivity = ({
   setModalAdd,
@@ -13,6 +15,8 @@ const ModalAddActivity = ({
   editMode
 }) => {
   const [active, setActive] = useState(true);
+  const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
+  const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [bodyActivity, setBodyActivity] = useState({
     name: '',
     description: '',
@@ -70,8 +74,7 @@ const ModalAddActivity = ({
     setActivity([...activity, newActivityCreated]);
   };
 
-  const submitActivity = (e) => {
-    e.preventDefault();
+  const submitActivity = () => {
     if (editMode) {
       editActivity(editId);
       window.location.reload();
@@ -83,11 +86,18 @@ const ModalAddActivity = ({
         isActive: ''
       });
     }
+    setModalConfirmOpen(false);
+    setModalSuccessOpen(true);
+  };
+
+  const handleConfirmEdit = (e) => {
+    e.preventDefault();
+    setModalConfirmOpen(true);
   };
 
   return (
     <section className={style.containerModal}>
-      <form onSubmit={submitActivity} className={style.containerForm}>
+      <form onSubmit={handleConfirmEdit} className={style.containerForm}>
         <h3>Add</h3>
         <div>
           <label>Name:</label>
@@ -150,6 +160,19 @@ const ModalAddActivity = ({
             </button>
           )}
         </div>
+        {modalConfirmOpen && (
+          <ModalEdit
+            method="Edit"
+            onConfirm={() => {
+              submitActivity();
+            }}
+            message="Are you sure you want to perform this action?"
+            setModalConfirmOpen={setModalConfirmOpen}
+          />
+        )}
+        {modalSuccessOpen && (
+          <ModalSuccess message="¡Success!" setModalSuccessOpen={setModalSuccessOpen} />
+        )}
       </form>
     </section>
   );

@@ -7,7 +7,6 @@ const TableActivity = ({ activity, deleteActivity, setActivity }) => {
   const [table, setTable] = useState(true);
   const [editId, setEditId] = useState('');
   const [editMode, setEditMode] = useState(false);
-
   const [editActivities, setEditActivities] = useState({
     name: '',
     description: '',
