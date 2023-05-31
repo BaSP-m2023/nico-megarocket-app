@@ -3,7 +3,6 @@ import styles from './form.module.css';
 import ModalConfirm from '../../Modals/ModalConfirm';
 import ModalSuccess from '../../Modals/ModalSuccess';
 
-// eslint-disable-next-line no-unused-vars
 const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
   const [trainerEdited, setTrainer] = useState({
     firstName: '',

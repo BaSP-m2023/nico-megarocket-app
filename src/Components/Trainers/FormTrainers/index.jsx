@@ -78,7 +78,6 @@ const Form = ({ addItem, closeForm }) => {
     return isValid;
   };
 
-  // eslint-disable-next-line no-unused-vars
   const addTrainer = async (trainer) => {
     try {
       await fetch(`${process.env.REACT_APP_API_URL}/trainer`, {
