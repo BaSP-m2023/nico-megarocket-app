@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ModalsConfirmation from '../../Modals/ModalConfirm';
 
 const Form = ({
   addItem,
@@ -9,6 +10,19 @@ const Form = ({
   updateItem
 }) => {
   const [actionType, setActionType] = useState(null);
+  const [modalModifyConfirmOpen, setModalModifyConfirmOpen] = useState(false);
+
+  const handleUpdateButtonClick = () => {
+    setModalModifyConfirmOpen(true);
+  };
+  const handleModalConfirmation = () => {
+    updateItem(superAdminForm);
+    setSuperAdminForm({
+      password: '',
+      email: ''
+    });
+    setModalModifyConfirmOpen(false);
+  };
 
   const onChangeInput = (e) => {
     setSuperAdminForm({
@@ -22,12 +36,8 @@ const Form = ({
     if (actionType === 'add') {
       addItem(superAdminForm);
     } else if (actionType === 'modify') {
-      updateItem(superAdminForm);
+      handleUpdateButtonClick();
     }
-    setSuperAdminForm({
-      password: '',
-      email: ''
-    });
   };
 
   return (
@@ -54,6 +64,14 @@ const Form = ({
         <button type="submit" onClick={() => setActionType('modify')}>
           Modificar Super Admin
         </button>
+      )}
+      {modalModifyConfirmOpen && (
+        <ModalsConfirmation
+          method="Update"
+          onConfirm={handleModalConfirmation}
+          setModalConfirmOpen={setModalModifyConfirmOpen}
+          message="Are you sure you want to update this?"
+        />
       )}
     </form>
   );

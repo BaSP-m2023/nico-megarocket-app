@@ -89,6 +89,8 @@ const SuperAdmins = () => {
           return item;
         });
         setSuperAdmins(updatedList);
+        setSuccessMessage('The Super Admin has been updated successfully.');
+        setModalSuccessOpen(true);
       } else {
         console.error('Failed to update item');
       }
