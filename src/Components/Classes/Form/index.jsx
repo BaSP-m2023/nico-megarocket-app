@@ -35,7 +35,6 @@ const Form = ({ updateClass, createCLass, show, updateToggle, classUpdateId, kla
   const onChangeHour = (e) => {
     klass.setKlass({
       ...klass.klass,
-      // eslint-disable-next-line prettier/prettier
       hour: e.target.value
     });
   };
@@ -50,7 +49,6 @@ const Form = ({ updateClass, createCLass, show, updateToggle, classUpdateId, kla
   const onChangeTrainer = (e) => {
     klass.setKlass({
       ...klass.klass,
-      // eslint-disable-next-line prettier/prettier
       trainer: [ e.target.value ]
     });
   };
