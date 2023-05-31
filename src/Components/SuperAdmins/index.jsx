@@ -6,9 +6,15 @@ import ModalsSuccess from '../Modals/ModalSuccess';
 
 const SuperAdmins = () => {
   const [superAdmins, setSuperAdmins] = useState([]);
+  const [superAdminForm, setSuperAdminForm] = useState({
+    email: '',
+    password: ''
+  });
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [showForm, setShowForm] = useState(false);
+  const [showBtnAdd, setShowBtnAdd] = useState(false);
+  const [showBtnMod, setShowBtnMod] = useState(false);
 
   const getSuperAdmins = async () => {
     try {
@@ -63,8 +69,43 @@ const SuperAdmins = () => {
     }
   };
 
-  const toggleForm = () => {
+  const updateItem = async (updatedItem) => {
+    try {
+      // eslint-disable-next-line no-unused-vars
+      const { _id, __v, ...updatedData } = updatedItem;
+      console.log(JSON.stringify(updatedData));
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/${_id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedData)
+      });
+      if (response.ok) {
+        const updatedList = superAdmins.map((item) => {
+          if (item._id === updatedItem._id) {
+            return updatedItem;
+          }
+          return item;
+        });
+        setSuperAdmins(updatedList);
+      } else {
+        console.error('Failed to update item');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const toggleForm = (showBtn) => {
     setShowForm(!showForm);
+    if (showBtn) {
+      setShowBtnAdd(false);
+      setShowBtnMod(true);
+    } else {
+      setShowBtnAdd(true);
+      setShowBtnMod(false);
+    }
   };
 
   return (
@@ -75,11 +116,25 @@ const SuperAdmins = () => {
             <ModalsSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
           )}
         </div>
-        <button className={styles.containerBtn} onClick={toggleForm}>
+        <button className={styles.containerBtn} onClick={() => toggleForm(false)}>
           Create Super Admin
         </button>
-        <Table data={superAdmins} deleteItem={deleteItem} form={toggleForm}></Table>
-        {showForm && <Form addItem={addItem} />}
+        <Table
+          data={superAdmins}
+          deleteItem={deleteItem}
+          form={toggleForm}
+          setSuperAdminForm={setSuperAdminForm}
+        ></Table>
+        {showForm && (
+          <Form
+            addItem={addItem}
+            superAdminForm={superAdminForm}
+            setSuperAdminForm={setSuperAdminForm}
+            showBtnMod={showBtnMod}
+            showBtnAdd={showBtnAdd}
+            updateItem={updateItem}
+          />
+        )}
       </section>
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './table.module.css';
 import ModalsConfirmation from '../../Modals/ModalConfirm';
 
-const Table = ({ data, deleteItem, form }) => {
+const Table = ({ data, deleteItem, form, setSuperAdminForm }) => {
   const [modalDeleteConfirmOpen, setModalDeleteConfirmOpen] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState('');
 
@@ -14,8 +14,11 @@ const Table = ({ data, deleteItem, form }) => {
     deleteItem(selectedItemId);
     setModalDeleteConfirmOpen(false);
   };
-  const handleEditButton = () => {
-    form();
+  const handleEditButton = (item) => {
+    setSuperAdminForm({
+      ...item
+    });
+    form(true);
   };
 
   return (
@@ -47,7 +50,7 @@ const Table = ({ data, deleteItem, form }) => {
                 </button>
               </td>
               <td className={styles.tableContainerBtn}>
-                <button className={styles.tableBtn} onClick={() => handleEditButton()}>
+                <button className={styles.tableBtn} onClick={() => handleEditButton(item)}>
                   <img
                     className={styles.tableBtnImg}
                     src="../../../assets/images/pencil-edit.svg"
