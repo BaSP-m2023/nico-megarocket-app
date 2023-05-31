@@ -36,7 +36,7 @@ export const MembersEditForm = ({ member, updateMember, memberID, setEditForm })
     setMemberUpdated((data) => ({ ...data, [e.target.name]: e.target.value }));
   };
 
-  const prueba = () => {
+  const updateHandler = () => {
     updateMember(memberID, memberUpdated);
     setModalEditConfirmOpen(false);
     setEditForm(false);
@@ -156,7 +156,7 @@ export const MembersEditForm = ({ member, updateMember, memberID, setEditForm })
         {modalEditConfirmOpen && (
           <ModalConfirm
             method="Edit"
-            onConfirm={prueba}
+            onConfirm={updateHandler}
             setModalConfirmOpen={setModalEditConfirmOpen}
             message="Are you sure you want to edit this member?"
           />

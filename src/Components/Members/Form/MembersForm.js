@@ -21,7 +21,7 @@ export const Form = ({ member, setMember }) => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/member/`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/member/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -39,7 +39,6 @@ export const Form = ({ member, setMember }) => {
           membership: member.membership
         })
       });
-      console.log(response);
       setModalSuccessOpen(true);
       setSuccessMessage('Member added successfully!');
       setMember({
@@ -55,7 +54,7 @@ export const Form = ({ member, setMember }) => {
         membership: ''
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
