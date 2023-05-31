@@ -39,7 +39,11 @@ const SubscriptionsTable = () => {
 
   return (
     <section className={style.containerTable}>
-      <TableSubscriptions subscription={subscription} deleteSubscription={deleteSubscription} />
+      <TableSubscriptions
+        subscription={subscription}
+        setSubscription={setSubscription}
+        deleteSubscription={deleteSubscription}
+      />
     </section>
   );
 };
