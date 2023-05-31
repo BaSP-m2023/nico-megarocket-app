@@ -1,23 +1,35 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, { useState } from 'react';
 import formStyles from '../Form/form.module.css';
+import ModalsConfirmation from '../../Modals/ModalConfirm';
 
 const Form = ({ updateClass, createCLass, show, updateToggle, classUpdateId, klass }) => {
+  const [ modalUpdateConfirmOpen, setModalUpdateConfirmOpen ] = useState(false);
 
   const classBody = {
-    method: 'POST',
+    method: updateToggle.updateMode ? 'PUT' : 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(klass.klass)
   };
 
-  const updateClassBody = {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(klass.klass)
+  const handleUpdateButtonClick = () => {
+    setModalUpdateConfirmOpen(true);
+  };
+
+  const handleModalConfirmation = () => {
+    updateClass(classUpdateId, classBody);
+    setModalUpdateConfirmOpen(false);
+    klass.setKlass({
+      hour: '',
+      day: '',
+      trainer: '',
+      activity: '',
+      slots: ''
+    });
+    updateToggle.setUpdateMode(false);
+    show();
   };
 
   const onChangeHour = (e) => {
@@ -61,19 +73,10 @@ const Form = ({ updateClass, createCLass, show, updateToggle, classUpdateId, kla
     e.preventDefault();
 
     if (updateToggle.updateMode) {
-      updateClass(classUpdateId, updateClassBody);
+      handleUpdateButtonClick();
     } else {
       createCLass(classBody);
     }
-
-    klass.setKlass({
-      hour: '',
-      day: '',
-      trainer: '',
-      activity: '',
-      slots: ''
-    });
-    updateToggle.setUpdateMode(false);
   };
 
   return (
@@ -87,40 +90,40 @@ const Form = ({ updateClass, createCLass, show, updateToggle, classUpdateId, kla
               placeholder="Hour"
               name="hour"
               type="text"
-              value={klass.hour}
+              value={klass.klass.hour}
               onChange={onChangeHour}
             />
             <input
               placeholder="Day"
               name="day"
               type="text"
-              value={klass.day}
+              value={klass.klass.day}
               onChange={onChangeDay}
             />
             <input
               placeholder="Trainer"
               name="trainer"
               type="text"
-              value={klass.trainer}
+              value={klass.klass.trainer}
               onChange={onChangeTrainer}
             />
             <input
               placeholder="Activity"
               name="activity"
               type="text"
-              value={klass.activity}
+              value={klass.klass.activity}
               onChange={onChangeActivity}
             />
             <input
               placeholder="Slots"
               name="slots"
               type="number"
-              value={klass.slots}
+              value={klass.klass.slots}
               onChange={onChangeSlots}
             />
           </div>
           <div className={formStyles.buttons}>
-            <button type="submit" onClick={show}>
+            <button type="submit">
               Send
             </button>
             <button type="button" onClick={show}>
@@ -129,6 +132,14 @@ const Form = ({ updateClass, createCLass, show, updateToggle, classUpdateId, kla
           </div>
         </div>
       </form>
+      {modalUpdateConfirmOpen && (
+        <ModalsConfirmation
+          method="Update"
+          onConfirm={handleModalConfirmation}
+          setModalConfirmOpen={setModalUpdateConfirmOpen}
+          message="Are you sure you want to update this?"
+        />
+      )}
     </div>
 
   );

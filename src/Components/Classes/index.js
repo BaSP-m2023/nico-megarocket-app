@@ -20,10 +20,13 @@ function Projects() {
   });
 
   const getClasses = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/class`);
-    const data = await response.json();
-    setClasses(data.data);
-    console.log(data.data);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/class`);
+      const data = await response.json();
+      setClasses(data.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -32,31 +35,32 @@ function Projects() {
 
   const createClass = async (body) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/class`, body);
-      const data = await response.json();
-      console.log(data);
-      console.log(JSON.parse(body.body));
+      await fetch(`${process.env.REACT_APP_API_URL}/class`, body);
       setClasses([...classes, JSON.parse(body.body)]);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
   const updateClass = async (id, body) => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/class/${id}`, body);
-    const data = await response.json();
-    console.log(data);
-    setClasses([...classes, JSON.parse(body.body)]);
-  };
-
-  const showForm = () => {
-    setTimeout(() => {
-      setShow(!show);
-    }, 100);
-  };
-
-  const updateModeToggle = () => {
-    setUpdateMode(!updateMode);
+    try {
+      await fetch(`${process.env.REACT_APP_API_URL}/class/${id}`, body);
+      const bodyParsed = JSON.parse(body.body);
+      const updatingClass = classes.map((item) => {
+        if (item._id === id) {
+          item.hour = bodyParsed.hour;
+          item.day = bodyParsed.day;
+          item.trainer = bodyParsed.trainer;
+          item.activity = bodyParsed.activity;
+          item.slots = bodyParsed.slots;
+          return item;
+        }
+        return item;
+      });
+      setClasses(updatingClass);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const deleteClassfromDB = async (id) => {
@@ -75,6 +79,16 @@ function Projects() {
     }
   };
 
+  const showForm = () => {
+    setTimeout(() => {
+      setShow(!show);
+    }, 0);
+  };
+
+  const updateModeToggle = () => {
+    setUpdateMode(!updateMode);
+  };
+
   const deleteClass = (id) => {
     deleteClassfromDB(id);
   };
@@ -83,6 +97,13 @@ function Projects() {
     showForm();
     updateModeToggle();
     setClassUpdateId(item._id);
+    setKlass({
+      hour: item.hour,
+      day: item.day,
+      trainer: item.trainer.map((item) => item._id),
+      activity: item.activity._id,
+      slots: item.slots
+    });
   };
 
   return (

@@ -19,25 +19,23 @@ const Table = ({ data, deleteClass, updateClick }) => {
 
   return (
     <section className={styles.container}>
-      <table>
-        <thead>
-          <tr>
-            <th>Activity</th>
-            <th>Day</th>
-            <th>Hour</th>
-            <th>Trainer</th>
-            <th>Places</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        {!data ? (
-          <div className={styles.nonTrainer}>
-            <div>
-              <h3>The list is empty</h3>
-            </div>
-          </div>
-        ) : (
+      {data.length === 0 ? (
+        <div className={styles.noneTrainer}>
+          <h3>The list is empty</h3>
+        </div>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>Activity</th>
+              <th>Day</th>
+              <th>Hour</th>
+              <th>Trainer</th>
+              <th>Places</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
           <tbody>
             {data.map((item, index) => {
               return (
@@ -46,9 +44,9 @@ const Table = ({ data, deleteClass, updateClick }) => {
                   <td>{item.day}</td>
                   <td>{item.hour}</td>
                   <td>
-                    {item.trainer.map((trainerOne) => {
+                    {item.trainer ? item.trainer.map((trainerOne) => {
                       return `${trainerOne.firstName} ${trainerOne.lastName}`;
-                    })}
+                    }) : ''}
                   </td>
                   <td>{item.slots}</td>
                   <td>
@@ -69,16 +67,16 @@ const Table = ({ data, deleteClass, updateClick }) => {
               );
             })}
           </tbody>
-        )}
-        {modalDeleteConfirmOpen && (
-          <ModalsConfirmation
-            method="Delete"
-            onConfirm={handleModalConfirmation}
-            setModalConfirmOpen={setModalDeleteConfirmOpen}
-            message="Are you sure you want to delete this?"
-          />
-        )}
-      </table>
+          {modalDeleteConfirmOpen && (
+            <ModalsConfirmation
+              method="Delete"
+              onConfirm={handleModalConfirmation}
+              setModalConfirmOpen={setModalDeleteConfirmOpen}
+              message="Are you sure you want to delete this?"
+            />
+          )}
+        </table>
+      )}
     </section>
   );
 };
