@@ -1,9 +1,16 @@
 .form {
     margin-bottom: 40px;
-    width: 50%;
     color: #373867;
     font-weight: bold;
+    width: 50%;
+}
 
+.containerForm{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .subContainer {

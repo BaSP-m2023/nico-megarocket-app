@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import styles from './admins.module.css';
 import Table from './Table';
 import Form from './Form';
+import ModalSuccess from '../Modals/ModalSuccess';
 
 function Admins() {
   const [admins, setAdmins] = useState([]);
@@ -11,6 +12,8 @@ function Admins() {
   const [adminToEditId, setAdminToEditId] = useState('');
 
   const [editMode, setEditMode] = useState(false);
+
+  const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
 
   const [adminEdited, setAdminEdited] = useState({
     firstName: '',
@@ -47,6 +50,7 @@ function Admins() {
       password
     };
     setAdmins([...admins, newAdmin]);
+    setModalSuccessOpen(true);
   };
 
   const editAdmins = async (id, bodyEdited) => {
@@ -58,6 +62,13 @@ function Admins() {
         },
         body: JSON.stringify(bodyEdited)
       });
+      const updateAdmins = [...admins];
+      const index = updateAdmins.findIndex((admin) => admin._id === id);
+      if (index !== -1) {
+        updateAdmins[index] = bodyEdited;
+        setAdmins(updateAdmins);
+        setModalSuccessOpen(true);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -107,6 +118,12 @@ function Admins() {
           adminEdited={adminEdited}
           setAdminEdited={setAdminEdited}
           finalEdit={finalEdit}
+        />
+      )}
+      {modalSuccessOpen && (
+        <ModalSuccess
+          message={editMode ? 'Admin edited successfully' : 'Admin created successfully'}
+          setModalSuccessOpen={setModalSuccessOpen}
         />
       )}
     </section>
