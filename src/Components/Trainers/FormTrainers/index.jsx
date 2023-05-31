@@ -12,7 +12,7 @@ const Form = ({ addItem }) => {
     salary: ''
   });
 
-  const onChargeInput = (e) => {
+  const onChangeInput = (e) => {
     setTrainer({
       ...trainer,
       [e.target.value]: e.target.value
@@ -42,7 +42,7 @@ const Form = ({ addItem }) => {
             className={styles.input}
             type="text"
             value={trainer.firstName}
-            onChange={onChargeInput}
+            onChange={onChangeInput}
           />
         </div>
         <div className={styles.inputContainer}>
@@ -51,7 +51,7 @@ const Form = ({ addItem }) => {
             className={styles.input}
             type="text"
             value={trainer.lastName}
-            onChange={onChargeInput}
+            onChange={onChangeInput}
           />
         </div>
         <div className={styles.inputContainer}>
@@ -60,7 +60,7 @@ const Form = ({ addItem }) => {
             className={styles.input}
             type="number"
             value={trainer.dni}
-            onChange={onChargeInput}
+            onChange={onChangeInput}
           />
         </div>
         <div className={styles.inputContainer}>
@@ -69,7 +69,7 @@ const Form = ({ addItem }) => {
             className={styles.input}
             type="number"
             value={trainer.phone}
-            onChange={onChargeInput}
+            onChange={onChangeInput}
           />
         </div>
         <div className={styles.inputContainer}>
@@ -78,7 +78,7 @@ const Form = ({ addItem }) => {
             className={styles.input}
             type="text"
             value={trainer.email}
-            onChange={onChargeInput}
+            onChange={onChangeInput}
           />
         </div>
         <div className={styles.inputContainer}>
@@ -87,7 +87,7 @@ const Form = ({ addItem }) => {
             className={styles.input}
             type="text"
             value={trainer.city}
-            onChange={onChargeInput}
+            onChange={onChangeInput}
           />
         </div>
         <div className={styles.inputContainer}>
@@ -96,7 +96,7 @@ const Form = ({ addItem }) => {
             className={styles.input}
             type="number"
             value={trainer.salary}
-            onChange={onChargeInput}
+            onChange={onChangeInput}
           />
         </div>
       </div>
