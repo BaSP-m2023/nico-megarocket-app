@@ -39,6 +39,17 @@ function Admins() {
     }
   };
 
+  const deleteAdmin = async (id) => {
+    try {
+      await fetch(process.env.REACT_APP_API_URL + '/admins/' + id, {
+        method: 'DELETE'
+      });
+      const newAdmins = admins.filter((admin) => admin._id !== id);
+      setAdmins(newAdmins);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const addAdmin = ({ firstName, lastName, phone, email, city, dni, password }) => {
     const newAdmin = {
       firstName,
@@ -107,6 +118,7 @@ function Admins() {
         setShowform={setShowform}
         setEditMode={setEditMode}
         adminEditedId={adminEditedId}
+        deleteAdm={deleteAdmin}
       />
       {showForm && (
         <Form

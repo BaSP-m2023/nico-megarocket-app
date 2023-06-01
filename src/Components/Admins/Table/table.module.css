@@ -1,27 +1,72 @@
 .container{
   margin-bottom:50px;
 }
-
 table {
-  border-collapse: collapse;
-  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 804px;
+  border: 1px solid rgba(128, 128, 128, 0.63);
+  border-radius: 5px;
 }
-
-th, td {
-  border: 1px solid black;
-  padding: 8px;
+thead tr th:first-child,
+tbody tr td:first-child{
+  padding-left: 10px;
 }
-
+thead tr th:nth-child(1),
+tbody tr td:nth-child(1){
+  width: 15%;
+}
+thead tr th:nth-child(2),
+tbody tr td:nth-child(2){
+  width: 10%;
+}
+thead tr th:nth-child(3),
+tbody tr td:nth-child(3){
+  width: 10%;
+  padding-left: 15px;
+}
+thead tr th:nth-child(4),
+tbody tr td:nth-child(4){
+  width: 30%;
+  padding-left: 15px;
+}
+thead tr th:nth-last-child(-n+2),
+tbody tr td:nth-last-child(-n+2){
+  width: 25px;
+}
+thead tr th,tbody tr td{
+  width: 150px;
+  padding: 0 5px;
+}
+thead tr th{
+  text-align: left;
+}
+td{
+  font-size: 16px;
+}
+tr{
+  height: 48px;
+}
+tr:nth-child(even) {
+  background-color: #9bceba33;
+}
 th {
-  background-color: #f2f2f2;
+  background-color:rgba(33, 33, 68, 0.301);
+  color: #373867;
 }
-
+.trash_edit{
+  width: 25px;
+  height: 25px;
+}
 .trash_edit:hover{
   cursor: pointer;
 }
 .add_admin{
-  background-color: #AACE9B33;
+  background-color: #9bd6817c;
 }
 .add_admin:hover{
   cursor: pointer;
+}
+.noneAdmin{
+  text-align: center;
 }
