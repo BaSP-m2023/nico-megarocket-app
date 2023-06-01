@@ -21,6 +21,18 @@ function Trainers() {
     getTrainers();
   }, []);
 
+  const deleteTrainer = async (id) => {
+    try {
+      await fetch(process.env.REACT_APP_API_URL + '/trainer/' + id, {
+        method: 'DELETE'
+      });
+      const newTrainers = trainers.filter((trainer) => trainer._id !== id);
+      setTrainers(newTrainers);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const addItem = ({ firstName, lastName, dni, phone, email, city, salary, isActive }) => {
     const newItem = {
       firstName,
@@ -39,13 +51,10 @@ function Trainers() {
     setShowForm((current) => !current);
   };
 
-  const deleteItem = (id) => {
-    setTrainers([...trainers.filter((trainer) => trainer.id !== id)]);
-  };
-
   return (
     <section className={styles.container}>
       <h2>Trainers</h2>
+
       <button className={styles.button} onClick={handleToggle}>
         <img
           className={styles.add_btn}
@@ -56,7 +65,7 @@ function Trainers() {
       </button>
       <Table
         data={trainers}
-        deleteItem={deleteItem}
+        deleteTrain={deleteTrainer}
         setTrainers={setTrainers}
         trainers={trainers}
       />

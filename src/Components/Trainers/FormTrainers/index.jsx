@@ -92,7 +92,7 @@ const Form = ({ addItem, closeForm }) => {
     }
   };
 
-  const onChargeInput = (e) => {
+  const onChangeInput = (e) => {
     setTrainer({
       ...trainer,
       [e.target.name]: e.target.value
@@ -102,6 +102,7 @@ const Form = ({ addItem, closeForm }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     setModalConfirmAdd(false);
+    console.log(validateForm());
     if (validateForm()) {
       addTrainer(trainer);
       addItem(trainer);
@@ -183,7 +184,7 @@ const Form = ({ addItem, closeForm }) => {
                 name="firstName"
                 type="text"
                 value={trainer.firstName}
-                onChange={onChargeInput}
+                onChange={onChangeInput}
                 onBlur={handleBlur}
               />
               {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
@@ -195,7 +196,7 @@ const Form = ({ addItem, closeForm }) => {
                 name="lastName"
                 type="text"
                 value={trainer.lastName}
-                onChange={onChargeInput}
+                onChange={onChangeInput}
               />
               {errors.lastName && <span className={styles.error}>{errors.lastName}</span>}
             </div>
@@ -208,7 +209,7 @@ const Form = ({ addItem, closeForm }) => {
                 name="dni"
                 type="number"
                 value={trainer.dni}
-                onChange={onChargeInput}
+                onChange={onChangeInput}
               />
               {errors.dni && <span className={styles.error}>{errors.dni}</span>}
             </div>
@@ -219,7 +220,7 @@ const Form = ({ addItem, closeForm }) => {
                 name="phone"
                 type="number"
                 value={trainer.phone}
-                onChange={onChargeInput}
+                onChange={onChangeInput}
               />
               {errors.phone && <span className={styles.error}>{errors.phone}</span>}
             </div>
@@ -232,7 +233,7 @@ const Form = ({ addItem, closeForm }) => {
                 name="email"
                 type="text"
                 value={trainer.email}
-                onChange={onChargeInput}
+                onChange={onChangeInput}
               />
               {errors.email && <span className={styles.error}>{errors.email}</span>}
             </div>
@@ -243,7 +244,7 @@ const Form = ({ addItem, closeForm }) => {
                 name="city"
                 type="text"
                 value={trainer.city}
-                onChange={onChargeInput}
+                onChange={onChangeInput}
               />
               {errors.city && <span className={styles.error}>{errors.city}</span>}
             </div>
@@ -256,7 +257,7 @@ const Form = ({ addItem, closeForm }) => {
                 name="salary"
                 type="number"
                 value={trainer.salary}
-                onChange={onChargeInput}
+                onChange={onChangeInput}
               />
               {errors.salary && <span className={styles.error}>{errors.salary}</span>}
             </div>

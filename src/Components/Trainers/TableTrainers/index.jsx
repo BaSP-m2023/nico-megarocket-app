@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import styles from './table.module.css';
+import ModalConfirm from '../../Modals/ModalConfirm/index';
+import ModalSuccess from '../../Modals/ModalSuccess/index';
 import FormEdit from '../FormEditTrainers/FormEditTrainer';
 
-const Table = ({ data, setTrainers, trainers }) => {
+const Table = ({ data, deleteTrain, setTrainers, trainers }) => {
+  const [modalDeleteConfirmOpen, setModalDeleteConfirmOpen] = useState(false);
+  const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(false);
+  const [idTrainer, setIdTrainer] = useState('');
   const [trainerModify, setTrainerModify] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
@@ -16,13 +22,24 @@ const Table = ({ data, setTrainers, trainers }) => {
     setShowForm(false);
   };
 
+  const somefunction = (id) => {
+    setModalDeleteConfirmOpen(true);
+    setIdTrainer(id);
+  };
+
+  const onConfirm = () => {
+    deleteTrain(idTrainer);
+    setModalDeleteConfirmOpen(false);
+    setModalSuccessOpen(true);
+    setSuccessMessage('Deleted succesffully');
+  };
+
   return (
-    <div>
+    <div className={styles.container}>
       <table>
         <thead>
           <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
+            <th>Trainer</th>
             <th>DNI</th>
             <th>Phone</th>
             <th>Email</th>
@@ -33,16 +50,24 @@ const Table = ({ data, setTrainers, trainers }) => {
           </tr>
         </thead>
         <tbody>
+          {data.length === 0 && (
+            <tr>
+              <td className={styles.noneTrainer} colSpan={8}>
+                The list is empty
+              </td>
+            </tr>
+          )}
           {data.map((item) => {
             return (
-              <tr key={item.id}>
-                <td>{item.firstName}</td>
-                <td>{item.lastName}</td>
+              <tr key={item._id}>
+                <td>
+                  {item.firstName} {item.lastName}
+                </td>
                 <td>{item.dni}</td>
                 <td>{item.phone}</td>
                 <td>{item.email}</td>
                 <td>{item.city}</td>
-                <td>{item.salary}</td>
+                <td>${item.salary}</td>
                 <td>
                   <img
                     onClick={() => handleEditClick(item._id)}
@@ -53,6 +78,9 @@ const Table = ({ data, setTrainers, trainers }) => {
                 </td>
                 <td>
                   <img
+                    onClick={() => {
+                      somefunction(item._id);
+                    }}
                     className={styles.trash_edit}
                     src={`${process.env.PUBLIC_URL}/assets/images/trash-delete.svg`}
                     alt="delete icon"
@@ -63,6 +91,14 @@ const Table = ({ data, setTrainers, trainers }) => {
           })}
         </tbody>
       </table>
+      {modalDeleteConfirmOpen && (
+        <ModalConfirm
+          method="Delete"
+          onConfirm={onConfirm}
+          setModalConfirmOpen={setModalDeleteConfirmOpen}
+          message="Are you sure you want to delete this?"
+        />
+      )}
       {showForm && (
         <FormEdit
           trainerModify={trainerModify}
@@ -70,6 +106,9 @@ const Table = ({ data, setTrainers, trainers }) => {
           setTrainers={setTrainers}
           trainers={trainers}
         />
+      )}
+      {modalSuccessOpen && (
+        <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
       )}
     </div>
   );
