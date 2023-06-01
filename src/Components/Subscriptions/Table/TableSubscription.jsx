@@ -6,7 +6,6 @@ const TableSubscriptions = ({ subscription, deleteSubscription, setSubscription 
   const [modalAdd, setModalAdd] = useState(false);
   const [table, setTable] = useState(true);
   const [editId, setEditId] = useState('');
-  const [editMode, setEditMode] = useState(false);
 
   const [editSubscriptions, setEditSubscriptions] = useState({
     classes: '',
@@ -26,7 +25,6 @@ const TableSubscriptions = ({ subscription, deleteSubscription, setSubscription 
           body: JSON.stringify(editSubscriptions)
         }
       );
-      console.log(subscriptionUpdated);
       return subscriptionUpdated.json();
     } catch (error) {
       console.error(error);
@@ -126,7 +124,6 @@ const TableSubscriptions = ({ subscription, deleteSubscription, setSubscription 
           editSubscription={editSubscription}
           editId={editId}
           findIdEdit={findIdEdit}
-          editMode={editMode}
         />
       )}
     </>
