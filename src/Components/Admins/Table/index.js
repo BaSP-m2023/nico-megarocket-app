@@ -3,8 +3,7 @@ import styles from './table.module.css';
 import Modal from '../Modals/ModalDelete/ModalDelete';
 import ModalDeleteConfirmation from '../Modals/ModalDeleteConfirmation/ModalDeleteConfirmation';
 
-function index({ admins, setShowform, setAdminToEditId, setEditMode, adminEditedId }) {
-
+function index({ admins, setShowform, setAdminToEditId, setEditMode, adminEditedId, deleteAdm }) {
   const [showModal, setShowModal] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [adminToDeleteId, setAdminToDeleteId] = useState('');
@@ -20,7 +19,7 @@ function index({ admins, setShowform, setAdminToEditId, setEditMode, adminEdited
     setEditMode(true);
     adminEditedId(id);
     setAdminToEditId(id);
-  }
+  };
 
   const closeModal = () => {
     setShowModal(false);
@@ -67,9 +66,9 @@ function index({ admins, setShowform, setAdminToEditId, setEditMode, adminEdited
               </td>
             </tr>
           )}
-          {admins.map((item, index) => {
+          {admins.map((item) => {
             return (
-              <tr key={index}>
+              <tr key={item._id}>
                 <td>
                   {item.firstName} {item.lastName}
                 </td>
@@ -89,16 +88,13 @@ function index({ admins, setShowform, setAdminToEditId, setEditMode, adminEdited
                 </td>
                 <td>
                   <img
-<<<<<<< HEAD
-=======
+                    className={styles.trash_edit}
+                    src={`${process.env.PUBLIC_URL}/assets/images/trash-delete.svg`}
+                    alt="delete icon"
                     onClick={() => {
                       handleDeleteClick(item._id);
                       setAdminFullName(item.firstName + ' ' + item.lastName);
                     }}
->>>>>>> origin/master
-                    className={styles.trash_edit}
-                    src={`${process.env.PUBLIC_URL}/assets/images/trash-delete.svg`}
-                    alt="delete icon"
                   />
                 </td>
               </tr>
