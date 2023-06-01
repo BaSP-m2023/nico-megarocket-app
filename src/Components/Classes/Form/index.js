@@ -1,10 +1,9 @@
-/* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
 import formStyles from '../Form/form.module.css';
 import ModalsConfirmation from '../../Modals/ModalConfirm';
 
 const Form = ({ updateClass, createCLass, show, updateToggle, classUpdateId, klass }) => {
-  const [ modalUpdateConfirmOpen, setModalUpdateConfirmOpen ] = useState(false);
+  const [modalUpdateConfirmOpen, setModalUpdateConfirmOpen] = useState(false);
 
   const classBody = {
     method: updateToggle.updateMode ? 'PUT' : 'POST',
@@ -49,7 +48,7 @@ const Form = ({ updateClass, createCLass, show, updateToggle, classUpdateId, kla
   const onChangeTrainer = (e) => {
     klass.setKlass({
       ...klass.klass,
-      trainer: [ e.target.value ]
+      trainer: [e.target.value]
     });
   };
 
@@ -79,7 +78,6 @@ const Form = ({ updateClass, createCLass, show, updateToggle, classUpdateId, kla
 
   return (
     <div>
-
       <form className={formStyles.form} onSubmit={formSubmit}>
         <div className={formStyles.container}>
           <h2 className={formStyles.formTitle}>Add Class</h2>
@@ -121,9 +119,7 @@ const Form = ({ updateClass, createCLass, show, updateToggle, classUpdateId, kla
             />
           </div>
           <div className={formStyles.buttons}>
-            <button type="submit">
-              Send
-            </button>
+            <button type="submit">Send</button>
             <button type="button" onClick={show}>
               Cancel
             </button>
@@ -139,7 +135,6 @@ const Form = ({ updateClass, createCLass, show, updateToggle, classUpdateId, kla
         />
       )}
     </div>
-
   );
 };
 
