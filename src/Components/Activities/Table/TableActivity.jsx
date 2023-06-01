@@ -22,7 +22,6 @@ const TableActivity = ({ activity, deleteActivity, setActivity }) => {
         },
         body: JSON.stringify(editActivities)
       });
-      console.log(activityEdited);
       return activityEdited.json();
     } catch (error) {
       console.error(error);
