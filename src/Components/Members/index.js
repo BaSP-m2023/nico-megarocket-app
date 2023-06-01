@@ -4,6 +4,8 @@ import TableMember from './TableMember';
 
 function Members() {
   const [members, setMembers] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const [showEditForm, setEditForm] = useState(false);
 
   const getMembers = async () => {
     try {
@@ -14,10 +16,33 @@ function Members() {
       console.log(error);
     }
   };
-
   useEffect(() => {
     getMembers();
   }, []);
+
+  const updateMember = async (id, memberUpdated) => {
+    let memberToUpdateIndex = members.findIndex((member) => member._id === id);
+    console.log(id);
+    console.log(memberUpdated);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/member/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(memberUpdated)
+      });
+
+      const { error } = await response.json();
+      if (!error) {
+        const currentsMembers = [...members];
+        currentsMembers[memberToUpdateIndex] = memberUpdated;
+        setMembers(currentsMembers);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const memberDelete = async (memberId) => {
     try {
@@ -31,11 +56,21 @@ function Members() {
     }
   };
 
+  const handleToggle = () => {
+    setShowForm((current) => !current);
+    setEditForm(false);
+  };
+
+  const handleEditToggle = () => {
+    setEditForm((current) => !current);
+    setShowForm(false);
+  };
+
   return (
     <section className={styles.container}>
       <div className={styles.titleContainer}>
         <h2 className={styles.letterColour}>Members</h2>
-        <div className={styles.addContainer}>
+        <div className={styles.addContainer} onClick={handleToggle}>
           <img
             className={styles.imgSize}
             src={`${process.env.PUBLIC_URL}/assets/images/btn-add.png`}
@@ -46,7 +81,15 @@ function Members() {
       {!members.length ? (
         <p>No active Members</p>
       ) : (
-        <TableMember members={members} onDeleteMember={memberDelete} />
+        <TableMember
+          onUpdateMember={updateMember}
+          members={members}
+          onDeleteMember={memberDelete}
+          showForm={showForm}
+          showEditForm={showEditForm}
+          handleEditToggle={handleEditToggle}
+          setEditForm={setEditForm}
+        />
       )}
     </section>
   );

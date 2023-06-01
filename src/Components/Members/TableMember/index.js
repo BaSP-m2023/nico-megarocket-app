@@ -1,9 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './table-member.module.css';
 import DeleteMember from '../DeleteMember';
 import EditMember from '../EditMember';
+import { Form } from '../Form/MembersForm';
+import { MembersEditForm } from '../EditForm/MembersEditForm';
 
-const TableMember = ({ members, onDeleteMember }) => {
+const TableMember = ({
+  members,
+  onDeleteMember,
+  onUpdateMember,
+  showForm,
+  showEditForm,
+  handleEditToggle,
+  setEditForm,
+  setModalEditConfirmOpen
+}) => {
+  const [member, setMember] = useState({
+    firstName: '',
+    lastName: '',
+    dni: '',
+    birthday: '',
+    phone: '',
+    email: '',
+    city: '',
+    postalCode: '',
+    isActive: false,
+    membership: ''
+  });
+
+  const [memberId, setmemberId] = useState(null);
+
   return (
     <div className={styles.container}>
       <table className={styles.table}>
@@ -31,13 +57,28 @@ const TableMember = ({ members, onDeleteMember }) => {
               <td>{member.postalCode}</td>
               <td>{member.membership}</td>
               <td className={styles.rowActions}>
-                <EditMember memberId={member._id} />
+                <EditMember
+                  handleEditToggle={handleEditToggle}
+                  setEditForm={setEditForm}
+                  setMemberID={setmemberId}
+                  memberID={member._id}
+                />
                 <DeleteMember memberId={member._id} onDeleteMember={onDeleteMember} />
               </td>
             </tr>
           );
         })}
       </table>
+      {showEditForm && (
+        <MembersEditForm
+          setModalEditConfirmOpen={setModalEditConfirmOpen}
+          memberID={memberId}
+          member={member}
+          updateMember={onUpdateMember}
+          setEditForm={setEditForm}
+        />
+      )}
+      {showForm && <Form member={member} setMember={setMember} />}
     </div>
   );
 };
