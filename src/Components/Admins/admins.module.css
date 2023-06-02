@@ -1,6 +1,7 @@
 .container {
-  flex: 1;
   display: flex;
+  flex: 1;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: center; 
 }
