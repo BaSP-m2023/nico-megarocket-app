@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styles from './table.module.css';
-import ModalsConfirmation from '../../Modals/ModalConfirm';
+import ModalConfirm from '../../Modals/ModalConfirm';
 
-const Table = ({ data, deleteItem }) => {
+const Table = ({ data, deleteItem, form, setSuperAdminForm }) => {
   const [modalDeleteConfirmOpen, setModalDeleteConfirmOpen] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState('');
 
@@ -14,6 +14,12 @@ const Table = ({ data, deleteItem }) => {
   const handleModalConfirmation = () => {
     deleteItem(selectedItemId);
     setModalDeleteConfirmOpen(false);
+  };
+  const handleEditButton = (item) => {
+    setSuperAdminForm({
+      ...item
+    });
+    form(true);
   };
 
   return (
@@ -45,7 +51,7 @@ const Table = ({ data, deleteItem }) => {
                 </button>
               </td>
               <td className={styles.tableContainerBtn}>
-                <button className={styles.tableBtn}>
+                <button className={styles.tableBtn} onClick={() => handleEditButton(item)}>
                   <img
                     className={styles.tableBtnImg}
                     src="../../../assets/images/pencil-edit.svg"
@@ -58,7 +64,7 @@ const Table = ({ data, deleteItem }) => {
         })}
       </tbody>
       {modalDeleteConfirmOpen && (
-        <ModalsConfirmation
+        <ModalConfirm
           method="Delete"
           onConfirm={handleModalConfirmation}
           setModalConfirmOpen={setModalDeleteConfirmOpen}
