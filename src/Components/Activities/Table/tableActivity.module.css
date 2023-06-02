@@ -37,8 +37,26 @@
   background-color: #37386710;
 }
 
+.containerTable thead tr th{
+  padding-left: 7rem;
+}
+
 .containerEachOneActivity tr {
   height: 3.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.containerEachOneActivity tr td {
+  padding-left: 7rem;
+  max-width: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.containerEachOneActivity tr td::first-letter {
+  text-transform: uppercase;
 }
 
 .containerEachOneActivity tr:nth-child(even) {
@@ -49,6 +67,11 @@
   background-color: #32326a00;
   border: none;
   cursor: pointer;
+}
+
+.iconsTable img:hover {
+  transition: all 0.1s;
+  transform: scale(1.15);
 }
 
 .containerTableEmpty {
