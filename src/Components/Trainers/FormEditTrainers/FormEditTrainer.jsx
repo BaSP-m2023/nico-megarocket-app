@@ -3,8 +3,8 @@ import styles from './form.module.css';
 import ModalConfirm from '../../Modals/ModalConfirm';
 import ModalSuccess from '../../Modals/ModalSuccess';
 
-const Form = ({ addItem, closeForm }) => {
-  const [trainer, setTrainer] = useState({
+const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
+  const [trainerEdited, setTrainer] = useState({
     firstName: '',
     lastName: '',
     dni: '',
@@ -27,9 +27,43 @@ const Form = ({ addItem, closeForm }) => {
   const [modalConfirmAdd, setModalConfirmAdd] = useState(false);
   const [modalSucessOpen, setModalSucessOpen] = useState(false);
 
-  const validateForm = () => {
-    let isValid = true;
-    const newErrors = {
+  const editTrainer = async (id) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/trainer/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(trainerEdited)
+      });
+      const responseData = await response.json();
+      return responseData;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onChargeInput = (e) => {
+    const { name, value } = e.target;
+    setTrainer((prevState) => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setModalConfirmAdd(false);
+    const edTrainer = await editTrainer(trainerModify._id);
+    const updatedTrainers = [...trainers];
+    const index = updatedTrainers.findIndex((trainer) => trainer._id === edTrainer._id);
+    if (index !== -1) {
+      updatedTrainers[index] = edTrainer;
+      setTrainers(updatedTrainers);
+    }
+    console.log(edTrainer);
+    console.log(trainers);
+    setTrainer({
       firstName: '',
       lastName: '',
       dni: '',
@@ -37,95 +71,18 @@ const Form = ({ addItem, closeForm }) => {
       email: '',
       city: '',
       salary: ''
-    };
-
-    if (trainer.firstName.trim() === '') {
-      newErrors.firstName = '*First Name is required';
-      isValid = false;
-    }
-
-    if (trainer.lastName.trim() === '') {
-      newErrors.lastName = '*Last Name is required';
-      isValid = false;
-    }
-
-    if (trainer.dni.trim() === '') {
-      newErrors.dni = '*DNI is required';
-      isValid = false;
-    }
-
-    if (trainer.phone.trim() === '') {
-      newErrors.phone = '*Phone is required';
-      isValid = false;
-    }
-
-    if (trainer.email.trim() === '') {
-      newErrors.email = '*Email is required';
-      isValid = false;
-    }
-
-    if (trainer.city.trim() === '') {
-      newErrors.city = '*City is required';
-      isValid = false;
-    }
-
-    if (trainer.salary.trim() === '') {
-      newErrors.city = '*City is required';
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-    return isValid;
-  };
-
-  const addTrainer = async (trainer) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/trainer`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(trainer)
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const onChangeInput = (e) => {
-    setTrainer({
-      ...trainer,
-      [e.target.name]: e.target.value
     });
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    setModalConfirmAdd(false);
-    console.log(validateForm());
-    if (validateForm()) {
-      addTrainer(trainer);
-      addItem(trainer);
-      setTrainer({
-        firstName: '',
-        lastName: '',
-        dni: '',
-        phone: '',
-        email: '',
-        city: '',
-        salary: ''
-      });
-      setErrors({
-        firstName: '',
-        lastName: '',
-        dni: '',
-        phone: '',
-        email: '',
-        city: '',
-        salary: ''
-      });
-      setModalSucessOpen(true);
-    }
+    setErrors({
+      firstName: '',
+      lastName: '',
+      dni: '',
+      phone: '',
+      email: '',
+      city: '',
+      salary: ''
+    });
+    setModalSucessOpen(true);
+    closeForm();
   };
 
   const handleClick = (e) => {
@@ -141,31 +98,31 @@ const Form = ({ addItem, closeForm }) => {
   const handleBlur = () => {
     let othersErrors = {};
 
-    if (trainer.firstName.trim() === '') {
+    if (trainerEdited.firstName.trim() === '') {
       othersErrors.firstName = 'First Name is required';
     }
 
-    if (trainer.lastName.trim() === '') {
+    if (trainerEdited.lastName.trim() === '') {
       othersErrors.lastName = 'Last Name is required';
     }
 
-    if (trainer.dni.trim() === '') {
+    if (trainerEdited.dni.trim() === '') {
       othersErrors.dni = 'DNI is required';
     }
 
-    if (trainer.phone.trim() === '') {
+    if (trainerEdited.phone.trim() === '') {
       othersErrors.phone = 'Phone is required';
     }
 
-    if (trainer.email.trim() === '') {
+    if (trainerEdited.email.trim() === '') {
       othersErrors.email = 'Email is required';
     }
 
-    if (trainer.city.trim() === '') {
+    if (trainerEdited.city.trim() === '') {
       othersErrors.city = 'City is required';
     }
 
-    if (trainer.salary.trim() === '') {
+    if (trainerEdited.salary.trim() === '') {
       othersErrors.city = 'City is required';
     }
 
@@ -183,8 +140,9 @@ const Form = ({ addItem, closeForm }) => {
                 className={styles.input}
                 name="firstName"
                 type="text"
-                value={trainer.firstName}
-                onChange={onChangeInput}
+                placeholder={trainerModify.firstName}
+                value={trainerEdited.firstName}
+                onChange={onChargeInput}
                 onBlur={handleBlur}
               />
               {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
@@ -195,10 +153,12 @@ const Form = ({ addItem, closeForm }) => {
                 className={styles.input}
                 name="lastName"
                 type="text"
-                value={trainer.lastName}
-                onChange={onChangeInput}
+                placeholder={trainerModify.lastName}
+                value={trainerEdited.lastName}
+                onChange={onChargeInput}
+                onBlur={handleBlur}
               />
-              {errors.lastName && <span className={styles.error}>{errors.lastName}</span>}
+              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
             </div>
           </div>
           <div className={styles.container}>
@@ -208,10 +168,12 @@ const Form = ({ addItem, closeForm }) => {
                 className={styles.input}
                 name="dni"
                 type="number"
-                value={trainer.dni}
-                onChange={onChangeInput}
+                placeholder={trainerModify.dni}
+                value={trainerEdited.dni}
+                onChange={onChargeInput}
+                onBlur={handleBlur}
               />
-              {errors.dni && <span className={styles.error}>{errors.dni}</span>}
+              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
             </div>
             <div className={styles.inputContainer}>
               <label className={styles.label}>Phone</label>
@@ -219,10 +181,12 @@ const Form = ({ addItem, closeForm }) => {
                 className={styles.input}
                 name="phone"
                 type="number"
-                value={trainer.phone}
-                onChange={onChangeInput}
+                placeholder={trainerModify.phone}
+                value={trainerEdited.phone}
+                onChange={onChargeInput}
+                onBlur={handleBlur}
               />
-              {errors.phone && <span className={styles.error}>{errors.phone}</span>}
+              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
             </div>
           </div>
           <div className={styles.container}>
@@ -232,10 +196,12 @@ const Form = ({ addItem, closeForm }) => {
                 className={styles.input}
                 name="email"
                 type="text"
-                value={trainer.email}
-                onChange={onChangeInput}
+                placeholder={trainerModify.email}
+                value={trainerEdited.email}
+                onChange={onChargeInput}
+                onBlur={handleBlur}
               />
-              {errors.email && <span className={styles.error}>{errors.email}</span>}
+              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
             </div>
             <div className={styles.inputContainer}>
               <label className={styles.label}>City</label>
@@ -243,10 +209,12 @@ const Form = ({ addItem, closeForm }) => {
                 className={styles.input}
                 name="city"
                 type="text"
-                value={trainer.city}
-                onChange={onChangeInput}
+                placeholder={trainerModify.city}
+                value={trainerEdited.city}
+                onChange={onChargeInput}
+                onBlur={handleBlur}
               />
-              {errors.city && <span className={styles.error}>{errors.city}</span>}
+              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
             </div>
           </div>
           <div className={styles.container}>
@@ -256,10 +224,12 @@ const Form = ({ addItem, closeForm }) => {
                 className={styles.input}
                 name="salary"
                 type="number"
-                value={trainer.salary}
-                onChange={onChangeInput}
+                placeholder={trainerModify.salary}
+                value={trainerEdited.salary}
+                onChange={onChargeInput}
+                onBlur={handleBlur}
               />
-              {errors.salary && <span className={styles.error}>{errors.salary}</span>}
+              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
             </div>
           </div>
         </div>
@@ -267,24 +237,24 @@ const Form = ({ addItem, closeForm }) => {
           <button className={styles.buttonCancel} onClick={formClose}>
             Cancel
           </button>
-          <button className={styles.buttonAdd} type="submit" onClick={handleClick}>
-            Add trainer
+          <button className={styles.buttonSave} type="submit" onClick={handleClick}>
+            Save
           </button>
         </div>
       </form>
       {modalConfirmAdd && (
         <ModalConfirm
           onConfirm={onSubmit}
-          method="add"
-          message="Are you sure to add a new trainer?"
+          method="edit"
+          message="Are you sure to edit this trainer?"
           setModalConfirmOpen={setModalConfirmAdd}
         />
       )}
       {modalSucessOpen && (
-        <ModalSuccess message="Trainer added" setModalSuccessOpen={setModalSucessOpen} />
+        <ModalSuccess message="Trainer edited" setModalSuccessOpen={setModalSucessOpen} />
       )}
     </div>
   );
 };
 
-export default Form;
+export default FormEdit;

@@ -2,12 +2,25 @@ import React, { useState } from 'react';
 import styles from './table.module.css';
 import ModalConfirm from '../../Modals/ModalConfirm/index';
 import ModalSuccess from '../../Modals/ModalSuccess/index';
+import FormEdit from '../FormEditTrainers/FormEditTrainer';
 
-const Table = ({ data, deleteTrain }) => {
+const Table = ({ data, deleteTrain, setTrainers, trainers }) => {
   const [modalDeleteConfirmOpen, setModalDeleteConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
   const [idTrainer, setIdTrainer] = useState('');
+  const [trainerModify, setTrainerModify] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+
+  const handleEditClick = (id) => {
+    const trainer = data.find((item) => item._id === id);
+    setTrainerModify(trainer);
+    setShowForm(true);
+  };
+
+  const closeForm = () => {
+    setShowForm(false);
+  };
 
   const somefunction = (id) => {
     setModalDeleteConfirmOpen(true);
@@ -57,6 +70,7 @@ const Table = ({ data, deleteTrain }) => {
                 <td>${item.salary}</td>
                 <td>
                   <img
+                    onClick={() => handleEditClick(item._id)}
                     className={styles.trash_edit}
                     src={`${process.env.PUBLIC_URL}/assets/images/pencil-edit.svg`}
                     alt="modifiy icon"
@@ -83,6 +97,14 @@ const Table = ({ data, deleteTrain }) => {
           onConfirm={onConfirm}
           setModalConfirmOpen={setModalDeleteConfirmOpen}
           message="Are you sure you want to delete this?"
+        />
+      )}
+      {showForm && (
+        <FormEdit
+          trainerModify={trainerModify}
+          closeForm={closeForm}
+          setTrainers={setTrainers}
+          trainers={trainers}
         />
       )}
       {modalSuccessOpen && (
