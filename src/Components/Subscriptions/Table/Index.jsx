@@ -38,7 +38,11 @@ const SubscriptionsTable = () => {
 
   return (
     <section>
-      <TableSubscriptions subscription={subscription} deleteSubscription={deleteSubscription} />
+      {!subscription.length ? (
+        <p>No active Members</p>
+      ) : (
+        <TableSubscriptions subscription={subscription} deleteSubscription={deleteSubscription} />
+      )}
     </section>
   );
 };
