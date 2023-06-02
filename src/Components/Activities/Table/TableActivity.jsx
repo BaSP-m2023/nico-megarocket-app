@@ -1,5 +1,7 @@
 import style from './tableActivity.module.css';
 import ModalAddActivity from '../AddActivity/Index';
+import ModalDelete from '../../Modals/ModalConfirm';
+import ModalSuccess from '../../Modals/ModalSuccess';
 import { useState } from 'react';
 
 const TableActivity = ({ activity, deleteActivity, setActivity }) => {
@@ -12,6 +14,9 @@ const TableActivity = ({ activity, deleteActivity, setActivity }) => {
     description: '',
     isActive: ''
   });
+  const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
+  const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
+  const [getId, setGetId] = useState('');
 
   const editActivityDB = async (id, editActivities) => {
     try {
@@ -49,6 +54,16 @@ const TableActivity = ({ activity, deleteActivity, setActivity }) => {
     setTable(false);
   };
 
+  const confirmDelete = () => {
+    setModalConfirmOpen(true);
+  };
+
+  const deleted = () => {
+    deleteActivity(getId);
+    setModalConfirmOpen(false);
+    setModalSuccessOpen(true);
+  };
+
   return (
     <section className={style.containerTableActivity}>
       {table && (
@@ -72,11 +87,13 @@ const TableActivity = ({ activity, deleteActivity, setActivity }) => {
               </tr>
             </thead>
             {activity.length < 1 ? (
-              <div className={style.containerTableEmpty}>
-                <div>
-                  <h3>This list is empty</h3>
-                </div>
-              </div>
+              <tbody className={style.containerTableEmpty}>
+                <tr>
+                  <td>
+                    <h3>This list is empty</h3>
+                  </td>
+                </tr>
+              </tbody>
             ) : (
               <tbody className={style.containerEachOneActivity}>
                 {activity.map((act, index) => (
@@ -97,7 +114,13 @@ const TableActivity = ({ activity, deleteActivity, setActivity }) => {
                       </button>
                     </td>
                     <td>
-                      <button className={style.iconsTable} onClick={() => deleteActivity(act._id)}>
+                      <button
+                        className={style.iconsTable}
+                        onClick={() => {
+                          confirmDelete();
+                          setGetId(act._id);
+                        }}
+                      >
                         <img
                           src={`${process.env.PUBLIC_URL}/assets/images/trash.png`}
                           alt="icon trash"
@@ -110,6 +133,19 @@ const TableActivity = ({ activity, deleteActivity, setActivity }) => {
             )}
           </table>
         </>
+      )}
+      {modalConfirmOpen && (
+        <ModalDelete
+          method="Delete"
+          onConfirm={() => {
+            deleted();
+          }}
+          message="Are you sure you want to delete this activity?"
+          setModalConfirmOpen={setModalConfirmOpen}
+        />
+      )}
+      {modalSuccessOpen && (
+        <ModalSuccess message="Successfully deleted" setModalSuccessOpen={setModalSuccessOpen} />
       )}
       {modalAdd && (
         <ModalAddActivity

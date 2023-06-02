@@ -43,9 +43,11 @@ const ModalAddActivity = ({
       [e.target.name]: e.target.value
     });
 
-    const allFieldsValid = Object.values(editActivities).every((field) => field.length >= 3);
-
-    setActive(!allFieldsValid);
+    if (e.target.value.length >= 3) {
+      setActive(false);
+    } else {
+      setActive(true);
+    }
   };
 
   const createActivityDB = async (bodyActivity) => {
@@ -162,7 +164,7 @@ const ModalAddActivity = ({
         </div>
         {modalConfirmOpen && (
           <ModalEdit
-            method="Edit"
+            method="Confirm"
             onConfirm={() => {
               submitActivity();
             }}

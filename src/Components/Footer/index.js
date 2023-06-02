@@ -1,4 +1,5 @@
 import styles from './footer.module.css';
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
@@ -7,28 +8,28 @@ function Footer() {
         <p className={styles.appName}>MegaRocket</p>
         <ul className={styles.rutes}>
           <li>
-            <a href={'/'}>Home</a>
+            <Link to="/home">Home</Link>
           </li>
           <li>
-            <a href={'/activities'}>Activities</a>
+            <Link to="/activities">Activities</Link>
           </li>
           <li>
-            <a href={'/admins'}>Admins</a>
+            <Link to="/admins">Admins</Link>
           </li>
           <li>
-            <a href={'/classes'}>Classes</a>
+            <Link to="/classes">Classes</Link>
           </li>
           <li>
-            <a href={'/members'}>Members</a>
+            <Link to="/members">Members</Link>
           </li>
           <li>
-            <a href={'/subscriptions'}>Subscriptions</a>
+            <Link to="/subscriptions">Subscriptions</Link>
           </li>
           <li>
-            <a href={'/super-admins'}>Super Admins</a>
+            <Link to="/super-admins">Super Admins</Link>
           </li>
           <li>
-            <a href={'/trainers'}>Trainers</a>
+            <Link to="/trainers">Trainers</Link>
           </li>
         </ul>
       </div>

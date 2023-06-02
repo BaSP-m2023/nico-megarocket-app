@@ -38,7 +38,7 @@
 }
 
 .containerTable thead tr th{
-  padding-left: 5rem;
+  padding-left: 7rem;
 }
 
 .containerEachOneActivity tr {
@@ -48,7 +48,7 @@
 }
 
 .containerEachOneActivity tr td {
-  padding-left: 5rem;
+  padding-left: 7rem;
   max-width: 20px;
   white-space: nowrap;
   overflow: hidden;
