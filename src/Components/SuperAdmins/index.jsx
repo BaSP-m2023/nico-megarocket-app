@@ -10,11 +10,11 @@ const SuperAdmins = () => {
     email: '',
     password: ''
   });
-  const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [showBtnAdd, setShowBtnAdd] = useState(false);
   const [showBtnMod, setShowBtnMod] = useState(false);
+  const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const getSuperAdmins = async () => {
     try {

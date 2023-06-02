@@ -10,6 +10,7 @@ const Table = ({ data, deleteItem, form, setSuperAdminForm }) => {
     setSelectedItemId(id);
     setModalDeleteConfirmOpen(true);
   };
+
   const handleModalConfirmation = () => {
     deleteItem(selectedItemId);
     setModalDeleteConfirmOpen(false);
