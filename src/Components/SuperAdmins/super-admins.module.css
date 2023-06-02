@@ -1,6 +1,33 @@
-.container {
-  flex: 1;
+.content {
   display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
+.containerBtn {
+  align-self: flex-end;
+  width: 150px;
+  height: 34px;
+  background: #AACE9B;
+  border: 1px solid #ccc;
+  color: #272853;
+  font-weight: bold;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.containerBtn:hover {
+  cursor: pointer;
+}
+
+.containerBtn:active {
+  transform: scale(0.95);
+}
+
