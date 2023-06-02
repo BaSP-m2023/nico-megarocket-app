@@ -3,11 +3,23 @@ import styles from './table.module.css';
 import Modal from '../Modals/ModalDelete/ModalDelete';
 import ModalDeleteConfirmation from '../Modals/ModalDeleteConfirmation/ModalDeleteConfirmation';
 
-function index({ admins, deleteAdm }) {
+function index({ admins, setShowform, setAdminToEditId, setEditMode, adminEditedId, deleteAdm }) {
   const [showModal, setShowModal] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [adminToDeleteId, setAdminToDeleteId] = useState('');
   const [adminFullName, setAdminFullName] = useState('');
+
+  const handleCreateClick = () => {
+    setShowform(true);
+    setEditMode(false);
+  };
+
+  const handleEditClick = (id) => {
+    setShowform(true);
+    setEditMode(true);
+    adminEditedId(id);
+    setAdminToEditId(id);
+  };
 
   const closeModal = () => {
     setShowModal(false);
@@ -69,17 +81,20 @@ function index({ admins, deleteAdm }) {
                     className={styles.trash_edit}
                     src={`${process.env.PUBLIC_URL}/assets/images/pencil-edit.svg`}
                     alt="modify icon"
+                    onClick={() => {
+                      handleEditClick(item._id);
+                    }}
                   />
                 </td>
                 <td>
                   <img
+                    className={styles.trash_edit}
+                    src={`${process.env.PUBLIC_URL}/assets/images/trash-delete.svg`}
+                    alt="delete icon"
                     onClick={() => {
                       handleDeleteClick(item._id);
                       setAdminFullName(item.firstName + ' ' + item.lastName);
                     }}
-                    className={styles.trash_edit}
-                    src={`${process.env.PUBLIC_URL}/assets/images/trash-delete.svg`}
-                    alt="delete icon"
                   />
                 </td>
               </tr>
@@ -88,7 +103,7 @@ function index({ admins, deleteAdm }) {
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan={7} className={styles.add_admin}>
+            <td colSpan={7} className={styles.add_admin} onClick={handleCreateClick}>
               Create new admin
             </td>
           </tr>
