@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './table.module.css';
-import ModalsConfirmation from '../../Modals/ModalConfirm';
+import ModalConfirm from '../../Modals/ModalConfirm';
 
 const Table = ({ data, deleteItem, form, setSuperAdminForm }) => {
   const [modalDeleteConfirmOpen, setModalDeleteConfirmOpen] = useState(false);
@@ -64,7 +64,7 @@ const Table = ({ data, deleteItem, form, setSuperAdminForm }) => {
         })}
       </tbody>
       {modalDeleteConfirmOpen && (
-        <ModalsConfirmation
+        <ModalConfirm
           method="Delete"
           onConfirm={handleModalConfirmation}
           setModalConfirmOpen={setModalDeleteConfirmOpen}

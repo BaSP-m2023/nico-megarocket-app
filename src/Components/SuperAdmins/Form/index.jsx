@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ModalsConfirmation from '../../Modals/ModalConfirm';
+import ModalConfirm from '../../Modals/ModalConfirm';
 
 const Form = ({
   addItem,
@@ -66,7 +66,7 @@ const Form = ({
         </button>
       )}
       {modalModifyConfirmOpen && (
-        <ModalsConfirmation
+        <ModalConfirm
           method="Update"
           onConfirm={handleModalConfirmation}
           setModalConfirmOpen={setModalModifyConfirmOpen}
