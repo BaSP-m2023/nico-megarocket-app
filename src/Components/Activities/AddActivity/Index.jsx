@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import { useState, useEffect } from 'react';
 import style from './modalAdd.module.css';
 import ModalEdit from '../../Modals/ModalConfirm';
@@ -23,20 +24,16 @@ const ModalAddActivity = ({
     isActive: ''
   });
 
-  const allFieldsValid = Object.values(bodyActivity).every((field) => field.length >= 3);
-
   const changeInput = (e) => {
-    setBodyActivity({
-      ...bodyActivity,
-      [e.target.name]: e.target.value
+    const newActivity = { ...bodyActivity, [e.target.name]: e.target.value };
+    setBodyActivity(newActivity);
+
+    const allFieldsValid = Object.values(newActivity).every((value) => {
+      return value.length >= 3 && value !== '';
     });
 
     setActive(!allFieldsValid);
   };
-
-  useEffect(() => {
-    setActive(!allFieldsValid);
-  }, [bodyActivity]);
 
   const changeInputEdit = (e) => {
     setEditActivities({
