@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './form.module.css';
-import { ModalSuccess } from '../../Shared';
 import { ModalConfirm } from '../../Shared';
+import { ModalSuccess } from '../../Shared';
 
 export const Form = ({ member, setMember }) => {
   const [validationsOk, setValidationsOk] = useState(false);

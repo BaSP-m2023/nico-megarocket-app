@@ -153,23 +153,23 @@ const ModalAddActivity = ({
             </button>
           )}
         </div>
-        {modalConfirmOpen && (
-          <ModalConfirm
-            method="Confirm"
-            onConfirm={() => {
-              submitActivity();
-            }}
-            message="Are you sure you want to perform this action?"
-            setModalConfirmOpen={setModalConfirmOpen}
-          />
-        )}
-        {modalSuccessOpen && (
-          <>
-            <ModalSuccess message="¡Success!" setModalSuccessOpen={setModalSuccessOpen} />
-            {setModalSuccessOpen && goBackTable()}
-          </>
-        )}
       </form>
+      {modalConfirmOpen && (
+        <ModalConfirm
+          method="Confirm"
+          onConfirm={() => {
+            submitActivity();
+          }}
+          message="Are you sure you want to perform this action?"
+          setModalConfirmOpen={setModalConfirmOpen}
+        />
+      )}
+      {modalSuccessOpen && (
+        <>
+          <ModalSuccess message="¡Success!" setModalSuccessOpen={setModalSuccessOpen} />
+          {setModalSuccessOpen && goBackTable()}
+        </>
+      )}
     </section>
   );
 };
