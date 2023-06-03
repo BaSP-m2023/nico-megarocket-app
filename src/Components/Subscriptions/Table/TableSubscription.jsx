@@ -6,13 +6,11 @@ const TableSubscriptions = ({ subscription, deleteSubscription, setSubscription 
   const [modalAdd, setModalAdd] = useState(false);
   const [table, setTable] = useState(true);
   const [editId, setEditId] = useState('');
-
   const [editSubscriptions, setEditSubscriptions] = useState({
     classes: '',
     member: '',
     date: ''
   });
-
   const editSubscriptionDB = async (id, editSubscriptions) => {
     try {
       let subscriptionUpdated = await fetch(
@@ -30,7 +28,6 @@ const TableSubscriptions = ({ subscription, deleteSubscription, setSubscription 
       console.error(error);
     }
   };
-
   const findIdEdit = (id) => {
     const findSubscription = subscription.find((sub) => sub._id === id);
     setEditSubscriptions({
@@ -40,13 +37,11 @@ const TableSubscriptions = ({ subscription, deleteSubscription, setSubscription 
     });
     setEditId(findSubscription._id);
   };
-
   const editSubscription = (id) => {
     const findSubscription = subscription.find((sub) => sub._id === id);
     editSubscriptionDB(findSubscription._id, editSubscriptions);
     findIdEdit(id);
   };
-
   return (
     <>
       {table && (
@@ -129,5 +124,4 @@ const TableSubscriptions = ({ subscription, deleteSubscription, setSubscription 
     </>
   );
 };
-
 export default TableSubscriptions;

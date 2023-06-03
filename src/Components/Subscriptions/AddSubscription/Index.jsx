@@ -21,28 +21,22 @@ const ModalAddSubscription = ({
     member: '',
     date: ''
   });
-
   const changeInput = (e) => {
     setBodySubscription({
       ...bodySubscription,
       [e.target.name]: e.target.value
     });
   };
-
   const validFields = Object.values(bodySubscription).every((field) => field.length >= 3);
-
   setBodySubscription(!validFields);
-
   const changeInputEdit = (e) => {
     setEditSubscriptions({
       classes: bodySubscription.classes || editSubscriptions.classes,
       member: bodySubscription.member || editSubscriptions.member,
       date: bodySubscription.date || bodySubscription.date,
-
       [e.target.name]: e.target.value
     });
   };
-
   const createSubscriptionDB = async (bodySubscription) => {
     try {
       const newSubscription = await fetch(`${process.env.REACT_APP_API_URL}/subscriptions`, {
@@ -57,18 +51,15 @@ const ModalAddSubscription = ({
       console.error(error);
     }
   };
-
   const addSubscription = async ({ classes, member, date }) => {
     let addedSubscription = {
       classes,
       member,
       date
     };
-
     const newSubscriptionCreated = await createSubscriptionDB(addedSubscription);
     setSubscription([...subscription, newSubscriptionCreated]);
   };
-
   const submitSubscription = (e) => {
     e.preventDefault();
     if (editMode) {
@@ -85,12 +76,10 @@ const ModalAddSubscription = ({
     setModalConfirmOpen(false);
     setModalSuccessOpen(true);
   };
-
   const handleConfirmEdit = (e) => {
     e.preventDefault();
     setModalConfirmOpen(true);
   };
-
   return (
     <section className={style.containerModal}>
       <form onSubmit={handleConfirmEdit} className={style.containerForm}>
@@ -178,5 +167,4 @@ const ModalAddSubscription = ({
     </section>
   );
 };
-
 export default ModalAddSubscription;
