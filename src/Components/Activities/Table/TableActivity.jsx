@@ -1,12 +1,58 @@
 import style from './tableActivity.module.css';
-import ModalDelete from '../../Modals/ModalConfirm';
-import ModalSuccess from '../../Modals/ModalSuccess';
+import ModalAddActivity from '../AddActivity/Index';
+import { ModalConfirm } from '../../Shared';
+import { ModalSuccess } from '../../Shared';
 import { useState } from 'react';
 
-const TableActivity = ({ activity, deleteActivity }) => {
+const TableActivity = ({ activity, deleteActivity, setActivity }) => {
+  const [modalAdd, setModalAdd] = useState(false);
+  const [table, setTable] = useState(true);
+  const [editId, setEditId] = useState('');
+  const [editMode, setEditMode] = useState(false);
+  const [editActivities, setEditActivities] = useState({
+    name: '',
+    description: '',
+    isActive: ''
+  });
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [getId, setGetId] = useState('');
+
+  const editActivityDB = async (id, editActivities) => {
+    try {
+      let activityEdited = await fetch(`${process.env.REACT_APP_API_URL}/activity/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(editActivities)
+      });
+      return activityEdited.json();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const findIdEdit = (id) => {
+    const findActivity = activity.find((act) => act._id === id);
+    setEditActivities({
+      name: findActivity.name,
+      description: findActivity.description,
+      isActive: findActivity.isActive
+    });
+    setEditId(findActivity._id);
+  };
+
+  const editActivity = (id) => {
+    const findActivity = activity.find((act) => act._id === id);
+    editActivityDB(findActivity._id, editActivities);
+    findIdEdit(id);
+  };
+
+  const handleEdit = () => {
+    setModalAdd(true);
+    setTable(false);
+  };
 
   const confirmDelete = () => {
     setModalConfirmOpen(true);
@@ -20,68 +66,101 @@ const TableActivity = ({ activity, deleteActivity }) => {
 
   return (
     <section className={style.containerTableActivity}>
-      <button className={style.addActivityButton}>+ Add activity</button>
-      <table className={style.containerTable}>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Modify</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        {activity.length < 1 ? (
-          <div className={style.containerTableEmpty}>
-            <div>
-              <h3>This list is empty</h3>
-            </div>
-          </div>
-        ) : (
-          <tbody className={style.containerEachOneActivity}>
-            {activity.map((act, index) => (
-              <tr key={index}>
-                <td>{act.name}</td>
-                <td>{act.description}</td>
-                <td>
-                  <button className={style.iconsTable}>
-                    <img src={`${process.env.PUBLIC_URL}/assets/images/edit.png`} alt="icon edit" />
-                  </button>
-                </td>
-                {modalConfirmOpen && (
-                  <ModalDelete
-                    method="Delete"
-                    onConfirm={() => {
-                      deleted();
-                    }}
-                    message="Do you sure you want delete this activity?"
-                    setModalConfirmOpen={setModalConfirmOpen}
-                  />
-                )}
-                {modalSuccessOpen && (
-                  <ModalSuccess
-                    message="Succesfully deleted"
-                    setModalSuccessOpen={setModalSuccessOpen}
-                  />
-                )}
-                <td>
-                  <button
-                    className={style.iconsTable}
-                    onClick={() => {
-                      confirmDelete();
-                      setGetId(act._id);
-                    }}
-                  >
-                    <img
-                      src={`${process.env.PUBLIC_URL}/assets/images/trash.png`}
-                      alt="icon trash"
-                    />
-                  </button>
-                </td>
+      {table && (
+        <>
+          <button
+            className={style.addActivityButton}
+            onClick={() => {
+              setModalAdd(true);
+              setTable(false);
+            }}
+          >
+            + Add activity
+          </button>
+          <table className={style.containerTable}>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Modify</th>
+                <th>Delete</th>
               </tr>
-            ))}
-          </tbody>
-        )}
-      </table>
+            </thead>
+            {activity.length < 1 ? (
+              <tbody className={style.containerTableEmpty}>
+                <tr>
+                  <td>
+                    <h3>This list is empty</h3>
+                  </td>
+                </tr>
+              </tbody>
+            ) : (
+              <tbody className={style.containerEachOneActivity}>
+                {activity.map((act, index) => (
+                  <tr key={index}>
+                    <td>{act.name}</td>
+                    <td>{act.description}</td>
+                    <td>
+                      <button className={style.iconsTable}>
+                        <img
+                          onClick={() => {
+                            handleEdit();
+                            setEditMode(true);
+                            findIdEdit(act._id);
+                          }}
+                          src={`${process.env.PUBLIC_URL}/assets/images/edit.png`}
+                          alt="icon edit"
+                        />
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className={style.iconsTable}
+                        onClick={() => {
+                          confirmDelete();
+                          setGetId(act._id);
+                        }}
+                      >
+                        <img
+                          src={`${process.env.PUBLIC_URL}/assets/images/trash.png`}
+                          alt="icon trash"
+                        />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            )}
+          </table>
+        </>
+      )}
+      {modalConfirmOpen && (
+        <ModalConfirm
+          method="Delete"
+          onConfirm={() => {
+            deleted();
+          }}
+          message="Are you sure you want to delete this activity?"
+          setModalConfirmOpen={setModalConfirmOpen}
+        />
+      )}
+      {modalSuccessOpen && (
+        <ModalSuccess message="Successfully deleted" setModalSuccessOpen={setModalSuccessOpen} />
+      )}
+      {modalAdd && (
+        <ModalAddActivity
+          activity={activity}
+          setActivity={setActivity}
+          setModalAdd={setModalAdd}
+          setTable={setTable}
+          editActivities={editActivities}
+          setEditActivities={setEditActivities}
+          editActivity={editActivity}
+          editId={editId}
+          findIdEdit={findIdEdit}
+          editMode={editMode}
+        />
+      )}
     </section>
   );
 };

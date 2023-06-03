@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './table.module.css';
-import ModalConfirm from '../../Modals/ModalConfirm/index';
-import ModalSuccess from '../../Modals/ModalSuccess/index';
+import { ModalConfirm } from '../../Shared';
+import { ModalSuccess } from '../../Shared';
 import FormEdit from '../FormEditTrainers/FormEditTrainer';
 
 const Table = ({ data, deleteTrain, setTrainers, trainers }) => {

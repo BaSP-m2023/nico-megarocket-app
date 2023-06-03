@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './table.module.css';
-import ModalConfirm from '../../Modals/ModalConfirm';
+import { ModalConfirm } from '../../Shared';
 
 const Table = ({ data, deleteItem, form, setSuperAdminForm }) => {
   const [modalDeleteConfirmOpen, setModalDeleteConfirmOpen] = useState(false);
