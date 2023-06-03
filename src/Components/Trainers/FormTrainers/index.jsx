@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './form.module.css';
-import ModalConfirm from '../../Shared/Modals/ModalConfirm/index';
-import ModalSuccess from '../../Shared/Modals/ModalSuccess/index';
+import { ModalConfirm } from '../../Shared/';
+import { ModalSuccess } from '../../Shared/';
 
 const Form = ({ addItem, closeForm }) => {
   const [trainer, setTrainer] = useState({

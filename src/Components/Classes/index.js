@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './classes.module.css';
 import Table from './Table/index';
 import Form from './Form/index';
-import ModalSuccess from '../Shared/Modals/ModalSuccess/index';
+import { ModalSuccess } from '../Shared';
 
 function Projects() {
   const [show, setShow] = useState(false);

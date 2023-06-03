@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import formStyles from '../Form/form.module.css';
-import ModalConfirm from '../../Shared/Modals/ModalConfirm/index';
+import { ModalConfirm } from '../../Shared/';
 
 const Form = ({ updateClass, createCLass, show, updateToggle, classUpdateId, klass }) => {
   const [modalUpdateConfirmOpen, setModalUpdateConfirmOpen] = useState(false);
