@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './classes.module.css';
 import Table from './Table/index';
 import Form from './Form/index';
-import ModalsSuccess from '../Modals/ModalSuccess/index';
+import { ModalSuccess } from '../Shared';
 
 function Projects() {
   const [show, setShow] = useState(false);
@@ -125,7 +125,7 @@ function Projects() {
       )}
       <div>
         {modalSuccessOpen && (
-          <ModalsSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
+          <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
         )}
       </div>
       <Table updateClick={updateClick} data={classes} deleteClass={deleteClass} />
