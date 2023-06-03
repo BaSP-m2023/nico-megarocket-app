@@ -4,22 +4,31 @@ import { ModalConfirm } from '../../Shared';
 import { ModalSuccess } from '../../Shared';
 import FormEdit from '../FormEditTrainers/FormEditTrainer';
 
-const Table = ({ data, deleteTrain, setTrainers, trainers }) => {
+const Table = ({
+  data,
+  deleteTrain,
+  setTrainers,
+  trainers,
+  setShowFormAdd,
+  setShowFormEdit,
+  showFormEdit
+}) => {
   const [modalDeleteConfirmOpen, setModalDeleteConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
   const [idTrainer, setIdTrainer] = useState('');
   const [trainerModify, setTrainerModify] = useState(null);
-  const [showForm, setShowForm] = useState(false);
+  //const [showForm, setShowForm] = useState(false);
 
   const handleEditClick = (id) => {
     const trainer = data.find((item) => item._id === id);
     setTrainerModify(trainer);
-    setShowForm(true);
+    setShowFormEdit(true);
+    setShowFormAdd(false);
   };
 
   const closeForm = () => {
-    setShowForm(false);
+    setShowFormEdit(false);
   };
 
   const somefunction = (id) => {
@@ -99,7 +108,7 @@ const Table = ({ data, deleteTrain, setTrainers, trainers }) => {
           message="Are you sure you want to delete this?"
         />
       )}
-      {showForm && (
+      {showFormEdit && (
         <FormEdit
           trainerModify={trainerModify}
           closeForm={closeForm}
