@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import styles from './admins.module.css';
 import Table from './Table';
 import Form from './Form';
-import ModalSuccess from '../Modals/ModalSuccess';
+import ModalSuccess from '../Shared/Modals/ModalSuccess/index';
 
 function Admins() {
   const [admins, setAdmins] = useState([]);

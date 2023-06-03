@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './delete-member.module.css';
-import ModalConfirm from '../../Modals/ModalConfirm';
-import ModalSuccess from '../../Modals/ModalSuccess';
+import ModalConfirm from '../../Shared/Modals/ModalConfirm/index';
+import ModalSuccess from '../../Shared/Modals/ModalSuccess/index';
 
 const DeleteMember = ({ memberId, onDeleteMember }) => {
   const [modalDeleteConfirmOpen, setModalDeleteConfirmOpen] = useState(false);

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import style from './modalAdd.module.css';
-import ModalEdit from '../../Modals/ModalConfirm';
-import ModalSuccess from '../../Modals/ModalSuccess';
+import ModalConfirm from '../../Shared/Modals/ModalConfirm/index';
+import ModalSuccess from '../../Shared/Modals/ModalSuccess/index';
 
 const ModalAddSubscription = ({
   setModalAdd,
@@ -151,7 +151,7 @@ const ModalAddSubscription = ({
           )}
         </div>
         {modalConfirmOpen && (
-          <ModalEdit
+          <ModalConfirm
             method="EDIT"
             onConfirm={() => {
               submitSubscription();

@@ -1,7 +1,7 @@
 import style from './tableActivity.module.css';
 import ModalAddActivity from '../AddActivity/Index';
-import ModalDelete from '../../Modals/ModalConfirm';
-import ModalSuccess from '../../Modals/ModalSuccess';
+import ModalConfirm from '../../Shared/Modals/ModalConfirm/index';
+import ModalSuccess from '../../Shared/Modals/ModalSuccess/index';
 import { useState } from 'react';
 
 const TableActivity = ({ activity, deleteActivity, setActivity }) => {
@@ -135,7 +135,7 @@ const TableActivity = ({ activity, deleteActivity, setActivity }) => {
         </>
       )}
       {modalConfirmOpen && (
-        <ModalDelete
+        <ModalConfirm
           method="Delete"
           onConfirm={() => {
             deleted();

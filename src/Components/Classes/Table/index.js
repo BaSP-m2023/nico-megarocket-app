@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
 import styles from './table.module.css';
-import ModalsConfirmation from '../../Modals/ModalConfirm';
+import ModalConfirm  from '../../Shared/Modals/ModalConfirm/index';
 
 const Table = ({ data, deleteClass, updateClick }) => {
   const [ modalDeleteConfirmOpen, setModalDeleteConfirmOpen ] = useState(false);
@@ -68,7 +68,7 @@ const Table = ({ data, deleteClass, updateClick }) => {
             })}
           </tbody>
           {modalDeleteConfirmOpen && (
-            <ModalsConfirmation
+            <ModalConfirm
               method="Delete"
               onConfirm={handleModalConfirmation}
               setModalConfirmOpen={setModalDeleteConfirmOpen}

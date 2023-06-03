@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ModalConfirm from '../../Modals/ModalConfirm';
+import ModalConfirm from '../../Shared/Modals/ModalConfirm/index';
 
 const Form = ({
   addItem,

@@ -2,7 +2,7 @@ import styles from './super-admins.module.css';
 import { useEffect, useState } from 'react';
 import Table from './Table';
 import Form from './Form';
-import ModalsSuccess from '../Modals/ModalSuccess';
+import ModalSuccess from '../Shared/Modals/ModalSuccess/index';
 
 const SuperAdmins = () => {
   const [superAdmins, setSuperAdmins] = useState([]);
@@ -115,7 +115,7 @@ const SuperAdmins = () => {
       <section className={styles.container}>
         <div>
           {modalSuccessOpen && (
-            <ModalsSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
+            <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
           )}
         </div>
         <button className={styles.containerBtn} onClick={() => toggleForm(false)}>
