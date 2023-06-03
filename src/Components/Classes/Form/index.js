@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import formStyles from '../Form/form.module.css';
-import ModalsConfirmation from '../../Modals/ModalConfirm';
+import { ModalConfirm } from '../../Shared';
 
 const Form = ({ updateClass, createCLass, show, updateToggle, classUpdateId, klass }) => {
   const [modalUpdateConfirmOpen, setModalUpdateConfirmOpen] = useState(false);
@@ -127,7 +127,7 @@ const Form = ({ updateClass, createCLass, show, updateToggle, classUpdateId, kla
         </div>
       </form>
       {modalUpdateConfirmOpen && (
-        <ModalsConfirmation
+        <ModalConfirm
           method="Update"
           onConfirm={handleModalConfirmation}
           setModalConfirmOpen={setModalUpdateConfirmOpen}

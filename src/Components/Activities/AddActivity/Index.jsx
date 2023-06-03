@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import style from './modalAdd.module.css';
-import ModalEdit from '../../Modals/ModalConfirm';
-import ModalSuccess from '../../Modals/ModalSuccess';
+import { ModalConfirm } from '../../Shared';
+import { ModalSuccess } from '../../Shared';
 
 const ModalAddActivity = ({
   setModalAdd,
@@ -163,7 +163,7 @@ const ModalAddActivity = ({
           )}
         </div>
         {modalConfirmOpen && (
-          <ModalEdit
+          <ModalConfirm
             method="Confirm"
             onConfirm={() => {
               submitActivity();
