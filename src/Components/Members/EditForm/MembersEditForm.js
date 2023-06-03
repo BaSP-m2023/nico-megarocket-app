@@ -4,7 +4,6 @@ import { ModalConfirm } from '../../Shared';
 import { ModalSuccess } from '../../Shared';
 
 export const MembersEditForm = ({
-  member,
   updateMember,
   memberID,
   setEditForm,
@@ -24,7 +23,7 @@ export const MembersEditForm = ({
     postalCode,
     isActive,
     membership
-  } = member;
+  } = memberEdited;
 
   const [memberUpdated, setMemberUpdated] = useState({
     firstName,

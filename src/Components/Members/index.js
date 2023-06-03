@@ -43,14 +43,13 @@ function Members() {
       dni: findMember.dni,
       password: findMember.password,
       membership: findMember.membership,
-      postalCode: findMember.postalCode
+      postalCode: findMember.postalCode,
+      birthday: findMember.birthday
     });
   };
 
   const updateMember = async (id, memberUpdated) => {
     let memberToUpdateIndex = members.findIndex((member) => member._id === id);
-    console.log(id);
-    console.log(memberUpdated);
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/member/${id}`, {
         method: 'PUT',
