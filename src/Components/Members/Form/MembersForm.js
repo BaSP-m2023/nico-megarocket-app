@@ -3,7 +3,7 @@ import styles from './form.module.css';
 import { ModalSuccess } from '../../Shared';
 import { ModalConfirm } from '../../Shared';
 
-export const Form = ({ member, setMember }) => {
+export const Form = ({ member, setMember, setMembers, members }) => {
   const [validationsOk, setValidationsOk] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
@@ -16,6 +16,33 @@ export const Form = ({ member, setMember }) => {
       isActive: true
     });
     setValidationsOk(true);
+  };
+
+  const addItem = ({
+    firstName,
+    lastName,
+    dni,
+    birthday,
+    phone,
+    email,
+    city,
+    postalCode,
+    isActive,
+    membership
+  }) => {
+    const newItem = {
+      firstName,
+      lastName,
+      dni,
+      birthday,
+      phone,
+      email,
+      city,
+      postalCode,
+      isActive,
+      membership
+    };
+    setMembers([...members, newItem]);
   };
 
   const handleSubmit = async (e) => {
@@ -41,6 +68,7 @@ export const Form = ({ member, setMember }) => {
       });
       setModalSuccessOpen(true);
       setSuccessMessage('Member added successfully!');
+      addItem(member);
       setMember({
         firstName: '',
         lastName: '',
