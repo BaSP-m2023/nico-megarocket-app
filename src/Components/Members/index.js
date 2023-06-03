@@ -6,6 +6,18 @@ function Members() {
   const [members, setMembers] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [showEditForm, setEditForm] = useState(false);
+  const [memberEdited, setMemberEdited] = useState({
+    firstName: '',
+    lastName: '',
+    dni: '',
+    birthday: '',
+    phone: '',
+    email: '',
+    city: '',
+    postalCode: '',
+    isActive: '',
+    membership: ''
+  });
 
   const getMembers = async () => {
     try {
@@ -19,6 +31,21 @@ function Members() {
   useEffect(() => {
     getMembers();
   }, []);
+
+  const memberEditedId = (id) => {
+    const findMember = members.find((i) => i._id === id);
+    setMemberEdited({
+      firstName: findMember.firstName,
+      lastName: findMember.lastName,
+      phone: findMember.phone,
+      email: findMember.email,
+      city: findMember.city,
+      dni: findMember.dni,
+      password: findMember.password,
+      membership: findMember.membership,
+      postalCode: findMember.postalCode
+    });
+  };
 
   const updateMember = async (id, memberUpdated) => {
     let memberToUpdateIndex = members.findIndex((member) => member._id === id);
@@ -89,6 +116,9 @@ function Members() {
           showEditForm={showEditForm}
           handleEditToggle={handleEditToggle}
           setEditForm={setEditForm}
+          setMemberEdited={setMemberEdited}
+          memberEditedId={memberEditedId}
+          memberEdited={memberEdited}
         />
       )}
     </section>
