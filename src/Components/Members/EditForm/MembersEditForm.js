@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../Form/form.module.css';
-import { ModalConfirm } from '../../Shared/';
-import { ModalSuccess } from '../../Shared/';
+import { ModalConfirm } from '../../Shared';
+import { ModalSuccess } from '../../Shared';
 
 export const MembersEditForm = ({ member, updateMember, memberID, setEditForm }) => {
   const [modalEditConfirmOpen, setModalEditConfirmOpen] = useState(false);

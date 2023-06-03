@@ -1,8 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 import { useState, useEffect } from 'react';
 import style from './modalAdd.module.css';
-import { ModalConfirm } from '../../Shared/';
-import { ModalSuccess } from '../../Shared/';
+import { ModalConfirm } from '../../Shared';
+import { ModalSuccess } from '../../Shared';
 
 const ModalAddActivity = ({
   setModalAdd,

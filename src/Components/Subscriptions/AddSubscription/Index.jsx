@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import style from './modalAdd.module.css';
-import { ModalConfirm } from '../../Shared/';
-import { ModalSuccess } from '../../Shared/';
+import { ModalConfirm } from '../../Shared';
+import { ModalSuccess } from '../../Shared';
 
 const ModalAddSubscription = ({
   setModalAdd,

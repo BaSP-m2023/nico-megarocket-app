@@ -2,7 +2,7 @@ import styles from './super-admins.module.css';
 import { useEffect, useState } from 'react';
 import Table from './Table';
 import Form from './Form';
-import { ModalSuccess } from '../Shared/';
+import { ModalSuccess } from '../Shared';
 
 const SuperAdmins = () => {
   const [superAdmins, setSuperAdmins] = useState([]);

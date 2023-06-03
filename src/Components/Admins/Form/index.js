@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './form.module.css';
-import { ModalConfirm } from '../../Shared/';
+import { ModalConfirm } from '../../Shared';
 
 const Form = ({
   addAdmin,
