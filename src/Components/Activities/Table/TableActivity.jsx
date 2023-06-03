@@ -87,13 +87,9 @@ const TableActivity = ({ activity, deleteActivity, setActivity }) => {
               </tr>
             </thead>
             {activity.length < 1 ? (
-              <tbody className={style.containerTableEmpty}>
-                <tr>
-                  <td>
-                    <h3>This list is empty</h3>
-                  </td>
-                </tr>
-              </tbody>
+              <tr>
+                <td colSpan="4">This list is empty</td>
+              </tr>
             ) : (
               <tbody className={style.containerEachOneActivity}>
                 {activity.map((act, index) => (
