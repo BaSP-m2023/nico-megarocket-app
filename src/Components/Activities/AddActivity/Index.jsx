@@ -162,20 +162,20 @@ const ModalAddActivity = ({
             </button>
           )}
         </div>
-        {modalConfirmOpen && (
-          <ModalEdit
-            method="Confirm"
-            onConfirm={() => {
-              submitActivity();
-            }}
-            message="Are you sure you want to perform this action?"
-            setModalConfirmOpen={setModalConfirmOpen}
-          />
-        )}
-        {modalSuccessOpen && (
-          <ModalSuccess message="¡Success!" setModalSuccessOpen={setModalSuccessOpen} />
-        )}
       </form>
+      {modalConfirmOpen && (
+        <ModalEdit
+          method="Confirm"
+          onConfirm={() => {
+            submitActivity();
+          }}
+          message="Are you sure you want to perform this action?"
+          setModalConfirmOpen={setModalConfirmOpen}
+        />
+      )}
+      {modalSuccessOpen && (
+        <ModalSuccess message="¡Success!" setModalSuccessOpen={setModalSuccessOpen} />
+      )}
     </section>
   );
 };
