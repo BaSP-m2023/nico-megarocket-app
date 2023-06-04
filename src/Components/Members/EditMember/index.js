@@ -1,10 +1,11 @@
 import React from 'react';
 import styles from './edit-members.module.css';
 
-const EditMember = ({ handleEditToggle, memberID, setMemberID }) => {
+const EditMember = ({ handleEditToggle, memberID, setMemberID, memberEditedId }) => {
   const handleClick = () => {
     handleEditToggle();
     setMemberID(memberID);
+    memberEditedId(memberID);
   };
 
   return (

@@ -14,16 +14,6 @@ const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
     salary: ''
   });
 
-  const [errors, setErrors] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    phone: '',
-    email: '',
-    city: '',
-    salary: ''
-  });
-
   const [modalConfirmAdd, setModalConfirmAdd] = useState(false);
   const [modalSucessOpen, setModalSucessOpen] = useState(false);
 
@@ -61,18 +51,7 @@ const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
       updatedTrainers[index] = edTrainer;
       setTrainers(updatedTrainers);
     }
-    console.log(edTrainer);
-    console.log(trainers);
     setTrainer({
-      firstName: '',
-      lastName: '',
-      dni: '',
-      phone: '',
-      email: '',
-      city: '',
-      salary: ''
-    });
-    setErrors({
       firstName: '',
       lastName: '',
       dni: '',
@@ -95,40 +74,6 @@ const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
     closeForm();
   };
 
-  const handleBlur = () => {
-    let othersErrors = {};
-
-    if (trainerEdited.firstName.trim() === '') {
-      othersErrors.firstName = 'First Name is required';
-    }
-
-    if (trainerEdited.lastName.trim() === '') {
-      othersErrors.lastName = 'Last Name is required';
-    }
-
-    if (trainerEdited.dni.trim() === '') {
-      othersErrors.dni = 'DNI is required';
-    }
-
-    if (trainerEdited.phone.trim() === '') {
-      othersErrors.phone = 'Phone is required';
-    }
-
-    if (trainerEdited.email.trim() === '') {
-      othersErrors.email = 'Email is required';
-    }
-
-    if (trainerEdited.city.trim() === '') {
-      othersErrors.city = 'City is required';
-    }
-
-    if (trainerEdited.salary.trim() === '') {
-      othersErrors.city = 'City is required';
-    }
-
-    setErrors(othersErrors);
-  };
-
   return (
     <div>
       <form className={styles.form}>
@@ -143,9 +88,7 @@ const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
                 placeholder={trainerModify.firstName}
                 value={trainerEdited.firstName}
                 onChange={onChargeInput}
-                onBlur={handleBlur}
               />
-              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
             </div>
             <div className={styles.inputContainer}>
               <label className={styles.label}>Last Name</label>
@@ -156,9 +99,7 @@ const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
                 placeholder={trainerModify.lastName}
                 value={trainerEdited.lastName}
                 onChange={onChargeInput}
-                onBlur={handleBlur}
               />
-              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
             </div>
           </div>
           <div className={styles.container}>
@@ -171,9 +112,7 @@ const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
                 placeholder={trainerModify.dni}
                 value={trainerEdited.dni}
                 onChange={onChargeInput}
-                onBlur={handleBlur}
               />
-              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
             </div>
             <div className={styles.inputContainer}>
               <label className={styles.label}>Phone</label>
@@ -184,9 +123,7 @@ const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
                 placeholder={trainerModify.phone}
                 value={trainerEdited.phone}
                 onChange={onChargeInput}
-                onBlur={handleBlur}
               />
-              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
             </div>
           </div>
           <div className={styles.container}>
@@ -199,9 +136,7 @@ const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
                 placeholder={trainerModify.email}
                 value={trainerEdited.email}
                 onChange={onChargeInput}
-                onBlur={handleBlur}
               />
-              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
             </div>
             <div className={styles.inputContainer}>
               <label className={styles.label}>City</label>
@@ -212,9 +147,7 @@ const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
                 placeholder={trainerModify.city}
                 value={trainerEdited.city}
                 onChange={onChargeInput}
-                onBlur={handleBlur}
               />
-              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
             </div>
           </div>
           <div className={styles.container}>
@@ -227,9 +160,7 @@ const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
                 placeholder={trainerModify.salary}
                 value={trainerEdited.salary}
                 onChange={onChargeInput}
-                onBlur={handleBlur}
               />
-              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
             </div>
           </div>
         </div>

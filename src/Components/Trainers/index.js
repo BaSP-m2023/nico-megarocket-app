@@ -6,9 +6,11 @@ import Form from './FormTrainers';
 function Trainers() {
   const [trainers, setTrainers] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [showFormEdit, setShowFormEdit] = useState(false);
 
   const handleToggle = () => {
-    setShowForm((current) => !current);
+    setShowForm(!showForm);
+    setShowFormEdit(false);
   };
 
   const getTrainers = async () => {
@@ -68,6 +70,9 @@ function Trainers() {
         deleteTrain={deleteTrainer}
         setTrainers={setTrainers}
         trainers={trainers}
+        setShowFormAdd={setShowForm}
+        setShowFormEdit={setShowFormEdit}
+        showFormEdit={showFormEdit}
       />
       {showForm && <Form addItem={addItem} closeForm={closeForm} />}
     </section>

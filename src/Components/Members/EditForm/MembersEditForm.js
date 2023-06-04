@@ -3,7 +3,13 @@ import styles from '../Form/form.module.css';
 import { ModalConfirm } from '../../Shared';
 import { ModalSuccess } from '../../Shared';
 
-export const MembersEditForm = ({ member, updateMember, memberID, setEditForm }) => {
+export const MembersEditForm = ({
+  updateMember,
+  memberID,
+  setEditForm,
+  setMemberEdited,
+  memberEdited
+}) => {
   const [modalEditConfirmOpen, setModalEditConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const {
@@ -17,7 +23,7 @@ export const MembersEditForm = ({ member, updateMember, memberID, setEditForm })
     postalCode,
     isActive,
     membership
-  } = member;
+  } = memberEdited;
 
   const [memberUpdated, setMemberUpdated] = useState({
     firstName,
@@ -34,6 +40,20 @@ export const MembersEditForm = ({ member, updateMember, memberID, setEditForm })
 
   const handleChange = (e) => {
     setMemberUpdated((data) => ({ ...data, [e.target.name]: e.target.value }));
+    setMemberEdited({
+      firstName: memberEdited.firstName,
+      lastName: memberEdited.lastName,
+      dni: memberEdited.dni,
+      birthday: memberEdited.birthday,
+      phone: memberEdited.phone,
+      email: memberEdited.email,
+      city: memberEdited.city,
+      postalCode: memberEdited.postalCode,
+      isActive: memberEdited.isActive,
+      membership: memberEdited.membership,
+
+      [e.target.name]: e.target.value
+    });
   };
 
   const updateHandler = () => {
@@ -60,7 +80,7 @@ export const MembersEditForm = ({ member, updateMember, memberID, setEditForm })
                 className={styles.input}
                 name="firstName"
                 type="text"
-                value={memberUpdated.firstName}
+                value={memberEdited.firstName}
                 onChange={handleChange}
               />
             </div>
@@ -70,7 +90,7 @@ export const MembersEditForm = ({ member, updateMember, memberID, setEditForm })
                 className={styles.input}
                 name="lastName"
                 type="text"
-                value={memberUpdated.lastName}
+                value={memberEdited.lastName}
                 onChange={handleChange}
               />
             </div>
@@ -80,7 +100,7 @@ export const MembersEditForm = ({ member, updateMember, memberID, setEditForm })
                 className={styles.input}
                 name="dni"
                 type="number"
-                value={memberUpdated.dni}
+                value={memberEdited.dni}
                 onChange={handleChange}
               />
             </div>
@@ -90,7 +110,7 @@ export const MembersEditForm = ({ member, updateMember, memberID, setEditForm })
                 className={styles.input}
                 name="birthday"
                 type="date"
-                value={memberUpdated.birthday}
+                value={memberEdited.birthday}
                 onChange={handleChange}
               />
             </div>
@@ -102,7 +122,7 @@ export const MembersEditForm = ({ member, updateMember, memberID, setEditForm })
                 className={styles.input}
                 name="phone"
                 type="number"
-                value={memberUpdated.phone}
+                value={memberEdited.phone}
                 onChange={handleChange}
               />
             </div>
@@ -112,7 +132,7 @@ export const MembersEditForm = ({ member, updateMember, memberID, setEditForm })
                 className={styles.input}
                 name="email"
                 type="email"
-                value={memberUpdated.email}
+                value={memberEdited.email}
                 onChange={handleChange}
               />
             </div>
@@ -122,7 +142,7 @@ export const MembersEditForm = ({ member, updateMember, memberID, setEditForm })
                 className={styles.input}
                 name="city"
                 type="text"
-                value={memberUpdated.city}
+                value={memberEdited.city}
                 onChange={handleChange}
               />
             </div>
@@ -132,7 +152,7 @@ export const MembersEditForm = ({ member, updateMember, memberID, setEditForm })
                 className={styles.input}
                 name="postalCode"
                 type="number"
-                value={memberUpdated.postalCode}
+                value={memberEdited.postalCode}
                 onChange={handleChange}
               />
             </div>
@@ -142,7 +162,7 @@ export const MembersEditForm = ({ member, updateMember, memberID, setEditForm })
                 className={styles.input}
                 name="membership"
                 type="text"
-                value={memberUpdated.membership}
+                value={memberEdited.membership}
                 onChange={handleChange}
               />
             </div>

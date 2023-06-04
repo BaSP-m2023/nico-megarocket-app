@@ -6,6 +6,18 @@ function Members() {
   const [members, setMembers] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [showEditForm, setEditForm] = useState(false);
+  const [memberEdited, setMemberEdited] = useState({
+    firstName: '',
+    lastName: '',
+    dni: '',
+    birthday: '',
+    phone: '',
+    email: '',
+    city: '',
+    postalCode: '',
+    isActive: '',
+    membership: ''
+  });
 
   const getMembers = async () => {
     try {
@@ -20,10 +32,24 @@ function Members() {
     getMembers();
   }, []);
 
+  const memberEditedId = (id) => {
+    const findMember = members.find((i) => i._id === id);
+    setMemberEdited({
+      firstName: findMember.firstName,
+      lastName: findMember.lastName,
+      phone: findMember.phone,
+      email: findMember.email,
+      city: findMember.city,
+      dni: findMember.dni,
+      password: findMember.password,
+      membership: findMember.membership,
+      postalCode: findMember.postalCode,
+      birthday: findMember.birthday
+    });
+  };
+
   const updateMember = async (id, memberUpdated) => {
     let memberToUpdateIndex = members.findIndex((member) => member._id === id);
-    console.log(id);
-    console.log(memberUpdated);
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/member/${id}`, {
         method: 'PUT',
@@ -89,6 +115,10 @@ function Members() {
           showEditForm={showEditForm}
           handleEditToggle={handleEditToggle}
           setEditForm={setEditForm}
+          setMemberEdited={setMemberEdited}
+          memberEditedId={memberEditedId}
+          memberEdited={memberEdited}
+          setMembers={setMembers}
         />
       )}
     </section>
