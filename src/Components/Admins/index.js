@@ -3,6 +3,7 @@ import styles from './admins.module.css';
 import Table from './Table';
 import Form from './Form';
 import { ModalSuccess } from '../Shared';
+import { ToastError } from '../Shared';
 
 function Admins() {
   const [admins, setAdmins] = useState([]);
@@ -14,6 +15,8 @@ function Admins() {
   const [editMode, setEditMode] = useState(false);
 
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
+
+  const [toastErroOpen, setToastErroOpen] = useState(false);
 
   const [adminEdited, setAdminEdited] = useState({
     firstName: '',
@@ -35,6 +38,7 @@ function Admins() {
       const data = await response.json();
       setAdmins(data.data);
     } catch (error) {
+      setToastErroOpen(true);
       console.log(error);
     }
   };
@@ -137,6 +141,9 @@ function Admins() {
           message={editMode ? 'Admin edited successfully' : 'Admin created successfully'}
           setModalSuccessOpen={setModalSuccessOpen}
         />
+      )}
+      {toastErroOpen && (
+        <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
       )}
     </section>
   );

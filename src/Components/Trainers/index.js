@@ -2,11 +2,13 @@ import styles from './trainers.module.css';
 import { useEffect, useState } from 'react';
 import Table from './TableTrainers';
 import Form from './FormTrainers';
+import { ToastError } from '../Shared';
 
 function Trainers() {
   const [trainers, setTrainers] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [showFormEdit, setShowFormEdit] = useState(false);
+  const [toastErroOpen, setToastErroOpen] = useState(false);
 
   const handleToggle = () => {
     setShowForm(!showForm);
@@ -14,9 +16,13 @@ function Trainers() {
   };
 
   const getTrainers = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/trainer`);
-    const data = await response.json();
-    setTrainers(data.data);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/trainer`);
+      const data = await response.json();
+      setTrainers(data.data);
+    } catch (error) {
+      setToastErroOpen(true);
+    }
   };
 
   useEffect(() => {
@@ -75,6 +81,9 @@ function Trainers() {
         showFormEdit={showFormEdit}
       />
       {showForm && <Form addItem={addItem} closeForm={closeForm} />}
+      {toastErroOpen && (
+        <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
+      )}
     </section>
   );
 }
