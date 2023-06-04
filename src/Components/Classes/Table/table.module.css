@@ -70,6 +70,4 @@ tbody tr td:nth-last-child(-n + 2) {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  position: relative;
-  left: 30px;
 }
