@@ -1,0 +1,22 @@
+.btnAccept {
+  background-color: #aace9b;
+  color: #373867;
+  border: none;
+  cursor: pointer;
+  border-radius: 11.5px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 10px;
+}
+.btnCancel {
+  background: #ffffff;
+  color: #373867;
+  border: 1px solid #373867;
+  cursor: pointer;
+  border-radius: 11.5px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 10px;
+}
