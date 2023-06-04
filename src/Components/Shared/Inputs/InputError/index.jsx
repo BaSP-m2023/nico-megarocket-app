@@ -16,7 +16,6 @@ const ErrorInput = ({ value, type, error, change, placeholder }) => {
 
   return (
     <div className="input-container">
-      <label>{placeholder}</label>
       <input
         className={inputClassName}
         type={type}

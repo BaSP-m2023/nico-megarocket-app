@@ -6,15 +6,6 @@
   border-color: #373867;
 }
 
-.inputPlaceholder-container label {
-  width: 71px;
-  height: 16px;
-  margin-bottom: 10px;
-  font-weight: 400;
-  font-size: 14px;
-  font-weight: bold;
-}
-
 .inputPlaceholder-container {
   display: flex;
   flex-direction: column;

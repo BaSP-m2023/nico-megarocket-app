@@ -6,14 +6,6 @@
   border-color: #373867;
 }
 
-.input-container label {
-  width: 71px;
-  height: 16px;
-  margin-bottom: 10px;
-  font-size: 14px;
-  font-weight: bold;
-}
-
 .input-container input:error {
   border-color: red;
   color: red;
