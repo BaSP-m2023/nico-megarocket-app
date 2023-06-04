@@ -18,7 +18,6 @@ const Table = ({
   const [successMessage, setSuccessMessage] = useState(false);
   const [idTrainer, setIdTrainer] = useState('');
   const [trainerModify, setTrainerModify] = useState(null);
-  //const [showForm, setShowForm] = useState(false);
 
   const handleEditClick = (id) => {
     const trainer = data.find((item) => item._id === id);
