@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Table from './Table';
 import Form from './Form';
 import { ModalSuccess } from '../Shared';
+import { ToastError } from '../Shared';
 
 const SuperAdmins = () => {
   const [superAdmins, setSuperAdmins] = useState([]);
@@ -15,6 +16,7 @@ const SuperAdmins = () => {
   const [showBtnMod, setShowBtnMod] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [toastErroOpen, setToastErroOpen] = useState(false);
 
   const getSuperAdmins = async () => {
     try {
@@ -22,6 +24,7 @@ const SuperAdmins = () => {
       const data = await response.json();
       setSuperAdmins(data.data);
     } catch (error) {
+      setToastErroOpen(true);
       console.error(error);
     }
   };
@@ -136,6 +139,9 @@ const SuperAdmins = () => {
             showBtnAdd={showBtnAdd}
             updateItem={updateItem}
           />
+        )}
+        {toastErroOpen && (
+          <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
         )}
       </section>
     </div>

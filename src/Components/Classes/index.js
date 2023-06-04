@@ -3,6 +3,7 @@ import styles from './classes.module.css';
 import Table from './Table/index';
 import Form from './Form/index';
 import { ModalSuccess } from '../Shared';
+import { ToastError } from '../Shared';
 
 function Projects() {
   const [show, setShow] = useState(false);
@@ -18,6 +19,7 @@ function Projects() {
     activity: '',
     slots: ''
   });
+  const [toastErroOpen, setToastErroOpen] = useState(false);
 
   const getClasses = async () => {
     try {
@@ -25,6 +27,7 @@ function Projects() {
       const data = await response.json();
       setClasses(data.data);
     } catch (error) {
+      setToastErroOpen(true);
       console.error(error);
     }
   };
@@ -129,6 +132,9 @@ function Projects() {
         )}
       </div>
       <Table updateClick={updateClick} data={classes} deleteClass={deleteClass} />
+      {toastErroOpen && (
+        <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
+      )}
     </section>
   );
 }

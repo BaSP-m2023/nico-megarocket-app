@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import TableActivity from './TableActivity';
 import style from './tableActivity.module.css';
+import { ToastError } from '../../Shared';
 
 const ActivitiesTable = () => {
   const [activity, setActivity] = useState([]);
+  const [toastErroOpen, setToastErroOpen] = useState(false);
 
   const getActivity = async () => {
     try {
@@ -11,6 +13,7 @@ const ActivitiesTable = () => {
       const activities = await res.json();
       setActivity(activities.data);
     } catch (error) {
+      setToastErroOpen(true);
       console.error(error);
     }
   };
@@ -44,6 +47,9 @@ const ActivitiesTable = () => {
         setActivity={setActivity}
         deleteActivity={deleteActivity}
       />
+      {toastErroOpen && (
+        <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
+      )}
     </section>
   );
 };
