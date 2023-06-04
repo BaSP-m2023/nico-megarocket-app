@@ -80,8 +80,18 @@ function Projects() {
     }, 0);
   };
 
-  const updateModeToggle = () => {
-    setUpdateMode(!updateMode);
+  const createMode = () => {
+    showForm();
+    {
+      updateMode && setUpdateMode(false);
+    }
+    setKlass({
+      hour: '',
+      day: '',
+      trainer: '',
+      activity: '',
+      slots: ''
+    });
   };
 
   const deleteClass = (id) => {
@@ -90,7 +100,7 @@ function Projects() {
 
   const updateClick = (item) => {
     showForm();
-    updateModeToggle();
+    setUpdateMode(true);
     setClassUpdateId(item._id);
     setKlass({
       hour: item.hour,
@@ -104,7 +114,7 @@ function Projects() {
   return (
     <section className={styles.container}>
       <h2>Classes</h2>
-      <button type="button" className={styles.button} onClick={showForm}>
+      <button type="button" className={styles.button} onClick={createMode}>
         <img src={`${process.env.PUBLIC_URL}/assets/images/btn-add.png`} /> Add
       </button>
       {show && (
