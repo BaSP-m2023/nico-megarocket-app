@@ -1,11 +1,10 @@
-/* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './table.module.css';
-import { ModalConfirm } from '../../Shared';
+import ModalsConfirmation from '../../Shared/Modals/ModalConfirm';
 
-const Table = ({ data, deleteClass, updateClick }) => {
-  const [ modalDeleteConfirmOpen, setModalDeleteConfirmOpen ] = useState(false);
-  const [ selectedItemId, setSelectedItemId ] = useState('');
+const Table = ({ data, deleteClass, updateClick, autoDelete, classes }) => {
+  const [modalDeleteConfirmOpen, setModalDeleteConfirmOpen] = useState(false);
+  const [selectedItemId, setSelectedItemId] = useState('');
 
   const handleDeleteButtonClick = (id) => {
     setSelectedItemId(id);
@@ -16,6 +15,20 @@ const Table = ({ data, deleteClass, updateClick }) => {
     deleteClass(selectedItemId);
     setModalDeleteConfirmOpen(false);
   };
+
+  const getClasses = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/class`);
+      const data = await response.json();
+      classes.setClasses(data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getClasses();
+  }, []);
 
   return (
     <section className={styles.container}>
@@ -37,16 +50,23 @@ const Table = ({ data, deleteClass, updateClick }) => {
             </tr>
           </thead>
           <tbody>
+            {data.forEach((item) => {
+              if (!item.activity || !item.trainer) {
+                autoDelete(item._id);
+              }
+            })}
             {data.map((item, index) => {
               return (
                 <tr key={index}>
-                  <td>{item.activity ? item.activity.name : ''}</td>
+                  <td>{item.activity ? item.activity.name : 'This Activity was DELETED'}</td>
                   <td>{item.day}</td>
                   <td>{item.hour}</td>
                   <td>
-                    {item.trainer ? item.trainer.map((trainerOne) => {
-                      return `${trainerOne.firstName} ${trainerOne.lastName}`;
-                    }) : ''}
+                    {item.trainer
+                      ? item.trainer.map(
+                          (trainerOne) => `${trainerOne.firstName} ${trainerOne.lastName}`
+                        )
+                      : 'This Trainer was DELETED'}
                   </td>
                   <td>{item.slots}</td>
                   <td>
@@ -68,7 +88,7 @@ const Table = ({ data, deleteClass, updateClick }) => {
             })}
           </tbody>
           {modalDeleteConfirmOpen && (
-            <ModalConfirm
+            <ModalsConfirmation
               method="Delete"
               onConfirm={handleModalConfirmation}
               setModalConfirmOpen={setModalDeleteConfirmOpen}
