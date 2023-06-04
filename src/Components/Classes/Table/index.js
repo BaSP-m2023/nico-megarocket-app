@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
 import styles from './table.module.css';
-import { ModalConfirm } from '../../Shared';
+import { ModalConfirm }  from '../../Shared';
 
 const Table = ({ data, deleteClass, updateClick }) => {
   const [ modalDeleteConfirmOpen, setModalDeleteConfirmOpen ] = useState(false);

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+// eslint-disable-next-line no-unused-vars
+import { useState, useEffect } from 'react';
 import style from './modalAdd.module.css';
 import { ModalConfirm } from '../../Shared';
 import { ModalSuccess } from '../../Shared';
@@ -24,12 +25,12 @@ const ModalAddActivity = ({
   });
 
   const changeInput = (e) => {
-    setBodyActivity({
-      ...bodyActivity,
-      [e.target.name]: e.target.value
-    });
+    const newActivity = { ...bodyActivity, [e.target.name]: e.target.value };
+    setBodyActivity(newActivity);
 
-    const allFieldsValid = Object.values(bodyActivity).every((field) => field.length >= 3);
+    const allFieldsValid = Object.values(newActivity).every((value) => {
+      return value.length >= 3 && value !== '';
+    });
 
     setActive(!allFieldsValid);
   };
@@ -97,53 +98,43 @@ const ModalAddActivity = ({
     setModalConfirmOpen(true);
   };
 
+  const goBackTable = () => {
+    setTimeout(() => {
+      setModalAdd(false);
+      setTable(true);
+    }, 1000);
+  };
+
   return (
     <section className={style.containerModal}>
       <form onSubmit={handleConfirmEdit} className={style.containerForm}>
         <h3>Add</h3>
         <div>
           <label>Name:</label>
-          {editMode ? (
-            <input type="text" value={editActivities.name} name="name" onChange={changeInputEdit} />
-          ) : (
-            <input type="text" value={bodyActivity.name} name="name" onChange={changeInput} />
-          )}
+          <input
+            type="text"
+            value={editMode ? editActivities.name : bodyActivity.name}
+            name="name"
+            onChange={editMode ? changeInputEdit : changeInput}
+          />
         </div>
         <div>
           <label>Description:</label>
-          {editMode ? (
-            <input
-              type="text"
-              value={editActivities.description}
-              name="description"
-              onChange={changeInputEdit}
-            />
-          ) : (
-            <input
-              type="text"
-              value={bodyActivity.description}
-              name="description"
-              onChange={changeInput}
-            />
-          )}
+          <input
+            type="text"
+            value={editMode ? editActivities.description : bodyActivity.description}
+            name="description"
+            onChange={editMode ? changeInputEdit : changeInput}
+          />
         </div>
         <div>
           <label>isActive</label>
-          {editMode ? (
-            <input
-              type="text"
-              value={editActivities.isActive}
-              name="isActive"
-              onChange={changeInputEdit}
-            />
-          ) : (
-            <input
-              type="text"
-              value={bodyActivity.isActive}
-              name="isActive"
-              onChange={changeInput}
-            />
-          )}
+          <input
+            type="text"
+            value={editMode ? editActivities.isActive : bodyActivity.isActive}
+            name="isActive"
+            onChange={editMode ? changeInputEdit : changeInput}
+          />
         </div>
         <div className={style.containerAddButton}>
           <button
@@ -162,20 +153,23 @@ const ModalAddActivity = ({
             </button>
           )}
         </div>
-        {modalConfirmOpen && (
-          <ModalConfirm
-            method="Confirm"
-            onConfirm={() => {
-              submitActivity();
-            }}
-            message="Are you sure you want to perform this action?"
-            setModalConfirmOpen={setModalConfirmOpen}
-          />
-        )}
-        {modalSuccessOpen && (
-          <ModalSuccess message="¡Success!" setModalSuccessOpen={setModalSuccessOpen} />
-        )}
       </form>
+      {modalConfirmOpen && (
+        <ModalConfirm
+          method="Confirm"
+          onConfirm={() => {
+            submitActivity();
+          }}
+          message="Are you sure you want to perform this action?"
+          setModalConfirmOpen={setModalConfirmOpen}
+        />
+      )}
+      {modalSuccessOpen && (
+        <>
+          <ModalSuccess message="¡Success!" setModalSuccessOpen={setModalSuccessOpen} />
+          {setModalSuccessOpen && goBackTable()}
+        </>
+      )}
     </section>
   );
 };

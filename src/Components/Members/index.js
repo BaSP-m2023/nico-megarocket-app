@@ -118,6 +118,7 @@ function Members() {
           setMemberEdited={setMemberEdited}
           memberEditedId={memberEditedId}
           memberEdited={memberEdited}
+          setMembers={setMembers}
         />
       )}
     </section>

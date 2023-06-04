@@ -1,8 +1,8 @@
 import style from './tableActivity.module.css';
 import ModalAddActivity from '../AddActivity/Index';
-import { ModalConfirm } from '../../Shared';
-import { ModalSuccess } from '../../Shared';
 import { useState } from 'react';
+import { ModalSuccess } from '../../Shared';
+import { ModalConfirm } from '../../Shared';
 
 const TableActivity = ({ activity, deleteActivity, setActivity }) => {
   const [modalAdd, setModalAdd] = useState(false);
@@ -87,13 +87,9 @@ const TableActivity = ({ activity, deleteActivity, setActivity }) => {
               </tr>
             </thead>
             {activity.length < 1 ? (
-              <tbody className={style.containerTableEmpty}>
-                <tr>
-                  <td>
-                    <h3>This list is empty</h3>
-                  </td>
-                </tr>
-              </tbody>
+              <tr>
+                <td colSpan="4">This list is empty</td>
+              </tr>
             ) : (
               <tbody className={style.containerEachOneActivity}>
                 {activity.map((act, index) => (
