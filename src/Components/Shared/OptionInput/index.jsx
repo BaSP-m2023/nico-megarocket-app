@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from './option-input.module.css';
 
 const SelectInput = ({ dataOptions }) => {
   const [selectedOption, setSelectedOption] = useState('');
@@ -7,10 +8,15 @@ const SelectInput = ({ dataOptions }) => {
     setSelectedOption(e.target.value);
   };
   return (
-    <div>
+    <div className={styles.containerInput}>
       <label htmlFor="selectInput">Select an option:</label>
-      <select id="selectInput" value={selectedOption} onChange={handleSelect}>
-        <option value="">Select</option>
+      <select
+        className={styles.optionInput}
+        id="selectInput"
+        value={selectedOption}
+        onChange={handleSelect}
+      >
+        <option value="">Default</option>
         {dataOptions.map((select, index) => {
           return (
             <option key={index} value={select}>
