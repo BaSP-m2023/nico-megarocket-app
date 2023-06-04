@@ -14,16 +14,6 @@ const Form = ({ addItem, closeForm }) => {
     salary: ''
   });
 
-  const [errors, setErrors] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    phone: '',
-    email: '',
-    city: '',
-    salary: ''
-  });
-
   const [modalConfirmAdd, setModalConfirmAdd] = useState(false);
   const [modalSucessOpen, setModalSucessOpen] = useState(false);
 
@@ -74,7 +64,6 @@ const Form = ({ addItem, closeForm }) => {
       isValid = false;
     }
 
-    setErrors(newErrors);
     return isValid;
   };
 
@@ -115,16 +104,8 @@ const Form = ({ addItem, closeForm }) => {
         city: '',
         salary: ''
       });
-      setErrors({
-        firstName: '',
-        lastName: '',
-        dni: '',
-        phone: '',
-        email: '',
-        city: '',
-        salary: ''
-      });
       setModalSucessOpen(true);
+      closeForm();
     }
   };
 
@@ -136,40 +117,6 @@ const Form = ({ addItem, closeForm }) => {
   const formClose = (e) => {
     e.preventDefault();
     closeForm();
-  };
-
-  const handleBlur = () => {
-    let othersErrors = {};
-
-    if (trainer.firstName.trim() === '') {
-      othersErrors.firstName = 'First Name is required';
-    }
-
-    if (trainer.lastName.trim() === '') {
-      othersErrors.lastName = 'Last Name is required';
-    }
-
-    if (trainer.dni.trim() === '') {
-      othersErrors.dni = 'DNI is required';
-    }
-
-    if (trainer.phone.trim() === '') {
-      othersErrors.phone = 'Phone is required';
-    }
-
-    if (trainer.email.trim() === '') {
-      othersErrors.email = 'Email is required';
-    }
-
-    if (trainer.city.trim() === '') {
-      othersErrors.city = 'City is required';
-    }
-
-    if (trainer.salary.trim() === '') {
-      othersErrors.city = 'City is required';
-    }
-
-    setErrors(othersErrors);
   };
 
   return (
@@ -185,9 +132,7 @@ const Form = ({ addItem, closeForm }) => {
                 type="text"
                 value={trainer.firstName}
                 onChange={onChangeInput}
-                onBlur={handleBlur}
               />
-              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
             </div>
             <div className={styles.inputContainer}>
               <label className={styles.label}>Last Name</label>
@@ -198,7 +143,6 @@ const Form = ({ addItem, closeForm }) => {
                 value={trainer.lastName}
                 onChange={onChangeInput}
               />
-              {errors.lastName && <span className={styles.error}>{errors.lastName}</span>}
             </div>
           </div>
           <div className={styles.container}>
@@ -211,7 +155,6 @@ const Form = ({ addItem, closeForm }) => {
                 value={trainer.dni}
                 onChange={onChangeInput}
               />
-              {errors.dni && <span className={styles.error}>{errors.dni}</span>}
             </div>
             <div className={styles.inputContainer}>
               <label className={styles.label}>Phone</label>
@@ -222,7 +165,6 @@ const Form = ({ addItem, closeForm }) => {
                 value={trainer.phone}
                 onChange={onChangeInput}
               />
-              {errors.phone && <span className={styles.error}>{errors.phone}</span>}
             </div>
           </div>
           <div className={styles.container}>
@@ -235,7 +177,6 @@ const Form = ({ addItem, closeForm }) => {
                 value={trainer.email}
                 onChange={onChangeInput}
               />
-              {errors.email && <span className={styles.error}>{errors.email}</span>}
             </div>
             <div className={styles.inputContainer}>
               <label className={styles.label}>City</label>
@@ -246,7 +187,6 @@ const Form = ({ addItem, closeForm }) => {
                 value={trainer.city}
                 onChange={onChangeInput}
               />
-              {errors.city && <span className={styles.error}>{errors.city}</span>}
             </div>
           </div>
           <div className={styles.container}>
@@ -259,7 +199,6 @@ const Form = ({ addItem, closeForm }) => {
                 value={trainer.salary}
                 onChange={onChangeInput}
               />
-              {errors.salary && <span className={styles.error}>{errors.salary}</span>}
             </div>
           </div>
         </div>
