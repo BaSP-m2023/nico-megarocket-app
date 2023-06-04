@@ -4,19 +4,25 @@ import style from './tableActivity.module.css';
 
 const ActivitiesTable = () => {
   const [activity, setActivity] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const getActivity = async () => {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/activity`);
       const activities = await res.json();
       setActivity(activities.data);
+      setLoading(false);
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    getActivity();
+    const waitActivities = async () => {
+      setLoading(true);
+      await getActivity();
+    };
+    waitActivities();
   }, []);
 
   const deleteActivityDB = async (id) => {
@@ -43,6 +49,7 @@ const ActivitiesTable = () => {
         activity={activity}
         setActivity={setActivity}
         deleteActivity={deleteActivity}
+        loading={loading}
       />
     </section>
   );
