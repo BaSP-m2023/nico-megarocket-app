@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './classes.module.css';
 import Table from './Table/index';
 import Form from './Form/index';
@@ -10,7 +10,7 @@ function Projects() {
   const [classes, setClasses] = useState([]);
   const [updateMode, setUpdateMode] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
-  const [toastErrorOpen, setToastErrorOpen] = useState(false);
+  const [toastErroOpen, setToastErroOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [classUpdateId, setClassUpdateId] = useState('');
@@ -21,6 +21,22 @@ function Projects() {
     activity: '',
     slots: ''
   });
+
+  const getClasses = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/class`);
+      const data = await response.json();
+      setClasses(data.data);
+    } catch (error) {
+      setToastMessage('Error in Database');
+      setToastErroOpen(true);
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getClasses();
+  }, []);
 
   const createClass = async (body) => {
     try {
@@ -68,7 +84,7 @@ function Projects() {
       });
       setClasses([...classes.filter((classes) => classes._id !== id)]);
       setToastMessage('The Activity or Trainer does not exist');
-      setToastErrorOpen(true);
+      setToastErroOpen(true);
     } catch (error) {
       console.error(error);
     }
@@ -133,11 +149,6 @@ function Projects() {
           <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
         )}
       </div>
-      <div>
-        {toastErrorOpen && (
-          <ToastError setToastErroOpen={setToastErrorOpen} message={toastMessage} />
-        )}
-      </div>
       <Table
         classes={{ classes, setClasses }}
         updateClick={updateClick}
@@ -145,6 +156,7 @@ function Projects() {
         deleteClass={deleteClass}
         autoDelete={autoDelete}
       />
+      {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
     </section>
   );
 }
