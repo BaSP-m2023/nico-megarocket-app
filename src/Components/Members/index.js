@@ -89,6 +89,7 @@ function Members() {
           showEditForm={showEditForm}
           handleEditToggle={handleEditToggle}
           setEditForm={setEditForm}
+          setMembers={setMembers}
         />
       )}
     </section>

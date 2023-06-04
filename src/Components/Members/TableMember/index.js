@@ -13,7 +13,8 @@ const TableMember = ({
   showEditForm,
   handleEditToggle,
   setEditForm,
-  setModalEditConfirmOpen
+  setModalEditConfirmOpen,
+  setMembers
 }) => {
   const [member, setMember] = useState({
     firstName: '',
@@ -76,9 +77,13 @@ const TableMember = ({
           member={member}
           updateMember={onUpdateMember}
           setEditForm={setEditForm}
+          setMembers={setMembers}
+          members={members}
         />
       )}
-      {showForm && <Form member={member} setMember={setMember} />}
+      {showForm && (
+        <Form member={member} setMember={setMember} members={members} setMembers={setMembers} />
+      )}
     </div>
   );
 };
