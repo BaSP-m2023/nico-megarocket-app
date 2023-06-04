@@ -6,7 +6,7 @@ const SubscriptionsTable = () => {
   const [subscription, setSubscription] = useState([]);
   const getSubscriptions = async () => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/subscriptions`);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/subscription`);
       const subscriptions = await res.json();
       setSubscription(subscriptions.data);
     } catch (error) {
@@ -18,7 +18,7 @@ const SubscriptionsTable = () => {
   }, []);
   const deleteSubscriptionDB = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/subscriptions/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/subscription/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-type': 'application/json'

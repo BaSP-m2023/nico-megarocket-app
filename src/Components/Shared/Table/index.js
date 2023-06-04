@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from './table.module.css';
 
-const Table2 = ({ columnTitleArray, data, editButton, deleteButton, columns }) => {
+const Table2 = ({ columnTitleArray, data, editButton, deleteButton, columns, valueField }) => {
+  const fieldValue = valueField;
   return (
     <section className={styles.container}>
       {data.length === 0 ? (
@@ -25,16 +26,17 @@ const Table2 = ({ columnTitleArray, data, editButton, deleteButton, columns }) =
                 {console.log('entré al primer map')}
                 {columns.map((column, columnIndex) => (
                   <td key={columnIndex}>
-                    {Array.isArray(row[column])
-                      ? row[column].map((item, itemIndex) => (
-                          <span key={itemIndex}>
-                            {item.firstName} {item.lastName}
-                            {console.log('Soy un array')}
-                          </span>
-                        ))
-                      : typeof row[column] === 'object'
-                      ? console.log(row[column])
-                      : row[column]}
+                    {Array.isArray(row[column]) ? (
+                      row[column].map((item, itemIndex) => (
+                        <span key={itemIndex}>
+                          {item[fieldValue.arrayFirstValue]} {item[fieldValue.arraySecondValue]}
+                        </span>
+                      ))
+                    ) : typeof row[column] === 'object' ? (
+                      <span>{row[column][fieldValue.objectValue]}</span>
+                    ) : (
+                      row[column]
+                    )}
                   </td>
                 ))}
                 <td>
