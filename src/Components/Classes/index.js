@@ -25,7 +25,6 @@ function Projects() {
   const createClass = async (body) => {
     try {
       await fetch(`${process.env.REACT_APP_API_URL}/class`, body);
-      setClasses([...classes, JSON.parse(body.body)]);
       setSuccessMessage('The class has been created successfully.');
       setTimeout(() => {
         window.location.reload();

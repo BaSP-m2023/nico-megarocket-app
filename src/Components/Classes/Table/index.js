@@ -51,7 +51,7 @@ const Table = ({ data, deleteClass, updateClick, autoDelete, classes }) => {
           </thead>
           <tbody>
             {data.forEach((item) => {
-              if (!item.activity || !item.trainer) {
+              if (!item.activity || !item.trainer.length != 0) {
                 autoDelete(item._id);
               }
             })}
