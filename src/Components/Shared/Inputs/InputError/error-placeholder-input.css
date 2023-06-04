@@ -1,0 +1,25 @@
+.input-container input {
+  width: 260px;
+  height: 20px;
+  border-radius: 4px;
+  padding: 10px 12px 10px 12px;
+  border-color: #373867;
+}
+
+.input-container input:error {
+  border-color: red;
+  color: red;
+}
+
+.error-text {
+  position: absolute;
+  color: red;
+  font-size: 12px;
+  top: 100%;
+  left: 0;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+}

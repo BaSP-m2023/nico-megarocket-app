@@ -29,6 +29,7 @@ const Form = ({ updateClass, createCLass, show, updateToggle, classUpdateId, kla
     });
     updateToggle.setUpdateMode(false);
     show();
+    window.location.reload();
   };
 
   const onChangeHour = (e) => {

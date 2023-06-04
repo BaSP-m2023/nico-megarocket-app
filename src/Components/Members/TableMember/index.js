@@ -13,7 +13,11 @@ const TableMember = ({
   showEditForm,
   handleEditToggle,
   setEditForm,
-  setModalEditConfirmOpen
+  setModalEditConfirmOpen,
+  memberEditedId,
+  memberEdited,
+  setMemberEdited,
+  setMembers
 }) => {
   const [member, setMember] = useState({
     firstName: '',
@@ -62,6 +66,7 @@ const TableMember = ({
                   setEditForm={setEditForm}
                   setMemberID={setmemberId}
                   memberID={member._id}
+                  memberEditedId={memberEditedId}
                 />
                 <DeleteMember memberId={member._id} onDeleteMember={onDeleteMember} />
               </td>
@@ -76,9 +81,15 @@ const TableMember = ({
           member={member}
           updateMember={onUpdateMember}
           setEditForm={setEditForm}
+          setMemberEdited={setMemberEdited}
+          memberEdited={memberEdited}
+          setMembers={setMembers}
+          members={members}
         />
       )}
-      {showForm && <Form member={member} setMember={setMember} />}
+      {showForm && (
+        <Form member={member} setMember={setMember} members={members} setMembers={setMembers} />
+      )}
     </div>
   );
 };
