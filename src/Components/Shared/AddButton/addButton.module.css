@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.container_button{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 1000px;
+  margin-bottom: 10px;
+}
+.link_styles{
+  text-decoration: none;
+}
+.add_button{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 30px;
+  gap: 10px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+}
+.btn_text{
+  font-size: 1rem;
+  font-weight: bold;
+  color: #373867;
+  font-family: 'Roboto', sans-serif;
+}
+.add_btn_img{
+  width: 15px;
+  height: 15px;
+}
