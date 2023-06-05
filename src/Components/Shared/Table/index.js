@@ -1,8 +1,25 @@
-import React from 'react';
 import styles from './table.module.css';
 
-const Table2 = ({ columnTitleArray, data, editButton, deleteButton, columns, valueField }) => {
+const Table2 = ({
+  columnTitleArray,
+  data,
+  editButton,
+  deleteButton,
+  columns,
+  valueField,
+  arrayAndObject,
+  autoDelete
+}) => {
   const fieldValue = valueField;
+  {
+    arrayAndObject &&
+      data.forEach((item) => {
+        if (!item[arrayAndObject.object] || !item[arrayAndObject.array].length != 0) {
+          autoDelete(item._id);
+        }
+      });
+  }
+
   return (
     <section className={styles.container}>
       {data.length === 0 ? (
@@ -23,19 +40,22 @@ const Table2 = ({ columnTitleArray, data, editButton, deleteButton, columns, val
           <tbody>
             {data.map((row, index) => (
               <tr key={index}>
-                {console.log('entré al primer map')}
                 {columns.map((column, columnIndex) => (
                   <td key={columnIndex}>
-                    {Array.isArray(row[column]) ? (
-                      row[column].map((item, itemIndex) => (
-                        <span key={itemIndex}>
-                          {item[fieldValue.arrayFirstValue]} {item[fieldValue.arraySecondValue]}
-                        </span>
-                      ))
-                    ) : typeof row[column] === 'object' ? (
-                      <span>{row[column][fieldValue.objectValue]}</span>
+                    {row[column] ? (
+                      Array.isArray(row[column]) ? (
+                        row[column].map((item, itemIndex) => (
+                          <span key={itemIndex}>
+                            {item[fieldValue.arrayFirstValue]} {item[fieldValue.arraySecondValue]}
+                          </span>
+                        ))
+                      ) : typeof row[column] === 'object' ? (
+                        <span>{row[column][fieldValue.objectValue]}</span>
+                      ) : (
+                        row[column]
+                      )
                     ) : (
-                      row[column]
+                      ''
                     )}
                   </td>
                 ))}
