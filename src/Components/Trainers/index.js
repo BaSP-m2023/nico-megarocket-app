@@ -17,7 +17,7 @@ function Trainers() {
 
   const getTrainers = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/trainer`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`);
       const data = await response.json();
       setTrainers(data.data);
     } catch (error) {
@@ -31,7 +31,7 @@ function Trainers() {
 
   const deleteTrainer = async (id) => {
     try {
-      await fetch(process.env.REACT_APP_API_URL + '/trainer/' + id, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
         method: 'DELETE'
       });
       const newTrainers = trainers.filter((trainer) => trainer._id !== id);

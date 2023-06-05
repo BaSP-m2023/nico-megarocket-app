@@ -10,7 +10,7 @@ const ActivitiesTable = () => {
 
   const getActivity = async () => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/activity`);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activity`);
       const activities = await res.json();
       setActivity(activities.data);
       setLoading(false);
@@ -30,7 +30,7 @@ const ActivitiesTable = () => {
 
   const deleteActivityDB = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/activity/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'

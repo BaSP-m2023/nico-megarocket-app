@@ -20,7 +20,7 @@ const SuperAdmins = () => {
 
   const getSuperAdmins = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin`);
       const data = await response.json();
       setSuperAdmins(data.data);
     } catch (error) {
@@ -35,7 +35,7 @@ const SuperAdmins = () => {
 
   const deleteItem = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
@@ -55,7 +55,7 @@ const SuperAdmins = () => {
         email,
         password
       };
-      const response = await fetch(`${process.env.REACT_APP_API_URL}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -77,7 +77,7 @@ const SuperAdmins = () => {
       // eslint-disable-next-line no-unused-vars
       const { _id, __v, ...updatedData } = updatedItem;
       console.log(JSON.stringify(updatedData));
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/${_id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin/${_id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
