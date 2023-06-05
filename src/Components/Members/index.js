@@ -23,7 +23,7 @@ function Members() {
 
   const getMembers = async () => {
     try {
-      const reponse = await fetch(`${process.env.REACT_APP_API_URL}/member`);
+      const reponse = await fetch(`${process.env.REACT_APP_API_URL}/api/member`);
       const data = await reponse.json();
       setMembers(data.data);
     } catch (error) {
@@ -54,7 +54,7 @@ function Members() {
   const updateMember = async (id, memberUpdated) => {
     let memberToUpdateIndex = members.findIndex((member) => member._id === id);
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/member/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json'
@@ -75,7 +75,7 @@ function Members() {
 
   const memberDelete = async (memberId) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/member/${memberId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${memberId}`, {
         method: 'DELETE'
       });
       console.log(response);
