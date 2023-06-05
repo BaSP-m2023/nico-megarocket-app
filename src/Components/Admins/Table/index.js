@@ -1,17 +1,28 @@
 import React, { useState } from 'react';
 import styles from './table.module.css';
-import Modal from '../Modals/ModalDelete/ModalDelete';
-import ModalDeleteConfirmation from '../Modals/ModalDeleteConfirmation/ModalDeleteConfirmation';
+import { ModalConfirm, ModalSuccess } from '../../Shared';
 
 function index({ admins, setShowform, setAdminToEditId, setEditMode, adminEditedId, deleteAdm }) {
-  const [showModal, setShowModal] = useState(false);
-  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-  const [adminToDeleteId, setAdminToDeleteId] = useState('');
-  const [adminFullName, setAdminFullName] = useState('');
+  const [modalDeleteConfirmOpen, setModalDeleteConfirmOpen] = useState(false);
+  const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(false);
+  const [idAdmin, setIdAdmin] = useState('');
 
   const handleCreateClick = () => {
     setShowform(true);
     setEditMode(false);
+  };
+
+  const adminDelete = (id) => {
+    setModalDeleteConfirmOpen(true);
+    setIdAdmin(id);
+  };
+
+  const onConfirm = () => {
+    deleteAdm(idAdmin);
+    setModalDeleteConfirmOpen(false);
+    setModalSuccessOpen(true);
+    setSuccessMessage('Deleted succesffully');
   };
 
   const handleEditClick = (id) => {
@@ -21,31 +32,8 @@ function index({ admins, setShowform, setAdminToEditId, setEditMode, adminEdited
     setAdminToEditId(id);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
-  const handleDeleteClick = (id) => {
-    setShowModal(true);
-    setAdminToDeleteId(id);
-  };
-
-  const confirmDelete = () => {
-    deleteAdm(adminToDeleteId);
-    closeModal();
-    setShowConfirmationModal(true);
-  };
-
   return (
     <div className={styles.container}>
-      <Modal show={showModal} confirmDelete={confirmDelete} closeModal={closeModal} />
-      {showConfirmationModal && (
-        <ModalDeleteConfirmation
-          show={showConfirmationModal}
-          setShowConfirmationModal={setShowConfirmationModal}
-          adminFullName={adminFullName}
-        />
-      )}
       <table className={styles.table}>
         <thead>
           <tr>
@@ -92,8 +80,7 @@ function index({ admins, setShowform, setAdminToEditId, setEditMode, adminEdited
                     src={`${process.env.PUBLIC_URL}/assets/images/trash-delete.svg`}
                     alt="delete icon"
                     onClick={() => {
-                      handleDeleteClick(item._id);
-                      setAdminFullName(item.firstName + ' ' + item.lastName);
+                      adminDelete(item._id);
                     }}
                   />
                 </td>
@@ -109,6 +96,17 @@ function index({ admins, setShowform, setAdminToEditId, setEditMode, adminEdited
           </tr>
         </tfoot>
       </table>
+      {modalDeleteConfirmOpen && (
+        <ModalConfirm
+          method="Delete"
+          onConfirm={onConfirm}
+          setModalConfirmOpen={setModalDeleteConfirmOpen}
+          message="Are you sure you want to delete this?"
+        />
+      )}
+      {modalSuccessOpen && (
+        <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
+      )}
     </div>
   );
 }
