@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './form.module.css';
 import { ModalConfirm } from '../../Shared';
 
-const Form = ({
+const FormAdmin = ({
   addAdmin,
   closedForm,
   adminToEditId,
@@ -281,4 +281,4 @@ const Form = ({
   );
 };
 
-export default Form;
+export default FormAdmin;

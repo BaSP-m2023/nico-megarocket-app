@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react';
 import styles from './admins.module.css';
 import Table from './Table';
 import Form from './Form';
-import { ModalSuccess } from '../Shared';
-import { ToastError } from '../Shared';
+import { ModalSuccess, ToastError, AddButton } from '../Shared';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function Admins() {
   const [admins, setAdmins] = useState([]);
 
+  // eslint-disable-next-line no-unused-vars
   const [showForm, setShowform] = useState(false);
 
   const [adminToEditId, setAdminToEditId] = useState('');
@@ -124,33 +125,40 @@ function Admins() {
   return (
     <section className={styles.container}>
       <h2>Admins</h2>
-      <Table
-        setAdminToEditId={setAdminToEditId}
-        admins={admins}
-        setShowform={setShowform}
-        setEditMode={setEditMode}
-        adminEditedId={adminEditedId}
-        deleteAdm={deleteAdmin}
-      />
-      {showForm && (
-        <Form
-          addAdmin={addAdmin}
-          closedForm={closeForm}
-          adminToEditId={adminToEditId}
-          admins={admins}
-          editMode={editMode}
-          adminEdited={adminEdited}
-          setAdminEdited={setAdminEdited}
-          finalEdit={finalEdit}
-        />
-      )}
-      {modalSuccessOpen && (
-        <ModalSuccess
-          message={editMode ? 'Admin edited successfully' : 'Admin created successfully'}
-          setModalSuccessOpen={setModalSuccessOpen}
-        />
-      )}
-      {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
+      <AddButton path="/formAdmin" />
+      <Router>
+        <Switch>
+          <Route path="/admins/">
+            <Table
+              setAdminToEditId={setAdminToEditId}
+              admins={admins}
+              setShowform={setShowform}
+              setEditMode={setEditMode}
+              adminEditedId={adminEditedId}
+              deleteAdm={deleteAdmin}
+            />
+          </Route>
+          <Route path="/formAdmin">
+            <Form
+              addAdmin={addAdmin}
+              closedForm={closeForm}
+              adminToEditId={adminToEditId}
+              admins={admins}
+              editMode={editMode}
+              adminEdited={adminEdited}
+              setAdminEdited={setAdminEdited}
+              finalEdit={finalEdit}
+            />
+          </Route>
+        </Switch>
+        {modalSuccessOpen && (
+          <ModalSuccess
+            message={editMode ? 'Admin edited successfully' : 'Admin created successfully'}
+            setModalSuccessOpen={setModalSuccessOpen}
+          />
+        )}
+        {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
+      </Router>
     </section>
   );
 }
