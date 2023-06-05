@@ -80,6 +80,7 @@ const Form = ({
       });
       addAdmins();
     }
+    window.location.reload();
     closedForm();
   };
 
