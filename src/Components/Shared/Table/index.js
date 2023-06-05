@@ -1,6 +1,6 @@
 import styles from './table.module.css';
 
-const Table2 = ({
+const TableComponent = ({
   columnTitleArray,
   data,
   editButton,
@@ -85,4 +85,4 @@ const Table2 = ({
   );
 };
 
-export default Table2;
+export default TableComponent;
