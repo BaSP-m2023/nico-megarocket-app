@@ -1,0 +1,24 @@
+.normalInput {
+  width: 255px;
+  border: 1px solid;
+  height: 25px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.normalInput:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  color: #666;
+  border: 1px solid #cccccc;
+  background-color: #cccccc;
+  box-shadow: none;
+}
+
+.nameLabel label {
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}

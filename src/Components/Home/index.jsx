@@ -1,5 +1,4 @@
 import styles from './home.module.css';
-
 function Home() {
   return (
     <section className={styles.container}>
@@ -7,5 +6,4 @@ function Home() {
     </section>
   );
 }
-
 export default Home;

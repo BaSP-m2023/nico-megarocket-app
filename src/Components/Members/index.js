@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './members.module.css';
 import TableMember from './TableMember';
+import { ToastError } from '../Shared';
 
 function Members() {
   const [members, setMembers] = useState([]);
@@ -18,6 +19,7 @@ function Members() {
     isActive: '',
     membership: ''
   });
+  const [toastErroOpen, setToastErroOpen] = useState(false);
 
   const getMembers = async () => {
     try {
@@ -25,6 +27,7 @@ function Members() {
       const data = await reponse.json();
       setMembers(data.data);
     } catch (error) {
+      setToastErroOpen(true);
       console.log(error);
     }
   };
@@ -120,6 +123,9 @@ function Members() {
           memberEdited={memberEdited}
           setMembers={setMembers}
         />
+      )}
+      {toastErroOpen && (
+        <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
       )}
     </section>
   );

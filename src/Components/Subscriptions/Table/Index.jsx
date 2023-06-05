@@ -1,15 +1,19 @@
 import { useState, useEffect } from 'react';
 import TableSubscriptions from './TableSubscription';
 import style from './TableSubscriptions.module.css';
+import { ToastError } from '../../Shared';
 
 const SubscriptionsTable = () => {
   const [subscription, setSubscription] = useState([]);
+  const [toastErroOpen, setToastErroOpen] = useState(false);
+
   const getSubscriptions = async () => {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/subscription`);
       const subscriptions = await res.json();
       setSubscription(subscriptions.data);
     } catch (error) {
+      setToastErroOpen(true);
       console.error(error);
     }
   };
@@ -39,6 +43,9 @@ const SubscriptionsTable = () => {
         setSubscription={setSubscription}
         deleteSubscription={deleteSubscription}
       />
+      {toastErroOpen && (
+        <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
+      )}
     </section>
   );
 };
