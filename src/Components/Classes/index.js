@@ -24,7 +24,7 @@ function Projects() {
 
   const getClasses = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/class`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class`);
       const data = await response.json();
       setClasses(data.data);
     } catch (error) {
@@ -40,7 +40,7 @@ function Projects() {
 
   const createClass = async (body) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/class`, body);
+      await fetch(`${process.env.REACT_APP_API_URL}/api/class`, body);
       setSuccessMessage('The class has been created successfully.');
       setTimeout(() => {
         window.location.reload();
@@ -52,7 +52,7 @@ function Projects() {
 
   const updateClass = async (id, body) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/class/${id}`, body);
+      await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, body);
     } catch (error) {
       console.error(error);
     }
@@ -60,7 +60,7 @@ function Projects() {
 
   const deleteClassfromDB = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/class/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
@@ -76,7 +76,7 @@ function Projects() {
 
   const autoDelete = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/class/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
