@@ -18,6 +18,8 @@ function Admins() {
 
   const [toastErroOpen, setToastErroOpen] = useState(false);
 
+  const [toastMessage, setToastMessage] = useState('Error in database');
+
   const [adminEdited, setAdminEdited] = useState({
     firstName: '',
     lastName: '',
@@ -70,22 +72,28 @@ function Admins() {
 
   const editAdmins = async (id, bodyEdited) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
+      const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(bodyEdited)
       });
-      const updateAdmins = [...admins];
-      const index = updateAdmins.findIndex((admin) => admin._id === id);
-      if (index !== -1) {
-        updateAdmins[index] = bodyEdited;
-        setAdmins(updateAdmins);
-        setModalSuccessOpen(true);
+      const data = await resp.json();
+      if (data.error) {
+        throw new Error(data.message);
+      } else {
+        const updateAdmins = [...admins];
+        const index = updateAdmins.findIndex((admin) => admin._id === id);
+        if (index !== -1) {
+          updateAdmins[index] = bodyEdited;
+          setAdmins(updateAdmins);
+          setModalSuccessOpen(true);
+        }
       }
     } catch (error) {
-      console.error(error);
+      setToastMessage(error.message);
+      setToastErroOpen(true);
     }
   };
 
@@ -142,9 +150,7 @@ function Admins() {
           setModalSuccessOpen={setModalSuccessOpen}
         />
       )}
-      {toastErroOpen && (
-        <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
-      )}
+      {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
     </section>
   );
 }
