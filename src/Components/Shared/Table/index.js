@@ -1,9 +1,10 @@
+import ButtonForm from '../ButtonForm';
 import styles from './table.module.css';
 
 const TableComponent = ({
   columnTitleArray,
   data,
-  editButton,
+  handleClick,
   deleteButton,
   columns,
   valueField,
@@ -62,18 +63,10 @@ const TableComponent = ({
                     </td>
                   ))}
                   <td>
-                    <img
-                      className={styles.trash_edit}
-                      onClick={() => editButton(row)}
-                      src={`${process.env.PUBLIC_URL}/assets/images/pencil-edit.svg`}
-                    />
+                    <ButtonForm nameImg="pencil-edit.svg" onAction={() => handleClick(row)} />
                   </td>
                   <td>
-                    <img
-                      className={styles.trash_edit}
-                      onClick={() => deleteButton(row._id)}
-                      src={`${process.env.PUBLIC_URL}/assets/images/trash-delete.svg`}
-                    />
+                    <ButtonForm nameImg="trash-delete.svg" onAction={() => deleteButton(row._id)} />
                   </td>
                 </tr>
               );
