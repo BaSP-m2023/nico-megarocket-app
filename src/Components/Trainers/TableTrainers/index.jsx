@@ -31,6 +31,7 @@ const Table = ({
   };
 
   const somefunction = (id) => {
+    console.log(id);
     setModalDeleteConfirmOpen(true);
     setIdTrainer(id);
   };

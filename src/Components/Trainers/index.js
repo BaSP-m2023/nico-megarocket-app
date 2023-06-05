@@ -41,8 +41,9 @@ function Trainers() {
     }
   };
 
-  const addItem = ({ firstName, lastName, dni, phone, email, city, salary, isActive }) => {
+  const addItem = ({ firstName, lastName, dni, phone, email, city, salary, isActive }, _id) => {
     const newItem = {
+      _id,
       firstName,
       lastName,
       dni,
