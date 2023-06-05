@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import styles from './form.module.css';
 import { ModalConfirm } from '../../Shared';
 import { ModalSuccess } from '../../Shared';
+import { Inputs, OptionInput } from '../../Shared';
 
-export const Form = ({ member, setMember, setMembers, members }) => {
+export const MembersForm = () => {
   const [validationsOk, setValidationsOk] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [modalAddConfirmOpen, setModalAddConfirmOpen] = useState(false);
+  const [member, setMember] = useState({});
+  const memberships = ['Black', 'Classic', 'Only Classes'];
 
   const handleChange = (e) => {
     setMember({
@@ -16,33 +19,6 @@ export const Form = ({ member, setMember, setMembers, members }) => {
       isActive: true
     });
     setValidationsOk(true);
-  };
-
-  const addItem = ({
-    firstName,
-    lastName,
-    dni,
-    birthday,
-    phone,
-    email,
-    city,
-    postalCode,
-    isActive,
-    membership
-  }) => {
-    const newItem = {
-      firstName,
-      lastName,
-      dni,
-      birthday,
-      phone,
-      email,
-      city,
-      postalCode,
-      isActive,
-      membership
-    };
-    setMembers([...members, newItem]);
   };
 
   const handleSubmit = async (e) => {
@@ -68,7 +44,6 @@ export const Form = ({ member, setMember, setMembers, members }) => {
       });
       setModalSuccessOpen(true);
       setSuccessMessage('Member added successfully!');
-      addItem(member);
       setMember({
         firstName: '',
         lastName: '',
@@ -106,105 +81,63 @@ export const Form = ({ member, setMember, setMembers, members }) => {
         <section className={styles.inputGroups}>
           <div className={styles.inputGroup}>
             <div className={styles.inputContainer}>
-              <label>FirstName</label>
-              <input
-                className={styles.input}
-                name="firstName"
-                type="text"
-                value={member.firstName}
-                onChange={handleChange}
-                required
-              />
+              <Inputs nameTitle="Name" type="text" change={handleChange} nameInput="firstName" />
             </div>
             <div className={styles.inputContainer}>
-              <label>LastName</label>
-              <input
-                className={styles.input}
-                name="lastName"
-                type="text"
-                value={member.lastName}
-                onChange={handleChange}
-                required
-              />
+              <Inputs nameTitle="Lastname" type="text" change={handleChange} nameInput="lastName" />
             </div>
             <div className={styles.inputContainer}>
-              <label>DNI</label>
-              <input
-                className={styles.input}
-                name="dni"
-                type="number"
-                value={member.dni}
-                onChange={handleChange}
-                required
-              />
+              <Inputs nameTitle="DNI" type="text" change={handleChange} nameInput="dni" />
             </div>
             <div className={styles.inputContainer}>
-              <label>Birthday</label>
-              <input
-                className={styles.input}
-                name="birthday"
+              <Inputs
+                nameTitle="Birthday"
                 type="date"
-                value={member.birthday}
-                onChange={handleChange}
+                change={handleChange}
+                nameInput="birthday"
                 required
               />
             </div>
           </div>
           <div className={styles.inputGroup}>
             <div className={styles.inputContainer}>
-              <label>Phone</label>
-              <input
-                className={styles.input}
-                name="phone"
+              <Inputs
+                nameTitle="Phone"
                 type="number"
-                value={member.phone}
-                onChange={handleChange}
+                change={handleChange}
+                nameInput="phone"
                 required
               />
             </div>
             <div className={styles.inputContainer}>
-              <label>Email</label>
-              <input
-                className={styles.input}
-                name="email"
+              <Inputs
+                nameTitle="Email"
                 type="email"
-                value={member.email}
-                onChange={handleChange}
+                change={handleChange}
+                nameInput="email"
                 required
               />
             </div>
             <div className={styles.inputContainer}>
-              <label>City</label>
-              <input
-                className={styles.input}
-                name="city"
+              <Inputs
+                nameTitle="City"
                 type="text"
-                value={member.city}
-                onChange={handleChange}
+                change={handleChange}
+                nameInput="city"
                 required
               />
             </div>
             <div className={styles.inputContainer}>
-              <label>Postal Code</label>
-              <input
-                className={styles.input}
-                name="postalCode"
+              <Inputs
+                nameTitle="Postal Code"
                 type="number"
-                value={member.postalCode}
-                onChange={handleChange}
+                change={handleChange}
+                nameInput="postalCode"
                 required
               />
             </div>
             <div className={styles.inputContainer}>
-              <label>Membership</label>
-              <input
-                className={styles.input}
-                name="membership"
-                type="text"
-                value={member.membership}
-                onChange={handleChange}
-                required
-              />
+              <OptionInput dataOptions={memberships} />
             </div>
           </div>
         </section>
