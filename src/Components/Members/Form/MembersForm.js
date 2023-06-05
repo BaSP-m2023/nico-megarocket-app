@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import styles from './form.module.css';
 import { ModalConfirm } from '../../Shared';
 import { ModalSuccess } from '../../Shared';
-import { Inputs, OptionInput } from '../../Shared';
+import { Inputs, Button /* , OptionInput */ } from '../../Shared';
 
 export const MembersForm = () => {
-  const [validationsOk, setValidationsOk] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [modalAddConfirmOpen, setModalAddConfirmOpen] = useState(false);
   const [member, setMember] = useState({});
-  const memberships = ['Black', 'Classic', 'Only Classes'];
+  /*  const memberships = ['Black', 'Classic', 'Only Classes']; */
 
   const handleChange = (e) => {
     setMember({
@@ -18,7 +17,6 @@ export const MembersForm = () => {
       [e.target.name]: e.target.value,
       isActive: true
     });
-    setValidationsOk(true);
   };
 
   const handleSubmit = async (e) => {
@@ -81,17 +79,36 @@ export const MembersForm = () => {
         <section className={styles.inputGroups}>
           <div className={styles.inputGroup}>
             <div className={styles.inputContainer}>
-              <Inputs nameTitle="Name" type="text" change={handleChange} nameInput="firstName" />
+              <Inputs
+                nameTitle="Name"
+                text={member.firstName}
+                type="text"
+                change={handleChange}
+                nameInput="firstName"
+              />
             </div>
             <div className={styles.inputContainer}>
-              <Inputs nameTitle="Lastname" type="text" change={handleChange} nameInput="lastName" />
+              <Inputs
+                nameTitle="Lastname"
+                text={member.lastName}
+                type="text"
+                change={handleChange}
+                nameInput="lastName"
+              />
             </div>
             <div className={styles.inputContainer}>
-              <Inputs nameTitle="DNI" type="text" change={handleChange} nameInput="dni" />
+              <Inputs
+                nameTitle="DNI"
+                text={member.dni}
+                type="text"
+                change={handleChange}
+                nameInput="dni"
+              />
             </div>
             <div className={styles.inputContainer}>
               <Inputs
                 nameTitle="Birthday"
+                text={member.birthday}
                 type="date"
                 change={handleChange}
                 nameInput="birthday"
@@ -103,6 +120,7 @@ export const MembersForm = () => {
             <div className={styles.inputContainer}>
               <Inputs
                 nameTitle="Phone"
+                text={member.phone}
                 type="number"
                 change={handleChange}
                 nameInput="phone"
@@ -112,6 +130,7 @@ export const MembersForm = () => {
             <div className={styles.inputContainer}>
               <Inputs
                 nameTitle="Email"
+                text={member.email}
                 type="email"
                 change={handleChange}
                 nameInput="email"
@@ -121,6 +140,7 @@ export const MembersForm = () => {
             <div className={styles.inputContainer}>
               <Inputs
                 nameTitle="City"
+                text={member.city}
                 type="text"
                 change={handleChange}
                 nameInput="city"
@@ -130,6 +150,7 @@ export const MembersForm = () => {
             <div className={styles.inputContainer}>
               <Inputs
                 nameTitle="Postal Code"
+                text={member.postalCode}
                 type="number"
                 change={handleChange}
                 nameInput="postalCode"
@@ -137,19 +158,22 @@ export const MembersForm = () => {
               />
             </div>
             <div className={styles.inputContainer}>
-              <OptionInput dataOptions={memberships} />
+              <Inputs
+                nameTitle="Membership"
+                text={member.membership}
+                type="text"
+                change={handleChange}
+                nameInput="membership"
+                required
+              />
+              {/* <OptionInput dataOptions={memberships} nameInput="membership" /> */}
             </div>
           </div>
         </section>
-        {validationsOk ? (
-          <button className={styles.submitButton} type="submit">
-            Submit
-          </button>
-        ) : (
-          <button className={styles.submitButton} type="submit" disabled>
-            Submit
-          </button>
-        )}
+        <div className={styles.buttonContainer}>
+          <Button clickAction={handleSubmit} text="Submit" />
+          <Button text="cancel" />
+        </div>
       </form>
     </div>
   );
