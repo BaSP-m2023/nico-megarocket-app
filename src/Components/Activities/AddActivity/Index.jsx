@@ -2,6 +2,8 @@ import { useState } from 'react';
 import style from './modalAdd.module.css';
 import { ModalConfirm } from '../../Shared';
 import { ModalSuccess } from '../../Shared';
+import { Inputs } from '../../Shared';
+import { Button } from '../../Shared/index';
 
 const ModalAddActivity = ({
   setModalAdd,
@@ -104,53 +106,39 @@ const ModalAddActivity = ({
     }, 1000);
   };
 
+  const enterForm = () => {
+    setModalAdd(false);
+    setTable(true);
+  };
+
   return (
     <section className={style.containerModal}>
-      <form onSubmit={handleConfirmEdit} className={style.containerForm}>
+      <form className={style.containerForm}>
         <h3>Add</h3>
-        <div>
-          <label>Name:</label>
-          <input
-            type="text"
-            value={editMode ? editActivities.name : bodyActivity.name}
-            name="name"
-            onChange={editMode ? changeInputEdit : changeInput}
-          />
-        </div>
-        <div>
-          <label>Description:</label>
-          <input
-            type="text"
-            value={editMode ? editActivities.description : bodyActivity.description}
-            name="description"
-            onChange={editMode ? changeInputEdit : changeInput}
-          />
-        </div>
-        <div>
-          <label>isActive</label>
-          <input
-            type="text"
-            value={editMode ? editActivities.isActive : bodyActivity.isActive}
-            name="isActive"
-            onChange={editMode ? changeInputEdit : changeInput}
-          />
-        </div>
+        <Inputs
+          nameTitle="Name:"
+          type="text"
+          text={editMode ? editActivities.name : bodyActivity.name}
+          change={editMode ? changeInputEdit : changeInput}
+          nameInput="name"
+        />
+        <Inputs
+          nameTitle="Description:"
+          type="text"
+          text={editMode ? editActivities.description : bodyActivity.description}
+          change={editMode ? changeInputEdit : changeInput}
+          nameInput="description"
+        />
+        <Inputs
+          nameTitle="Is active:"
+          type="text"
+          text={editMode ? editActivities.isActive : bodyActivity.isActive}
+          change={editMode ? changeInputEdit : changeInput}
+          nameInput="isActive"
+        />
         <div className={style.containerAddButton}>
-          <button
-            onClick={() => {
-              setModalAdd(false);
-              setTable(true);
-            }}
-          >
-            Cancel
-          </button>
-          {!active ? (
-            <button>Save</button>
-          ) : (
-            <button disabled className={style.buttonDisabled}>
-              Save
-            </button>
-          )}
+          <Button clickAction={enterForm} text="Cancel" />
+          <Button clickAction={handleConfirmEdit} text="Save" disabled={active} />
         </div>
       </form>
       {modalConfirmOpen && (
