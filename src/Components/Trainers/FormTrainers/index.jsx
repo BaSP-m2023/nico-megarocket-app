@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styles from './form.module.css';
 import { ModalConfirm } from '../../Shared';
 import { ModalSuccess } from '../../Shared';
+import { Inputs } from '../../Shared';
+import { Button } from '../../Shared';
 
 const Form = ({ addItem, closeForm }) => {
   const [trainer, setTrainer] = useState({
@@ -126,7 +128,7 @@ const Form = ({ addItem, closeForm }) => {
           <div className={styles.container}>
             <div className={styles.inputContainer}>
               <label className={styles.label}>First Name</label>
-              <input
+              <Inputs
                 className={styles.input}
                 name="firstName"
                 type="text"
@@ -136,7 +138,7 @@ const Form = ({ addItem, closeForm }) => {
             </div>
             <div className={styles.inputContainer}>
               <label className={styles.label}>Last Name</label>
-              <input
+              <Inputs
                 className={styles.input}
                 name="lastName"
                 type="text"
@@ -148,7 +150,7 @@ const Form = ({ addItem, closeForm }) => {
           <div className={styles.container}>
             <div className={styles.inputContainer}>
               <label className={styles.label}>DNI</label>
-              <input
+              <Inputs
                 className={styles.input}
                 name="dni"
                 type="number"
@@ -158,7 +160,7 @@ const Form = ({ addItem, closeForm }) => {
             </div>
             <div className={styles.inputContainer}>
               <label className={styles.label}>Phone</label>
-              <input
+              <Inputs
                 className={styles.input}
                 name="phone"
                 type="number"
@@ -170,7 +172,7 @@ const Form = ({ addItem, closeForm }) => {
           <div className={styles.container}>
             <div className={styles.inputContainer}>
               <label className={styles.label}>Email</label>
-              <input
+              <Inputs
                 className={styles.input}
                 name="email"
                 type="text"
@@ -180,7 +182,7 @@ const Form = ({ addItem, closeForm }) => {
             </div>
             <div className={styles.inputContainer}>
               <label className={styles.label}>City</label>
-              <input
+              <Inputs
                 className={styles.input}
                 name="city"
                 type="text"
@@ -192,7 +194,7 @@ const Form = ({ addItem, closeForm }) => {
           <div className={styles.container}>
             <div className={styles.inputContainer}>
               <label className={styles.label}>Salary</label>
-              <input
+              <Inputs
                 className={styles.input}
                 name="salary"
                 type="number"
@@ -203,12 +205,8 @@ const Form = ({ addItem, closeForm }) => {
           </div>
         </div>
         <div className={styles.container}>
-          <button className={styles.buttonCancel} onClick={formClose}>
-            Cancel
-          </button>
-          <button className={styles.buttonAdd} type="submit" onClick={handleClick}>
-            Add trainer
-          </button>
+          <Button clickAction={formClose} text="Cancel" />
+          <Button clickAction={handleClick} text="Add Trainer" />
         </div>
       </form>
       {modalConfirmAdd && (
