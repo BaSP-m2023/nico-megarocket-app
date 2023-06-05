@@ -4,7 +4,7 @@ import styles from './table.module.css';
 const TableComponent = ({
   columnTitleArray,
   data,
-  editButton,
+  handleClick,
   deleteButton,
   columns,
   valueField,
@@ -63,7 +63,7 @@ const TableComponent = ({
                     </td>
                   ))}
                   <td>
-                    <ButtonForm nameImg="pencil-edit.svg" onAction={() => editButton(row)} />
+                    <ButtonForm nameImg="pencil-edit.svg" onAction={() => handleClick(row)} />
                   </td>
                   <td>
                     <ButtonForm nameImg="trash-delete.svg" onAction={() => deleteButton(row._id)} />
