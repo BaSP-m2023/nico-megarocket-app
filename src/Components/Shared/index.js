@@ -1,6 +1,7 @@
 export { default as ModalConfirm } from './Modals/ModalConfirm';
 export { default as ModalSuccess } from './Modals/ModalSuccess';
 export { default as ToastError } from './Modals/ToastError';
+export { default as TableComponent } from './Table';
 export { default as AddButton } from './AddButton';
 export { default as Button } from './Button';
 export { default as Loader } from './Loader';
