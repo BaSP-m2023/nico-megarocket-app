@@ -14,7 +14,7 @@ const TableSubscriptions = ({ subscription, deleteSubscription, setSubscription 
   const editSubscriptionDB = async (id, editSubscriptions) => {
     try {
       let subscriptionUpdated = await fetch(
-        `${process.env.REACT_APP_API_URL}/subscriptions/${id}`,
+        `${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`,
         {
           method: 'PUT',
           headers: {

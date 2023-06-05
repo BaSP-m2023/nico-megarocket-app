@@ -71,7 +71,7 @@ const Form = ({ addItem, closeForm }) => {
 
   const addTrainer = async (trainer) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/trainer`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

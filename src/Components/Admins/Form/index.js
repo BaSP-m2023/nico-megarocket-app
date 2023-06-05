@@ -25,7 +25,7 @@ const Form = ({
 
   const addAdmins = async () => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/admins`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
