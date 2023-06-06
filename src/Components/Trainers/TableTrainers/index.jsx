@@ -58,7 +58,7 @@ const Table = ({
           </tr>
         </thead>
         <tbody>
-          {data.length === 0 && (
+          {!data.length && (
             <tr>
               <td className={styles.noneTrainer} colSpan={8}>
                 The list is empty

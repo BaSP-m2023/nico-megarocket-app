@@ -2,6 +2,9 @@ import React from 'react';
 import styles from './modalConfirm.module.css';
 
 const ModalConfirm = ({ message, method, onConfirm, setModalConfirmOpen }) => {
+  const onConfirmFunction = () => {
+    onConfirm(), setModalConfirmOpen(false);
+  };
   return (
     <div className={styles.modalAlert}>
       <div className={styles.modalStyles}>
@@ -33,7 +36,7 @@ const ModalConfirm = ({ message, method, onConfirm, setModalConfirmOpen }) => {
             className={
               method.toLowerCase() === 'delete' ? styles.btnAcceptDelete : styles.btnAccept
             }
-            onClick={onConfirm}
+            onClick={onConfirmFunction}
           >
             {method}
           </button>
