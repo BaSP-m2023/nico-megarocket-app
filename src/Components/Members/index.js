@@ -1,12 +1,10 @@
+import { ToastError, TableComponent } from '../Shared';
 import { useEffect, useState } from 'react';
 import styles from './members.module.css';
-import TableMember from './TableMember';
-import { ToastError } from '../Shared';
+import { useHistory } from 'react-router-dom';
 
 function Members() {
   const [members, setMembers] = useState([]);
-  const [showForm, setShowForm] = useState(false);
-  const [showEditForm, setEditForm] = useState(false);
   const [memberEdited, setMemberEdited] = useState({
     firstName: '',
     lastName: '',
@@ -20,6 +18,16 @@ function Members() {
     membership: ''
   });
   const [toastErroOpen, setToastErroOpen] = useState(false);
+
+  const history = useHistory();
+
+  const handleClick = (item) => {
+    history.push(`members/form/${item._id}`, { params: { mode: 'edit', ...item } });
+  };
+
+  const createMode = () => {
+    history.push(`members/form/`, { params: { mode: 'create' } });
+  };
 
   const getMembers = async () => {
     try {
@@ -85,15 +93,27 @@ function Members() {
     }
   };
 
-  const handleToggle = () => {
-    setShowForm((current) => !current);
-    setEditForm(false);
-  };
+  const columns = [
+    'Full Name',
+    'email',
+    'phone',
+    'city',
+    'isActive',
+    'postalCode Code',
+    'membership'
+  ];
 
-  const handleEditToggle = () => {
-    setEditForm((current) => !current);
-    setShowForm(false);
-  };
+  const columnTitleArray = [
+    'Full Name',
+    'Email',
+    'Phone',
+    'City',
+    'Status',
+    'Postal Code',
+    'Membership'
+  ];
+
+  const data = [];
 
   return (
     <section className={styles.container}>
@@ -110,18 +130,13 @@ function Members() {
       {!members.length ? (
         <p>No active Members</p>
       ) : (
-        <TableMember
-          onUpdateMember={updateMember}
-          members={members}
-          onDeleteMember={memberDelete}
-          showForm={showForm}
-          showEditForm={showEditForm}
-          handleEditToggle={handleEditToggle}
-          setEditForm={setEditForm}
-          setMemberEdited={setMemberEdited}
-          memberEditedId={memberEditedId}
-          memberEdited={memberEdited}
-          setMembers={setMembers}
+        <TableComponent
+          columns={columnsValue}
+          columnTitleArray={columnTitleArray}
+          data={members}
+          handleClick={handleClick}
+          deleteButton={memberDelete}
+          autoDelete={() => {}}
         />
       )}
       {toastErroOpen && (

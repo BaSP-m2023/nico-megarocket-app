@@ -26,6 +26,7 @@ function Layout() {
           <Route path="/subscriptions" component={Subscriptions} />
           <Route path="/super-admins" component={SuperAdmins} />
           <Route path="/trainers" component={Trainers} />
+          <Route path="/members/:id?" component={Members} />
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>

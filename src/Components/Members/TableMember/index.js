@@ -1,10 +1,10 @@
+/*
 import React, { useState } from 'react';
 import styles from './table-member.module.css';
 import DeleteMember from '../DeleteMember';
 import EditMember from '../EditMember';
 import { Form } from '../Form/MembersForm';
 import { MembersEditForm } from '../EditForm/MembersEditForm';
-
 const TableMember = ({
   members,
   onDeleteMember,
@@ -35,6 +35,7 @@ const TableMember = ({
   const [memberId, setmemberId] = useState(null);
 
   return (
+    <TableComponent />
     <div className={styles.container}>
       <table className={styles.table}>
         <tr className={styles.tableContent}>
@@ -95,3 +96,4 @@ const TableMember = ({
 };
 
 export default TableMember;
+*/
