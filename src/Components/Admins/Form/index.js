@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './form.module.css';
-import { ModalConfirm, ToastError, ModalSuccess } from '../../Shared';
+import { ModalConfirm, ToastError, ModalSuccess, Inputs, Button } from '../../Shared';
 import { useParams, useLocation, useHistory } from 'react-router-dom';
 
 const FormAdmin = () => {
@@ -143,110 +143,82 @@ const FormAdmin = () => {
     <div className={styles.containerForm}>
       <form className={styles.form}>
         <div className={styles.subContainer}>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>Name</label>
-            <input
-              className={styles.input}
-              name="firstName"
-              type="text"
-              value={inputValue.firstName}
-              required
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>Last Name</label>
-            <input
-              className={styles.input}
-              name="lastName"
-              type="text"
-              value={inputValue.lastName}
-              required
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>DNI</label>
+          <Inputs
+            text={inputValue.firstName}
+            type="text"
+            nameTitle="Name"
+            isDisabled={false}
+            change={handleInputChange}
+            nameInput="firstName"
+          />
 
-            <input
-              className={styles.input}
-              name="dni"
-              type="text"
-              value={inputValue.dni}
-              required
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>Phone</label>
-            <input
-              className={styles.input}
-              name="phone"
-              type="text"
-              value={inputValue.phone}
-              required
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>Email</label>
-            <input
-              className={styles.input}
-              name="email"
-              type="text"
-              value={inputValue.email}
-              required
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>City</label>
-
-            <input
-              className={styles.input}
-              name="city"
-              type="text"
-              value={inputValue.city}
-              required
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>Password</label>
-            <input
-              className={styles.input}
-              name="password"
-              type="password"
-              value={inputValue.password}
-              required
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>Repeat Password</label>
-            <input
-              className={styles.input}
-              name="repeatPassword"
-              type="password"
-              required
-              value={repeatPass}
-              onChange={handleRepeatPasswordChange}
-            />
-          </div>
+          <Inputs
+            text={inputValue.lastName}
+            type="text"
+            nameTitle="Last Name"
+            isDisabled={false}
+            change={handleInputChange}
+            nameInput="lastName"
+          />
+          <Inputs
+            text={inputValue.dni}
+            type="text"
+            nameTitle="DNI"
+            isDisabled={false}
+            change={handleInputChange}
+            nameInput="dni"
+          />
+          <Inputs
+            text={inputValue.phone}
+            type="text"
+            nameTitle="Phone"
+            isDisabled={false}
+            change={handleInputChange}
+            nameInput="phone"
+          />
+          <Inputs
+            text={inputValue.email}
+            type="email"
+            nameTitle="E-Mail"
+            isDisabled={false}
+            change={handleInputChange}
+            nameInput="email"
+          />
+          <Inputs
+            text={inputValue.city}
+            type="text"
+            nameTitle="City"
+            isDisabled={false}
+            change={handleInputChange}
+            nameInput="city"
+          />
+          <Inputs
+            text={inputValue.password}
+            type="password"
+            nameTitle="Password"
+            isDisabled={false}
+            change={handleInputChange}
+            nameInput="password"
+          />
+          <Inputs
+            text={repeatPass}
+            type="password"
+            nameTitle="Repeat Password"
+            isDisabled={false}
+            change={handleRepeatPasswordChange}
+            nameInput="repeat-password"
+          />
         </div>
+
         <div className={styles.buttonContainer}>
-          <button className={styles.button} onClick={openModal}>
-            Save
-          </button>
-          <button
-            className={styles.button}
-            onClick={(e) => {
+          <Button clickAction={openModal} text="Save" />
+          <Button
+            clickAction={(e) => {
               e.preventDefault();
               history.push('/admins/');
             }}
-          >
-            Cancel
-          </button>
+            text="Cancel"
+          />
         </div>
       </form>
       {modalConfirmOpen && (

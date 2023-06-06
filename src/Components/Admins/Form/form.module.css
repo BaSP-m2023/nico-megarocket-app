@@ -11,6 +11,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border: 1px solid green;
 }
 
 .subContainer {
@@ -20,7 +21,7 @@
     padding: 8px;
     justify-content: space-around;
     padding: 20px 0;
-    height: 250px;
+    border: 1px solid red;
 }
 
 .input {
