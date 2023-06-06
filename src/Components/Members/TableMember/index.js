@@ -1,39 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './table-member.module.css';
-import DeleteMember from '../DeleteMember';
-import EditMember from '../EditMember';
-import { Form } from '../Form/MembersForm';
-import { MembersEditForm } from '../EditForm/MembersEditForm';
 
-const TableMember = ({
-  members,
-  onDeleteMember,
-  onUpdateMember,
-  showForm,
-  showEditForm,
-  handleEditToggle,
-  setEditForm,
-  setModalEditConfirmOpen,
-  memberEditedId,
-  memberEdited,
-  setMemberEdited,
-  setMembers
-}) => {
-  const [member, setMember] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    birthday: '',
-    phone: '',
-    email: '',
-    city: '',
-    postalCode: '',
-    isActive: false,
-    membership: ''
-  });
-
-  const [memberId, setmemberId] = useState(null);
-
+const TableMember = ({ members, handleClick }) => {
   return (
     <div className={styles.container}>
       <table className={styles.table}>
@@ -61,35 +29,13 @@ const TableMember = ({
               <td>{member.postalCode}</td>
               <td>{member.membership}</td>
               <td className={styles.rowActions}>
-                <EditMember
-                  handleEditToggle={handleEditToggle}
-                  setEditForm={setEditForm}
-                  setMemberID={setmemberId}
-                  memberID={member._id}
-                  memberEditedId={memberEditedId}
-                />
-                <DeleteMember memberId={member._id} onDeleteMember={onDeleteMember} />
+                <button onClick={() => handleClick(member)}>Edit</button>
+                <button>Delete</button>
               </td>
             </tr>
           );
         })}
       </table>
-      {showEditForm && (
-        <MembersEditForm
-          setModalEditConfirmOpen={setModalEditConfirmOpen}
-          memberID={memberId}
-          member={member}
-          updateMember={onUpdateMember}
-          setEditForm={setEditForm}
-          setMemberEdited={setMemberEdited}
-          memberEdited={memberEdited}
-          setMembers={setMembers}
-          members={members}
-        />
-      )}
-      {showForm && (
-        <Form member={member} setMember={setMember} members={members} setMembers={setMembers} />
-      )}
     </div>
   );
 };
