@@ -43,22 +43,6 @@ function Trainers() {
     }
   };
 
-  /*   const addItem = ({ firstName, lastName, dni, phone, email, city, salary, isActive }, _id) => {
-    const newItem = {
-      _id,
-      firstName,
-      lastName,
-      dni,
-      phone,
-      email,
-      city,
-      salary,
-      isActive
-    };
-    setTrainers([...trainers, newItem]);
-  };
- */
-
   const columnsTable = ['Trainer', 'DNI', 'Phone', 'Email', 'City', 'Salary/Hour'];
   const columnsValue = ['firstName', 'dni', 'phone', 'email', 'city', 'salary'];
 
