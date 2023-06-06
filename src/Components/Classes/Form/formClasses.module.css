@@ -3,13 +3,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 300px;
+  height: 80vh;
 }
 
 .formTitle {
-  margin-top: -10px;
-  margin-bottom: 5px;
-  font-size: 20px;
+  margin-bottom: 70 px;
+  font-family: 'Roboto', sans-serif;
+  color: #373867;
+  font-size: 30px;
 }
 
 .inputs {
@@ -20,19 +21,13 @@
 }
 
 .inputs input {
-  margin-top: 10px;
-  width: 350px;
-  height: 25px;
   padding-left: 5px;
-  border: 0.5px solid black;
-  border-radius: 5px;
 }
 
 .buttons {
   display: flex;
   justify-content: space-between;
   width: 250px;
-  margin-top: 10px;
 }
 
 .buttons button:hover {
