@@ -1,32 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import styles from './classes.module.css';
-import FormClasses from './Form/index';
 import { ModalSuccess, TableComponent } from '../Shared';
 import { ToastError } from '../Shared';
 import { useHistory } from 'react-router-dom';
+import AddButton from './../Shared/AddButton/index';
 
 function Projects() {
-  const [show, setShow] = useState(false);
   const [classes, setClasses] = useState([]);
-  const [updateMode, setUpdateMode] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [toastErrorOpen, setToastErrorOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [klass, setKlass] = useState({
-    hour: '',
-    day: '',
-    trainer: '',
-    activity: '',
-    slots: ''
-  });
 
   const columnTitleArray = ['Activity', 'Day', 'Hour', 'Trainer', 'Slots'];
 
   const columns = ['activity', 'day', 'hour', 'trainer', 'slots'];
 
   const arrayAndObject = {
-    array: 'trainers',
+    array: 'trainer',
     object: 'activity'
   };
 
@@ -53,26 +44,6 @@ function Projects() {
   useEffect(() => {
     getClasses();
   }, []);
-
-  const createClass = async (body) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/class`, body);
-      setSuccessMessage('The class has been created successfully.');
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const updateClass = async (id, body) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, body);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const deleteClassFromDB = async (id) => {
     try {
@@ -108,24 +79,8 @@ function Projects() {
     }
   };
 
-  const showForm = () => {
-    setTimeout(() => {
-      setShow(!show);
-    }, 0);
-  };
-
   const createMode = () => {
-    showForm();
-    {
-      updateMode && setUpdateMode(false);
-    }
-    setKlass({
-      hour: '',
-      day: '',
-      trainer: '',
-      activity: '',
-      slots: ''
-    });
+    history.push('/classes/ClassForm', { params: { mode: 'create' } });
   };
 
   const deleteClass = (id) => {
@@ -133,35 +88,13 @@ function Projects() {
   };
 
   const handleClick = (item) => {
-    history.push(`/classes/AdminForm/${item._id}`, { params: { item: item, mode: 'edit' } });
-    // showForm();
-    // setUpdateMode(true);
-    // setClassUpdateId(item._id);
-    // setKlass({
-    //   hour: item.hour,
-    //   day: item.day,
-    //   trainer: item.trainer.map((item) => item._id),
-    //   activity: item.activity._id,
-    //   slots: item.slots
-    // });
+    history.push(`/classes/ClassForm/${item._id}`, { params: { item: item, mode: 'edit' } });
   };
 
   return (
     <section className={styles.container}>
       <h2>Classes</h2>
-      <button type="button" className={styles.button} onClick={createMode}>
-        <img src={`${process.env.PUBLIC_URL}/assets/images/btn-add.png`} /> Add
-      </button>
-      {show && (
-        <FormClasses
-          klass={{ klass, setKlass }}
-          classes={classes}
-          createCLass={createClass}
-          updateClass={updateClass}
-          updateToggle={{ updateMode, setUpdateMode }}
-          show={showForm}
-        />
-      )}
+      <AddButton entity={'Class'} createMode={createMode} />{' '}
       <div>
         {modalSuccessOpen && (
           <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
