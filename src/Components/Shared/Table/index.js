@@ -1,5 +1,7 @@
 import ButtonForm from '../ButtonForm';
 import styles from './table.module.css';
+import { useState } from 'react';
+import { ModalConfirm } from '../index';
 
 const TableComponent = ({
   columnTitleArray,
@@ -20,6 +22,13 @@ const TableComponent = ({
         }
       });
   }
+  const [modalConfirm, setModalConfirm] = useState(false);
+  const [idDelete, setIdDelete] = useState('');
+
+  const onConfirmOpen = (id) => {
+    setModalConfirm(true);
+    setIdDelete(id);
+  };
 
   return (
     <section className={styles.container}>
@@ -66,13 +75,24 @@ const TableComponent = ({
                     <ButtonForm nameImg="pencil-edit.svg" onAction={() => handleClick(row)} />
                   </td>
                   <td>
-                    <ButtonForm nameImg="trash-delete.svg" onAction={() => deleteButton(row._id)} />
+                    <ButtonForm
+                      nameImg="trash-delete.svg"
+                      onAction={() => onConfirmOpen(row._id)}
+                    />
                   </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
+      )}
+      {modalConfirm && (
+        <ModalConfirm
+          onConfirm={() => deleteButton(idDelete)}
+          message="Are you sure to delete this?"
+          method="Delete"
+          setModalConfirmOpen={setModalConfirm}
+        />
       )}
     </section>
   );
