@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import formStyles from '../Form/formClasses.module.css';
-import { ModalConfirm, ModalSuccess } from '../../Shared';
+import { ModalConfirm, ModalSuccess, ToastError } from '../../Shared';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 const FormClasses = () => {
   const [modalUpdateConfirmOpen, setModalUpdateConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [toastErrorOpen, setToastErrorOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
   const [inputForm, setInputForm] = useState('');
   const { id } = useParams();
   const locationObject = useLocation();
@@ -38,13 +40,19 @@ const FormClasses = () => {
 
   const createClass = async (body) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/class`, body);
-      setSuccessMessage('The class has been created successfully.');
-      setModalSuccessOpen(true);
-      setTimeout(() => {
-        history.push('/classes');
-        setModalSuccessOpen(false);
-      }, 2000);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class`, body);
+      const data = await response.json();
+      if (data.error === true) {
+        setToastMessage(data.message);
+        setToastErrorOpen(true);
+      } else {
+        setSuccessMessage('The class has been created successfully.');
+        setModalSuccessOpen(true);
+        setTimeout(() => {
+          history.push('/classes');
+          setModalSuccessOpen(false);
+        }, 2000);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -52,13 +60,19 @@ const FormClasses = () => {
 
   const updateClass = async (id, body) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, body);
-      setSuccessMessage('The class has been updated successfully.');
-      setModalSuccessOpen(true);
-      setTimeout(() => {
-        history.push('/classes');
-        setModalSuccessOpen(false);
-      }, 2000);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, body);
+      const data = await response.json();
+      if (data.error === true) {
+        setToastMessage(data.message);
+        setToastErrorOpen(true);
+      } else {
+        setSuccessMessage('The class has been updated successfully.');
+        setModalSuccessOpen(true);
+        setTimeout(() => {
+          history.push('/classes');
+          setModalSuccessOpen(false);
+        }, 2000);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -183,6 +197,7 @@ const FormClasses = () => {
           <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
         )}
       </div>
+      {toastErrorOpen && <ToastError setToastErroOpen={setToastErrorOpen} message={toastMessage} />}
     </div>
   );
 };
