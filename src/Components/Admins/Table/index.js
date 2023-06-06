@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import styles from './table.module.css';
 import { ModalConfirm, ModalSuccess } from '../../Shared';
+import { useHistory } from 'react-router-dom';
 
-function index({ admins, setShowform, setAdminToEditId, setEditMode, adminEditedId, deleteAdm }) {
+function index({
+  admins,
+  setShowform,
+  /*setAdminToEditId,*/ setEditMode,
+  /*adminEditedId,*/ deleteAdm
+}) {
   const [modalDeleteConfirmOpen, setModalDeleteConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
@@ -24,12 +30,10 @@ function index({ admins, setShowform, setAdminToEditId, setEditMode, adminEdited
     setModalSuccessOpen(true);
     setSuccessMessage('Deleted succesffully');
   };
+  const history = useHistory();
 
-  const handleEditClick = (id) => {
-    setShowform(true);
-    setEditMode(true);
-    adminEditedId(id);
-    setAdminToEditId(id);
+  const handleEditClick = (item) => {
+    history.push(`/admins/form/${item._id}`, { params: { item, mode: 'edit' } });
   };
 
   return (
@@ -70,7 +74,7 @@ function index({ admins, setShowform, setAdminToEditId, setEditMode, adminEdited
                     src={`${process.env.PUBLIC_URL}/assets/images/pencil-edit.svg`}
                     alt="modify icon"
                     onClick={() => {
-                      handleEditClick(item._id);
+                      handleEditClick(item);
                     }}
                   />
                 </td>

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import styles from './admins.module.css';
 import Table from './Table';
-import Form from './Form';
+// import Form from './Form';
 import { ModalSuccess, ToastError, AddButton } from '../Shared';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 function Admins() {
   const [admins, setAdmins] = useState([]);
@@ -11,7 +11,7 @@ function Admins() {
   // eslint-disable-next-line no-unused-vars
   const [showForm, setShowform] = useState(false);
 
-  const [adminToEditId, setAdminToEditId] = useState('');
+  // const [adminToEditId, setAdminToEditId] = useState('');
 
   const [editMode, setEditMode] = useState(false);
 
@@ -21,19 +21,21 @@ function Admins() {
 
   const [toastMessage, setToastMessage] = useState('Error in database');
 
-  const [adminEdited, setAdminEdited] = useState({
-    firstName: '',
-    lastName: '',
-    phone: '',
-    email: '',
-    city: '',
-    dni: '',
-    password: ''
-  });
+  // const [adminEdited, setAdminEdited] = useState({
+  //   firstName: '',
+  //   lastName: '',
+  //   phone: '',
+  //   email: '',
+  //   city: '',
+  //   dni: '',
+  //   password: ''
+  // });
 
-  const closeForm = () => {
-    setShowform(false);
-  };
+  const history = useHistory();
+
+  // const closeForm = () => {
+  //   setShowform(false);
+  // };
 
   const getAdmins = async () => {
     try {
@@ -54,111 +56,111 @@ function Admins() {
       const newAdmins = admins.filter((admin) => admin._id !== id);
       setAdmins(newAdmins);
     } catch (error) {
-      console.log(error);
-    }
-  };
-  const addAdmin = ({ firstName, lastName, phone, email, city, dni, password }) => {
-    const newAdmin = {
-      firstName,
-      lastName,
-      phone,
-      email,
-      city,
-      dni,
-      password
-    };
-    setAdmins([...admins, newAdmin]);
-    setModalSuccessOpen(true);
-  };
-
-  const editAdmins = async (id, bodyEdited) => {
-    try {
-      const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(bodyEdited)
-      });
-      const data = await resp.json();
-      if (data.error) {
-        throw new Error(data.message);
-      } else {
-        const updateAdmins = [...admins];
-        const index = updateAdmins.findIndex((admin) => admin._id === id);
-        if (index !== -1) {
-          updateAdmins[index] = bodyEdited;
-          setAdmins(updateAdmins);
-          setModalSuccessOpen(true);
-        }
-      }
-    } catch (error) {
-      setToastMessage(error.message);
       setToastErroOpen(true);
+      setToastMessage(error.message);
+      // console.log(error);
     }
   };
 
-  const adminEditedId = (id) => {
-    const findAdmin = admins.find((i) => i._id === id);
-    setAdminEdited({
-      firstName: findAdmin.firstName,
-      lastName: findAdmin.lastName,
-      phone: findAdmin.phone,
-      email: findAdmin.email,
-      city: findAdmin.city,
-      dni: findAdmin.dni,
-      password: findAdmin.password
-    });
-    setAdminToEditId(findAdmin._id);
-  };
+  // const addAdmin = ({ firstName, lastName, phone, email, city, dni, password }) => {
+  //   const newAdmin = {
+  //     firstName,
+  //     lastName,
+  //     phone,
+  //     email,
+  //     city,
+  //     dni,
+  //     password
+  //   };
+  //   setAdmins([...admins, newAdmin]);
+  //   setModalSuccessOpen(true);
+  // };
 
-  const finalEdit = (id) => {
-    const findId = admins.find((i) => i._id === id);
-    editAdmins(findId._id, adminEdited);
-    adminEditedId(id);
-  };
+  // const editAdmins = async (id, bodyEdited) => {
+  //   try {
+  //     const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
+  //       method: 'PUT',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify(bodyEdited)
+  //     });
+  //     const data = await resp.json();
+  //     if (data.error) {
+  //       throw new Error(data.message);
+  //     } else {
+  //       const updateAdmins = [...admins];
+  //       const index = updateAdmins.findIndex((admin) => admin._id === id);
+  //       if (index !== -1) {
+  //         updateAdmins[index] = bodyEdited;
+  //         setAdmins(updateAdmins);
+  //         setModalSuccessOpen(true);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     setToastMessage(error.message);
+  //     setToastErroOpen(true);
+  //   }
+  // };
+
+  // const adminEditedId = (id) => {
+  //   const findAdmin = admins.find((i) => i._id === id);
+  //   setAdminEdited({
+  //     firstName: findAdmin.firstName,
+  //     lastName: findAdmin.lastName,
+  //     phone: findAdmin.phone,
+  //     email: findAdmin.email,
+  //     city: findAdmin.city,
+  //     dni: findAdmin.dni,
+  //     password: findAdmin.password
+  //   });
+  //   setAdminToEditId(findAdmin._id);
+  // };
+
+  // const finalEdit = (id) => {
+  //   const findId = admins.find((i) => i._id === id);
+  //   editAdmins(findId._id, adminEdited);
+  //   adminEditedId(id);
+  // };
 
   useEffect(() => {
     getAdmins();
   }, []);
 
+  const createMode = () => {
+    history.push('/admins/form', { params: { mode: 'create' } });
+  };
   return (
     <section className={styles.container}>
       <h2>Admins</h2>
-      <AddButton path="/formAdmin" />
-      <Router>
-        <Switch>
-          <Route path="/admins/">
-            <Table
-              setAdminToEditId={setAdminToEditId}
-              admins={admins}
-              setShowform={setShowform}
-              setEditMode={setEditMode}
-              adminEditedId={adminEditedId}
-              deleteAdm={deleteAdmin}
-            />
-          </Route>
-          <Route path="/formAdmin">
-            <Form
-              addAdmin={addAdmin}
-              closedForm={closeForm}
-              adminToEditId={adminToEditId}
-              admins={admins}
-              editMode={editMode}
-              adminEdited={adminEdited}
-              setAdminEdited={setAdminEdited}
-              finalEdit={finalEdit}
-            />
-          </Route>
-        </Switch>
-        {modalSuccessOpen && (
-          <ModalSuccess
-            message={editMode ? 'Admin edited successfully' : 'Admin created successfully'}
-            setModalSuccessOpen={setModalSuccessOpen}
-          />
-        )}
-        {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
-      </Router>
+      <AddButton entity="Admin" createMode={createMode} />
+      <Table
+        // setAdminToEditId={setAdminToEditId}
+        admins={admins}
+        setShowform={setShowform}
+        setEditMode={setEditMode}
+        // adminEditedId={adminEditedId}
+        deleteAdm={deleteAdmin}
+      />
+
+      {/* <Form
+        addAdmin={addAdmin}
+        closedForm={closeForm}
+        adminToEditId={adminToEditId}
+        admins={admins}
+        editMode={editMode}
+        adminEdited={adminEdited}
+        setAdminEdited={setAdminEdited}
+        finalEdit={finalEdit}
+      /> */}
+
+      {modalSuccessOpen && (
+        <ModalSuccess
+          message={editMode ? 'Admin edited successfully' : 'Admin created successfully'}
+          setModalSuccessOpen={setModalSuccessOpen}
+        />
+      )}
+      {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
     </section>
   );
 }
