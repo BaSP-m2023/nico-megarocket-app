@@ -64,6 +64,10 @@ const TableComponent = ({
                           ))
                         ) : typeof row[column] === 'object' ? (
                           <span>{row[column][fieldValue.objectValue]}</span>
+                        ) : column === 'firstName' ? (
+                          <span>
+                            {row.firstName} {row.lastName}
+                          </span>
                         ) : (
                           row[column]
                         )
