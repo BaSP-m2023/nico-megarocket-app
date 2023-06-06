@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import formStyles from '../Form/formClasses.module.css';
-import { ModalConfirm, ModalSuccess, ToastError } from '../../Shared';
+import { ModalConfirm, ModalSuccess, ToastError, Button } from '../../Shared';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 const FormClasses = () => {
@@ -134,7 +134,7 @@ const FormClasses = () => {
 
   return (
     <div>
-      <form className={formStyles.form} onSubmit={formSubmit}>
+      <form className={formStyles.form}>
         <div className={formStyles.container}>
           <h2 className={formStyles.formTitle}>
             {updateData.mode === 'edit' ? 'Update' : 'Create'} Class
@@ -177,10 +177,13 @@ const FormClasses = () => {
             />
           </div>
           <div className={formStyles.buttons}>
-            <button type="submit">Send</button>
-            <button type="button" onClick={() => history.goBack()}>
-              Cancel
-            </button>
+            <Button
+              clickAction={formSubmit}
+              text={updateData.mode === 'edit' ? 'Update' : 'Create'}
+            />
+            <span className={formStyles.cancelButton}>
+              <Button clickAction={() => history.goBack()} text="Cancel" />
+            </span>
           </div>
         </div>
       </form>

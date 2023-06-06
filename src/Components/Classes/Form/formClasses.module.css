@@ -35,12 +35,12 @@
   margin-top: 10px;
 }
 
-.buttons button {
-  width: 90px;
-  height: 25px;
-  background-color: #ea3354;
-  border: 0.5px solid black;
-  border-radius: 5px;
-  font-weight: 800;
+.buttons button:hover {
+  opacity: 0.9;
   cursor: pointer;
+}
+
+.cancelButton button:hover {
+  color: #fff;
+  background-color: #ea3354;
 }
