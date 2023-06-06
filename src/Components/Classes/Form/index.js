@@ -40,9 +40,11 @@ const FormClasses = () => {
     try {
       await fetch(`${process.env.REACT_APP_API_URL}/api/class`, body);
       setSuccessMessage('The class has been created successfully.');
+      setModalSuccessOpen(true);
       setTimeout(() => {
         history.push('/classes');
-      }, 1000);
+        setModalSuccessOpen(false);
+      }, 2000);
     } catch (error) {
       console.error(error);
     }
@@ -51,6 +53,12 @@ const FormClasses = () => {
   const updateClass = async (id, body) => {
     try {
       await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, body);
+      setSuccessMessage('The class has been updated successfully.');
+      setModalSuccessOpen(true);
+      setTimeout(() => {
+        history.push('/classes');
+        setModalSuccessOpen(false);
+      }, 2000);
     } catch (error) {
       console.error(error);
     }
@@ -63,14 +71,6 @@ const FormClasses = () => {
   const handleModalConfirmation = () => {
     updateClass(id, classBody);
     setModalUpdateConfirmOpen(false);
-    setInputForm({
-      hour: '',
-      day: '',
-      trainer: '',
-      activity: '',
-      slots: ''
-    });
-    window.location.reload();
   };
 
   const onChangeHour = (e) => {
