@@ -1,17 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './form.module.css';
-import { ModalConfirm } from '../../Shared';
+import { ModalConfirm, ToastError, ModalSuccess } from '../../Shared';
+import { useParams, useLocation, useHistory } from 'react-router-dom';
 
-const Form = ({
-  addAdmin,
-  closedForm,
-  adminToEditId,
-  editMode,
-  adminEdited,
-  setAdminEdited,
-  finalEdit
-}) => {
-  const [admin, setAdmin] = useState({
+const FormAdmin = () => {
+  const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [inputValue, setInputValue] = useState({
     firstName: '',
     lastName: '',
     phone: '',
@@ -20,56 +15,19 @@ const Form = ({
     dni: '',
     password: ''
   });
+  const [repeatPass, setRepeatPass] = useState('');
+  const [toastErroOpen, setToastErroOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('Error in database');
+  const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
 
-  const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
+  const history = useHistory();
+  const { id } = useParams();
+  const location = useLocation();
+  const data = location.state.params;
 
-  const addAdmins = async () => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(admin)
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const onChange = (e) => {
-    setAdmin({
-      ...admin,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const openModal = (e) => {
-    e.preventDefault();
-    setModalConfirmOpen(true);
-  };
-
-  const onChangeEdit = (e) => {
-    setAdminEdited({
-      firstName: adminEdited.firstName,
-      lastName: adminEdited.lastName,
-      phone: adminEdited.phone,
-      email: adminEdited.email,
-      city: adminEdited.city,
-      dni: adminEdited.dni,
-      password: adminEdited.password,
-
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (editMode) {
-      finalEdit(adminToEditId);
-    } else {
-      addAdmin(admin);
-      setAdmin({
+  useEffect(() => {
+    if (data.mode === 'create') {
+      setInputValue({
         firstName: '',
         lastName: '',
         phone: '',
@@ -78,172 +36,191 @@ const Form = ({
         dni: '',
         password: ''
       });
-      addAdmins();
+    } else {
+      setInputValue({
+        firstName: data.item.firstName,
+        lastName: data.item.lastName,
+        phone: data.item.phone,
+        email: data.item.email,
+        city: data.item.city,
+        dni: data.item.dni,
+        password: data.item.password
+      });
+      setRepeatPass(data.item.password);
+      setEditMode(true);
     }
-    closedForm();
+  }, []);
+
+  const addAdmins = async () => {
+    try {
+      const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(inputValue)
+      });
+      const data = await resp.json();
+      if (!data.error) {
+        confirmation();
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      setModalConfirmOpen(false);
+      setToastErroOpen(true);
+      setToastMessage(error.message);
+    }
   };
 
-  const closeForm = (e) => {
-    e.preventDefault();
-    closedForm();
+  const addEditAdmins = async () => {
+    try {
+      const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(inputValue)
+      });
+      const data = await resp.json();
+      if (!data.error) {
+        confirmation();
+        setModalSuccessOpen(true);
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      setToastMessage(error.message);
+      setToastErroOpen(true);
+    }
   };
+
+  const openModal = (e) => {
+    e.preventDefault();
+    setModalConfirmOpen(true);
+  };
+
+  const validatePasswords = () => {
+    if (inputValue.password === repeatPass) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const confirmation = () => {
+    setModalSuccessOpen(true);
+    setTimeout(() => {
+      history.push('/admins/');
+    }, 2000);
+  };
+
+  const submitAdmin = () => {
+    if (validatePasswords()) {
+      if (!editMode) {
+        setModalConfirmOpen(false);
+        addAdmins();
+      } else {
+        setModalConfirmOpen(false);
+        addEditAdmins();
+      }
+    } else {
+      setModalConfirmOpen(false);
+      setToastErroOpen(true);
+      setToastMessage('Passwords must match ');
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setInputValue({ ...inputValue, [e.target.name]: e.target.value });
+  };
+  const handleRepeatPasswordChange = (e) => {
+    const { value } = e.target;
+    setRepeatPass(value);
+  };
+
   return (
     <div className={styles.containerForm}>
       <form className={styles.form}>
         <div className={styles.subContainer}>
           <div className={styles.inputContainer}>
             <label className={styles.label}>Name</label>
-            {editMode ? (
-              <input
-                className={styles.input}
-                name="firstName"
-                type="text"
-                value={adminEdited.firstName}
-                required
-                onChange={onChangeEdit}
-              />
-            ) : (
-              <input
-                className={styles.input}
-                name="firstName"
-                type="text"
-                value={admin.firstName}
-                required
-                onChange={onChange}
-              />
-            )}
+            <input
+              className={styles.input}
+              name="firstName"
+              type="text"
+              value={inputValue.firstName}
+              required
+              onChange={handleInputChange}
+            />
           </div>
           <div className={styles.inputContainer}>
             <label className={styles.label}>Last Name</label>
-            {editMode ? (
-              <input
-                className={styles.input}
-                name="lastName"
-                type="text"
-                value={adminEdited.lastName}
-                required
-                onChange={onChangeEdit}
-              />
-            ) : (
-              <input
-                className={styles.input}
-                name="lastName"
-                type="text"
-                required
-                value={admin.lastName}
-                onChange={onChange}
-              />
-            )}
+            <input
+              className={styles.input}
+              name="lastName"
+              type="text"
+              value={inputValue.lastName}
+              required
+              onChange={handleInputChange}
+            />
           </div>
           <div className={styles.inputContainer}>
             <label className={styles.label}>DNI</label>
-            {editMode ? (
-              <input
-                className={styles.input}
-                name="dni"
-                type="text"
-                value={adminEdited.dni}
-                required
-                onChange={onChangeEdit}
-              />
-            ) : (
-              <input
-                className={styles.input}
-                name="dni"
-                type="text"
-                required
-                value={admin.dni}
-                onChange={onChange}
-              />
-            )}
+
+            <input
+              className={styles.input}
+              name="dni"
+              type="text"
+              value={inputValue.dni}
+              required
+              onChange={handleInputChange}
+            />
           </div>
           <div className={styles.inputContainer}>
             <label className={styles.label}>Phone</label>
-            {editMode ? (
-              <input
-                className={styles.input}
-                name="phone"
-                type="text"
-                value={adminEdited.phone}
-                required
-                onChange={onChangeEdit}
-              />
-            ) : (
-              <input
-                className={styles.input}
-                name="phone"
-                type="text"
-                required
-                value={admin.phone}
-                onChange={onChange}
-              />
-            )}
+            <input
+              className={styles.input}
+              name="phone"
+              type="text"
+              value={inputValue.phone}
+              required
+              onChange={handleInputChange}
+            />
           </div>
           <div className={styles.inputContainer}>
             <label className={styles.label}>Email</label>
-            {editMode ? (
-              <input
-                className={styles.input}
-                name="email"
-                type="text"
-                value={adminEdited.email}
-                required
-                onChange={onChangeEdit}
-              />
-            ) : (
-              <input
-                className={styles.input}
-                name="email"
-                type="text"
-                required
-                value={admin.email}
-                onChange={onChange}
-              />
-            )}
+            <input
+              className={styles.input}
+              name="email"
+              type="text"
+              value={inputValue.email}
+              required
+              onChange={handleInputChange}
+            />
           </div>
           <div className={styles.inputContainer}>
             <label className={styles.label}>City</label>
-            {editMode ? (
-              <input
-                className={styles.input}
-                name="city"
-                type="text"
-                value={adminEdited.city}
-                required
-                onChange={onChangeEdit}
-              />
-            ) : (
-              <input
-                className={styles.input}
-                name="city"
-                type="text"
-                required
-                value={admin.city}
-                onChange={onChange}
-              />
-            )}
+
+            <input
+              className={styles.input}
+              name="city"
+              type="text"
+              value={inputValue.city}
+              required
+              onChange={handleInputChange}
+            />
           </div>
           <div className={styles.inputContainer}>
             <label className={styles.label}>Password</label>
-            {editMode ? (
-              <input
-                className={styles.input}
-                name="password"
-                type="text"
-                value={adminEdited.password}
-                required
-                onChange={onChangeEdit}
-              />
-            ) : (
-              <input
-                className={styles.input}
-                name="password"
-                type="password"
-                required
-                value={admin.password}
-                onChange={onChange}
-              />
-            )}
+            <input
+              className={styles.input}
+              name="password"
+              type="password"
+              value={inputValue.password}
+              required
+              onChange={handleInputChange}
+            />
           </div>
           <div className={styles.inputContainer}>
             <label className={styles.label}>Repeat Password</label>
@@ -252,7 +229,8 @@ const Form = ({
               name="repeatPassword"
               type="password"
               required
-              value={admin.repeatPassword}
+              value={repeatPass}
+              onChange={handleRepeatPasswordChange}
             />
           </div>
         </div>
@@ -260,7 +238,13 @@ const Form = ({
           <button className={styles.button} onClick={openModal}>
             Save
           </button>
-          <button className={styles.button} onClick={closeForm}>
+          <button
+            className={styles.button}
+            onClick={(e) => {
+              e.preventDefault();
+              history.push('/admins/');
+            }}
+          >
             Cancel
           </button>
         </div>
@@ -273,12 +257,19 @@ const Form = ({
               ? 'Are you sure you want to edit the admin?'
               : 'Are you sure you want to add the admin?'
           }
-          onConfirm={onSubmit}
+          onConfirm={submitAdmin}
           setModalConfirmOpen={setModalConfirmOpen}
         />
       )}
+      {modalSuccessOpen && (
+        <ModalSuccess
+          message={editMode ? 'Admin edited successfully' : 'Admin created successfully'}
+          setModalSuccessOpen={setModalSuccessOpen}
+        />
+      )}
+      {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
     </div>
   );
 };
 
-export default Form;
+export default FormAdmin;

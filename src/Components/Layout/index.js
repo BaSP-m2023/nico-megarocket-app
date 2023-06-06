@@ -16,6 +16,8 @@ import Footer from '../Footer/index';
 import FormClasses from '../Classes/Form';
 import styles from './layout.module.css';
 
+import FormAdmin from '../Admins/Form/index';
+
 function Layout() {
   return (
     <Router>
@@ -24,7 +26,8 @@ function Layout() {
         <Switch>
           <Route path="/home" component={Home} />
           <Route path="/activities" component={Activities} />
-          <Route path="/admins" component={Admins} />
+          <Route exact path="/admins" component={Admins} />
+          <Route path="/admins/form/:id?" component={FormAdmin} />
           <Route exact path="/classes" component={Classes} />
           <Route path="/classes/ClassForm/:id?" component={FormClasses} />
           <Route path="/members" component={Members} />
