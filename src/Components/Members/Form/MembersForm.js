@@ -1,15 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import { ModalConfirm } from '../../Shared';
 import { ModalSuccess } from '../../Shared';
 import { Inputs, Button /* , OptionInput */ } from '../../Shared';
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
 export const MembersForm = () => {
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [modalAddConfirmOpen, setModalAddConfirmOpen] = useState(false);
   const [member, setMember] = useState({});
+  const params = useParams();
   /*  const memberships = ['Black', 'Classic', 'Only Classes']; */
+
+  /* const updateMember = async (id, memberUpdated) => {
+    let memberToUpdateIndex = members.findIndex((member) => member._id === id);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/member/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(memberUpdated)
+      });
+
+      const { error } = await response.json();
+      if (!error) {
+        const currentsMembers = [...members];
+        currentsMembers[memberToUpdateIndex] = memberUpdated;
+        setMembers(currentsMembers);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }; */
 
   const handleChange = (e) => {
     setMember({
@@ -58,6 +82,12 @@ export const MembersForm = () => {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (params) {
+      console.log(params);
+    }
+  }, []);
 
   return (
     <div className={styles.container}>

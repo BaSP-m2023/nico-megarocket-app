@@ -10,7 +10,7 @@ function Members() {
 
   const getMembers = async () => {
     try {
-      const reponse = await fetch(`${process.env.REACT_APP_API_URL}/member`);
+      const reponse = await fetch(`${process.env.REACT_APP_API_URL}/api/member`);
       const data = await reponse.json();
       setMembers(data.data);
     } catch (error) {
@@ -22,34 +22,12 @@ function Members() {
     getMembers();
   }, []);
 
-  /* const updateMember = async (id, memberUpdated) => {
-    let memberToUpdateIndex = members.findIndex((member) => member._id === id);
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/member/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(memberUpdated)
-      });
-
-      const { error } = await response.json();
-      if (!error) {
-        const currentsMembers = [...members];
-        currentsMembers[memberToUpdateIndex] = memberUpdated;
-        setMembers(currentsMembers);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }; */
-
   return (
     <section className={styles.container}>
       <div className={styles.titleContainer}>
         <h2 className={styles.letterColour}>Members</h2>
         <div className={styles.addContainer}>
-          <AddButton entity="members" path="/membersForm" />
+          <AddButton entity="members" path="/members/membersForm" />
         </div>
       </div>
       {!members.length ? (
