@@ -1,24 +1,18 @@
 import { useState, useEffect } from 'react';
 import styles from './admins.module.css';
-import Table from './Table';
-// import Form from './Form';
-import { ModalSuccess, ToastError, AddButton } from '../Shared';
+import { ToastError, AddButton, TableComponent } from '../Shared';
 import { useHistory } from 'react-router-dom';
 
 function Admins() {
   const [admins, setAdmins] = useState([]);
-
-  // const [showForm, setShowform] = useState(false);
-
-  const [editMode, setEditMode] = useState(false);
-
-  const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
 
   const [toastErroOpen, setToastErroOpen] = useState(false);
 
   const [toastMessage, setToastMessage] = useState('Error in database');
 
   const history = useHistory();
+  const columnTitleArray = ['Name', 'Surname', 'DNI', 'Phone', 'E-Mail', 'City'];
+  const columns = ['firstName', 'lastName', 'dni', 'phone', 'email', 'city'];
 
   const getAdmins = async () => {
     try {
@@ -27,7 +21,6 @@ function Admins() {
       setAdmins(data.data);
     } catch (error) {
       setToastErroOpen(true);
-      console.log(error);
     }
   };
 
@@ -43,6 +36,9 @@ function Admins() {
       setToastMessage(error.message);
     }
   };
+  const handleEditClick = (item) => {
+    history.push(`/admins/form/${item._id}`, { params: { item, mode: 'edit' } });
+  };
 
   useEffect(() => {
     getAdmins();
@@ -56,21 +52,14 @@ function Admins() {
     <section className={styles.container}>
       <h2>Admins</h2>
       <AddButton entity="Admin" createMode={createMode} />
-      <Table
-        // setAdminToEditId={setAdminToEditId}
-        admins={admins}
-        // setShowform={setShowform}
-        setEditMode={setEditMode}
-        // adminEditedId={adminEditedId}
-        deleteAdm={deleteAdmin}
+      <TableComponent
+        columnTitleArray={columnTitleArray}
+        data={admins}
+        handleClick={handleEditClick}
+        deleteButton={deleteAdmin}
+        columns={columns}
       />
-
-      {modalSuccessOpen && (
-        <ModalSuccess
-          message={editMode ? 'Admin edited successfully' : 'Admin created successfully'}
-          setModalSuccessOpen={setModalSuccessOpen}
-        />
-      )}
+      <div className={styles.bottom_container}></div>
       {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
     </section>
   );
