@@ -1,15 +1,13 @@
-import style from './tableActivity.module.css';
-import ModalAddActivity from '../AddActivity/Index';
+import styles from './tableActivity.module.css';
 import { useState } from 'react';
-import { ModalSuccess } from '../../Shared';
-import { ModalConfirm } from '../../Shared';
-import { Loader } from '../../Shared';
+import { ModalSuccess, ModalConfirm, TableComponent } from '../../Shared';
+import ModalAddActivity from '../AddActivity/Index';
 
-const TableActivity = ({ activity, deleteActivity, setActivity, loading }) => {
+const TableActivity = ({ activity, deleteActivity, setActivity }) => {
   const [modalAdd, setModalAdd] = useState(false);
   const [table, setTable] = useState(true);
   const [editId, setEditId] = useState('');
-  const [editMode, setEditMode] = useState(false);
+  const [editMode] = useState(false);
   const [editActivities, setEditActivities] = useState({
     name: '',
     description: '',
@@ -17,7 +15,7 @@ const TableActivity = ({ activity, deleteActivity, setActivity, loading }) => {
   });
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
-  const [getId, setGetId] = useState('');
+  const [getId] = useState('');
 
   const editActivityDB = async (id, editActivities) => {
     try {
@@ -65,12 +63,15 @@ const TableActivity = ({ activity, deleteActivity, setActivity, loading }) => {
     setModalSuccessOpen(true);
   };
 
+  const columnTitleArray = ['Name', 'Description'];
+  const columns = ['name', 'description'];
+
   return (
-    <section className={style.containerTableActivity}>
+    <section className={styles.containerTableActivity}>
       {table && (
         <>
           <button
-            className={style.addActivityButton}
+            className={styles.addActivityButton}
             onClick={() => {
               setModalAdd(true);
               setTable(false);
@@ -78,63 +79,20 @@ const TableActivity = ({ activity, deleteActivity, setActivity, loading }) => {
           >
             + Add activity
           </button>
-          <table className={style.containerTable}>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Modify</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            {loading ? (
-              <Loader />
-            ) : (
-              <>
-                {activity.length < 1 ? (
-                  <tr>
-                    <td colSpan="4">This list is empty</td>
-                  </tr>
-                ) : (
-                  <tbody className={style.containerEachOneActivity}>
-                    {activity.map((act, index) => (
-                      <tr key={index}>
-                        <td>{act.name}</td>
-                        <td>{act.description}</td>
-                        <td>
-                          <button className={style.iconsTable}>
-                            <img
-                              onClick={() => {
-                                handleEdit();
-                                setEditMode(true);
-                                findIdEdit(act._id);
-                              }}
-                              src={`${process.env.PUBLIC_URL}/assets/images/edit.png`}
-                              alt="icon edit"
-                            />
-                          </button>
-                        </td>
-                        <td>
-                          <button
-                            className={style.iconsTable}
-                            onClick={() => {
-                              confirmDelete();
-                              setGetId(act._id);
-                            }}
-                          >
-                            <img
-                              src={`${process.env.PUBLIC_URL}/assets/images/trash.png`}
-                              alt="icon trash"
-                            />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                )}
-              </>
-            )}
-          </table>
+          <TableComponent
+            columnTitleArray={columnTitleArray}
+            data={activity}
+            editButton={handleEdit}
+            deleteButton={confirmDelete}
+            columns={columns}
+            valueField={{
+              arrayFirstValue: 'name',
+              arraySecondValue: 'description',
+              objectValue: 'description'
+            }}
+            arrayAndObject={null}
+            autoDelete={() => {}}
+          />
         </>
       )}
       {modalConfirmOpen && (
