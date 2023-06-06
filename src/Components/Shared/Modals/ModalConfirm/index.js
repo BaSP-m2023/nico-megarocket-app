@@ -7,7 +7,7 @@ const ModalConfirm = ({ message, method, onConfirm, setModalConfirmOpen }) => {
   const onConfirmFunction = () => {
     setModalSuccess(true), onConfirm(), setTimeout(() => setModalConfirmOpen(false), 800);
   };
-  console.log(modalSuccess);
+
   return (
     <div className={styles.modalAlert}>
       <div className={styles.modalStyles}>
