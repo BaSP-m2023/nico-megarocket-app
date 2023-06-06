@@ -3,7 +3,7 @@ import styles from './form.module.css';
 import { ModalConfirm } from '../../Shared';
 import { ModalSuccess } from '../../Shared';
 
-export const Form = ({ member, setMember, setMembers, members }) => {
+export const FormMembers = ({ member, setMember, setMembers, members }) => {
   const [validationsOk, setValidationsOk] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');

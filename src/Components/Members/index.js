@@ -26,9 +26,9 @@ function Members() {
     history.push(`members/form/${item._id}`, { params: { mode: 'edit', ...item } });
   };
 
-  // const createMode = () => {
-  //   history.push(`members/form/`, { params: { mode: 'create' } });
-  // };
+  const createMode = () => {
+    history.push(`members/form/`, { params: { mode: 'create' } });
+  };
 
   const getMembers = async () => {
     try {
@@ -60,7 +60,6 @@ function Members() {
   //   });
   // };
 
-<<<<<<< HEAD
   // const updateMember = async (id, memberUpdated) => {
   //   let memberToUpdateIndex = members.findIndex((member) => member._id === id);
   //   try {
@@ -71,18 +70,6 @@ function Members() {
   //       },
   //       body: JSON.stringify(memberUpdated)
   //     });
-=======
-  const updateMember = async (id, memberUpdated) => {
-    let memberToUpdateIndex = members.findIndex((member) => member._id === id);
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(memberUpdated)
-      });
->>>>>>> master
 
   //     const { error } = await response.json();
   //     if (!error) {
@@ -107,31 +94,15 @@ function Members() {
     }
   };
 
-  const columns = [
-    'Full Name',
-    'email',
-    'phone',
-    'city',
-    'isActive',
-    'postalCode Code',
-    'membership'
-  ];
+  const columns = ['firstName', 'email', 'phone', 'city', 'postalCode', 'membership'];
 
-  const columnTitleArray = [
-    'Full Name',
-    'Email',
-    'Phone',
-    'City',
-    'Status',
-    'Postal Code',
-    'Membership'
-  ];
+  const columnTitleArray = ['Full Name', 'Email', 'Phone', 'City', 'Postal Code', 'Membership'];
 
   return (
     <section className={styles.container}>
       <div className={styles.titleContainer}>
         <h2 className={styles.letterColour}>Members</h2>
-        <AddButton entity="Member" />
+        <AddButton entity="Member" createMode={createMode} />
       </div>
       {!members.length ? (
         <p>No active Members</p>
