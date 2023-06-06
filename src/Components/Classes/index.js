@@ -88,12 +88,14 @@ function Projects() {
   };
 
   const handleClick = (item) => {
-    history.push(`/classes/ClassForm/${item._id}`, { params: { item: item, mode: 'edit' } });
+    history.push(`/classes/ClassForm/${item._id}`, {
+      params: { item: item, mode: 'edit' }
+    });
   };
 
   return (
     <section className={styles.container}>
-      <h2>Classes</h2>
+      <h2 className={styles.classTitle}>Classes</h2>
       <AddButton entity={'Class'} createMode={createMode} />{' '}
       <div>
         {modalSuccessOpen && (

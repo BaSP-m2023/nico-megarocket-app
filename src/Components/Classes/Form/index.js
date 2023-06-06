@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import formStyles from '../Form/formClasses.module.css';
-import { ModalConfirm, ModalSuccess, ToastError } from '../../Shared';
+import { ModalConfirm, ModalSuccess, ToastError, Button, Inputs } from '../../Shared';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 const FormClasses = () => {
@@ -133,54 +133,64 @@ const FormClasses = () => {
   };
 
   return (
-    <div>
-      <form className={formStyles.form} onSubmit={formSubmit}>
+    <div className={formStyles.container}>
+      <form className={formStyles.form}>
         <div className={formStyles.container}>
           <h2 className={formStyles.formTitle}>
             {updateData.mode === 'edit' ? 'Update' : 'Create'} Class
           </h2>
           <div className={formStyles.inputs}>
-            <input
-              placeholder="Hour"
-              name="hour"
-              type="text"
-              value={inputForm.hour}
-              onChange={onChangeHour}
+            <Inputs
+              text={inputForm.hour}
+              type={'text'}
+              isDisabled={false}
+              change={onChangeHour}
+              nameInput={'hour'}
+              nameTitle="Hour"
             />
-            <input
-              placeholder="Day"
-              name="day"
-              type="text"
-              value={inputForm.day}
-              onChange={onChangeDay}
+
+            <Inputs
+              text={inputForm.day}
+              type={'text'}
+              isDisabled={false}
+              change={onChangeDay}
+              nameInput={'day'}
+              nameTitle="Day"
             />
-            <input
-              placeholder="Trainer"
-              name="trainer"
-              type="text"
-              value={inputForm.trainer}
-              onChange={onChangeTrainer}
+
+            <Inputs
+              text={inputForm.trainer}
+              type={'text'}
+              isDisabled={false}
+              change={onChangeTrainer}
+              nameInput={'trainer'}
+              nameTitle="Trainer"
             />
-            <input
-              placeholder="Activity"
-              name="activity"
-              type="text"
-              value={inputForm.activity}
-              onChange={onChangeActivity}
+            <Inputs
+              text={inputForm.activity}
+              type={'text'}
+              isDisabled={false}
+              change={onChangeActivity}
+              nameInput={'activity'}
+              nameTitle="Activity"
             />
-            <input
-              placeholder="Slots"
-              name="slots"
-              type="number"
-              value={inputForm.slots}
-              onChange={onChangeSlots}
+            <Inputs
+              text={inputForm.slots}
+              type={'text'}
+              isDisabled={false}
+              change={onChangeSlots}
+              nameInput={'slots'}
+              nameTitle="Slots"
             />
           </div>
           <div className={formStyles.buttons}>
-            <button type="submit">Send</button>
-            <button type="button" onClick={() => history.goBack()}>
-              Cancel
-            </button>
+            <span className={formStyles.cancelButton}>
+              <Button clickAction={() => history.goBack()} text="Cancel" />
+            </span>
+            <Button
+              clickAction={formSubmit}
+              text={updateData.mode === 'edit' ? 'Update' : 'Create'}
+            />
           </div>
         </div>
       </form>
