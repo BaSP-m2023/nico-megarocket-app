@@ -11,6 +11,7 @@ import Home from '../Home/index';
 import Header from '../Header/index';
 import Footer from '../Footer/index';
 import styles from './layout.module.css';
+import FormActivity from '../Activities/FormActivities';
 
 function Layout() {
   return (
@@ -19,7 +20,8 @@ function Layout() {
         <Header />
         <Switch>
           <Route path="/home" component={Home} />
-          <Route path="/activities" component={Activities} />
+          <Route exact path="/activities" component={Activities} />
+          <Route path="/activities/form/:id?" component={FormActivity} />
           <Route path="/admins" component={Admins} />
           <Route path="/classes" component={Classes} />
           <Route path="/members" component={Members} />
