@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styles from './form.module.css';
 import { ModalConfirm } from '../../Shared';
 import { ModalSuccess } from '../../Shared';
+import { InputPlaceholder } from '../../Shared';
+import { Button } from '../../Shared';
 
 const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
   const [trainerEdited, setTrainer] = useState({
@@ -81,7 +83,7 @@ const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
           <div className={styles.container}>
             <div className={styles.inputContainer}>
               <label className={styles.label}>First Name</label>
-              <input
+              <InputPlaceholder
                 className={styles.input}
                 name="firstName"
                 type="text"
@@ -92,7 +94,7 @@ const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
             </div>
             <div className={styles.inputContainer}>
               <label className={styles.label}>Last Name</label>
-              <input
+              <InputPlaceholder
                 className={styles.input}
                 name="lastName"
                 type="text"
@@ -105,7 +107,7 @@ const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
           <div className={styles.container}>
             <div className={styles.inputContainer}>
               <label className={styles.label}>DNI</label>
-              <input
+              <InputPlaceholder
                 className={styles.input}
                 name="dni"
                 type="number"
@@ -116,7 +118,7 @@ const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
             </div>
             <div className={styles.inputContainer}>
               <label className={styles.label}>Phone</label>
-              <input
+              <InputPlaceholder
                 className={styles.input}
                 name="phone"
                 type="number"
@@ -129,7 +131,7 @@ const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
           <div className={styles.container}>
             <div className={styles.inputContainer}>
               <label className={styles.label}>Email</label>
-              <input
+              <InputPlaceholder
                 className={styles.input}
                 name="email"
                 type="text"
@@ -140,7 +142,7 @@ const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
             </div>
             <div className={styles.inputContainer}>
               <label className={styles.label}>City</label>
-              <input
+              <InputPlaceholder
                 className={styles.input}
                 name="city"
                 type="text"
@@ -153,7 +155,7 @@ const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
           <div className={styles.container}>
             <div className={styles.inputContainer}>
               <label className={styles.label}>Salary</label>
-              <input
+              <InputPlaceholder
                 className={styles.input}
                 name="salary"
                 type="number"
@@ -165,12 +167,8 @@ const FormEdit = ({ trainerModify, closeForm, setTrainers, trainers }) => {
           </div>
         </div>
         <div className={styles.container}>
-          <button className={styles.buttonCancel} onClick={formClose}>
-            Cancel
-          </button>
-          <button className={styles.buttonSave} type="submit" onClick={handleClick}>
-            Save
-          </button>
+          <Button clickAction={formClose} text="Cancel" />
+          <Button clickAction={handleClick} text="Save" />
         </div>
       </form>
       {modalConfirmAdd && (
