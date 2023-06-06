@@ -3,6 +3,7 @@ import styles from './members.module.css';
 import TableMember from './TableMember';
 import { ToastError } from '../Shared';
 import AddButton from '../Shared/AddButton/index';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 function Members() {
   const [members, setMembers] = useState([]);
@@ -18,6 +19,12 @@ function Members() {
       console.log(error);
     }
   };
+
+  const history = useHistory();
+  const handleClick = (member) => {
+    history.push(`members/membersForm/${member._id}`, { params: { ...member, mode: 'edit' } });
+  };
+
   useEffect(() => {
     getMembers();
   }, []);
@@ -33,7 +40,7 @@ function Members() {
       {!members.length ? (
         <p>No active Members</p>
       ) : (
-        <TableMember members={members} setMembers={setMembers} />
+        <TableMember members={members} setMembers={setMembers} handleClick={handleClick} />
       )}
       {toastErroOpen && (
         <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />

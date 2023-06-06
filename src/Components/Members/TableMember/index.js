@@ -1,14 +1,7 @@
 import React from 'react';
 import styles from './table-member.module.css';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
-const TableMember = ({ members }) => {
-  const history = useHistory();
-
-  const handleClick = (id) => {
-    history.push(`members/membersForm/${id}`);
-  };
-
+const TableMember = ({ members, handleClick }) => {
   return (
     <div className={styles.container}>
       <table className={styles.table}>
@@ -36,7 +29,7 @@ const TableMember = ({ members }) => {
               <td>{member.postalCode}</td>
               <td>{member.membership}</td>
               <td className={styles.rowActions}>
-                <button onClick={() => handleClick(member._id)}>Edit</button>
+                <button onClick={() => handleClick(member)}>Edit</button>
                 <button>Delete</button>
               </td>
             </tr>

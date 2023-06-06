@@ -3,16 +3,15 @@ import styles from './form.module.css';
 import { ModalConfirm } from '../../Shared';
 import { ModalSuccess } from '../../Shared';
 import { Inputs, Button /* , OptionInput */ } from '../../Shared';
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { useLocation /* useParams */ } from 'react-router-dom/cjs/react-router-dom.min';
 
 export const MembersForm = () => {
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [modalAddConfirmOpen, setModalAddConfirmOpen] = useState(false);
   const [member, setMember] = useState({});
-  const params = useParams();
-  /*  const memberships = ['Black', 'Classic', 'Only Classes']; */
-
+  const location = useLocation();
+  const data = location.state.params;
   /* const updateMember = async (id, memberUpdated) => {
     let memberToUpdateIndex = members.findIndex((member) => member._id === id);
     try {
@@ -84,8 +83,30 @@ export const MembersForm = () => {
   };
 
   useEffect(() => {
-    if (params) {
-      console.log(params);
+    if (data.mode === 'edit') {
+      setMember({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        dni: data.dni,
+        birthday: data.birthday,
+        phone: data.phone,
+        email: data.email,
+        city: data.city,
+        postalCode: data.postalCode,
+        membership: data.membership
+      });
+    } else {
+      setMember({
+        firstName: '',
+        lastName: '',
+        dni: '',
+        birthday: '',
+        phone: '',
+        email: '',
+        city: '',
+        postalCode: '',
+        membership: ''
+      });
     }
   }, []);
 
