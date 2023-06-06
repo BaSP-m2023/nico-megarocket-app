@@ -34,7 +34,7 @@ function Admins() {
 
   const getAdmins = async () => {
     try {
-      const response = await fetch(process.env.REACT_APP_API_URL + '/admins');
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
       const data = await response.json();
       setAdmins(data.data);
     } catch (error) {
@@ -45,7 +45,7 @@ function Admins() {
 
   const deleteAdmin = async (id) => {
     try {
-      await fetch(process.env.REACT_APP_API_URL + '/admins/' + id, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
         method: 'DELETE'
       });
       const newAdmins = admins.filter((admin) => admin._id !== id);
@@ -70,7 +70,7 @@ function Admins() {
 
   const editAdmins = async (id, bodyEdited) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
