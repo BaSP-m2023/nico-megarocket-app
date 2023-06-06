@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 function Members() {
   const [members, setMembers] = useState([]);
   const [toastErroOpen, setToastErroOpen] = useState(false);
+  const history = useHistory();
 
   const getMembers = async () => {
     try {
@@ -20,9 +21,12 @@ function Members() {
     }
   };
 
-  const history = useHistory();
   const handleClick = (member) => {
-    history.push(`members/membersForm/${member._id}`, { params: { ...member, mode: 'edit' } });
+    history.push(`/members/membersForm/${member._id}`, { params: { ...member, mode: 'edit' } });
+  };
+
+  const createMode = () => {
+    history.push('/members/membersForm', { param: { mode: 'create' } });
   };
 
   useEffect(() => {
@@ -34,7 +38,7 @@ function Members() {
       <div className={styles.titleContainer}>
         <h2 className={styles.letterColour}>Members</h2>
         <div className={styles.addContainer}>
-          <AddButton entity="members" path="/members/membersForm" />
+          <AddButton entity="members" createMode={createMode} />
         </div>
       </div>
       {!members.length ? (

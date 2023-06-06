@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import { ModalConfirm } from '../../Shared';
 import { ModalSuccess } from '../../Shared';
-import { Inputs, Button /* , OptionInput */ } from '../../Shared';
-import { useLocation /* useParams */ } from 'react-router-dom/cjs/react-router-dom.min';
+import { Inputs, Button } from '../../Shared';
+import { useLocation, useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
 export const MembersForm = () => {
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
@@ -11,28 +11,29 @@ export const MembersForm = () => {
   const [modalAddConfirmOpen, setModalAddConfirmOpen] = useState(false);
   const [member, setMember] = useState({});
   const location = useLocation();
+  const history = useHistory();
   const data = location.state.params;
-  /* const updateMember = async (id, memberUpdated) => {
-    let memberToUpdateIndex = members.findIndex((member) => member._id === id);
+  const { id } = useParams();
+
+  const updateMember = async (id, memberUpdated) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/member/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json'
         },
         body: JSON.stringify(memberUpdated)
       });
-
-      const { error } = await response.json();
-      if (!error) {
-        const currentsMembers = [...members];
-        currentsMembers[memberToUpdateIndex] = memberUpdated;
-        setMembers(currentsMembers);
-      }
+      setModalSuccessOpen(true);
+      setSuccessMessage('Member edited successfully!');
     } catch (error) {
       console.log(error);
     }
-  }; */
+  };
+
+  const handleConfirmModal = () => {
+    setModalAddConfirmOpen(true);
+  };
 
   const handleChange = (e) => {
     setMember({
@@ -43,47 +44,52 @@ export const MembersForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    try {
-      e.preventDefault();
-      await fetch(`${process.env.REACT_APP_API_URL}/api/member/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          firstName: member.firstName,
-          lastName: member.lastName,
-          dni: member.dni,
-          birthday: member.birthday,
-          phone: member.phone,
-          email: member.email,
-          city: member.city,
-          postalCode: member.postalCode,
-          isActive: member.isActive,
-          membership: member.membership
-        })
-      });
-      setModalSuccessOpen(true);
-      setSuccessMessage('Member added successfully!');
-      setMember({
-        firstName: '',
-        lastName: '',
-        dni: '',
-        birthday: '',
-        phone: '',
-        email: '',
-        city: '',
-        postalCode: '',
-        isActive: false,
-        membership: ''
-      });
-    } catch (error) {
-      console.error(error);
+    e.preventDefault();
+    if (!id) {
+      try {
+        e.preventDefault();
+        await fetch(`${process.env.REACT_APP_API_URL}/api/member/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            firstName: member.firstName,
+            lastName: member.lastName,
+            dni: member.dni,
+            birthday: member.birthday,
+            phone: member.phone,
+            email: member.email,
+            city: member.city,
+            postalCode: member.postalCode,
+            isActive: member.isActive,
+            membership: member.membership
+          })
+        });
+        setMember({
+          firstName: '',
+          lastName: '',
+          dni: '',
+          birthday: '',
+          phone: '',
+          email: '',
+          city: '',
+          postalCode: '',
+          isActive: false,
+          membership: ''
+        });
+        setModalSuccessOpen(true);
+        setSuccessMessage('Member added successfully!');
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      handleConfirmModal();
     }
   };
 
   useEffect(() => {
-    if (data.mode === 'edit') {
+    if (id) {
       setMember({
         firstName: data.firstName,
         lastName: data.lastName,
@@ -112,19 +118,21 @@ export const MembersForm = () => {
 
   return (
     <div className={styles.container}>
-      <div>
-        {modalAddConfirmOpen && (
-          <ModalConfirm
-            method="Add"
-            onConfirm={handleSubmit}
-            setModalConfirmOpen={setModalAddConfirmOpen}
-            message="Are you sure you want to edit this member?"
-          />
-        )}
-        {modalSuccessOpen && (
-          <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
-        )}
-      </div>
+      {
+        <div>
+          {modalAddConfirmOpen && (
+            <ModalConfirm
+              method="Update"
+              onConfirm={() => updateMember(id, member)}
+              setModalConfirmOpen={setModalAddConfirmOpen}
+              message="Are you sure you want to add this member?"
+            />
+          )}
+          {modalSuccessOpen && (
+            <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
+          )}
+        </div>
+      }
       <h3 className={styles.title}>Add Member</h3>
       <form className={styles.form} onSubmit={handleSubmit}>
         <section className={styles.inputGroups}>
@@ -217,13 +225,12 @@ export const MembersForm = () => {
                 nameInput="membership"
                 required
               />
-              {/* <OptionInput dataOptions={memberships} nameInput="membership" /> */}
             </div>
           </div>
         </section>
         <div className={styles.buttonContainer}>
           <Button clickAction={handleSubmit} text="Submit" />
-          <Button text="cancel" />
+          <Button text="Cancel" clickAction={() => history.goBack()} />
         </div>
       </form>
     </div>
