@@ -93,7 +93,7 @@ const Form = ({ addItem, closeForm }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     setModalConfirmAdd(false);
-    console.log(validateForm());
+
     if (validateForm()) {
       addTrainer(trainer);
       addItem(trainer);
