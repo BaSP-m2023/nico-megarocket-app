@@ -7,7 +7,7 @@ import { Button } from '../../Shared';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 
-const FormTrainers = () => {
+const FormTrainer = () => {
   const [modalUpdateConfirmOpen, setModalUpdateConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
@@ -15,30 +15,30 @@ const FormTrainers = () => {
   const [toastMessage, setToastMessage] = useState('');
   const [inputForm, setInputForm] = useState('');
   const { id } = useParams();
-  const locationObject = useLocation();
-  const updateData = locationObject.state.params;
+  const location = useLocation();
+  const updateData = location.state.params;
 
   useEffect(() => {
-    {
-      updateData.mode === 'edit'
-        ? setInputForm({
-            firstName: updateData.item.firstName,
-            lastName: updateData.item.lastName,
-            dni: updateData.item.dni,
-            phone: updateData.item.phone,
-            email: updateData.item.email,
-            city: updateData.item.city,
-            salary: updateData.item.salary
-          })
-        : setInputForm({
-            firstName: '',
-            lastName: '',
-            dni: '',
-            phone: '',
-            email: '',
-            city: '',
-            salary: ''
-          });
+    if (updateData.mode === 'edit') {
+      setInputForm({
+        firstName: updateData.firstName,
+        lastName: updateData.lastName,
+        dni: updateData.dni,
+        phone: updateData.phone,
+        email: updateData.email,
+        city: updateData.city,
+        salary: updateData.salary
+      });
+    } else {
+      setInputForm({
+        firstName: '',
+        lastName: '',
+        dni: '',
+        phone: '',
+        email: '',
+        city: '',
+        salary: ''
+      });
     }
   }, []);
 
@@ -49,7 +49,7 @@ const FormTrainers = () => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.strungify(inputForm)
+    body: JSON.stringify(inputForm)
   };
 
   const createTrainer = async (body) => {
@@ -101,10 +101,52 @@ const FormTrainers = () => {
     setModalUpdateConfirmOpen(false);
   };
 
-  const onChangeInput = (e) => {
+  const onChangeInputFirstName = (e) => {
     setInputForm({
       ...inputForm,
-      [e.target.name]: e.target.value
+      firstName: e.target.value
+    });
+  };
+
+  const onChangeInputLastName = (e) => {
+    setInputForm({
+      ...inputForm,
+      lastName: e.target.value
+    });
+  };
+
+  const onChangeInputDni = (e) => {
+    setInputForm({
+      ...inputForm,
+      dni: e.target.value
+    });
+  };
+
+  const onChangeInputPhone = (e) => {
+    setInputForm({
+      ...inputForm,
+      phone: e.target.value
+    });
+  };
+
+  const onChangeInputEmail = (e) => {
+    setInputForm({
+      ...inputForm,
+      email: e.target.value
+    });
+  };
+
+  const onChangeInputCity = (e) => {
+    setInputForm({
+      ...inputForm,
+      city: e.target.value
+    });
+  };
+
+  const onChangeInputSalary = (e) => {
+    setInputForm({
+      ...inputForm,
+      salary: e.target.value
     });
   };
 
@@ -129,8 +171,8 @@ const FormTrainers = () => {
                 className={styles.input}
                 name="firstName"
                 type="text"
-                value={inputForm.firstName}
-                onChange={onChangeInput}
+                text={inputForm.firstName}
+                change={onChangeInputFirstName}
               />
             </div>
             <div className={styles.inputContainer}>
@@ -139,8 +181,8 @@ const FormTrainers = () => {
                 className={styles.input}
                 name="lastName"
                 type="text"
-                value={inputForm.lastName}
-                onChange={onChangeInput}
+                text={inputForm.lastName}
+                change={onChangeInputLastName}
               />
             </div>
           </div>
@@ -151,8 +193,8 @@ const FormTrainers = () => {
                 className={styles.input}
                 name="dni"
                 type="number"
-                value={inputForm.dni}
-                onChange={onChangeInput}
+                text={inputForm.dni}
+                change={onChangeInputDni}
               />
             </div>
             <div className={styles.inputContainer}>
@@ -161,8 +203,8 @@ const FormTrainers = () => {
                 className={styles.input}
                 name="phone"
                 type="number"
-                value={inputForm.phone}
-                onChange={onChangeInput}
+                text={inputForm.phone}
+                change={onChangeInputPhone}
               />
             </div>
           </div>
@@ -173,8 +215,8 @@ const FormTrainers = () => {
                 className={styles.input}
                 name="email"
                 type="text"
-                value={inputForm.email}
-                onChange={onChangeInput}
+                text={inputForm.email}
+                change={onChangeInputEmail}
               />
             </div>
             <div className={styles.inputContainer}>
@@ -183,8 +225,8 @@ const FormTrainers = () => {
                 className={styles.input}
                 name="city"
                 type="text"
-                value={inputForm.city}
-                onChange={onChangeInput}
+                text={inputForm.city}
+                change={onChangeInputCity}
               />
             </div>
           </div>
@@ -195,8 +237,8 @@ const FormTrainers = () => {
                 className={styles.input}
                 name="salary"
                 type="number"
-                value={inputForm.salary}
-                onChange={onChangeInput}
+                text={inputForm.salary}
+                change={onChangeInputSalary}
               />
             </div>
           </div>
@@ -224,4 +266,4 @@ const FormTrainers = () => {
   );
 };
 
-export default FormTrainers;
+export default FormTrainer;
