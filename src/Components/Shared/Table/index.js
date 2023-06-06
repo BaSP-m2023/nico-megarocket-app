@@ -90,7 +90,7 @@ const TableComponent = ({
       {modalConfirm && (
         <ModalConfirm
           onConfirm={() => deleteButton(idDelete)}
-          message="Are you sure to delete this Trainer?"
+          message="Are you sure to delete this?"
           method="Delete"
           setModalConfirmOpen={setModalConfirm}
         />
