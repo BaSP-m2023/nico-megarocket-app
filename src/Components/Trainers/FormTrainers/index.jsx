@@ -13,7 +13,6 @@ const Form = ({ addItem, closeForm }) => {
     city: '',
     salary: ''
   });
-
   const [modalConfirmAdd, setModalConfirmAdd] = useState(false);
   const [modalSucessOpen, setModalSucessOpen] = useState(false);
 
@@ -67,20 +66,6 @@ const Form = ({ addItem, closeForm }) => {
     return isValid;
   };
 
-  const addTrainer = async (trainer) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(trainer)
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const onChangeInput = (e) => {
     setTrainer({
       ...trainer,
@@ -88,24 +73,34 @@ const Form = ({ addItem, closeForm }) => {
     });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     setModalConfirmAdd(false);
-    console.log(validateForm());
     if (validateForm()) {
-      addTrainer(trainer);
-      addItem(trainer);
-      setTrainer({
-        firstName: '',
-        lastName: '',
-        dni: '',
-        phone: '',
-        email: '',
-        city: '',
-        salary: ''
-      });
-      setModalSucessOpen(true);
-      closeForm();
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(trainer)
+        });
+        const responseData = await response.json();
+        addItem(trainer, responseData._id);
+        setTrainer({
+          firstName: '',
+          lastName: '',
+          dni: '',
+          phone: '',
+          email: '',
+          city: '',
+          salary: ''
+        });
+        setModalSucessOpen(true);
+        closeForm();
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
