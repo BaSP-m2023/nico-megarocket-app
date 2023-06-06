@@ -24,11 +24,11 @@ function Trainers() {
   }, []);
 
   const createMode = () => {
-    history.push('trainer/form/', { params: { mode: 'created' } });
+    history.push('trainers/form/', { params: { mode: 'created' } });
   };
 
   const handleClick = (item) => {
-    history.push(`trainer/form/${item._id}`, { params: { ...item, mode: 'edit' } });
+    history.push(`trainers/form/${item._id}`, { params: { ...item, mode: 'edit' } });
   };
 
   const deleteTrainer = async (id) => {

@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './modalConfirm.module.css';
+import { ModalSuccess } from '../../index';
 
 const ModalConfirm = ({ message, method, onConfirm, setModalConfirmOpen }) => {
+  const [modalSuccess, setModalSuccess] = useState(false);
   const onConfirmFunction = () => {
-    onConfirm(), setModalConfirmOpen(false);
+    setModalSuccess(true), onConfirm(), setTimeout(() => setModalConfirmOpen(false), 800);
   };
+
   return (
     <div className={styles.modalAlert}>
       <div className={styles.modalStyles}>
@@ -42,6 +45,9 @@ const ModalConfirm = ({ message, method, onConfirm, setModalConfirmOpen }) => {
           </button>
         </div>
       </div>
+      {modalSuccess && (
+        <ModalSuccess setModalSuccessOpen={setModalSuccess} message="Deleted successfully" />
+      )}
     </div>
   );
 };
