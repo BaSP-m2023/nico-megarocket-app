@@ -1,0 +1,44 @@
+.noneTrainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40vw;
+  height: 50px;
+  border-radius: 5px;
+  background-color: #d9d9d9ea;
+  font-size: 30px;
+}
+
+.container {
+  width: 80%;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(55, 56, 103, 0.1);
+  color: #373867;
+}
+
+.table tr td,
+.table tr th {
+  padding: 10px;
+  text-align: left;
+}
+
+.rowBackground1 {
+  background-color: #aace9b33;
+}
+
+.rowBackground2 {
+  background-color: #ffffff;
+}
+
+.trash_edit {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}

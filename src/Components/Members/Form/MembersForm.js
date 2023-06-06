@@ -45,7 +45,7 @@ export const MembersForm = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      await fetch(`${process.env.REACT_APP_API_URL}/member/`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/member/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

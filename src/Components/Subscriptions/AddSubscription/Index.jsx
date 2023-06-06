@@ -39,7 +39,7 @@ const ModalAddSubscription = ({
   };
   const createSubscriptionDB = async (bodySubscription) => {
     try {
-      const newSubscription = await fetch(`${process.env.REACT_APP_API_URL}/subscriptions`, {
+      const newSubscription = await fetch(`${process.env.REACT_APP_API_URL}/api/subscription`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json'
