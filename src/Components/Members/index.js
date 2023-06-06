@@ -22,11 +22,11 @@ function Members() {
   };
 
   const handleClick = (member) => {
-    history.push(`/members/membersForm/${member._id}`, { params: { ...member, mode: 'edit' } });
+    history.push(`/members/form/${member._id}`, { params: { ...member, mode: 'edit' } });
   };
 
   const createMode = () => {
-    history.push('/members/membersForm', { param: { mode: 'create' } });
+    history.push('/members/form', { param: { mode: 'create' } });
   };
 
   useEffect(() => {

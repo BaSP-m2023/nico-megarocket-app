@@ -16,17 +16,6 @@
   margin-bottom:20px;
 }
 
-/* .form label {
-  color: var(--Blue);
-  font-weight: 600;
-  margin: 10px 0;
-}
-
-.input {
-  padding: 5px;
-  border-radius: 5px;
-  border: solid var(--Blue) 1px;
-} */
 
 .inputGroups {
   display: flex;
