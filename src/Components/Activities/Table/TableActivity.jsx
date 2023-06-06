@@ -10,7 +10,7 @@
 //   const [getId, setGetId] = useState('');
 
 //   const handleEdit = (act) => {
-//     history.push(`activities/formActivities/${act._id}`, { params: act });
+//     history.push(`activities/form/${act._id}`, { params: act });
 //   };
 
 //   const confirmDelete = () => {
