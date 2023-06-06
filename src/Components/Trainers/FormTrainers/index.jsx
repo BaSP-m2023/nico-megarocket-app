@@ -76,7 +76,6 @@ const Form = ({ addItem, closeForm }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     setModalConfirmAdd(false);
-    console.log(validateForm());
     if (validateForm()) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`, {
