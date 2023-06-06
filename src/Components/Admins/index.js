@@ -11,8 +11,8 @@ function Admins() {
   const [toastMessage, setToastMessage] = useState('Error in database');
 
   const history = useHistory();
-  const columnTitleArray = ['Name', 'Surname', 'DNI', 'Phone', 'E-Mail', 'City'];
-  const columns = ['firstName', 'lastName', 'dni', 'phone', 'email', 'city'];
+  const columnTitleArray = ['Admin', 'DNI', 'Phone', 'E-Mail', 'City'];
+  const columns = ['firstName', 'dni', 'phone', 'email', 'city'];
 
   const getAdmins = async () => {
     try {
