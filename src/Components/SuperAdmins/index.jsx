@@ -4,6 +4,7 @@ import Table from './Table';
 import Form from './Form';
 import { ModalSuccess } from '../Shared';
 import { ToastError } from '../Shared';
+import { AddButton } from '../Shared';
 
 const SuperAdmins = () => {
   const [superAdmins, setSuperAdmins] = useState([]);
@@ -121,15 +122,13 @@ const SuperAdmins = () => {
             <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
           )}
         </div>
-        <button className={styles.containerBtn} onClick={() => toggleForm(false)}>
-          Create Super Admin
-        </button>
+        <AddButton entity={'Super Admin'} path={'/formSuperAdmin'} />
         <Table
           data={superAdmins}
           deleteItem={deleteItem}
           form={toggleForm}
           setSuperAdminForm={setSuperAdminForm}
-        ></Table>
+        />
         {showForm && (
           <Form
             addItem={addItem}

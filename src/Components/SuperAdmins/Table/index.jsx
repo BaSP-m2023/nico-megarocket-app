@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import styles from './table.module.css';
 import { ModalConfirm } from '../../Shared';
+import { TableComponent } from '../../Shared';
 
 const Table = ({ data, deleteItem, form, setSuperAdminForm }) => {
   const [modalDeleteConfirmOpen, setModalDeleteConfirmOpen] = useState(false);
@@ -23,46 +23,16 @@ const Table = ({ data, deleteItem, form, setSuperAdminForm }) => {
   };
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th className={styles.tableTitle}>Email</th>
-          <th className={styles.tableTitle}>Password</th>
-          <th className={styles.tableTitle}></th>
-          <th className={styles.tableTitle}></th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((item) => {
-          return (
-            <tr key={item.id}>
-              <td className={styles.tableContainerTitle}>{item.email}</td>
-              <td className={styles.tableContainerTitle}>{item.password}</td>
-              <td className={styles.tableContainerBtn}>
-                <button
-                  className={styles.tableBtn}
-                  onClick={() => handleDeleteButtonClick(item._id)}
-                >
-                  <img
-                    className={styles.tableBtnImg}
-                    src="../../../assets/images/trash-delete.svg"
-                    alt="Delete"
-                  />
-                </button>
-              </td>
-              <td className={styles.tableContainerBtn}>
-                <button className={styles.tableBtn} onClick={() => handleEditButton(item)}>
-                  <img
-                    className={styles.tableBtnImg}
-                    src="../../../assets/images/pencil-edit.svg"
-                    alt="Edit"
-                  />
-                </button>
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
+    <div>
+      <TableComponent
+        columnTitleArray={['Email', 'Password']}
+        data={data}
+        handleClick={handleEditButton}
+        deleteButton={handleDeleteButtonClick}
+        columns={['email', 'password']}
+        autoDelete={() => {}}
+      />
+
       {modalDeleteConfirmOpen && (
         <ModalConfirm
           method="Delete"
@@ -71,7 +41,7 @@ const Table = ({ data, deleteItem, form, setSuperAdminForm }) => {
           message="Are you sure you want to delete this?"
         />
       )}
-    </table>
+    </div>
   );
 };
 
