@@ -19,7 +19,7 @@ const TableActivity = ({ activity, deleteActivity, setActivity }) => {
 
   const editActivityDB = async (id, editActivities) => {
     try {
-      let activityEdited = await fetch(`${process.env.REACT_APP_API_URL}/activity/${id}`, {
+      let activityEdited = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
