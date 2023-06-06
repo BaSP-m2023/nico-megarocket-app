@@ -7,7 +7,7 @@ import Trainers from '../Trainers';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 import Activities from '../Activities';
-import FormActivity from '../Activities/FormActivity';
+import FormActivity from '../Activities/FormActivities';
 
 import Home from '../Home/index';
 import Header from '../Header/index';
