@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import styles from './classes.module.css';
-import Table from './Table/index';
-import Form from './Form/index';
-import { ModalSuccess } from '../Shared';
+import FormClasses from './Form/index';
+import { ModalSuccess, TableComponent } from '../Shared';
 import { ToastError } from '../Shared';
+import { useHistory } from 'react-router-dom';
 
 function Projects() {
   const [show, setShow] = useState(false);
   const [classes, setClasses] = useState([]);
   const [updateMode, setUpdateMode] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
-  const [toastErroOpen, setToastErroOpen] = useState(false);
+  const [toastErrorOpen, setToastErrorOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [classUpdateId, setClassUpdateId] = useState('');
   const [klass, setKlass] = useState({
     hour: '',
     day: '',
@@ -22,6 +21,23 @@ function Projects() {
     slots: ''
   });
 
+  const columnTitleArray = ['Activity', 'Day', 'Hour', 'Trainer', 'Slots'];
+
+  const columns = ['activity', 'day', 'hour', 'trainer', 'slots'];
+
+  const arrayAndObject = {
+    array: 'trainers',
+    object: 'activity'
+  };
+
+  const valueField = {
+    arrayFirstValue: 'firstName',
+    arraySecondValue: 'lastName',
+    objectValue: 'name'
+  };
+
+  const history = useHistory();
+
   const getClasses = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class`);
@@ -29,7 +45,7 @@ function Projects() {
       setClasses(data.data);
     } catch (error) {
       setToastMessage('Error in Database');
-      setToastErroOpen(true);
+      setToastErrorOpen(true);
       console.error(error);
     }
   };
@@ -58,7 +74,7 @@ function Projects() {
     }
   };
 
-  const deleteClassfromDB = async (id) => {
+  const deleteClassFromDB = async (id) => {
     try {
       await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
         method: 'DELETE',
@@ -83,8 +99,10 @@ function Projects() {
         }
       });
       setClasses([...classes.filter((classes) => classes._id !== id)]);
-      setToastMessage('The Activity or Trainer does not exist');
-      setToastErroOpen(true);
+      setToastMessage(
+        'One or more classes were deleted from the table. Why?: The Trainer or Activity were deleted from DB'
+      );
+      setToastErrorOpen(true);
     } catch (error) {
       console.error(error);
     }
@@ -111,20 +129,21 @@ function Projects() {
   };
 
   const deleteClass = (id) => {
-    deleteClassfromDB(id);
+    deleteClassFromDB(id);
   };
 
-  const updateClick = (item) => {
-    showForm();
-    setUpdateMode(true);
-    setClassUpdateId(item._id);
-    setKlass({
-      hour: item.hour,
-      day: item.day,
-      trainer: item.trainer.map((item) => item._id),
-      activity: item.activity._id,
-      slots: item.slots
-    });
+  const handleClick = (item) => {
+    history.push(`/classes/AdminForm/${item._id}`, { params: { item: item, mode: 'edit' } });
+    // showForm();
+    // setUpdateMode(true);
+    // setClassUpdateId(item._id);
+    // setKlass({
+    //   hour: item.hour,
+    //   day: item.day,
+    //   trainer: item.trainer.map((item) => item._id),
+    //   activity: item.activity._id,
+    //   slots: item.slots
+    // });
   };
 
   return (
@@ -134,10 +153,9 @@ function Projects() {
         <img src={`${process.env.PUBLIC_URL}/assets/images/btn-add.png`} /> Add
       </button>
       {show && (
-        <Form
+        <FormClasses
           klass={{ klass, setKlass }}
           classes={classes}
-          classUpdateId={classUpdateId}
           createCLass={createClass}
           updateClass={updateClass}
           updateToggle={{ updateMode, setUpdateMode }}
@@ -149,14 +167,17 @@ function Projects() {
           <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
         )}
       </div>
-      <Table
-        classes={{ classes, setClasses }}
-        updateClick={updateClick}
+      <TableComponent
+        columnTitleArray={columnTitleArray}
         data={classes}
-        deleteClass={deleteClass}
+        handleClick={handleClick}
+        deleteButton={deleteClass}
+        columns={columns}
+        valueField={valueField}
+        arrayAndObject={arrayAndObject}
         autoDelete={autoDelete}
       />
-      {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
+      {toastErrorOpen && <ToastError setToastErroOpen={setToastErrorOpen} message={toastMessage} />}
     </section>
   );
 }

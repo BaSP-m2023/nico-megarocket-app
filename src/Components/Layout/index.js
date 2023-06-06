@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import Home from '../Home/index';
 import Header from '../Header/index';
 import Footer from '../Footer/index';
+import FormClasses from '../Classes/Form';
 import styles from './layout.module.css';
 
 function Layout() {
@@ -21,7 +22,8 @@ function Layout() {
           <Route path="/home" component={Home} />
           <Route path="/activities" component={Activities} />
           <Route path="/admins" component={Admins} />
-          <Route path="/classes" component={Classes} />
+          <Route exact path="/classes" component={Classes} />
+          <Route path="/classes/form/:id" component={FormClasses} />
           <Route path="/members" component={Members} />
           <Route path="/subscriptions" component={Subscriptions} />
           <Route path="/super-admins" component={SuperAdmins} />
