@@ -1,7 +1,7 @@
 import ButtonForm from '../ButtonForm';
 import styles from './table.module.css';
-import { useState } from 'react';
 import { ModalConfirm } from '../index';
+import { useState } from 'react';
 
 const TableComponent = ({
   columnTitleArray,
@@ -22,6 +22,7 @@ const TableComponent = ({
         }
       });
   }
+
   const [modalConfirm, setModalConfirm] = useState(false);
   const [idDelete, setIdDelete] = useState('');
 
@@ -63,6 +64,10 @@ const TableComponent = ({
                           ))
                         ) : typeof row[column] === 'object' ? (
                           <span>{row[column][fieldValue.objectValue]}</span>
+                        ) : column === 'firstName' ? (
+                          <span>
+                            {row.firstName} {row.lastName}
+                          </span>
                         ) : (
                           row[column]
                         )

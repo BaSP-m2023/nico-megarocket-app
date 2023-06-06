@@ -3,7 +3,7 @@ import styles from './form.module.css';
 import { ModalConfirm } from '../../Shared';
 import { ModalSuccess } from '../../Shared';
 
-const Form = ({ addItem, closeForm }) => {
+const FormTrainer = ({ addItem, closeForm }) => {
   const [trainer, setTrainer] = useState({
     firstName: '',
     lastName: '',
@@ -221,4 +221,4 @@ const Form = ({ addItem, closeForm }) => {
   );
 };
 
-export default Form;
+export default FormTrainer;
