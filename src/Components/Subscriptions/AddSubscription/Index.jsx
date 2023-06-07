@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { Inputs, Button, ModalConfirm, ModalSuccess } from '../../Shared';
-import style from './ModalAddSubscription.module.css';
+import style from '../AddSubscription/modalAdd.module.css';
 
 const ModalAddSubscription = () => {
   const [isValid, setIsValid] = useState(true);
