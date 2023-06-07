@@ -1,9 +1,12 @@
+import ButtonForm from '../ButtonForm';
 import styles from './table.module.css';
+import { ModalConfirm } from '../index';
+import { useState } from 'react';
 
 const TableComponent = ({
   columnTitleArray,
   data,
-  editButton,
+  handleClick,
   deleteButton,
   columns,
   valueField,
@@ -22,6 +25,14 @@ const TableComponent = ({
         });
     }
   }
+
+  const [modalConfirm, setModalConfirm] = useState(false);
+  const [idDelete, setIdDelete] = useState('');
+
+  const onConfirmOpen = (id) => {
+    setModalConfirm(true);
+    setIdDelete(id);
+  };
 
   return (
     <section className={styles.container}>
@@ -56,6 +67,10 @@ const TableComponent = ({
                           ))
                         ) : typeof row[column] === 'object' ? (
                           <span>{row[column][fieldValue.objectValue]}</span>
+                        ) : column === 'firstName' ? (
+                          <span>
+                            {row.firstName} {row.lastName}
+                          </span>
                         ) : (
                           row[column]
                         )
@@ -65,17 +80,12 @@ const TableComponent = ({
                     </td>
                   ))}
                   <td>
-                    <img
-                      className={styles.trash_edit}
-                      onClick={() => editButton(row)}
-                      src={`${process.env.PUBLIC_URL}/assets/images/pencil-edit.svg`}
-                    />
+                    <ButtonForm nameImg="pencil-edit.svg" onAction={() => handleClick(row)} />
                   </td>
                   <td>
-                    <img
-                      className={styles.trash_edit}
-                      onClick={() => deleteButton(row._id)}
-                      src={`${process.env.PUBLIC_URL}/assets/images/trash-delete.svg`}
+                    <ButtonForm
+                      nameImg="trash-delete.svg"
+                      onAction={() => onConfirmOpen(row._id)}
                     />
                   </td>
                 </tr>
@@ -83,6 +93,14 @@ const TableComponent = ({
             })}
           </tbody>
         </table>
+      )}
+      {modalConfirm && (
+        <ModalConfirm
+          onConfirm={() => deleteButton(idDelete)}
+          message="Are you sure to delete this?"
+          method="Delete"
+          setModalConfirmOpen={setModalConfirm}
+        />
       )}
     </section>
   );
