@@ -1,0 +1,41 @@
+.containerModal {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  color: #373867;
+}
+
+.containerForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  background-color: white;
+  width: 30rem;
+  border-radius: 1rem;
+}
+
+.containerForm h3 {
+  text-align: center;
+  font-size: 2rem;
+}
+
+.containerForm .containerAddButton {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 3rem;
+  flex-direction: row;
+  margin-top: 1.5rem;
+}
+
+.containerForm .containerAddButton Button {
+  width: 5.3rem;
+  height: 2.2rem;
+  border-radius: 0.3rem;
+  color: #373867;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}

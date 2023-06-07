@@ -1,6 +1,7 @@
 import style from './TableSubscriptions.module.css';
 import { useState } from 'react';
 import ModalAddSubscription from '../AddSubscription/Index';
+// import { TableComponent } from '../../Shared/index';
 
 const TableSubscriptions = ({ subscription, deleteSubscription, setSubscription }) => {
   const [modalAdd, setModalAdd] = useState(false);
@@ -42,6 +43,9 @@ const TableSubscriptions = ({ subscription, deleteSubscription, setSubscription 
     editSubscriptionDB(findSubscription._id, editSubscriptions);
     findIdEdit(id);
   };
+
+  // const columnTitleArray = ['Classes', 'Member', 'Date'];
+
   return (
     <>
       {table && (
@@ -55,6 +59,7 @@ const TableSubscriptions = ({ subscription, deleteSubscription, setSubscription 
           >
             Add subscription
           </button>
+          {/* <TableComponent columnTitleArray={columnTitleArray} data={subscription}  /> */}
           <table className={style.containerTable}>
             <thead>
               <tr>
