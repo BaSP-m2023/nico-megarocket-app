@@ -1,13 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import { ModalConfirm } from '../../Shared';
 import { ModalSuccess } from '../../Shared';
+import { Inputs, Button } from '../../Shared';
+import { useLocation, useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
-export const Form = ({ member, setMember, setMembers, members }) => {
-  const [validationsOk, setValidationsOk] = useState(false);
+export const MembersForm = () => {
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [modalAddConfirmOpen, setModalAddConfirmOpen] = useState(false);
+  const [member, setMember] = useState({});
+  const location = useLocation();
+  const history = useHistory();
+  const data = location.state.params;
+  const { id } = useParams();
+
+  const updateMember = async (id, memberUpdated) => {
+    try {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(memberUpdated)
+      });
+      setModalSuccessOpen(true);
+      setSuccessMessage('Member edited successfully!');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleConfirmModal = () => {
+    setModalAddConfirmOpen(true);
+  };
 
   const handleChange = (e) => {
     setMember({
@@ -15,60 +41,67 @@ export const Form = ({ member, setMember, setMembers, members }) => {
       [e.target.name]: e.target.value,
       isActive: true
     });
-    setValidationsOk(true);
-  };
-
-  const addItem = ({
-    firstName,
-    lastName,
-    dni,
-    birthday,
-    phone,
-    email,
-    city,
-    postalCode,
-    isActive,
-    membership
-  }) => {
-    const newItem = {
-      firstName,
-      lastName,
-      dni,
-      birthday,
-      phone,
-      email,
-      city,
-      postalCode,
-      isActive,
-      membership
-    };
-    setMembers([...members, newItem]);
   };
 
   const handleSubmit = async (e) => {
-    try {
-      e.preventDefault();
-      await fetch(`${process.env.REACT_APP_API_URL}/member/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          firstName: member.firstName,
-          lastName: member.lastName,
-          dni: member.dni,
-          birthday: member.birthday,
-          phone: member.phone,
-          email: member.email,
-          city: member.city,
-          postalCode: member.postalCode,
-          isActive: member.isActive,
-          membership: member.membership
-        })
+    e.preventDefault();
+    if (!id) {
+      try {
+        e.preventDefault();
+        await fetch(`${process.env.REACT_APP_API_URL}/api/member/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            firstName: member.firstName,
+            lastName: member.lastName,
+            dni: member.dni,
+            birthday: member.birthday,
+            phone: member.phone,
+            email: member.email,
+            city: member.city,
+            postalCode: member.postalCode,
+            isActive: member.isActive,
+            membership: member.membership
+          })
+        });
+        setMember({
+          firstName: '',
+          lastName: '',
+          dni: '',
+          birthday: '',
+          phone: '',
+          email: '',
+          city: '',
+          postalCode: '',
+          isActive: false,
+          membership: ''
+        });
+        setModalSuccessOpen(true);
+        setSuccessMessage('Member added successfully!');
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      handleConfirmModal();
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      setMember({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        dni: data.dni,
+        birthday: data.birthday,
+        phone: data.phone,
+        email: data.email,
+        city: data.city,
+        postalCode: data.postalCode,
+        membership: data.membership
       });
-      setModalSuccessOpen(true);
-      setSuccessMessage('Member added successfully!');
-      addItem(member);
+    } else {
       setMember({
         firstName: '',
         lastName: '',
@@ -78,145 +111,127 @@ export const Form = ({ member, setMember, setMembers, members }) => {
         email: '',
         city: '',
         postalCode: '',
-        isActive: false,
         membership: ''
       });
-    } catch (error) {
-      console.error(error);
     }
-  };
+  }, []);
 
   return (
     <div className={styles.container}>
-      <div>
-        {modalAddConfirmOpen && (
-          <ModalConfirm
-            method="Add"
-            onConfirm={handleSubmit}
-            setModalConfirmOpen={setModalAddConfirmOpen}
-            message="Are you sure you want to edit this member?"
-          />
-        )}
-        {modalSuccessOpen && (
-          <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
-        )}
-      </div>
+      {
+        <div>
+          {modalAddConfirmOpen && (
+            <ModalConfirm
+              method="Update"
+              onConfirm={() => updateMember(id, member)}
+              setModalConfirmOpen={setModalAddConfirmOpen}
+              message="Are you sure you want to add this member?"
+            />
+          )}
+          {modalSuccessOpen && (
+            <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
+          )}
+        </div>
+      }
       <h3 className={styles.title}>Add Member</h3>
       <form className={styles.form} onSubmit={handleSubmit}>
         <section className={styles.inputGroups}>
           <div className={styles.inputGroup}>
             <div className={styles.inputContainer}>
-              <label>FirstName</label>
-              <input
-                className={styles.input}
-                name="firstName"
+              <Inputs
+                nameTitle="Name"
+                text={member.firstName}
                 type="text"
-                value={member.firstName}
-                onChange={handleChange}
-                required
+                change={handleChange}
+                nameInput="firstName"
               />
             </div>
             <div className={styles.inputContainer}>
-              <label>LastName</label>
-              <input
-                className={styles.input}
-                name="lastName"
+              <Inputs
+                nameTitle="Lastname"
+                text={member.lastName}
                 type="text"
-                value={member.lastName}
-                onChange={handleChange}
-                required
+                change={handleChange}
+                nameInput="lastName"
               />
             </div>
             <div className={styles.inputContainer}>
-              <label>DNI</label>
-              <input
-                className={styles.input}
-                name="dni"
-                type="number"
-                value={member.dni}
-                onChange={handleChange}
-                required
+              <Inputs
+                nameTitle="DNI"
+                text={member.dni}
+                type="text"
+                change={handleChange}
+                nameInput="dni"
               />
             </div>
             <div className={styles.inputContainer}>
-              <label>Birthday</label>
-              <input
-                className={styles.input}
-                name="birthday"
+              <Inputs
+                nameTitle="Birthday"
+                text={member.birthday}
                 type="date"
-                value={member.birthday}
-                onChange={handleChange}
+                change={handleChange}
+                nameInput="birthday"
                 required
               />
             </div>
           </div>
           <div className={styles.inputGroup}>
             <div className={styles.inputContainer}>
-              <label>Phone</label>
-              <input
-                className={styles.input}
-                name="phone"
+              <Inputs
+                nameTitle="Phone"
+                text={member.phone}
                 type="number"
-                value={member.phone}
-                onChange={handleChange}
+                change={handleChange}
+                nameInput="phone"
                 required
               />
             </div>
             <div className={styles.inputContainer}>
-              <label>Email</label>
-              <input
-                className={styles.input}
-                name="email"
+              <Inputs
+                nameTitle="Email"
+                text={member.email}
                 type="email"
-                value={member.email}
-                onChange={handleChange}
+                change={handleChange}
+                nameInput="email"
                 required
               />
             </div>
             <div className={styles.inputContainer}>
-              <label>City</label>
-              <input
-                className={styles.input}
-                name="city"
+              <Inputs
+                nameTitle="City"
+                text={member.city}
                 type="text"
-                value={member.city}
-                onChange={handleChange}
+                change={handleChange}
+                nameInput="city"
                 required
               />
             </div>
             <div className={styles.inputContainer}>
-              <label>Postal Code</label>
-              <input
-                className={styles.input}
-                name="postalCode"
+              <Inputs
+                nameTitle="Postal Code"
+                text={member.postalCode}
                 type="number"
-                value={member.postalCode}
-                onChange={handleChange}
+                change={handleChange}
+                nameInput="postalCode"
                 required
               />
             </div>
             <div className={styles.inputContainer}>
-              <label>Membership</label>
-              <input
-                className={styles.input}
-                name="membership"
+              <Inputs
+                nameTitle="Membership"
+                text={member.membership}
                 type="text"
-                value={member.membership}
-                onChange={handleChange}
+                change={handleChange}
+                nameInput="membership"
                 required
               />
             </div>
           </div>
         </section>
-        {validationsOk ? (
-          <button className={styles.submitButton} type="submit">
-            Submit
-          </button>
-        ) : (
-          <button className={styles.submitButton} type="submit" disabled>
-            Submit
-          </button>
-        )}
+        <div className={styles.buttonContainer}>
+          <Button clickAction={handleSubmit} text="Submit" />
+          <Button text="Cancel" clickAction={() => history.goBack()} />
+        </div>
       </form>
     </div>
   );

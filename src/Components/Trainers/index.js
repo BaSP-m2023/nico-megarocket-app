@@ -1,23 +1,17 @@
 import styles from './trainers.module.css';
 import { useEffect, useState } from 'react';
-import Table from './TableTrainers';
-import Form from './FormTrainers';
-import { ToastError } from '../Shared';
+import { AddButton, TableComponent, ToastError } from '../Shared';
+import { useHistory } from 'react-router-dom';
 
 function Trainers() {
   const [trainers, setTrainers] = useState([]);
-  const [showForm, setShowForm] = useState(false);
-  const [showFormEdit, setShowFormEdit] = useState(false);
   const [toastErroOpen, setToastErroOpen] = useState(false);
 
-  const handleToggle = () => {
-    setShowForm(!showForm);
-    setShowFormEdit(false);
-  };
+  const history = useHistory();
 
   const getTrainers = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/trainer`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`);
       const data = await response.json();
       setTrainers(data.data);
     } catch (error) {
@@ -29,9 +23,17 @@ function Trainers() {
     getTrainers();
   }, []);
 
+  const createMode = () => {
+    history.push('trainers/form/', { params: { mode: 'created' } });
+  };
+
+  const handleClick = (item) => {
+    history.push(`trainers/form/${item._id}`, { params: { ...item, mode: 'edit' } });
+  };
+
   const deleteTrainer = async (id) => {
     try {
-      await fetch(process.env.REACT_APP_API_URL + '/trainer/' + id, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
         method: 'DELETE'
       });
       const newTrainers = trainers.filter((trainer) => trainer._id !== id);
@@ -41,46 +43,21 @@ function Trainers() {
     }
   };
 
-  const addItem = ({ firstName, lastName, dni, phone, email, city, salary, isActive }) => {
-    const newItem = {
-      firstName,
-      lastName,
-      dni,
-      phone,
-      email,
-      city,
-      salary,
-      isActive
-    };
-    setTrainers([...trainers, newItem]);
-  };
-
-  const closeForm = () => {
-    setShowForm((current) => !current);
-  };
+  const columnsTable = ['Trainer', 'DNI', 'Phone', 'Email', 'City', 'Salary/Hour'];
+  const columnsValue = ['firstName', 'dni', 'phone', 'email', 'city', 'salary'];
 
   return (
     <section className={styles.container}>
       <h2>Trainers</h2>
-
-      <button className={styles.button} onClick={handleToggle}>
-        <img
-          className={styles.add_btn}
-          src={`${process.env.PUBLIC_URL}/assets/images/btn-add.png`}
-          alt="add icon"
-        />
-        Add trainer
-      </button>
-      <Table
+      <AddButton entity="Trainer" createMode={createMode} />
+      <TableComponent
+        columnTitleArray={columnsTable}
         data={trainers}
-        deleteTrain={deleteTrainer}
-        setTrainers={setTrainers}
-        trainers={trainers}
-        setShowFormAdd={setShowForm}
-        setShowFormEdit={setShowFormEdit}
-        showFormEdit={showFormEdit}
+        handleClick={handleClick}
+        deleteButton={deleteTrainer}
+        columns={columnsValue}
+        autoDelete={() => {}}
       />
-      {showForm && <Form addItem={addItem} closeForm={closeForm} />}
       {toastErroOpen && (
         <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
       )}

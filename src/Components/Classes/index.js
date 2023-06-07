@@ -1,35 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import styles from './classes.module.css';
-import Table from './Table/index';
-import Form from './Form/index';
-import { ModalSuccess } from '../Shared';
-import { ToastError } from '../Shared';
+import { TableComponent, ToastError } from '../Shared';
+import { useHistory } from 'react-router-dom';
+import AddButton from './../Shared/AddButton/index';
 
 function Projects() {
-  const [show, setShow] = useState(false);
   const [classes, setClasses] = useState([]);
-  const [updateMode, setUpdateMode] = useState(false);
-  const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
-  const [toastErroOpen, setToastErroOpen] = useState(false);
+  const [toastErrorOpen, setToastErrorOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [classUpdateId, setClassUpdateId] = useState('');
-  const [klass, setKlass] = useState({
-    hour: '',
-    day: '',
-    trainer: '',
-    activity: '',
-    slots: ''
-  });
+
+  const columnTitleArray = ['Activity', 'Day', 'Hour', 'Trainer', 'Slots'];
+
+  const columns = ['activity', 'day', 'hour', 'trainer', 'slots'];
+
+  const arrayAndObject = {
+    array: 'trainer',
+    object: 'activity'
+  };
+
+  const valueField = {
+    arrayFirstValue: 'firstName',
+    arraySecondValue: 'lastName',
+    objectValue: 'name'
+  };
+
+  const history = useHistory();
 
   const getClasses = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/class`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class`);
       const data = await response.json();
       setClasses(data.data);
     } catch (error) {
       setToastMessage('Error in Database');
-      setToastErroOpen(true);
+      setToastErrorOpen(true);
       console.error(error);
     }
   };
@@ -38,37 +42,15 @@ function Projects() {
     getClasses();
   }, []);
 
-  const createClass = async (body) => {
+  const deleteClassFromDB = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/class`, body);
-      setSuccessMessage('The class has been created successfully.');
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const updateClass = async (id, body) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/class/${id}`, body);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const deleteClassfromDB = async (id) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/class/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
         }
       });
       setClasses([...classes.filter((classes) => classes._id !== id)]);
-      setSuccessMessage('The class has been deleted successfully.');
-      setModalSuccessOpen(true);
     } catch (error) {
       console.error(error);
     }
@@ -76,87 +58,51 @@ function Projects() {
 
   const autoDelete = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/class/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
         }
       });
       setClasses([...classes.filter((classes) => classes._id !== id)]);
-      setToastMessage('The Activity or Trainer does not exist');
-      setToastErroOpen(true);
+      setToastMessage(
+        'One or more classes were deleted from the table. Why?: The Trainer or Activity were deleted from DB'
+      );
+      setToastErrorOpen(true);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const showForm = () => {
-    setTimeout(() => {
-      setShow(!show);
-    }, 0);
-  };
-
   const createMode = () => {
-    showForm();
-    {
-      updateMode && setUpdateMode(false);
-    }
-    setKlass({
-      hour: '',
-      day: '',
-      trainer: '',
-      activity: '',
-      slots: ''
-    });
+    history.push('/classes/ClassForm', { params: { mode: 'create' } });
   };
 
   const deleteClass = (id) => {
-    deleteClassfromDB(id);
+    deleteClassFromDB(id);
   };
 
-  const updateClick = (item) => {
-    showForm();
-    setUpdateMode(true);
-    setClassUpdateId(item._id);
-    setKlass({
-      hour: item.hour,
-      day: item.day,
-      trainer: item.trainer.map((item) => item._id),
-      activity: item.activity._id,
-      slots: item.slots
+  const handleClick = (item) => {
+    history.push(`/classes/ClassForm/${item._id}`, {
+      params: { item: item, mode: 'edit' }
     });
   };
 
   return (
     <section className={styles.container}>
-      <h2>Classes</h2>
-      <button type="button" className={styles.button} onClick={createMode}>
-        <img src={`${process.env.PUBLIC_URL}/assets/images/btn-add.png`} /> Add
-      </button>
-      {show && (
-        <Form
-          klass={{ klass, setKlass }}
-          classes={classes}
-          classUpdateId={classUpdateId}
-          createCLass={createClass}
-          updateClass={updateClass}
-          updateToggle={{ updateMode, setUpdateMode }}
-          show={showForm}
-        />
-      )}
-      <div>
-        {modalSuccessOpen && (
-          <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
-        )}
-      </div>
-      <Table
-        classes={{ classes, setClasses }}
-        updateClick={updateClick}
+      <h2 className={styles.classTitle}>Classes</h2>
+      <AddButton entity={'Class'} createMode={createMode} />{' '}
+      <TableComponent
+        columnTitleArray={columnTitleArray}
         data={classes}
-        deleteClass={deleteClass}
+        handleClick={handleClick}
+        deleteButton={deleteClass}
+        columns={columns}
+        valueField={valueField}
+        arrayAndObject={arrayAndObject}
         autoDelete={autoDelete}
       />
-      {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
+      {toastErrorOpen && <ToastError setToastErroOpen={setToastErrorOpen} message={toastMessage} />}
     </section>
   );
 }
