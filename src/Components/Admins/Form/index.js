@@ -143,71 +143,78 @@ const FormAdmin = () => {
     <div className={styles.containerForm}>
       <form className={styles.form}>
         <div className={styles.subContainer}>
-          <Inputs
-            text={inputValue.firstName}
-            type="text"
-            nameTitle="Name"
-            isDisabled={false}
-            change={handleInputChange}
-            nameInput="firstName"
-          />
-
-          <Inputs
-            text={inputValue.lastName}
-            type="text"
-            nameTitle="Last Name"
-            isDisabled={false}
-            change={handleInputChange}
-            nameInput="lastName"
-          />
-          <Inputs
-            text={inputValue.dni}
-            type="text"
-            nameTitle="DNI"
-            isDisabled={false}
-            change={handleInputChange}
-            nameInput="dni"
-          />
-          <Inputs
-            text={inputValue.phone}
-            type="text"
-            nameTitle="Phone"
-            isDisabled={false}
-            change={handleInputChange}
-            nameInput="phone"
-          />
-          <Inputs
-            text={inputValue.email}
-            type="email"
-            nameTitle="E-Mail"
-            isDisabled={false}
-            change={handleInputChange}
-            nameInput="email"
-          />
-          <Inputs
-            text={inputValue.city}
-            type="text"
-            nameTitle="City"
-            isDisabled={false}
-            change={handleInputChange}
-            nameInput="city"
-          />
-          <Inputs
-            text={inputValue.password}
-            type="password"
-            nameTitle="Password"
-            isDisabled={false}
-            change={handleInputChange}
-            nameInput="password"
-          />
-          <Inputs
-            text={repeatPass}
-            type="password"
-            nameTitle="Repeat Password"
-            isDisabled={false}
-            change={handleRepeatPasswordChange}
-            nameInput="repeat-password"
-          />
+          <div className={styles.sub_buttons}>
+            <Inputs
+              text={inputValue.firstName}
+              type="text"
+              nameTitle="Name"
+              isDisabled={false}
+              change={handleInputChange}
+              nameInput="firstName"
+            />
+            <Inputs
+              text={inputValue.lastName}
+              type="text"
+              nameTitle="Last Name"
+              isDisabled={false}
+              change={handleInputChange}
+              nameInput="lastName"
+            />
+          </div>
+          <div className={styles.sub_buttons}>
+            <Inputs
+              text={inputValue.dni}
+              type="text"
+              nameTitle="DNI"
+              isDisabled={false}
+              change={handleInputChange}
+              nameInput="dni"
+            />
+            <Inputs
+              text={inputValue.phone}
+              type="text"
+              nameTitle="Phone"
+              isDisabled={false}
+              change={handleInputChange}
+              nameInput="phone"
+            />
+          </div>
+          <div className={styles.sub_buttons}>
+            <Inputs
+              text={inputValue.email}
+              type="email"
+              nameTitle="E-Mail"
+              isDisabled={false}
+              change={handleInputChange}
+              nameInput="email"
+            />
+            <Inputs
+              text={inputValue.city}
+              type="text"
+              nameTitle="City"
+              isDisabled={false}
+              change={handleInputChange}
+              nameInput="city"
+            />
+          </div>
+          <div className={styles.sub_buttons}>
+            <Inputs
+              text={inputValue.password}
+              type="password"
+              nameTitle="Password"
+              isDisabled={false}
+              change={handleInputChange}
+              nameInput="password"
+            />
+            <Inputs
+              text={repeatPass}
+              type="password"
+              nameTitle="Repeat Password"
+              isDisabled={false}
+              change={handleRepeatPasswordChange}
+              nameInput="repeat-password"
+            />
+          </div>
         </div>
 
         <div className={styles.buttonContainer}>
@@ -221,6 +228,7 @@ const FormAdmin = () => {
           />
         </div>
       </form>
+
       {modalConfirmOpen && (
         <ModalConfirm
           method={editMode ? 'Edit' : 'Create'}

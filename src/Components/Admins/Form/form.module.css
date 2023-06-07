@@ -1,62 +1,40 @@
 .form {
-    margin-bottom: 40px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     color: #373867;
     font-weight: bold;
-    width: 50%;
+    width: 650px;
 }
-
 .containerForm{
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid green;
 }
-
 .subContainer {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     border: 1px solid #373867;
-    padding: 8px;
-    justify-content: space-around;
-    padding: 20px 0;
-    border: 1px solid red;
+    padding: 20px;
+    
 }
-
-.input {
-    padding: 5px;
-    border: 1px solid #373867;
-    border-radius: 5px;
+.sub_buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
 }
-
 .inputContainer{
     display: flex;
     flex-direction: column;
     width: 45%;
 }
-
-.button {
-    width: 130px;
-    height: 50px;
-    margin: 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #373867;
-}
-
-.button:first-child {
-    background-color: #AACE9B;
-    border: 1px solid #AACE9B;
-    border-radius: 10px;
-}
-
-.button:last-child {
-    border: 1px solid #373867;
-    border-radius: 10px;
-}
-
 .buttonContainer{
-    display: flex;
-    justify-content: center;
+  margin-top: 10px;
+  gap: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
