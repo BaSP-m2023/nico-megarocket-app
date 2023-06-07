@@ -36,7 +36,6 @@ const SuperAdmins = () => {
     }
   };
 
-  
   const handleClick = (item) => {
     history.push(`super-admins/form/${item._id}`, { params: { ...item, mode: 'edit' } });
   };
