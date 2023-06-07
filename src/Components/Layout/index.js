@@ -5,7 +5,7 @@ import { MembersForm } from '../Members/Form/MembersForm';
 import Subscriptions from '../Subscriptions';
 import SuperAdmins from '../SuperAdmins';
 import Trainers from '../Trainers';
-import superAdminForm from '../SuperAdmins/Form/index';
+import FormSuperAdmin from '../SuperAdmins/Form/index';
 import FormTrainer from '../Trainers/FormTrainers';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Activities from '../Activities';
@@ -34,7 +34,7 @@ function Layout() {
           <Route path="/members/form/:id?" component={MembersForm} />
           <Route exact path="/subscriptions" component={Subscriptions} />
           <Route exact path="/super-admins" component={SuperAdmins} />
-          <Route path="/super-admins/form/" component={superAdminForm} />
+          <Route path="/super-admins/form/:id?" component={FormSuperAdmin} />
           <Route exact path="/trainers" component={Trainers} />
           <Route path="/trainers/form/:id?" component={FormTrainer} />
           <Route exact path="/">

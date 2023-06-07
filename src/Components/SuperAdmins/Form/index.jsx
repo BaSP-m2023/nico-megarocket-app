@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ModalConfirm, Inputs, Button, ModalSuccess } from '../../Shared';
-import { useLocation } from 'react-router-dom';
 import styles from './form.module.css';
-import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory, useParams, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Form = () => {
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
@@ -49,15 +48,15 @@ const Form = () => {
   };
   const updateItem = async (updatedItem) => {
     try {
-      // eslint-disable-next-line no-unused-vars
-      const { _id, __v, ...updatedData } = updatedItem;
       await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(updatedData)
+        body: JSON.stringify(updatedItem)
       });
+      setSuccessMessage('Super Admin updated successfully');
+      setModalSuccessOpen('true');
     } catch (error) {
       console.error(error);
     }
