@@ -40,59 +40,6 @@ const SuperAdmins = () => {
     }
   };
 
-  /*const addItem = async ({ email, password }) => {
-    try {
-      const newSuperAdmin = {
-        email,
-        password
-      };
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newSuperAdmin)
-      });
-      if (response.ok) {
-        setSuperAdmins([...superAdmins, newSuperAdmin]);
-      } else {
-        console.error('Failed to add super admin');
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };*/
-
-  /*const updateItem = async (updatedItem) => {
-    try {
-      // eslint-disable-next-line no-unused-vars
-      const { _id, __v, ...updatedData } = updatedItem;
-      console.log(JSON.stringify(updatedData));
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin/${_id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedData)
-      });
-      if (response.ok) {
-        const updatedList = superAdmins.map((item) => {
-          if (item._id === updatedItem._id) {
-            return updatedItem;
-          }
-          return item;
-        });
-        setSuperAdmins(updatedList);
-        setSuccessMessage('The Super Admin has been updated successfully.');
-        setModalSuccessOpen(true);
-      } else {
-        console.error('Failed to update item');
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };*/
-
   /*const handleDeleteButtonClick = (id) => {
     deleteItem(id);
   };*/
