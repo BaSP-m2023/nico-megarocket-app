@@ -28,15 +28,10 @@ function Layout() {
         <Header />
         <Switch>
           <Route path="/home" component={Home} />
-          <Route path="/admins" component={Admins} />
-          <Route path="/classes" component={Classes} />
-          <Route path="/members" component={Members} />
           <Route path="/subscriptions" component={Subscriptions} />
           <Route path="/super-admins" component={SuperAdmins} />
-          <Route path="/trainers" component={Trainers} />
           <Route exact path="/activities" component={Activities} />
           <Route path="/activities/form/:id?" component={FormActivity} />
-          <Route path="/activities" component={Activities} />
           <Route exact path="/admins" component={Admins} />
           <Route path="/admins/form/:id?" component={FormAdmin} />
           <Route exact path="/classes" component={Classes} />
