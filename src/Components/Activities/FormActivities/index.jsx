@@ -68,7 +68,7 @@ const ModalAddActivity = () => {
 
   const createActivityDB = async (bodyActivity) => {
     try {
-      const activityNew = await fetch(`${process.env.REACT_APP_API_URL}/activity`, {
+      const activityNew = await fetch(`${process.env.REACT_APP_API_URL}/api/activity`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -83,7 +83,7 @@ const ModalAddActivity = () => {
 
   const editActivityDB = async (id, editActivities) => {
     try {
-      let activityEdited = await fetch(`${process.env.REACT_APP_API_URL}/activity/${id}`, {
+      let activityEdited = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
