@@ -15,15 +15,12 @@ const TableComponent = ({
 }) => {
   const fieldValue = valueField;
   {
-    {
-      data.length !== 0 &&
-        arrayAndObject &&
-        data.forEach((item) => {
-          if (!item[arrayAndObject.object] || !item[arrayAndObject.array].length != 0) {
-            autoDelete(item._id);
-          }
-        });
-    }
+    arrayAndObject &&
+      data.forEach((item) => {
+        if (!item[arrayAndObject.object] || !item[arrayAndObject.array]?.length != 0) {
+          autoDelete(item._id);
+        }
+      });
   }
 
   const [modalConfirm, setModalConfirm] = useState(false);
@@ -36,7 +33,7 @@ const TableComponent = ({
 
   return (
     <section className={styles.container}>
-      {data.length === 0 ? (
+      {data?.length === 0 ? (
         <div className={styles.noneTrainer}>
           <h3>The list is empty</h3>
         </div>

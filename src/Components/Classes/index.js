@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styles from './classes.module.css';
-import { ModalSuccess, TableComponent } from '../Shared';
-import { ToastError } from '../Shared';
+import { TableComponent, ToastError } from '../Shared';
 import { useHistory } from 'react-router-dom';
 import AddButton from './../Shared/AddButton/index';
 
 function Projects() {
   const [classes, setClasses] = useState([]);
-  const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [toastErrorOpen, setToastErrorOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
 
   const columnTitleArray = ['Activity', 'Day', 'Hour', 'Trainer', 'Slots'];
 
@@ -54,8 +51,6 @@ function Projects() {
         }
       });
       setClasses([...classes.filter((classes) => classes._id !== id)]);
-      setSuccessMessage('The class has been deleted successfully.');
-      setModalSuccessOpen(true);
     } catch (error) {
       console.error(error);
     }
@@ -97,11 +92,6 @@ function Projects() {
     <section className={styles.container}>
       <h2 className={styles.classTitle}>Classes</h2>
       <AddButton entity={'Class'} createMode={createMode} />{' '}
-      <div>
-        {modalSuccessOpen && (
-          <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
-        )}
-      </div>
       <TableComponent
         columnTitleArray={columnTitleArray}
         data={classes}
