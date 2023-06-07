@@ -19,7 +19,6 @@ const FormAdmin = () => {
   const [toastErroOpen, setToastErroOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('Error in database');
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
-
   const history = useHistory();
   const { id } = useParams();
   const location = useLocation();
@@ -62,7 +61,13 @@ const FormAdmin = () => {
       });
       const data = await resp.json();
       if (!data.error) {
-        confirmation();
+        if (validatePasswords()) {
+          confirmation();
+        } else {
+          setModalConfirmOpen(false);
+          setToastErroOpen(true);
+          setToastMessage('Passwords must match ');
+        }
       } else {
         throw new Error(data.message);
       }
@@ -84,8 +89,14 @@ const FormAdmin = () => {
       });
       const data = await resp.json();
       if (!data.error) {
-        confirmation();
-        setModalSuccessOpen(true);
+        if (validatePasswords()) {
+          confirmation();
+          setModalSuccessOpen(true);
+        } else {
+          setModalConfirmOpen(false);
+          setToastErroOpen(true);
+          setToastMessage('Passwords must match ');
+        }
       } else {
         throw new Error(data.message);
       }
@@ -114,20 +125,13 @@ const FormAdmin = () => {
       history.push('/admins/');
     }, 2000);
   };
-
   const submitAdmin = () => {
-    if (validatePasswords()) {
-      if (!editMode) {
-        setModalConfirmOpen(false);
-        addAdmins();
-      } else {
-        setModalConfirmOpen(false);
-        addEditAdmins();
-      }
+    if (!editMode) {
+      setModalConfirmOpen(false);
+      addAdmins();
     } else {
       setModalConfirmOpen(false);
-      setToastErroOpen(true);
-      setToastMessage('Passwords must match ');
+      addEditAdmins();
     }
   };
 
