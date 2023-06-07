@@ -4,16 +4,17 @@ import { AddButton, TableComponent, ToastError } from '../Shared';
 import { useHistory } from 'react-router-dom';
 
 function Subscriptions() {
-  const [subscription, serSubscription] = useState([]);
+  const [subscription, setSubscription] = useState([]);
   const [toastErroOpen, setToastErroOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
   const history = useHistory();
 
   const getSuscription = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/subscription`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscription`);
       const data = await response.json();
-      serSubscription(data.data);
+      setSubscription(data.data);
     } catch (error) {
       setToastErroOpen(true);
     }
@@ -32,13 +33,31 @@ function Subscriptions() {
 
   const deleteSubscription = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/subscription/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/subscription/${id}`, {
         method: 'DELETE'
       });
       const newSubscription = subscription.filter((subs) => subs._id !== id);
-      serSubscription(newSubscription);
+      setSubscription(newSubscription);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const autoDelete = async (id) => {
+    try {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/subscription/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      setSubscription([...subscription.filter((subs) => subs._id !== id)]);
+      setToastMessage(
+        'One or more classes were deleted from the table. Why?: The Member or Class were deleted from DB'
+      );
+      setToastErroOpen(true);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -49,7 +68,10 @@ function Subscriptions() {
     arraySecondValue: 'lastName',
     objectValue: '_id'
   };
-
+  const arrayAndObject = {
+    array: 'members',
+    object: 'classId'
+  };
   return (
     <section className={styles.container}>
       <h2>Subscriptions</h2>
@@ -60,12 +82,11 @@ function Subscriptions() {
         handleClick={handleClick}
         deleteButton={deleteSubscription}
         valueField={valueField}
-        // arrayAndObject={arrayAndObject}
+        arrayAndObject={arrayAndObject}
         columns={columns}
+        autoDelete={autoDelete}
       />
-      {toastErroOpen && (
-        <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
-      )}
+      {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
     </section>
   );
 }

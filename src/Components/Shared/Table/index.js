@@ -12,12 +12,15 @@ const TableComponent = ({
 }) => {
   const fieldValue = valueField;
   {
-    arrayAndObject &&
-      data.forEach((item) => {
-        if (!item[arrayAndObject.object] || !item[arrayAndObject.array].length != 0) {
-          autoDelete(item._id);
-        }
-      });
+    {
+      data.length !== 0 &&
+        arrayAndObject &&
+        data.forEach((item) => {
+          if (!item[arrayAndObject.object] || !item[arrayAndObject.array].length != 0) {
+            autoDelete(item._id);
+          }
+        });
+    }
   }
 
   return (

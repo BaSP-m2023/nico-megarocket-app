@@ -1,9 +1,7 @@
 import style from './tableActivity.module.css';
 import ModalAddActivity from '../AddActivity/Index';
 import { useState } from 'react';
-import { ModalSuccess } from '../../Shared';
-import { ModalConfirm } from '../../Shared';
-import { Loader } from '../../Shared';
+import { ModalSuccess, ModalConfirm, Loader } from '../../Shared';
 
 const TableActivity = ({ activity, deleteActivity, setActivity, loading }) => {
   const [modalAdd, setModalAdd] = useState(false);
