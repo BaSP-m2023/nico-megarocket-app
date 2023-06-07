@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 .container {
   flex: 1;
   display: flex;
@@ -6,23 +8,7 @@
   align-items: center;
 }
 
-.button {
-  position: relative;
-  left: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100px;
-  height: 25px;
-  margin-bottom: 15px;
-  background-color: #f0f4f9;
-  border: 0.5px solid black;
-  border-radius: 5px;
-  font-size: 20px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.button img {
-  margin-right: 10px;
+.classTitle {
+  font-family: 'Roboto', sans-serif;
+  color: #373867;
 }
