@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import Inputs from './Inputs';
-import Button from './Button';
-import ModalConfirm from './ModalConfirm';
-import ModalSuccess from './ModalSuccess';
+import { Inputs, Button, ModalConfirm, ModalSuccess } from '../../Shared';
 import style from './ModalAddSubscription.module.css';
 
 const ModalAddSubscription = () => {
