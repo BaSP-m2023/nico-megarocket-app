@@ -1,0 +1,35 @@
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 5%;
+  min-height: 100px;
+  background-color: #aace9b;
+}
+
+.rutes {
+  display: flex;
+  list-style-type: none;
+}
+
+.rutes > li > a {
+  margin-left: 15px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: capitalize;
+  color: black;
+}
+.rutes > li > a:hover {
+  color: #373867;
+}
+
+.anchor:active{
+  color:#373867;
+}
+
+@media screen and (min-width: 750px) {
+  .navbar {
+    padding: 0 20%;
+  }
+}

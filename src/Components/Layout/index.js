@@ -15,6 +15,7 @@ import FormActivity from '../Activities/FormActivities';
 
 import Home from '../Home/index';
 import Header from '../Header/index';
+import { Navbar } from '../Navbar/Navbar';
 import Footer from '../Footer/index';
 import FormClasses from '../Classes/Form';
 import styles from './layout.module.css';
@@ -26,6 +27,7 @@ function Layout() {
     <Router>
       <div className={styles.container}>
         <Header />
+        <Navbar />
         <Switch>
           <Route path="/home" component={Home} />
           <Route path="/subscriptions" component={Subscriptions} />

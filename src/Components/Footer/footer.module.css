@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   background-color: #373867;
+  margin-top:20px;
 }
 
 .main {
@@ -11,7 +12,6 @@
   align-items: center;
   padding: 0 5%;
   width: 90%;
-  height: 250px;
 }
 
 .appName {
