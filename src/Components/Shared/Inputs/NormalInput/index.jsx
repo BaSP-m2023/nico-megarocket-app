@@ -9,6 +9,7 @@ const Inputs = ({ text, type, isDisabled, change, nameInput, nameTitle }) => {
         className={
           type === 'disable' ? `${styles.disableInput} ${styles.normalInput}` : styles.normalInput
         }
+        type={type}
         disabled={isDisabled}
         value={text}
         name={nameInput}

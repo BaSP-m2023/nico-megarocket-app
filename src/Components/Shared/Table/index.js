@@ -1,7 +1,7 @@
 import ButtonForm from '../ButtonForm';
 import styles from './table.module.css';
-import { useState } from 'react';
 import { ModalConfirm } from '../index';
+import { useState } from 'react';
 
 const TableComponent = ({
   columnTitleArray,
@@ -17,11 +17,12 @@ const TableComponent = ({
   {
     arrayAndObject &&
       data.forEach((item) => {
-        if (!item[arrayAndObject.object] || !item[arrayAndObject.array].length != 0) {
+        if (!item[arrayAndObject.object] || !item[arrayAndObject.array]?.length != 0) {
           autoDelete(item._id);
         }
       });
   }
+
   const [modalConfirm, setModalConfirm] = useState(false);
   const [idDelete, setIdDelete] = useState('');
 
@@ -32,7 +33,7 @@ const TableComponent = ({
 
   return (
     <section className={styles.container}>
-      {data.length === 0 ? (
+      {data?.length === 0 ? (
         <div className={styles.noneTrainer}>
           <h3>The list is empty</h3>
         </div>
@@ -63,6 +64,10 @@ const TableComponent = ({
                           ))
                         ) : typeof row[column] === 'object' ? (
                           <span>{row[column][fieldValue.objectValue]}</span>
+                        ) : column === 'firstName' ? (
+                          <span>
+                            {row.firstName} {row.lastName}
+                          </span>
                         ) : (
                           row[column]
                         )

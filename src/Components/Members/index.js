@@ -1,25 +1,21 @@
+import { ToastError, TableComponent, AddButton } from '../Shared';
 import { useEffect, useState } from 'react';
 import styles from './members.module.css';
-import TableMember from './TableMember';
-import { ToastError } from '../Shared';
+import { useHistory } from 'react-router-dom';
 
 function Members() {
   const [members, setMembers] = useState([]);
-  const [showForm, setShowForm] = useState(false);
-  const [showEditForm, setEditForm] = useState(false);
-  const [memberEdited, setMemberEdited] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    birthday: '',
-    phone: '',
-    email: '',
-    city: '',
-    postalCode: '',
-    isActive: '',
-    membership: ''
-  });
   const [toastErroOpen, setToastErroOpen] = useState(false);
+
+  const history = useHistory();
+
+  const handleClick = (item) => {
+    history.push(`members/form/${item._id}`, { params: { mode: 'edit', ...item } });
+  };
+
+  const createMode = () => {
+    history.push(`members/form/`, { params: { mode: 'create' } });
+  };
 
   const getMembers = async () => {
     try {
@@ -31,47 +27,10 @@ function Members() {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getMembers();
   }, []);
-
-  const memberEditedId = (id) => {
-    const findMember = members.find((i) => i._id === id);
-    setMemberEdited({
-      firstName: findMember.firstName,
-      lastName: findMember.lastName,
-      phone: findMember.phone,
-      email: findMember.email,
-      city: findMember.city,
-      dni: findMember.dni,
-      password: findMember.password,
-      membership: findMember.membership,
-      postalCode: findMember.postalCode,
-      birthday: findMember.birthday
-    });
-  };
-
-  const updateMember = async (id, memberUpdated) => {
-    let memberToUpdateIndex = members.findIndex((member) => member._id === id);
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(memberUpdated)
-      });
-
-      const { error } = await response.json();
-      if (!error) {
-        const currentsMembers = [...members];
-        currentsMembers[memberToUpdateIndex] = memberUpdated;
-        setMembers(currentsMembers);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const memberDelete = async (memberId) => {
     try {
@@ -85,43 +44,26 @@ function Members() {
     }
   };
 
-  const handleToggle = () => {
-    setShowForm((current) => !current);
-    setEditForm(false);
-  };
+  const columns = ['firstName', 'email', 'phone', 'city', 'postalCode', 'membership'];
 
-  const handleEditToggle = () => {
-    setEditForm((current) => !current);
-    setShowForm(false);
-  };
+  const columnTitleArray = ['Full Name', 'Email', 'Phone', 'City', 'Postal Code', 'Membership'];
 
   return (
     <section className={styles.container}>
       <div className={styles.titleContainer}>
         <h2 className={styles.letterColour}>Members</h2>
-        <div className={styles.addContainer} onClick={handleToggle}>
-          <img
-            className={styles.imgSize}
-            src={`${process.env.PUBLIC_URL}/assets/images/btn-add.png`}
-          />
-          <p>Add Member</p>
-        </div>
+        <AddButton entity="Member" createMode={createMode} />
       </div>
       {!members.length ? (
         <p>No active Members</p>
       ) : (
-        <TableMember
-          onUpdateMember={updateMember}
-          members={members}
-          onDeleteMember={memberDelete}
-          showForm={showForm}
-          showEditForm={showEditForm}
-          handleEditToggle={handleEditToggle}
-          setEditForm={setEditForm}
-          setMemberEdited={setMemberEdited}
-          memberEditedId={memberEditedId}
-          memberEdited={memberEdited}
-          setMembers={setMembers}
+        <TableComponent
+          columns={columns}
+          columnTitleArray={columnTitleArray}
+          data={members}
+          handleClick={handleClick}
+          deleteButton={memberDelete}
+          autoDelete={() => {}}
         />
       )}
       {toastErroOpen && (
