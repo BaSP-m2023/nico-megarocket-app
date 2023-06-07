@@ -21,45 +21,12 @@ const Form = () => {
         password: ''
       });
     } else {
-      console.log(params);
       setInputValue({
         email: params.email,
         password: params.password
       });
     }
   }, []);
-
-  const handleUpdateButtonClick = () => {
-    setModalSuccessConfirmOpen(true);
-  };
-
-  const handleModalConfirmation = () => {
-    updateItem(inputValue);
-    setModalSuccessConfirmOpen(false);
-  };
-
-  const onChangeInputEmail = (e) => {
-    setInputValue({
-      ...inputValue,
-      email: e.target.value
-    });
-  };
-
-  const onChangeInputPassword = (e) => {
-    setInputValue({
-      ...inputValue,
-      password: e.target.value
-    });
-  };
-
-  const onSubmit = () => {
-    console.log(params.mode);
-    if (params.mode === 'create') {
-      addItem(inputValue);
-    } else {
-      handleUpdateButtonClick(inputValue);
-    }
-  };
 
   const addItem = async ({ email, password }) => {
     try {
@@ -80,7 +47,6 @@ const Form = () => {
       console.error(error);
     }
   };
-
   const updateItem = async (updatedItem) => {
     try {
       // eslint-disable-next-line no-unused-vars
@@ -94,6 +60,35 @@ const Form = () => {
       });
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const onChangeInputEmail = (e) => {
+    setInputValue({
+      ...inputValue,
+      email: e.target.value
+    });
+  };
+  const onChangeInputPassword = (e) => {
+    setInputValue({
+      ...inputValue,
+      password: e.target.value
+    });
+  };
+
+  const handleUpdateButtonClick = () => {
+    setModalSuccessConfirmOpen(true);
+  };
+  const handleModalConfirmation = () => {
+    updateItem(inputValue);
+    setModalSuccessConfirmOpen(false);
+  };
+
+  const onSubmit = () => {
+    if (params.mode === 'create') {
+      addItem(inputValue);
+    } else {
+      handleUpdateButtonClick();
     }
   };
 
