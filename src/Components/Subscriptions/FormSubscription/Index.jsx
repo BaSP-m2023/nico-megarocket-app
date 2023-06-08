@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { Inputs, Button, ModalConfirm, ModalSuccess } from '../../Shared';
-import style from '../AddSubscription/modalAdd.module.css';
+import style from '../FormSubscription/modalAdd.module.css';
 
 const ModalAddSubscription = () => {
   const [isValid, setIsValid] = useState(true);
@@ -134,7 +134,7 @@ const ModalAddSubscription = () => {
   return (
     <section className={style.containerModal}>
       <form className={style.containerForm}>
-        <h3>Add subscription</h3>
+        <h3>{id ? 'Edit subscription' : 'Add subscription'}</h3>
         <Inputs
           nameTitle="Class:"
           type="text"
