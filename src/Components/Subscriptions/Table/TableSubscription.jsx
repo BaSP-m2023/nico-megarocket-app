@@ -1,6 +1,6 @@
 import style from './TableSubscriptions.module.css';
 import { useState } from 'react';
-import ModalAddSubscription from '../AddSubscription/Index';
+import ModalAddSubscription from '../FormSubscription/Index';
 
 const TableSubscriptions = ({ subscription, deleteSubscription, setSubscription }) => {
   const [modalAdd, setModalAdd] = useState(false);
