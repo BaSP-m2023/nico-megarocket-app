@@ -10,6 +10,7 @@ export const MembersForm = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [modalAddConfirmOpen, setModalAddConfirmOpen] = useState(false);
   const [member, setMember] = useState({});
+  const [editMode, setEditMode] = useState(null);
   const location = useLocation();
   const history = useHistory();
   const data = location.state.params;
@@ -26,6 +27,9 @@ export const MembersForm = () => {
       });
       setModalSuccessOpen(true);
       setSuccessMessage('Member edited successfully!');
+      setTimeout(() => {
+        history.goBack();
+      }, 1000);
     } catch (error) {
       console.log(error);
     }
@@ -93,6 +97,7 @@ export const MembersForm = () => {
 
   useEffect(() => {
     if (id) {
+      setEditMode(true);
       setMember({
         firstName: data.firstName,
         lastName: data.lastName,
@@ -105,6 +110,7 @@ export const MembersForm = () => {
         membership: data.membership
       });
     } else {
+      setEditMode(false);
       setMember({
         firstName: '',
         lastName: '',
@@ -128,7 +134,11 @@ export const MembersForm = () => {
               method="Update"
               onConfirm={() => updateMember(id, member)}
               setModalConfirmOpen={setModalAddConfirmOpen}
-              message="Are you sure you want to add this member?"
+              message={
+                editMode
+                  ? 'Are sure do you want update this member?'
+                  : 'Are sure do you want add this member?'
+              }
             />
           )}
           {modalSuccessOpen && (
@@ -136,7 +146,7 @@ export const MembersForm = () => {
           )}
         </div>
       }
-      <h3 className={styles.title}>Add Member</h3>
+      <h3 className={styles.title}>{editMode ? 'Edit Member' : 'Add Member'}</h3>
       <form className={styles.form} onSubmit={handleSubmit}>
         <section className={styles.inputGroups}>
           <div className={styles.inputGroup}>
@@ -232,7 +242,7 @@ export const MembersForm = () => {
           </div>
         </section>
         <div className={styles.buttonContainer}>
-          <Button clickAction={handleSubmit} text="Submit" />
+          <Button clickAction={handleSubmit} text={editMode ? 'Update' : 'Add'} />
           <Button text="Cancel" clickAction={() => history.goBack()} />
         </div>
       </form>
