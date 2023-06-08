@@ -106,20 +106,19 @@ export const MembersForm = () => {
         postalCode: data.postalCode,
         membership: data.membership
       });
-      // } else {
-      //   setEditMode(false);
-      //   setMember({
-      //     firstName: '',
-      //     lastName: '',
-      //     dni: '',
-      //     birthday: '',
-      //     phone: '',
-      //     email: '',
-      //     city: '',
-      //     postalCode: '',
-      //     membership: ''
-      //   });
-      //
+    } else {
+      setEditMode(false);
+      setMember({
+        firstName: '',
+        lastName: '',
+        dni: '',
+        birthday: '',
+        phone: '',
+        email: '',
+        city: '',
+        postalCode: '',
+        membership: ''
+      });
     }
   }, []);
 
