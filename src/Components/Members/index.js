@@ -34,11 +34,11 @@ function Members() {
 
   const memberDelete = async (memberId) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${memberId}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/member/${memberId}`, {
         method: 'DELETE'
       });
-      console.log(response);
-      setMembers([...members.filter((member) => member._id !== memberId)]);
+      const pepito = [...members.filter((member) => member._id !== memberId)];
+      setMembers(pepito);
     } catch (error) {
       console.log(error);
     }
