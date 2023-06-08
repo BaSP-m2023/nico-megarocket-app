@@ -80,6 +80,9 @@ export const MembersForm = () => {
         });
         setModalSuccessOpen(true);
         setSuccessMessage('Member added successfully!');
+        setTimeout(() => {
+          history.goBack();
+        }, 1000);
       } catch (error) {
         console.error(error);
       }
