@@ -90,7 +90,6 @@ function Projects() {
 
   return (
     <section className={styles.container}>
-      <h2 className={styles.classTitle}>Classes</h2>
       <AddButton entity={'Class'} createMode={createMode} />{' '}
       <TableComponent
         columnTitleArray={columnTitleArray}

@@ -47,7 +47,6 @@ function Activities() {
 
   return (
     <section className={styles.container}>
-      <h2>Activities</h2>
       <AddButton entity="Activity" createMode={createMode} />
       <TableComponent
         columnTitleArray={columnTitleArray}

@@ -23,26 +23,34 @@ function Layout() {
     <Router>
       <div className={styles.container}>
         <Header />
-        <Navbar />
-        <Switch>
-          <Route path="/home" component={Home} />
-          <Route exact path="/activities" component={Activities} />
-          <Route path="/activities/form/:id?" component={FormActivity} />
-          <Route exact path="/admins" component={Admins} />
-          <Route path="/admins/form/:id?" component={FormAdmin} />
-          <Route exact path="/classes" component={Classes} />
-          <Route path="/classes/ClassForm/:id?" component={FormClasses} />
-          <Route exact path="/members" component={Members} />
-          <Route path="/members/form/:id?" component={MembersForm} />
-          <Route exact path="/subscriptions" component={Subscriptions} />
-          <Route exact path="/super-admins" component={SuperAdmins} />
-          <Route path="/super-admins/form/:id?" component={FormSuperAdmin} />
-          <Route exact path="/trainers" component={Trainers} />
-          <Route path="/trainers/form/:id?" component={FormTrainer} />
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
-        </Switch>
+        <div className={styles.mainContainer}>
+          <div className={styles.asideContainer}>
+            <aside>
+              <Navbar />
+            </aside>
+          </div>
+          <div className={styles.switchContainer}>
+            <Switch>
+              <Route path="/home" component={Home} />
+              <Route exact path="/activities" component={Activities} />
+              <Route path="/activities/form/:id?" component={FormActivity} />
+              <Route exact path="/admins" component={Admins} />
+              <Route path="/admins/form/:id?" component={FormAdmin} />
+              <Route exact path="/classes" component={Classes} />
+              <Route path="/classes/ClassForm/:id?" component={FormClasses} />
+              <Route exact path="/members" component={Members} />
+              <Route path="/members/form/:id?" component={MembersForm} />
+              <Route exact path="/subscriptions" component={Subscriptions} />
+              <Route exact path="/super-admins" component={SuperAdmins} />
+              <Route path="/super-admins/form/:id?" component={FormSuperAdmin} />
+              <Route exact path="/trainers" component={Trainers} />
+              <Route path="/trainers/form/:id?" component={FormTrainer} />
+              <Route exact path="/">
+                <Redirect to="/home" />
+              </Route>
+            </Switch>
+          </div>
+        </div>
         <Footer />
       </div>
     </Router>

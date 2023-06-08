@@ -50,7 +50,6 @@ function Admins() {
 
   return (
     <section className={styles.container}>
-      <h2>Admins</h2>
       <AddButton entity="Admin" createMode={createMode} />
       <TableComponent
         columnTitleArray={columnTitleArray}

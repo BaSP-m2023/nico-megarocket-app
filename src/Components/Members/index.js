@@ -51,7 +51,6 @@ function Members() {
   return (
     <section className={styles.container}>
       <div className={styles.titleContainer}>
-        <h2 className={styles.letterColour}>Members</h2>
         <AddButton entity="Member" createMode={createMode} />
       </div>
       {!members.length ? (

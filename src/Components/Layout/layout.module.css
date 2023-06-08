@@ -1,6 +1,33 @@
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
   min-height: 100vh;
+}
+
+aside {
+  position: sticky;
+  top: 0;
+  left:0;
+  width: 100%;
+  background-color: #aace9b;
+  height:100vh;
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: row;
+  width: 85%;
+  min-height: 100vh;
+  position: relative;
+  /* display:grid; */
+}
+
+.switchContainer {
+  width: 85%;
+}
+
+.asideContainer {
+  height: auto;
+  width:100%;
 }

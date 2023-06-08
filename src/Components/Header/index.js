@@ -4,7 +4,7 @@ function Header() {
   return (
     <header>
       <div className={styles.container}>
-        <div className={styles.brand}>Radium Rocket</div>
+        <div className={styles.brand}>Mega Rocket</div>
         <div>
           <a href={'https://www.facebook.com/radiumrocket'} target={'_blank'} rel="noreferrer">
             <img

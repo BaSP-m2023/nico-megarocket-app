@@ -74,7 +74,6 @@ function Subscriptions() {
   };
   return (
     <section className={styles.container}>
-      <h2>Subscriptions</h2>
       <AddButton entity="Suscription" createMode={createMode} />
       <TableComponent
         columnTitleArray={columnTitleArray}

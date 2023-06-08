@@ -1,34 +1,36 @@
 import React from 'react';
 import styles from './navbar.module.css';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 
 export const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <ul className={styles.rutes}>
         <li className={styles.anchor}>
-          <Link to="/home">Home</Link>
+          <NavLink to="/home" className={({ isActive }) => (isActive ? 'active' : 'nav-item')}>
+            Home
+          </NavLink>
         </li>
         <li>
-          <Link to="/activities">Activities</Link>
+          <NavLink to="/activities">Activities</NavLink>
         </li>
         <li>
-          <Link to="/admins">Admins</Link>
+          <NavLink to="/admins">Admins</NavLink>
         </li>
         <li>
-          <Link to="/classes">Classes</Link>
+          <NavLink to="/classes">Classes</NavLink>
         </li>
         <li>
-          <Link to="/members">Members</Link>
+          <NavLink to="/members">Members</NavLink>
         </li>
         <li>
-          <Link to="/subscriptions">Subscriptions</Link>
+          <NavLink to="/subscriptions">Subscriptions</NavLink>
         </li>
         <li>
-          <Link to="/super-admins">Super Admins</Link>
+          <NavLink to="/super-admins">Super Admins</NavLink>
         </li>
         <li>
-          <Link to="/trainers">Trainers</Link>
+          <NavLink to="/trainers">Trainers</NavLink>
         </li>
       </ul>
     </nav>

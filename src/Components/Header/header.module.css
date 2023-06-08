@@ -10,10 +10,12 @@
 .brand {
   font-weight: bold;
   font-size: 1rem;
+  color:white;
 }
 
 .socialIcon {
   margin-left: 15px;
+  filter: invert();
 }
 
 @media screen and (min-width: 750px) {

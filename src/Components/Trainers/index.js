@@ -48,7 +48,6 @@ function Trainers() {
 
   return (
     <section className={styles.container}>
-      <h2>Trainers</h2>
       <AddButton entity="Trainer" createMode={createMode} />
       <TableComponent
         columnTitleArray={columnsTable}

@@ -11,13 +11,19 @@
 
 .container {
   width: 80%;
+  position: relative;
+  left: 14rem;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  background: rgba(55, 56, 103, 0.1);
+  background: #d9d9d9ea;
   color: #373867;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 6px 30px -7px rgba(0, 0, 0, 0.75);
+  margin:20px 0;
 }
 
 .table tr td,
@@ -27,7 +33,7 @@
 }
 
 .rowBackground1 {
-  background-color: #aace9b33;
+  background-color: #aace9b90;
 }
 
 .rowBackground2 {
