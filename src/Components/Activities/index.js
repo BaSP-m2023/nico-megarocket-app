@@ -23,7 +23,7 @@ function Activities() {
   }, []);
 
   const createMode = () => {
-    history.push('activities/form/', { params: { mode: 'created' } });
+    history.push('activities/form', { params: { mode: 'created' } });
   };
 
   const handleClick = (item) => {

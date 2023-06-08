@@ -1,7 +1,7 @@
 import ButtonForm from '../ButtonForm';
 import styles from './table.module.css';
 import { ModalConfirm } from '../index';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const TableComponent = ({
   columnTitleArray,
@@ -14,14 +14,19 @@ const TableComponent = ({
   autoDelete
 }) => {
   const fieldValue = valueField;
+  const arrayDeleteId = [];
   {
     arrayAndObject &&
       data.forEach((item) => {
-        if (!item[arrayAndObject.object] || !item[arrayAndObject.array].length != 0) {
-          autoDelete(item._id);
+        if (!item[arrayAndObject.object] || !item[arrayAndObject.array]?.length != 0) {
+          arrayDeleteId.push(item._id);
         }
       });
   }
+
+  useEffect(() => {
+    arrayDeleteId.length > 0 && autoDelete(arrayDeleteId[0]);
+  }, [arrayDeleteId]);
 
   const [modalConfirm, setModalConfirm] = useState(false);
   const [idDelete, setIdDelete] = useState('');
@@ -33,7 +38,7 @@ const TableComponent = ({
 
   return (
     <section className={styles.container}>
-      {data.length === 0 ? (
+      {data?.length === 0 ? (
         <div className={styles.noneTrainer}>
           <h3>The list is empty</h3>
         </div>
