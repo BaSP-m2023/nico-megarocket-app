@@ -42,6 +42,9 @@ const TableSubscriptions = ({ subscription, deleteSubscription, setSubscription 
     editSubscriptionDB(findSubscription._id, editSubscriptions);
     findIdEdit(id);
   };
+
+  // const columnTitleArray = ['Classes', 'Member', 'Date'];
+
   return (
     <>
       {table && (
@@ -55,6 +58,7 @@ const TableSubscriptions = ({ subscription, deleteSubscription, setSubscription 
           >
             Add subscription
           </button>
+          {/* <TableComponent columnTitleArray={columnTitleArray} data={subscription}  /> */}
           <table className={style.containerTable}>
             <thead>
               <tr>
