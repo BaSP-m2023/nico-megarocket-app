@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   background-color: #373867;
+  position:relative;
 }
 
 .main {
@@ -10,8 +11,6 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 5%;
-  width: 90%;
-  height: 250px;
 }
 
 .appName {

@@ -1,11 +1,11 @@
-import { ToastError, TableComponent, AddButton } from '../Shared';
+import { ToastError, TableComponent, AddButton, Loader } from '../Shared';
 import { useEffect, useState } from 'react';
-import styles from './members.module.css';
 import { useHistory } from 'react-router-dom';
 
 function Members() {
   const [members, setMembers] = useState([]);
   const [toastErroOpen, setToastErroOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const history = useHistory();
 
@@ -22,7 +22,9 @@ function Members() {
       const reponse = await fetch(`${process.env.REACT_APP_API_URL}/api/member`);
       const data = await reponse.json();
       setMembers(data.data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       setToastErroOpen(true);
       console.log(error);
     }
@@ -48,13 +50,12 @@ function Members() {
   const columnTitleArray = ['Full Name', 'Email', 'Phone', 'City', 'Postal Code', 'Membership'];
 
   return (
-    <section className={styles.container}>
-      <div className={styles.titleContainer}>
-        <h2 className={styles.letterColour}>Members</h2>
+    <section>
+      <div>
         <AddButton entity="Member" createMode={createMode} />
       </div>
-      {!members.length ? (
-        <p>No active Members</p>
+      {loading ? (
+        <Loader />
       ) : (
         <TableComponent
           columns={columns}
