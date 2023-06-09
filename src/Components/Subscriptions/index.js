@@ -1,4 +1,3 @@
-import styles from './subscriptions.module.css';
 import { useEffect, useState } from 'react';
 import { AddButton, Loader, TableComponent, ToastError } from '../Shared';
 import { useHistory } from 'react-router-dom';
@@ -76,7 +75,7 @@ function Subscriptions() {
     object: 'classId'
   };
   return (
-    <section className={styles.container}>
+    <section>
       <AddButton entity="Suscription" createMode={createMode} />
       {loading ? (
         <Loader />
