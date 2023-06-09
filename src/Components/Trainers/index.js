@@ -1,4 +1,3 @@
-import styles from './trainers.module.css';
 import { useEffect, useState } from 'react';
 import { AddButton, Loader, TableComponent, ToastError } from '../Shared';
 import { useHistory } from 'react-router-dom';
@@ -50,7 +49,7 @@ function Trainers() {
   const columnsValue = ['firstName', 'dni', 'phone', 'email', 'city', 'salary'];
 
   return (
-    <section className={styles.container}>
+    <section>
       <AddButton entity="Trainer" createMode={createMode} />
       {loading ? (
         <Loader />

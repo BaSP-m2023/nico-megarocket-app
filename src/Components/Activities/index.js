@@ -1,4 +1,3 @@
-import styles from './activities.module.css';
 import { useEffect, useState } from 'react';
 import { AddButton, Loader, TableComponent, ToastError } from '../Shared';
 import { useHistory } from 'react-router-dom';
@@ -49,7 +48,7 @@ function Activities() {
   const columns = ['name', 'description'];
 
   return (
-    <section className={styles.container}>
+    <section>
       <AddButton entity="Activity" createMode={createMode} />
       {loading ? (
         <Loader />

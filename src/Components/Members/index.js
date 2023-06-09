@@ -1,6 +1,5 @@
 import { ToastError, TableComponent, AddButton, Loader } from '../Shared';
 import { useEffect, useState } from 'react';
-import styles from './members.module.css';
 import { useHistory } from 'react-router-dom';
 
 function Members() {
@@ -52,8 +51,8 @@ function Members() {
   const columnTitleArray = ['Full Name', 'Email', 'Phone', 'City', 'Postal Code', 'Membership'];
 
   return (
-    <section className={styles.container}>
-      <div className={styles.titleContainer}>
+    <section>
+      <div>
         <AddButton entity="Member" createMode={createMode} />
       </div>
       {loading ? (

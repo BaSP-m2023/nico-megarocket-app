@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import styles from './admins.module.css';
 import { ToastError, AddButton, TableComponent, Loader } from '../Shared';
 import { useHistory } from 'react-router-dom';
 
@@ -53,7 +52,7 @@ function Admins() {
   };
 
   return (
-    <section className={styles.container}>
+    <section>
       <AddButton entity="Admin" createMode={createMode} />
       {loading ? (
         <Loader />
@@ -66,7 +65,6 @@ function Admins() {
           columns={columns}
         />
       )}
-      <div className={styles.bottom_container}></div>
       {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
     </section>
   );

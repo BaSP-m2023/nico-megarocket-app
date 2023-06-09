@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import styles from './classes.module.css';
 import { Loader, TableComponent, ToastError } from '../Shared';
 import { useHistory } from 'react-router-dom';
 import AddButton from './../Shared/AddButton/index';
@@ -92,7 +91,7 @@ function Projects() {
   };
 
   return (
-    <section className={styles.container}>
+    <section>
       <AddButton entity={'Class'} createMode={createMode} />{' '}
       {loading ? (
         <Loader />

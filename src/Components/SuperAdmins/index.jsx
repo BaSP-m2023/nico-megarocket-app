@@ -1,4 +1,3 @@
-import styles from './super-admins.module.css';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ToastError, AddButton, TableComponent, Loader } from '../Shared';
@@ -47,8 +46,8 @@ const SuperAdmins = () => {
   };
 
   return (
-    <div className={styles.content}>
-      <section className={styles.container}>
+    <div>
+      <section>
         <AddButton entity={'Super Admin'} createMode={createMode} />
         <div>
           {loading ? (
