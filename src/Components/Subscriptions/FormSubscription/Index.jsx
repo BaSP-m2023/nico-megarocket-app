@@ -3,51 +3,49 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { Inputs, Button, ModalConfirm, ModalSuccess } from '../../Shared';
 import style from '../FormSubscription/modalAdd.module.css';
 
-const ModalAddSubscription = () => {
+const FormSubscription = () => {
   const [isValid, setIsValid] = useState(true);
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [bodySubscription, setBodySubscription] = useState({
-    classes: '',
-    member: '',
+    classId: '',
+    members: [],
     date: ''
   });
 
   const [subscriptionEdit, setEditSubscriptions] = useState({
-    classes: '',
-    member: '',
+    classId: '',
+    members: [],
     date: ''
   });
 
   const history = useHistory();
-  const editData = useLocation();
+  const location = useLocation();
   const { id } = useParams();
+  const data = location.state.params;
 
   useEffect(() => {
-    if (!id) {
+    if (data.mode === 'created') {
       setBodySubscription({
-        classes: '',
-        member: '',
+        classId: '',
+        members: [],
         date: ''
       });
     } else {
-      const subscriptionEdited = editData.state.params;
+      const subscriptionEdited = location.state.params;
       setEditSubscriptions({
-        classes: subscriptionEdited.classes,
-        member: subscriptionEdited.member,
+        classId: subscriptionEdited.classId,
+        members: [subscriptionEdited.members],
         date: subscriptionEdited.date
       });
     }
-  }, [editData, id]);
+  }, []);
 
   const changeInput = (e) => {
-    const veryNewSubscription = { ...bodySubscription, [e.target.name]: e.target.value };
-    setBodySubscription(veryNewSubscription);
-
-    const validFields = Object.values(veryNewSubscription).every((field) => {
+    setBodySubscription({ ...bodySubscription, [e.target.name]: e.target.value });
+    const validFields = Object.values(bodySubscription).every((field) => {
       return field.length >= 3 && field !== '';
     });
-
     setIsValid(!validFields);
   };
 
@@ -56,7 +54,6 @@ const ModalAddSubscription = () => {
       ...subscriptionEdit,
       [e.target.name]: e.target.value
     });
-
     if (e.target.value.length >= 3) {
       setIsValid(true);
     } else {
@@ -64,14 +61,20 @@ const ModalAddSubscription = () => {
     }
   };
 
-  const createSubscriptionDB = async (bodySubscription) => {
+  const createSubscriptionDB = async () => {
+    const newSub = {
+      classId: bodySubscription.classId,
+      members: [bodySubscription.members],
+      date: bodySubscription.date
+    };
+    console.log(newSub);
     try {
       const newSubscription = await fetch(`${process.env.REACT_APP_API_URL}/api/subscription`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json'
         },
-        body: JSON.stringify(bodySubscription)
+        body: JSON.stringify(newSub)
       });
       return newSubscription.json();
     } catch (error) {
@@ -81,7 +84,7 @@ const ModalAddSubscription = () => {
 
   const editSubscriptionsDB = async (id, subscriptionEdit) => {
     try {
-      let subscriptionEdited = await fetch(`${process.env.REACT_APP_API_URL}/activity/${id}`, {
+      let subscriptionEdited = await fetch(`${process.env.REACT_APP_API_URL}/subscription/${id}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json'
@@ -94,20 +97,10 @@ const ModalAddSubscription = () => {
     }
   };
 
-  const addSubscription = async ({ classes, member, date }) => {
-    let veryNewSubscription = {
-      classes,
-      member,
-      date
-    };
-
-    await createSubscriptionDB(veryNewSubscription);
-  };
-
   const submitSubscription = () => {
-    addSubscription(bodySubscription);
     setModalConfirmOpen(false);
     setModalSuccessOpen(true);
+    createSubscriptionDB();
   };
 
   const submitEditedSubscription = (id, subscriptionsEdition) => {
@@ -138,23 +131,21 @@ const ModalAddSubscription = () => {
         <Inputs
           nameTitle="Class:"
           type="text"
-          value={id ? subscriptionEdit.classes : bodySubscription.classes}
-          name="classes"
-          onChange={id ? changeInputEdit : changeInput}
+          nameInput="classId"
+          change={id ? changeInputEdit : changeInput}
         />
         <Inputs
           nameTitle="Member:"
           type="text"
-          value={id ? subscriptionEdit.member : bodySubscription.member}
-          name="member"
-          onChange={id ? changeInputEdit : changeInput}
+          nameInput="members"
+          change={id ? changeInputEdit : changeInput}
         />
         <Inputs
           nameTitle="Date:"
           type="date"
           value={id ? subscriptionEdit.date : bodySubscription.date}
-          name="date"
-          onChange={id ? changeInputEdit : changeInput}
+          nameInput="date"
+          change={id ? changeInputEdit : changeInput}
         />
         <div className={style.containerAdd}>
           <Button clickAction={goBack} text="Cancel" />
@@ -180,5 +171,4 @@ const ModalAddSubscription = () => {
     </section>
   );
 };
-
-export default ModalAddSubscription;
+export default FormSubscription;
