@@ -34,8 +34,10 @@ const FormSubscription = () => {
     } else {
       const subscriptionEdited = location.state.params;
       setEditSubscriptions({
-        classId: subscriptionEdited.classId,
-        members: [subscriptionEdited.members],
+        classId: subscriptionEdited.classId._id,
+        members: subscriptionEdited.members.map((member) => {
+          return member._id;
+        }),
         date: subscriptionEdited.date
       });
     }
@@ -67,7 +69,6 @@ const FormSubscription = () => {
       members: [bodySubscription.members],
       date: bodySubscription.date
     };
-    console.log(newSub);
     try {
       const newSubscription = await fetch(`${process.env.REACT_APP_API_URL}/api/subscription`, {
         method: 'POST',
@@ -84,14 +85,19 @@ const FormSubscription = () => {
 
   const editSubscriptionsDB = async (id, subscriptionEdit) => {
     try {
-      let subscriptionEdited = await fetch(`${process.env.REACT_APP_API_URL}/subscription/${id}`, {
+      const editedSub = {
+        classId: subscriptionEdit.classId,
+        members: [subscriptionEdit.members],
+        date: subscriptionEdit.date
+      };
+      let subEdited = await fetch(`${process.env.REACT_APP_API_URL}/api/subscription/${id}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json'
         },
-        body: JSON.stringify(subscriptionEdit)
+        body: JSON.stringify(editedSub)
       });
-      return subscriptionEdited.json();
+      return subEdited.json();
     } catch (error) {
       console.error(error);
     }
@@ -133,17 +139,19 @@ const FormSubscription = () => {
           type="text"
           nameInput="classId"
           change={id ? changeInputEdit : changeInput}
+          text={id ? subscriptionEdit.classId : bodySubscription.classId}
         />
         <Inputs
           nameTitle="Member:"
           type="text"
+          text={id ? subscriptionEdit.members : bodySubscription.members}
           nameInput="members"
           change={id ? changeInputEdit : changeInput}
         />
         <Inputs
           nameTitle="Date:"
           type="date"
-          value={id ? subscriptionEdit.date : bodySubscription.date}
+          text={id ? subscriptionEdit.date : bodySubscription.date}
           nameInput="date"
           change={id ? changeInputEdit : changeInput}
         />
