@@ -1,5 +1,7 @@
-import { createStore } from 'redux';
-import rootReducer from './rootReducer';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import trainerReducer from './trainers/reducer';
 
-const store = createStore(rootReducer);
+const store = createStore(trainerReducer, applyMiddleware(thunk));
+
 export default store;
