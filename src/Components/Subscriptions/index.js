@@ -1,12 +1,12 @@
-import styles from './subscriptions.module.css';
 import { useEffect, useState } from 'react';
-import { AddButton, TableComponent, ToastError } from '../Shared';
+import { AddButton, Loader, TableComponent, ToastError } from '../Shared';
 import { useHistory } from 'react-router-dom';
 
 function Subscriptions() {
   const [subscription, setSubscription] = useState([]);
   const [toastErroOpen, setToastErroOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const history = useHistory();
 
@@ -15,7 +15,9 @@ function Subscriptions() {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscription`);
       const data = await response.json();
       setSubscription(data.data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       setToastErroOpen(true);
     }
   };
@@ -73,19 +75,22 @@ function Subscriptions() {
     object: 'classId'
   };
   return (
-    <section className={styles.container}>
-      <h2>Subscriptions</h2>
+    <section>
       <AddButton entity="Suscription" createMode={createMode} />
-      <TableComponent
-        columnTitleArray={columnTitleArray}
-        data={subscription}
-        handleClick={handleClick}
-        deleteButton={deleteSubscription}
-        valueField={valueField}
-        arrayAndObject={arrayAndObject}
-        columns={columns}
-        autoDelete={autoDelete}
-      />
+      {loading ? (
+        <Loader />
+      ) : (
+        <TableComponent
+          columnTitleArray={columnTitleArray}
+          data={subscription}
+          handleClick={handleClick}
+          deleteButton={deleteSubscription}
+          valueField={valueField}
+          arrayAndObject={arrayAndObject}
+          columns={columns}
+          autoDelete={autoDelete}
+        />
+      )}
       {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
     </section>
   );

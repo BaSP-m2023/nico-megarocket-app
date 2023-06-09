@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import styles from './admins.module.css';
-import { ToastError, AddButton, TableComponent } from '../Shared';
+import { ToastError, AddButton, TableComponent, Loader } from '../Shared';
 import { useHistory } from 'react-router-dom';
 
 function Admins() {
@@ -9,6 +8,8 @@ function Admins() {
   const [toastErroOpen, setToastErroOpen] = useState(false);
 
   const [toastMessage, setToastMessage] = useState('Error in database');
+
+  const [loading, setLoading] = useState(true);
 
   const history = useHistory();
   const columnTitleArray = ['Admin', 'DNI', 'Phone', 'E-Mail', 'City'];
@@ -19,7 +20,9 @@ function Admins() {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
       const data = await response.json();
       setAdmins(data.data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       setToastErroOpen(true);
     }
   };
@@ -49,17 +52,19 @@ function Admins() {
   };
 
   return (
-    <section className={styles.container}>
-      <h2>Admins</h2>
+    <section>
       <AddButton entity="Admin" createMode={createMode} />
-      <TableComponent
-        columnTitleArray={columnTitleArray}
-        data={admins}
-        handleClick={handleEditClick}
-        deleteButton={deleteAdmin}
-        columns={columns}
-      />
-      <div className={styles.bottom_container}></div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <TableComponent
+          columnTitleArray={columnTitleArray}
+          data={admins}
+          handleClick={handleEditClick}
+          deleteButton={deleteAdmin}
+          columns={columns}
+        />
+      )}
       {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
     </section>
   );
