@@ -1,11 +1,12 @@
 import styles from './trainers.module.css';
 import { useEffect, useState } from 'react';
-import { AddButton, TableComponent, ToastError } from '../Shared';
+import { AddButton, Loader, TableComponent, ToastError } from '../Shared';
 import { useHistory } from 'react-router-dom';
 
 function Trainers() {
   const [trainers, setTrainers] = useState([]);
   const [toastErroOpen, setToastErroOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const history = useHistory();
 
@@ -14,7 +15,9 @@ function Trainers() {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`);
       const data = await response.json();
       setTrainers(data.data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       setToastErroOpen(true);
     }
   };
@@ -49,14 +52,18 @@ function Trainers() {
   return (
     <section className={styles.container}>
       <AddButton entity="Trainer" createMode={createMode} />
-      <TableComponent
-        columnTitleArray={columnsTable}
-        data={trainers}
-        handleClick={handleClick}
-        deleteButton={deleteTrainer}
-        columns={columnsValue}
-        autoDelete={() => {}}
-      />
+      {loading ? (
+        <Loader />
+      ) : (
+        <TableComponent
+          columnTitleArray={columnsTable}
+          data={trainers}
+          handleClick={handleClick}
+          deleteButton={deleteTrainer}
+          columns={columnsValue}
+          autoDelete={() => {}}
+        />
+      )}
       {toastErroOpen && (
         <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
       )}

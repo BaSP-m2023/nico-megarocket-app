@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './classes.module.css';
-import { TableComponent, ToastError } from '../Shared';
+import { Loader, TableComponent, ToastError } from '../Shared';
 import { useHistory } from 'react-router-dom';
 import AddButton from './../Shared/AddButton/index';
 
@@ -8,6 +8,7 @@ function Projects() {
   const [classes, setClasses] = useState([]);
   const [toastErrorOpen, setToastErrorOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const columnTitleArray = ['Activity', 'Day', 'Hour', 'Trainer', 'Slots'];
 
@@ -31,7 +32,9 @@ function Projects() {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class`);
       const data = await response.json();
       setClasses(data.data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       setToastMessage('Error in Database');
       setToastErrorOpen(true);
       console.error(error);
@@ -91,16 +94,20 @@ function Projects() {
   return (
     <section className={styles.container}>
       <AddButton entity={'Class'} createMode={createMode} />{' '}
-      <TableComponent
-        columnTitleArray={columnTitleArray}
-        data={classes}
-        handleClick={handleClick}
-        deleteButton={deleteClass}
-        columns={columns}
-        valueField={valueField}
-        arrayAndObject={arrayAndObject}
-        autoDelete={autoDelete}
-      />
+      {loading ? (
+        <Loader />
+      ) : (
+        <TableComponent
+          columnTitleArray={columnTitleArray}
+          data={classes}
+          handleClick={handleClick}
+          deleteButton={deleteClass}
+          columns={columns}
+          valueField={valueField}
+          arrayAndObject={arrayAndObject}
+          autoDelete={autoDelete}
+        />
+      )}
       {toastErrorOpen && <ToastError setToastErroOpen={setToastErrorOpen} message={toastMessage} />}
     </section>
   );

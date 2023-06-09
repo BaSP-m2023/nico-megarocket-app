@@ -22,10 +22,25 @@
   color: #373867;
 }
 
-.rutes > li > a:hover {
-  color: #373867;
+.navbarLink.active {
+  color: #ffffff;
+  filter: drop-shadow(2px 2px 4px rgba(255, 255, 255, 0.858));
 }
 
-.active {
-  color: white;
+.navbarLink {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #373867;
+  transition: 0.1s;
+}
+
+.navbarLink img {
+  width: 1rem;
+  height: 1rem;
+}
+
+.navbarLink:hover {
+  transform: scale(1.05);
+  color: #ffffff;
 }

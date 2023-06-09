@@ -9,7 +9,6 @@ aside {
   position: sticky;
   top: 0;
   left:0;
-  width: 100%;
   background-color: #aace9b;
   height:100vh;
 }
@@ -17,17 +16,19 @@ aside {
 .mainContainer {
   display: flex;
   flex-direction: row;
-  width: 85%;
+  justify-content: center;
+  width: 100%;
   min-height: 100vh;
   position: relative;
-  /* display:grid; */
 }
 
 .switchContainer {
+  display: flex;
+  justify-content: center;
   width: 85%;
 }
 
 .asideContainer {
   height: auto;
-  width:100%;
+  width:15%;
 }
