@@ -16,6 +16,7 @@ import Footer from '../Footer/index';
 import FormClasses from '../Classes/Form';
 import styles from './layout.module.css';
 import FormAdmin from '../Admins/Form/index';
+import FormSubscriptions from '../Subscriptions/FormSubscription/Index';
 
 function Layout() {
   return (
@@ -33,6 +34,7 @@ function Layout() {
           <Route exact path="/members" component={Members} />
           <Route path="/members/form/:id?" component={MembersForm} />
           <Route exact path="/subscriptions" component={Subscriptions} />
+          <Route path="/subscriptions/form/:id?" component={FormSubscriptions} />
           <Route exact path="/super-admins" component={SuperAdmins} />
           <Route path="/super-admins/form/:id?" component={FormSuperAdmin} />
           <Route exact path="/trainers" component={Trainers} />
