@@ -1,11 +1,15 @@
-import { ToastError, TableComponent, AddButton } from '../Shared';
-import { useEffect, useState } from 'react';
+import { TableComponent, AddButton } from '../Shared';
+import { useEffect } from 'react';
 import styles from './members.module.css';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAllMembers, memberDelete } from '../../redux/members/thunks';
 
 function Members() {
-  const [members, setMembers] = useState([]);
-  const [toastErroOpen, setToastErroOpen] = useState(false);
+  const dispatch = useDispatch();
+  const members = useSelector((state) => state.members.list);
+
+  console.log(members);
 
   const history = useHistory();
 
@@ -17,31 +21,9 @@ function Members() {
     history.push(`members/form/`, { params: { mode: 'create' } });
   };
 
-  const getMembers = async () => {
-    try {
-      const reponse = await fetch(`${process.env.REACT_APP_API_URL}/api/member`);
-      const data = await reponse.json();
-      setMembers(data.data);
-    } catch (error) {
-      setToastErroOpen(true);
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    getMembers();
+    getAllMembers(dispatch);
   }, []);
-
-  const memberDelete = async (memberId) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/member/${memberId}`, {
-        method: 'DELETE'
-      });
-      setMembers([...members.filter((member) => member._id !== memberId)]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const columns = ['firstName', 'email', 'phone', 'city', 'postalCode', 'membership'];
 
@@ -60,14 +42,14 @@ function Members() {
           columns={columns}
           columnTitleArray={columnTitleArray}
           data={members}
-          handleClick={handleClick}
           deleteButton={memberDelete}
+          handleClick={handleClick}
           autoDelete={() => {}}
         />
       )}
-      {toastErroOpen && (
+      {/*       {toastErroOpen && (
         <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
-      )}
+      )} */}
     </section>
   );
 }
