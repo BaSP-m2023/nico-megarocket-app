@@ -6,7 +6,7 @@ import { getAllAdmins, adminDelete } from '../../redux/admins/thunks';
 
 function Admins() {
   const admins = useSelector((state) => state.admins.list);
-  const isPending = useSelector((state) => state.members.pending);
+  const isPending = useSelector((state) => state.admins.pending);
   const dispatch = useDispatch();
   const [toastErroOpen, setToastErroOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('Error in database');
