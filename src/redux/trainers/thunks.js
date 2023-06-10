@@ -1,9 +1,11 @@
-import { addTrainer, updateTrainerSuccess } from './actions';
+import { addTrainerPending, addTrainer, updateTrainerSuccess } from './actions';
 
 export const createTrainer = async (dispatch, body) => {
   try {
+    dispatch(addTrainerPending(true));
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`, body);
     const data = await response.json();
+    dispatch(addTrainerPending(false));
     dispatch(addTrainer(data));
   } catch (error) {
     console.log(error);

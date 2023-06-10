@@ -7,9 +7,10 @@ import {
   UPDATE_TRAINER_ERROR
 } from './constants';
 
-export const addTrainerPending = () => {
+export const addTrainerPending = (pending) => {
   return {
-    type: ADD_TRAINER_PENDING
+    type: ADD_TRAINER_PENDING,
+    pending: pending
   };
 };
 

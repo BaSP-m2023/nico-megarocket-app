@@ -1,10 +1,28 @@
-import { ADD_TRAINER, UPDATE_TRAINER } from './constants';
+import { ADD_TRAINER, ADD_TRAINER_PENDING, UPDATE_TRAINER } from './constants';
 
 const initialState = {
-  list: []
+  list: [
+    {
+      _id: '64847b7de11f590534914333',
+      firstName: 'John',
+      lastName: 'Doe',
+      dni: '123456789',
+      phone: '123-456-7890',
+      email: 'johndoe@example.com',
+      city: 'New York',
+      salary: 50000
+    }
+  ]
 };
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ADD_TRAINER_PENDING: {
+      console.log(action.payload);
+      return {
+        ...state,
+        pending: action.payload
+      };
+    }
     case ADD_TRAINER: {
       return {
         ...state,
@@ -12,20 +30,24 @@ const reducer = (state = initialState, action) => {
       };
     }
 
-    case UPDATE_TRAINER:
-      {
-        const { _id, firstName, lastName, dni, phone, city, salary } = action.payload;
-        const trainerFound = state.list.find((trainer) => trainer.id === _id);
-        if (trainerFound) {
-          trainerFound.firstName = firstName;
-          trainerFound.lastName = lastName;
-          trainerFound.dni = dni;
-          trainerFound.phone = phone;
-          trainerFound.city = city;
-          trainerFound.salary = salary;
+    case UPDATE_TRAINER: {
+      const trainerUpdated = action.payload;
+      console.log(state);
+      console.log(trainerUpdated._id);
+      const updatedTrainers = state.list.map((trainer) => {
+        if (trainer._id === trainerUpdated._id) {
+          return {
+            ...trainer,
+            ...trainerUpdated
+          };
         }
-      }
-      break;
+        return trainer;
+      });
+      return {
+        ...state,
+        list: updatedTrainers
+      };
+    }
 
     default:
       return state;

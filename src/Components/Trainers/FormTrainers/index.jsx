@@ -61,6 +61,7 @@ const FormTrainer = () => {
 
   const handleModalConfirmation = () => {
     updateTrainer(dispatch, id, trainerBody);
+    history.goBack();
     setModalUpdateConfirmOpen(false);
   };
 
@@ -120,6 +121,7 @@ const FormTrainer = () => {
       handleUpdateButtonClick();
     } else {
       createTrainer(dispatch, trainerBody);
+      history.goBack();
     }
   };
 
