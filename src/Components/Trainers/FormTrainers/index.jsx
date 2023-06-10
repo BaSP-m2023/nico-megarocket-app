@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 import styles from './form.module.css';
 import { ModalConfirm, ModalSuccess } from '../../Shared';
-import { ToastError } from '../../Shared';
+/* import { ToastError } from '../../Shared'; */
 import { Inputs } from '../../Shared';
 import { Button } from '../../Shared';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import { createTrainer, updateTrainer } from '../../../redux/trainers/thunks';
+import { useDispatch } from 'react-redux';
 
 const FormTrainer = () => {
   const [modalUpdateConfirmOpen, setModalUpdateConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
-  const [toastErrorOpen, setToastErrorOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
+  /*   const [successMessage, setSuccessMessage] = useState('');
+  const [toastErrorOpen, setToastErrorOpen] = useState(false); */
+  /*  const [toastMessage, setToastMessage] = useState(''); */
   const [inputForm, setInputForm] = useState('');
   const { id } = useParams();
   const location = useLocation();
   const updateData = location.state.params;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (updateData.mode === 'edit') {
@@ -52,52 +55,12 @@ const FormTrainer = () => {
     body: JSON.stringify(inputForm)
   };
 
-  const createTrainer = async (body) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`, body);
-      const data = await response.json();
-      if (data.error === true) {
-        setToastMessage(data.message);
-        setToastErrorOpen(true);
-      } else {
-        setSuccessMessage('A new Trainers has been created successfully.');
-        setModalSuccessOpen(true);
-        setTimeout(() => {
-          history.push('/trainers');
-          setModalSuccessOpen(false);
-        }, 2000);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const updateTrainer = async (id, body) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, body);
-      const data = await response.json();
-      if (data.error === true) {
-        setToastMessage(data.message);
-        setToastErrorOpen(true);
-      } else {
-        setSuccessMessage('The Trainer selected has been updated successfully.');
-        setModalSuccessOpen(true);
-        setTimeout(() => {
-          history.push('/trainers');
-          setModalSuccessOpen(false);
-        }, 2000);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleUpdateButtonClick = () => {
     setModalUpdateConfirmOpen(true);
   };
 
   const handleModalConfirmation = () => {
-    updateTrainer(id, trainerBody);
+    updateTrainer(dispatch, id, trainerBody);
     setModalUpdateConfirmOpen(false);
   };
 
@@ -156,7 +119,7 @@ const FormTrainer = () => {
     if (updateData.mode === 'edit') {
       handleUpdateButtonClick();
     } else {
-      createTrainer(trainerBody);
+      createTrainer(dispatch, trainerBody);
     }
   };
 
@@ -256,12 +219,8 @@ const FormTrainer = () => {
           message="Are you sure you want to update this Trainer?"
         />
       )}
-      <div>
-        {modalSuccessOpen && (
-          <ModalSuccess message={successMessage} setModalSuccessOpen={setModalSuccessOpen} />
-        )}
-      </div>
-      {toastErrorOpen && <ToastError setToastErroOpen={setToastErrorOpen} message={toastMessage} />}
+      <div>{modalSuccessOpen && <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} />}</div>
+      {/* {toastErrorOpen && <ToastError setToastErroOpen={setToastErrorOpen} message={toastMessage} />} */}
     </div>
   );
 };

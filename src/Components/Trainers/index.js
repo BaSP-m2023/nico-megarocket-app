@@ -2,10 +2,12 @@ import styles from './trainers.module.css';
 import { useEffect, useState } from 'react';
 import { AddButton, TableComponent, ToastError } from '../Shared';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function Trainers() {
   const [trainers, setTrainers] = useState([]);
   const [toastErroOpen, setToastErroOpen] = useState(false);
+  const storeTrainers = useSelector((store) => store.trainers.list);
 
   const history = useHistory();
 
@@ -21,6 +23,7 @@ function Trainers() {
 
   useEffect(() => {
     getTrainers();
+    console.log(storeTrainers);
   }, []);
 
   const createMode = () => {
