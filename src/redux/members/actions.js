@@ -1,29 +1,66 @@
-import { GET_MEMBERS, ADD_MEMBER, EDIT_MEMBER, DELETE_MEMBER } from './constants';
+import {
+  GET_MEMBERS_PENDING,
+  GET_MEMBERS_SUCCESS,
+  GET_MEMBERS_ERROR,
+  ADD_MEMBER_SUCCESS,
+  EDIT_MEMBER_SUCCESS,
+  DELETE_MEMBER_PENDING,
+  DELETE_MEMBER_SUCCESS,
+  DELETE_MEMBER_ERROR
+} from './constants';
 
-export const getMembers = (list) => {
+export const getMembersPending = (pending) => {
   return {
-    type: GET_MEMBERS,
+    type: GET_MEMBERS_PENDING,
+    payload: pending
+  };
+};
+
+export const getMembersSuccess = (list) => {
+  return {
+    type: GET_MEMBERS_SUCCESS,
     payload: list
   };
 };
 
-export const addMember = (member) => {
+export const getMembersError = (error) => {
   return {
-    type: ADD_MEMBER,
+    type: GET_MEMBERS_ERROR,
+    payload: error
+  };
+};
+
+export const addMemberSuccess = (member) => {
+  return {
+    type: ADD_MEMBER_SUCCESS,
     payload: member
   };
 };
 
-export const editMember = (member) => {
+export const editMemberSuccess = (member) => {
   return {
-    type: EDIT_MEMBER,
+    type: EDIT_MEMBER_SUCCESS,
     payload: member
   };
 };
 
-export const deleteMember = (memberID) => {
+export const deleteMemberPending = (pending) => {
   return {
-    type: DELETE_MEMBER,
+    type: DELETE_MEMBER_PENDING,
+    payload: pending
+  };
+};
+
+export const deleteMemberSuccess = (memberID) => {
+  return {
+    type: DELETE_MEMBER_SUCCESS,
     payload: memberID
+  };
+};
+
+export const deleteMemberError = (error) => {
+  return {
+    type: DELETE_MEMBER_ERROR,
+    payload: error
   };
 };

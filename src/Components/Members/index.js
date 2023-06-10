@@ -1,15 +1,17 @@
 import { TableComponent, AddButton } from '../Shared';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './members.module.css';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllMembers, memberDelete } from '../../redux/members/thunks';
+import { ToastError, Loader } from '../Shared';
 
 function Members() {
   const dispatch = useDispatch();
   const members = useSelector((state) => state.members.list);
-
-  console.log(members);
+  const isPending = useSelector((state) => state.members.pending);
+  const isError = useSelector((state) => state.members.error);
+  const [setToastErroOpen] = useState(isError);
 
   const history = useHistory();
 
@@ -35,6 +37,7 @@ function Members() {
         <h2 className={styles.letterColour}>Members</h2>
         <AddButton entity="Member" createMode={createMode} />
       </div>
+      {isPending && <Loader />}
       {!members.length ? (
         <p>No active Members</p>
       ) : (
@@ -47,9 +50,11 @@ function Members() {
           autoDelete={() => {}}
         />
       )}
-      {/*       {toastErroOpen && (
+      {isError ? (
         <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
-      )} */}
+      ) : (
+        ''
+      )}
     </section>
   );
 }
