@@ -1,6 +1,5 @@
 import { TableComponent, AddButton } from '../Shared';
 import { useEffect, useState } from 'react';
-import styles from './members.module.css';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllMembers, memberDelete } from '../../redux/members/thunks';
@@ -36,9 +35,8 @@ function Members() {
   const columnTitleArray = ['Full Name', 'Email', 'Phone', 'City', 'Postal Code', 'Membership'];
 
   return (
-    <section className={styles.container}>
-      <div className={styles.titleContainer}>
-        <h2 className={styles.letterColour}>Members</h2>
+    <section>
+      <div>
         <AddButton entity="Member" createMode={createMode} />
       </div>
       {isPending && <Loader />}

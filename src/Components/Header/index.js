@@ -1,11 +1,10 @@
 import styles from './header.module.css';
-import { Link } from 'react-router-dom';
 
 function Header() {
   return (
     <header>
       <div className={styles.container}>
-        <div className={styles.brand}>Radium Rocket</div>
+        <div className={styles.brand}>Mega Rocket</div>
         <div>
           <a href={'https://www.facebook.com/radiumrocket'} target={'_blank'} rel="noreferrer">
             <img
@@ -27,35 +26,6 @@ function Header() {
           </a>
         </div>
       </div>
-      <nav className={styles.navbar}>
-        <h1 className={styles.appName}>MegaRocket</h1>
-        <ul className={styles.rutes}>
-          <li>
-            <Link to="/home">Home</Link>
-          </li>
-          <li>
-            <Link to="/activities">Activities</Link>
-          </li>
-          <li>
-            <Link to="/admins">Admins</Link>
-          </li>
-          <li>
-            <Link to="/classes">Classes</Link>
-          </li>
-          <li>
-            <Link to="/members">Members</Link>
-          </li>
-          <li>
-            <Link to="/subscriptions">Subscriptions</Link>
-          </li>
-          <li>
-            <Link to="/super-admins">Super Admins</Link>
-          </li>
-          <li>
-            <Link to="/trainers">Trainers</Link>
-          </li>
-        </ul>
-      </nav>
     </header>
   );
 }

@@ -1,11 +1,11 @@
-import styles from './super-admins.module.css';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { ToastError, AddButton, TableComponent } from '../Shared';
+import { ToastError, AddButton, TableComponent, Loader } from '../Shared';
 
 const SuperAdmins = () => {
   const [superAdmins, setSuperAdmins] = useState([]);
   const [toastErroOpen, setToastErroOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
   const history = useHistory();
 
   useEffect(() => {
@@ -17,7 +17,9 @@ const SuperAdmins = () => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin`);
       const data = await response.json();
       setSuperAdmins(data.data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       setToastErroOpen(true);
       console.error(error);
     }
@@ -44,18 +46,22 @@ const SuperAdmins = () => {
   };
 
   return (
-    <div className={styles.content}>
-      <section className={styles.container}>
+    <div>
+      <section>
         <AddButton entity={'Super Admin'} createMode={createMode} />
         <div>
-          <TableComponent
-            columnTitleArray={['Email', 'Password']}
-            data={superAdmins}
-            handleClick={handleClick}
-            deleteButton={deleteItem}
-            columns={['email', 'password']}
-            autoDelete={() => {}}
-          />
+          {loading ? (
+            <Loader />
+          ) : (
+            <TableComponent
+              columnTitleArray={['Email', 'Password']}
+              data={superAdmins}
+              handleClick={handleClick}
+              deleteButton={deleteItem}
+              columns={['email', 'password']}
+              autoDelete={() => {}}
+            />
+          )}
           {toastErroOpen && (
             <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
           )}
