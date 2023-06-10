@@ -24,15 +24,14 @@ const TableComponent = ({
         }
       });
   }
-
-  useEffect(() => {
-    arrayDeleteId.length > 0 && autoDelete(arrayDeleteId[0]);
-  }, [arrayDeleteId]);
+  const dispatch = useDispatch();
 
   const [modalConfirm, setModalConfirm] = useState(false);
   const [idDelete, setIdDelete] = useState('');
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    arrayDeleteId.length > 0 && autoDelete(arrayDeleteId[0]);
+  }, [arrayDeleteId]);
 
   const onConfirmOpen = (id) => {
     setModalConfirm(true);
@@ -101,7 +100,7 @@ const TableComponent = ({
       )}
       {modalConfirm && (
         <ModalConfirm
-          onConfirm={() => deleteButton(dispatch, idDelete)}
+          onConfirm={() => dispatch(deleteButton(idDelete))}
           message="Are you sure to delete this?"
           method="Delete"
           setModalConfirmOpen={setModalConfirm}

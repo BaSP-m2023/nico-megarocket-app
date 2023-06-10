@@ -11,7 +11,7 @@ function Members() {
   const members = useSelector((state) => state.members.list);
   const isPending = useSelector((state) => state.members.pending);
   const isError = useSelector((state) => state.members.error);
-  const [setToastErroOpen] = useState(isError);
+  const [toastError, setToastErroOpen] = useState(isError);
 
   const history = useHistory();
 
@@ -26,6 +26,10 @@ function Members() {
   useEffect(() => {
     getAllMembers(dispatch);
   }, []);
+
+  useEffect(() => {
+    setToastErroOpen(!!isError);
+  }, [isError]);
 
   const columns = ['firstName', 'email', 'phone', 'city', 'postalCode', 'membership'];
 
@@ -50,11 +54,7 @@ function Members() {
           autoDelete={() => {}}
         />
       )}
-      {isError ? (
-        <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
-      ) : (
-        ''
-      )}
+      {toastError && <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />}
     </section>
   );
 }
