@@ -1,50 +1,30 @@
 import { useState, useEffect } from 'react';
 import { ToastError, AddButton, TableComponent, Loader } from '../Shared';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAllAdmins, adminDelete } from '../../redux/admins/thunks';
 
 function Admins() {
-  const [admins, setAdmins] = useState([]);
-
+  const admins = useSelector((state) => state.admins.list);
+  const isPending = useSelector((state) => state.members.pending);
+  const dispatch = useDispatch();
   const [toastErroOpen, setToastErroOpen] = useState(false);
-
   const [toastMessage, setToastMessage] = useState('Error in database');
-
-  const [loading, setLoading] = useState(true);
 
   const history = useHistory();
   const columnTitleArray = ['Admin', 'DNI', 'Phone', 'E-Mail', 'City'];
   const columns = ['firstName', 'dni', 'phone', 'email', 'city'];
 
-  const getAdmins = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
-      const data = await response.json();
-      setAdmins(data.data);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      setToastErroOpen(true);
-    }
-  };
-
-  const deleteAdmin = async (id) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
-        method: 'DELETE'
-      });
-      const newAdmins = admins.filter((admin) => admin._id !== id);
-      setAdmins(newAdmins);
-    } catch (error) {
-      setToastErroOpen(true);
-      setToastMessage(error.message);
-    }
-  };
   const handleEditClick = (item) => {
     history.push(`/admins/form/${item._id}`, { params: { item, mode: 'edit' } });
   };
 
   useEffect(() => {
-    getAdmins();
+    getAllAdmins(dispatch);
+  }, []);
+
+  useEffect(() => {
+    setToastMessage(useState('Error in database'));
   }, []);
 
   const createMode = () => {
@@ -53,19 +33,18 @@ function Admins() {
 
   return (
     <section>
-      <AddButton entity="Admin" createMode={createMode} />
-      {loading ? (
-        <Loader />
-      ) : (
-        <TableComponent
-          columnTitleArray={columnTitleArray}
-          data={admins}
-          handleClick={handleEditClick}
-          deleteButton={deleteAdmin}
-          columns={columns}
-        />
-      )}
-      {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
+      <div>
+        <AddButton entity="Admin" createMode={createMode} />
+      </div>
+      {isPending && <Loader />} : (
+      <TableComponent
+        columnTitleArray={columnTitleArray}
+        data={admins}
+        handleClick={handleEditClick}
+        deleteButton={adminDelete}
+        columns={columns}
+      />
+      ){toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
     </section>
   );
 }
