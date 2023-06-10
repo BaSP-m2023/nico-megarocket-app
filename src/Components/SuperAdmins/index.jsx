@@ -1,29 +1,29 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ToastError, AddButton, TableComponent, Loader } from '../Shared';
+import { getSuperAdmins } from '../../redux/superAdmins/thunks';
+import { useSelector, useDispatch } from 'react-redux';
 
 const SuperAdmins = () => {
   const [superAdmins, setSuperAdmins] = useState([]);
-  const [toastErroOpen, setToastErroOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
+
+  const [toastErrorOpen, setToastErrorOpen] = useState(false);
+
   const history = useHistory();
 
+  const dispatch = useDispatch();
+
+  const superAdminState = useSelector((state) => state.superAdmin);
+  const superadmins = useSelector((state) => state.superAdmin.list);
+
   useEffect(() => {
-    getSuperAdmins();
+    getSuperAdmins(dispatch);
   }, []);
 
-  const getSuperAdmins = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin`);
-      const data = await response.json();
-      setSuperAdmins(data.data);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      setToastErroOpen(true);
-      console.error(error);
-    }
-  };
+  useEffect(() => {
+    setToastErrorOpen(!!superAdminState.error);
+  }, [superAdminState.error]);
+
   const deleteItem = async (id) => {
     try {
       await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin/${id}`, {
@@ -50,20 +50,20 @@ const SuperAdmins = () => {
       <section>
         <AddButton entity={'Super Admin'} createMode={createMode} />
         <div>
-          {loading ? (
+          {superAdminState.loading ? (
             <Loader />
           ) : (
             <TableComponent
               columnTitleArray={['Email', 'Password']}
-              data={superAdmins}
+              data={superadmins}
               handleClick={handleClick}
               deleteButton={deleteItem}
               columns={['email', 'password']}
               autoDelete={() => {}}
             />
           )}
-          {toastErroOpen && (
-            <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
+          {toastErrorOpen && (
+            <ToastError setToastErroOpen={setToastErrorOpen} message="Error in Database" />
           )}
         </div>
       </section>
