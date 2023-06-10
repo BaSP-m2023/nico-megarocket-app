@@ -37,7 +37,6 @@ const memberReducer = (state = INITIAL_STATE, action) => {
     }
 
     case ADD_MEMBER_SUCCESS: {
-      console.log('action ADD_MEMBER', action.payload);
       return {
         ...state,
         list: action.payload
@@ -45,7 +44,6 @@ const memberReducer = (state = INITIAL_STATE, action) => {
     }
 
     case EDIT_MEMBER_SUCCESS: {
-      console.log('action EDIT_MEMBER', action.payload);
       const editMember = state.list.map((member) => {
         return member._id === action.payload._id ? { ...member, ...action.payload } : member;
       });
