@@ -1,45 +1,118 @@
-import * as types from './constants';
+import {
+  ADD_TRAINER,
+  ADD_TRAINER_PENDING,
+  ADD_TRAINER_ERROR,
+  UPDATE_TRAINER,
+  UPDATE_TRAINER_ERROR,
+  UPDATE_TRAINER_PENDING,
+  GET_TRAINERS_PENDING,
+  GET_TRAINERS_SUCCESS,
+  GET_TRAINERS_FAILURE,
+  DELETE_TRAINER_PENDING,
+  DELETE_TRAINER_SUCCESS,
+  DELETE_TRAINER_FAILURE
+} from './constants';
 
 const initialState = {
-  trainers: []
+  list: []
 };
-
-const trainerReducer = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.GET_TRAINERS_PENDING:
+    case ADD_TRAINER_PENDING: {
       return {
         ...state,
         pending: action.payload
       };
-    case types.DELETE_TRAINER_PENDING:
+    }
+    case ADD_TRAINER: {
+      return {
+        ...state,
+        list: action.payload
+      };
+    }
+
+    case ADD_TRAINER_ERROR: {
+      return {
+        ...state,
+        error: action.payload
+      };
+    }
+
+    case UPDATE_TRAINER_PENDING: {
+      return {
+        ...state,
+        pending: action.payload
+      };
+    }
+
+    case UPDATE_TRAINER: {
+      const trainerUpdated = action.payload;
+      const updatedTrainers = state.list.map((trainer) => {
+        if (trainer._id === trainerUpdated._id) {
+          return {
+            ...trainer,
+            ...trainerUpdated
+          };
+        }
+        return trainer;
+      });
+      return {
+        ...state,
+        list: updatedTrainers
+      };
+    }
+
+    case UPDATE_TRAINER_ERROR: {
+      return {
+        ...state,
+        error: action.payload
+      };
+    }
+
+    case GET_TRAINERS_PENDING: {
+      return {
+        ...state,
+        pending: action.payload
+      };
+    }
+
+    case DELETE_TRAINER_PENDING: {
       return {
         ...state,
         pending: action.payload,
         error: null
       };
-    case types.GET_TRAINERS_SUCCESS:
+    }
+
+    case GET_TRAINERS_SUCCESS: {
       return {
         ...state,
         trainers: action.payload,
         loading: false,
         error: null
       };
-    case types.GET_TRAINERS_FAILURE:
-    case types.DELETE_TRAINER_FAILURE:
+    }
+
+    case GET_TRAINERS_FAILURE:
+    case DELETE_TRAINER_FAILURE: {
       return {
         ...state,
         loading: false,
         error: action.payload
       };
-    case types.DELETE_TRAINER_SUCCESS:
+    }
+
+    case DELETE_TRAINER_SUCCESS: {
       return {
         ...state,
         loading: false,
         error: null
       };
+    }
+
     default:
       return state;
   }
 };
 
-export default trainerReducer;
+export default reducer;
