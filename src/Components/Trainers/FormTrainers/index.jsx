@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './form.module.css';
 import { ModalConfirm, ModalSuccess } from '../../Shared';
-/* import { ToastError } from '../../Shared'; */
+import { ToastError } from '../../Shared';
 import { Inputs } from '../../Shared';
 import { Button } from '../../Shared';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
@@ -11,10 +11,8 @@ import { useDispatch } from 'react-redux';
 
 const FormTrainer = () => {
   const [modalUpdateConfirmOpen, setModalUpdateConfirmOpen] = useState(false);
-  const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
-  /*   const [successMessage, setSuccessMessage] = useState('');
-  const [toastErrorOpen, setToastErrorOpen] = useState(false); */
-  /*  const [toastMessage, setToastMessage] = useState(''); */
+  const [toastErrorOpen, setToastErrorOpen] = useState(false);
+  const [modalSuccess, setModalSuccess] = useState(false);
   const [inputForm, setInputForm] = useState('');
   const { id } = useParams();
   const location = useLocation();
@@ -61,8 +59,10 @@ const FormTrainer = () => {
 
   const handleModalConfirmation = () => {
     updateTrainer(dispatch, id, trainerBody);
-    history.goBack();
     setModalUpdateConfirmOpen(false);
+    setTimeout(() => {
+      history.goBack();
+    }, 1000);
   };
 
   const onChangeInputFirstName = (e) => {
@@ -116,12 +116,14 @@ const FormTrainer = () => {
 
   const formSubmit = (e) => {
     e.preventDefault();
-
     if (updateData.mode === 'edit') {
       handleUpdateButtonClick();
     } else {
       createTrainer(dispatch, trainerBody);
-      history.goBack();
+      setModalSuccess(true);
+      setTimeout(() => {
+        history.goBack();
+      }, 1000);
     }
   };
 
@@ -221,8 +223,12 @@ const FormTrainer = () => {
           message="Are you sure you want to update this Trainer?"
         />
       )}
-      <div>{modalSuccessOpen && <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} />}</div>
-      {/* {toastErrorOpen && <ToastError setToastErroOpen={setToastErrorOpen} message={toastMessage} />} */}
+      {modalSuccess && (
+        <ModalSuccess setModalSuccessOpen={setModalSuccess} message="Trainer added successfully" />
+      )}
+      {toastErrorOpen && (
+        <ToastError setToastErroOpen={setToastErrorOpen} message="Error in database" />
+      )}
     </div>
   );
 };

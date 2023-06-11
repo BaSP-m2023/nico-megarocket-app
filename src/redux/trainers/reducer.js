@@ -1,4 +1,11 @@
-import { ADD_TRAINER, ADD_TRAINER_PENDING, UPDATE_TRAINER } from './constants';
+import {
+  ADD_TRAINER,
+  ADD_TRAINER_PENDING,
+  ADD_TRAINER_ERROR,
+  UPDATE_TRAINER,
+  UPDATE_TRAINER_ERROR,
+  UPDATE_TRAINER_PENDING
+} from './constants';
 
 const initialState = {
   list: [
@@ -17,7 +24,6 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TRAINER_PENDING: {
-      console.log(action.payload);
       return {
         ...state,
         pending: action.payload
@@ -30,10 +36,22 @@ const reducer = (state = initialState, action) => {
       };
     }
 
+    case ADD_TRAINER_ERROR: {
+      return {
+        ...state,
+        error: action.payload
+      };
+    }
+
+    case UPDATE_TRAINER_PENDING: {
+      return {
+        ...state,
+        pending: action.payload
+      };
+    }
+
     case UPDATE_TRAINER: {
       const trainerUpdated = action.payload;
-      console.log(state);
-      console.log(trainerUpdated._id);
       const updatedTrainers = state.list.map((trainer) => {
         if (trainer._id === trainerUpdated._id) {
           return {
@@ -46,6 +64,13 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         list: updatedTrainers
+      };
+    }
+
+    case UPDATE_TRAINER_ERROR: {
+      return {
+        ...state,
+        error: action.payload
       };
     }
 

@@ -1,4 +1,11 @@
-import { addTrainerPending, addTrainer, updateTrainerSuccess } from './actions';
+import {
+  addTrainerPending,
+  addTrainer,
+  addTrainerError,
+  updateTrainerPending,
+  updateTrainerSuccess,
+  updateTrainerError
+} from './actions';
 
 export const createTrainer = async (dispatch, body) => {
   try {
@@ -8,17 +15,20 @@ export const createTrainer = async (dispatch, body) => {
     dispatch(addTrainerPending(false));
     dispatch(addTrainer(data));
   } catch (error) {
-    console.log(error);
+    dispatch(addTrainerPending(false));
+    dispatch(addTrainerError(true));
   }
 };
 
 export const updateTrainer = async (dispatch, id, body) => {
   try {
+    dispatch(updateTrainerPending(true));
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, body);
     const data = await response.json();
-    console.log(data);
+    dispatch(updateTrainerPending(false));
     dispatch(updateTrainerSuccess(data));
   } catch (error) {
-    console.log(error);
+    dispatch(updateTrainerPending(false));
+    dispatch(updateTrainerError(true));
   }
 };

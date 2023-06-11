@@ -10,7 +10,7 @@ import {
 export const addTrainerPending = (pending) => {
   return {
     type: ADD_TRAINER_PENDING,
-    pending: pending
+    payload: pending
   };
 };
 
@@ -21,15 +21,17 @@ export const addTrainer = (data) => {
   };
 };
 
-export const addTrainerError = () => {
+export const addTrainerError = (error) => {
   return {
-    type: ADD_TRAINER_ERROR
+    type: ADD_TRAINER_ERROR,
+    payload: error
   };
 };
 
-export const updateTrainerPending = () => {
+export const updateTrainerPending = (pending) => {
   return {
-    type: UPDATE_TRAINER_PENDING
+    type: UPDATE_TRAINER_PENDING,
+    payload: pending
   };
 };
 
@@ -40,8 +42,9 @@ export const updateTrainerSuccess = (data) => {
   };
 };
 
-export const updateTrainerError = () => {
+export const updateTrainerError = (error) => {
   return {
-    type: UPDATE_TRAINER_ERROR
+    type: UPDATE_TRAINER_ERROR,
+    payload: error
   };
 };
