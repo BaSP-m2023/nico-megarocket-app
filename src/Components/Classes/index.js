@@ -13,11 +13,6 @@ function Projects() {
 
   const columns = ['activity', 'day', 'hour', 'trainer', 'slots'];
 
-  const arrayAndObject = {
-    array: 'trainer',
-    object: 'activity'
-  };
-
   const valueField = {
     arrayFirstValue: 'firstName',
     arraySecondValue: 'lastName',
@@ -58,24 +53,6 @@ function Projects() {
     }
   };
 
-  const autoDelete = async (id) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      setClasses([...classes.filter((classes) => classes._id !== id)]);
-      setToastMessage(
-        'One or more classes were deleted from the table. Why?: The Trainer or Activity were deleted from DB'
-      );
-      setToastErrorOpen(true);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const createMode = () => {
     history.push('/classes/ClassForm', { params: { mode: 'create' } });
   };
@@ -103,8 +80,6 @@ function Projects() {
           deleteButton={deleteClass}
           columns={columns}
           valueField={valueField}
-          arrayAndObject={arrayAndObject}
-          autoDelete={autoDelete}
         />
       )}
       {toastErrorOpen && <ToastError setToastErroOpen={setToastErrorOpen} message={toastMessage} />}

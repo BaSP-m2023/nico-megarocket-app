@@ -20,8 +20,8 @@ const FormClasses = () => {
         ? setInputForm({
             hour: updateData.item.hour,
             day: updateData.item.day,
-            trainer: updateData.item.trainer.map((item) => item._id),
-            activity: updateData.item.activity._id,
+            trainer: updateData.item.trainer ? updateData.item.trainer.map((item) => item._id) : '',
+            activity: updateData.item.activity ? updateData.item.activity._id : '',
             slots: updateData.item.slots
           })
         : setInputForm({ hour: '', day: '', trainer: '', activity: '', slots: '' });

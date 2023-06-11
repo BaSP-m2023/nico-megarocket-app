@@ -24,11 +24,11 @@
   border-radius: 3px;
   overflow: hidden;
   box-shadow: 0px 6px 30px -7px rgba(0, 0, 0, 0.75);
-  margin:20px 0;
+  margin: 20px 0;
 }
 
 .table tr td,
-.table tr th{
+.table tr th {
   padding: 15px 10px 15px 20px;
   text-align: left;
   white-space: nowrap;
@@ -38,12 +38,12 @@
   transition: all 0.1s;
 }
 
-.table tr td:nth-last-child(-n+2):hover {
+.table tr td:nth-last-child(-n + 2):hover {
   background-color: #37386700;
   transform: scale(1.2);
 }
 
-.table tr td:hover{
+.table tr td:hover {
   transform: scale(1.1);
   max-width: 280px;
   background-color: #353090b2;

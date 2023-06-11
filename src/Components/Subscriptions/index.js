@@ -18,6 +18,7 @@ function Subscriptions() {
       setLoading(false);
     } catch (error) {
       setLoading(false);
+      setToastMessage(error);
       setToastErroOpen(true);
     }
   };
@@ -45,24 +46,6 @@ function Subscriptions() {
     }
   };
 
-  const autoDelete = async (id) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/subscription/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      setSubscription([...subscription.filter((subs) => subs._id !== id)]);
-      setToastMessage(
-        'One or more classes were deleted from the table. Why?: The Member or Class were deleted from DB'
-      );
-      setToastErroOpen(true);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const columnTitleArray = ['Classes', 'Members', 'Date'];
   const columns = ['classId', 'members', 'date'];
   const valueField = {
@@ -70,10 +53,7 @@ function Subscriptions() {
     arraySecondValue: 'lastName',
     objectValue: '_id'
   };
-  const arrayAndObject = {
-    array: 'members',
-    object: 'classId'
-  };
+
   return (
     <section>
       <AddButton entity="Suscription" createMode={createMode} />
@@ -86,9 +66,7 @@ function Subscriptions() {
           handleClick={handleClick}
           deleteButton={deleteSubscription}
           valueField={valueField}
-          arrayAndObject={arrayAndObject}
           columns={columns}
-          autoDelete={autoDelete}
         />
       )}
       {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
