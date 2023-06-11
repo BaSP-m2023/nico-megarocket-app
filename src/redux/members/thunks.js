@@ -2,9 +2,6 @@ import {
   getMembersPending,
   getMembersSuccess,
   getMembersError,
-  addMemberPending,
-  addMemberSuccess,
-  addMemberError,
   deleteMemberPending,
   deleteMemberSuccess,
   deleteMemberError
@@ -24,17 +21,19 @@ export const getAllMembers = async (dispatch) => {
   }
 };
 
-export const memberDelete = async (dispatch, memberID) => {
-  try {
-    dispatch(deleteMemberPending(true));
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${memberID}`, {
-      method: 'DELETE'
-    });
-    if (response.ok) {
-      dispatch(deleteMemberPending(false));
-      dispatch(deleteMemberSuccess(memberID));
+export const memberDelete = (memberID) => {
+  return async (dispatch) => {
+    try {
+      dispatch(deleteMemberPending(true));
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${memberID}`, {
+        method: 'DELETE'
+      });
+      if (response.ok) {
+        dispatch(deleteMemberPending(false));
+        dispatch(deleteMemberSuccess(memberID));
+      }
+    } catch (error) {
+      dispatch(deleteMemberError(error));
     }
-  } catch (error) {
-    dispatch(deleteMemberError(error));
-  }
+  };
 };

@@ -1,11 +1,11 @@
-import styles from './activities.module.css';
 import { useEffect, useState } from 'react';
-import { AddButton, TableComponent, ToastError } from '../Shared';
+import { AddButton, Loader, TableComponent, ToastError } from '../Shared';
 import { useHistory } from 'react-router-dom';
 
 function Activities() {
   const [activities, setActivities] = useState([]);
   const [toastErroOpen, setToastErroOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const history = useHistory();
 
@@ -14,7 +14,9 @@ function Activities() {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity`);
       const data = await response.json();
       setActivities(data.data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       setToastErroOpen(true);
     }
   };
@@ -46,17 +48,20 @@ function Activities() {
   const columns = ['name', 'description'];
 
   return (
-    <section className={styles.container}>
-      <h2>Activities</h2>
+    <section>
       <AddButton entity="Activity" createMode={createMode} />
-      <TableComponent
-        columnTitleArray={columnTitleArray}
-        data={activities}
-        handleClick={handleClick}
-        deleteButton={deleteActivity}
-        columns={columns}
-        autoDelete={() => {}}
-      />
+      {loading ? (
+        <Loader />
+      ) : (
+        <TableComponent
+          columnTitleArray={columnTitleArray}
+          data={activities}
+          handleClick={handleClick}
+          deleteButton={deleteActivity}
+          columns={columns}
+          autoDelete={() => {}}
+        />
+      )}
       {toastErroOpen && (
         <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
       )}

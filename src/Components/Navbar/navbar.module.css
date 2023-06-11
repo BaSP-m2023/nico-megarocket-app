@@ -1,0 +1,46 @@
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  background-color: #aace9b;
+  height:100vh;
+}
+
+.rutes {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  padding: 0;
+  gap: 30px;
+  margin-top: 5rem;
+}
+
+.rutes > li > a {
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: capitalize;
+  color: #373867;
+}
+
+.navbarLink.active {
+  color: #ffffff;
+  filter: drop-shadow(2px 2px 4px rgba(255, 255, 255, 0.858));
+}
+
+.navbarLink {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #373867;
+  transition: 0.1s;
+}
+
+.navbarLink img {
+  width: 1rem;
+  height: 1rem;
+}
+
+.navbarLink:hover {
+  transform: scale(1.05);
+  color: #ffffff;
+}
