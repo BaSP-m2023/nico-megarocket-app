@@ -1,18 +1,20 @@
 import * as types from './constants';
 
 const initialState = {
-  trainers: [],
-  loading: false,
-  error: null
+  trainers: []
 };
 
 const trainerReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.GET_TRAINERS_REQUEST:
-    case types.DELETE_TRAINER_REQUEST:
+    case types.GET_TRAINERS_PENDING:
       return {
         ...state,
-        loading: true,
+        pending: action.payload
+      };
+    case types.DELETE_TRAINER_PENDING:
+      return {
+        ...state,
+        pending: action.payload,
         error: null
       };
     case types.GET_TRAINERS_SUCCESS:

@@ -2,7 +2,7 @@ import * as actions from './actions';
 
 export const getTrainers = () => {
   return async (dispatch) => {
-    dispatch(actions.getTrainersRequest());
+    dispatch(actions.getTrainersPending());
 
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
@@ -21,7 +21,7 @@ export const getTrainers = () => {
 
 export const deleteTrainer = (id) => {
   return async (dispatch) => {
-    dispatch(actions.deleteTrainerRequest());
+    dispatch(actions.deleteTrainerPending());
 
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {

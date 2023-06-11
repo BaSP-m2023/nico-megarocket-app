@@ -1,8 +1,9 @@
 import * as types from './constants';
 import * as thunks from './thunks';
 
-export const getTrainersRequest = () => ({
-  type: types.GET_TRAINERS_REQUEST
+export const getTrainersPending = (pending) => ({
+  type: types.GET_TRAINERS_PENDING,
+  payload: pending
 });
 
 export const getTrainersSuccess = (trainers) => ({
@@ -15,8 +16,9 @@ export const getTrainersFailure = (error) => ({
   payload: error
 });
 
-export const deleteTrainerRequest = () => ({
-  type: types.DELETE_TRAINER_REQUEST
+export const deleteTrainerPending = (pending) => ({
+  type: types.DELETE_TRAINER_PENDING,
+  payload: pending
 });
 
 export const deleteTrainerSuccess = () => ({
@@ -28,5 +30,5 @@ export const deleteTrainerFailure = (error) => ({
   payload: error
 });
 
-export const getTrainers = thunks.fetchTrainers;
+export const getTrainers = thunks.getTrainers;
 export const deleteTrainer = thunks.deleteTrainer;

@@ -1,29 +1,16 @@
 import { useEffect, useState } from 'react';
 import { AddButton, Loader, TableComponent, ToastError } from '../Shared';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getTrainers, deleteTrainer } from '../../redux/trainers/thunks';
 
 function Trainers() {
-  const [trainers, setTrainers] = useState([]);
   const [toastErroOpen, setToastErroOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
-
+  const isLoading = useSelector((state) => state.trainers.pending);
+  const isError = useSelector((state) => state.trainers.error);
+  const trainers = useSelector((state) => state.trainers.list);
   const history = useHistory();
-
-  const getTrainers = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`);
-      const data = await response.json();
-      setTrainers(data.data);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      setToastErroOpen(true);
-    }
-  };
-
-  useEffect(() => {
-    getTrainers();
-  }, []);
+  const dispatch = useDispatch();
 
   const createMode = () => {
     history.push('trainers/form/', { params: { mode: 'created' } });
@@ -33,17 +20,14 @@ function Trainers() {
     history.push(`trainers/form/${item._id}`, { params: { ...item, mode: 'edit' } });
   };
 
-  const deleteTrainer = async (id) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
-        method: 'DELETE'
-      });
-      const newTrainers = trainers.filter((trainer) => trainer._id !== id);
-      setTrainers(newTrainers);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  useEffect(() => {
+    getTrainers(dispatch);
+  }, []);
+
+  useEffect(() => {
+    setToastErroOpen(!!isError);
+  }, [isError]);
+  console.log(isError);
 
   const columnsTable = ['Trainer', 'DNI', 'Phone', 'Email', 'City', 'Salary/Hour'];
   const columnsValue = ['firstName', 'dni', 'phone', 'email', 'city', 'salary'];
@@ -51,7 +35,7 @@ function Trainers() {
   return (
     <section>
       <AddButton entity="Trainer" createMode={createMode} />
-      {loading ? (
+      {isLoading ? (
         <Loader />
       ) : (
         <TableComponent
