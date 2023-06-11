@@ -8,18 +8,7 @@ import {
 } from './constants';
 
 const initialState = {
-  list: [
-    {
-      _id: '64847b7de11f590534914333',
-      firstName: 'John',
-      lastName: 'Doe',
-      dni: '123456789',
-      phone: '123-456-7890',
-      email: 'johndoe@example.com',
-      city: 'New York',
-      salary: 50000
-    }
-  ]
+  list: []
 };
 const reducer = (state = initialState, action) => {
   switch (action.type) {
