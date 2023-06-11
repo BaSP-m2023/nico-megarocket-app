@@ -7,6 +7,7 @@ export const getAllActivities = async (dispatch) => {
     const data = await response.json();
     const activitiesList = data.data;
     dispatch(getActivitiesPending(false));
+    dispatch(getActivitiesError(false));
     dispatch(getActivitiesSuccess(activitiesList));
   } catch (error) {
     dispatch(getActivitiesPending(false));

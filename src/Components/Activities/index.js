@@ -15,12 +15,12 @@ function Activities() {
   const history = useHistory();
 
   useEffect(() => {
-    console.log(activities);
     getAllActivities(dispatch);
   }, []);
 
   useEffect(() => {
-    setToastErroOpen(!isError);
+    console.log(isError);
+    setToastErroOpen(isError);
   }, [isError]);
 
   const createMode = () => {
