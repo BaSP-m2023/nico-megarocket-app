@@ -101,7 +101,7 @@ const Form = () => {
       <Button
         clickAction={(e) => {
           e.preventDefault();
-          history.push('/super-admins/');
+          history.goBack();
         }}
         text="Cancel"
       />
