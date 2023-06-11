@@ -2,6 +2,9 @@ import {
   getMembersPending,
   getMembersSuccess,
   getMembersError,
+  addMemberPending,
+  addMemberSuccess,
+  addMemberError,
   deleteMemberPending,
   deleteMemberSuccess,
   deleteMemberError

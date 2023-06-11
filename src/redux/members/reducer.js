@@ -2,8 +2,12 @@ import {
   GET_MEMBERS_PENDING,
   GET_MEMBERS_SUCCESS,
   GET_MEMBERS_ERROR,
+  ADD_MEMBER_PENDING,
   ADD_MEMBER_SUCCESS,
+  ADD_MEMBER_ERROR,
+  EDIT_MEMBER_PENDING,
   EDIT_MEMBER_SUCCESS,
+  EDIT_MEMBER_ERROR,
   DELETE_MEMBER_PENDING,
   DELETE_MEMBER_SUCCESS,
   DELETE_MEMBER_ERROR
@@ -36,22 +40,48 @@ const memberReducer = (state = INITIAL_STATE, action) => {
       };
     }
 
+    case ADD_MEMBER_PENDING: {
+      return {
+        ...state,
+        pending: action.payload
+      };
+    }
+
     case ADD_MEMBER_SUCCESS: {
-      console.log('action ADD_MEMBER', action.payload);
       return {
         ...state,
         list: action.payload
       };
     }
 
+    case ADD_MEMBER_ERROR: {
+      return {
+        ...state,
+        error: action.payload
+      };
+    }
+
+    case EDIT_MEMBER_PENDING: {
+      return {
+        ...state,
+        pending: action.payload
+      };
+    }
+
     case EDIT_MEMBER_SUCCESS: {
-      console.log('action EDIT_MEMBER', action.payload);
       const editMember = state.list.map((member) => {
         return member._id === action.payload._id ? { ...member, ...action.payload } : member;
       });
       return {
         ...state,
         list: [...editMember]
+      };
+    }
+
+    case EDIT_MEMBER_ERROR: {
+      return {
+        ...state,
+        error: action.payload
       };
     }
 
