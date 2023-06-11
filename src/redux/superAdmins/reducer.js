@@ -1,4 +1,11 @@
-import { GET_SUPERADMIN_PENDING, GET_SUPERADMIN_SUCCESS, GET_SUPERADMIN_ERROR } from './constants';
+import {
+  GET_SUPERADMIN_PENDING,
+  GET_SUPERADMIN_SUCCESS,
+  GET_SUPERADMIN_ERROR,
+  POST_SUPERADMIN_PENDING,
+  POST_SUPERADMIN_SUCCESS,
+  POST_SUPERADMIN_ERROR
+} from './constants';
 
 const INITIAL_STATE = {
   list: [],
@@ -22,6 +29,25 @@ export const superAdminReducer = (state = INITIAL_STATE, action) => {
         error: null
       };
     case GET_SUPERADMIN_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
+    case POST_SUPERADMIN_PENDING:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+    case POST_SUPERADMIN_SUCCESS:
+      return {
+        ...state,
+        list: [...state.list, action.payload],
+        loading: false,
+        error: null
+      };
+    case POST_SUPERADMIN_ERROR:
       return {
         ...state,
         loading: false,
