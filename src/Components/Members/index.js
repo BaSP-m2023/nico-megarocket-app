@@ -1,11 +1,16 @@
-import { ToastError, TableComponent, AddButton, Loader } from '../Shared';
+import { TableComponent, AddButton } from '../Shared';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAllMembers, memberDelete } from '../../redux/members/thunks';
+import { ToastError, Loader } from '../Shared';
 
 function Members() {
-  const [members, setMembers] = useState([]);
-  const [toastErroOpen, setToastErroOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const members = useSelector((state) => state.members.list);
+  const isPending = useSelector((state) => state.members.pending);
+  const isError = useSelector((state) => state.members.error);
+  const [toastError, setToastErroOpen] = useState(isError);
 
   const history = useHistory();
 
@@ -17,33 +22,13 @@ function Members() {
     history.push(`members/form/`, { params: { mode: 'create' } });
   };
 
-  const getMembers = async () => {
-    try {
-      const reponse = await fetch(`${process.env.REACT_APP_API_URL}/api/member`);
-      const data = await reponse.json();
-      setMembers(data.data);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      setToastErroOpen(true);
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    getMembers();
+    getAllMembers(dispatch);
   }, []);
 
-  const memberDelete = async (memberId) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/member/${memberId}`, {
-        method: 'DELETE'
-      });
-      setMembers([...members.filter((member) => member._id !== memberId)]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  useEffect(() => {
+    setToastErroOpen(!!isError);
+  }, [isError]);
 
   const columns = ['firstName', 'email', 'phone', 'city', 'postalCode', 'membership'];
 
@@ -54,21 +39,20 @@ function Members() {
       <div>
         <AddButton entity="Member" createMode={createMode} />
       </div>
-      {loading ? (
-        <Loader />
+      {isPending && <Loader />}
+      {!members.length ? (
+        <p>No active Members</p>
       ) : (
         <TableComponent
           columns={columns}
           columnTitleArray={columnTitleArray}
           data={members}
-          handleClick={handleClick}
           deleteButton={memberDelete}
+          handleClick={handleClick}
           autoDelete={() => {}}
         />
       )}
-      {toastErroOpen && (
-        <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
-      )}
+      {toastError && <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />}
     </section>
   );
 }

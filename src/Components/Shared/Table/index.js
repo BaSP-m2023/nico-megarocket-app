@@ -2,6 +2,7 @@ import ButtonForm from '../ButtonForm';
 import styles from './table.module.css';
 import { ModalConfirm } from '../index';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 const TableComponent = ({
   columnTitleArray,
@@ -12,8 +13,11 @@ const TableComponent = ({
   valueField
 }) => {
   const fieldValue = valueField;
+
   const [modalConfirm, setModalConfirm] = useState(false);
   const [idDelete, setIdDelete] = useState('');
+
+  const dispatch = useDispatch();
 
   const onConfirmOpen = (id) => {
     setModalConfirm(true);
@@ -32,10 +36,10 @@ const TableComponent = ({
     }
   };
 
-  const ifObject = (item, itemContent) => {
-    if (item[itemContent]) {
-      if (typeof item[itemContent] === 'object') {
-        return <span>{item[itemContent][fieldValue.objectValue]}</span>;
+  const ifObject = (item) => {
+    if (item) {
+      if (typeof item === 'object') {
+        return <span>{item[fieldValue.objectValue]}</span>;
       }
     }
   };
@@ -86,7 +90,7 @@ const TableComponent = ({
                   {columns.map((column, columnIndex) => (
                     <td key={columnIndex}>
                       {ifArray(row[column])}
-                      {ifObject(row, column)}
+                      {ifObject(row[column])}
                       {ifNotArrayNotObject(row, column)}
                       {ifNotExist(row[column])}
                     </td>
@@ -108,7 +112,7 @@ const TableComponent = ({
       )}
       {modalConfirm && (
         <ModalConfirm
-          onConfirm={() => deleteButton(idDelete)}
+          onConfirm={() => dispatch(deleteButton(idDelete))}
           message="Are you sure to delete this?"
           method="Delete"
           setModalConfirmOpen={setModalConfirm}
