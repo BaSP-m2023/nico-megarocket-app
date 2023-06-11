@@ -1,7 +1,7 @@
 import ButtonForm from '../ButtonForm';
 import styles from './table.module.css';
 import { ModalConfirm } from '../index';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 const TableComponent = ({
@@ -10,32 +10,58 @@ const TableComponent = ({
   handleClick,
   deleteButton,
   columns,
-  valueField,
-  arrayAndObject,
-  autoDelete
+  valueField
 }) => {
   const fieldValue = valueField;
-  const arrayDeleteId = [];
-  {
-    arrayAndObject &&
-      data.forEach((item) => {
-        if (!item[arrayAndObject.object] || !item[arrayAndObject.array]?.length != 0) {
-          arrayDeleteId.push(item._id);
-        }
-      });
-  }
-  const dispatch = useDispatch();
 
   const [modalConfirm, setModalConfirm] = useState(false);
   const [idDelete, setIdDelete] = useState('');
 
-  useEffect(() => {
-    arrayDeleteId.length > 0 && autoDelete(arrayDeleteId[0]);
-  }, [arrayDeleteId]);
+  const dispatch = useDispatch();
 
   const onConfirmOpen = (id) => {
     setModalConfirm(true);
     setIdDelete(id);
+  };
+
+  const ifArray = (item) => {
+    if (item) {
+      if (Array.isArray(item)) {
+        return item.map((content, contentIndex) => (
+          <span key={contentIndex}>
+            {content[fieldValue.arrayFirstValue]} {content[fieldValue.arraySecondValue]}
+          </span>
+        ));
+      }
+    }
+  };
+
+  const ifObject = (item) => {
+    if (item) {
+      if (typeof item === 'object') {
+        return <span>{item[fieldValue.objectValue]}</span>;
+      }
+    }
+  };
+
+  const ifNotArrayNotObject = (item, itemContent) => {
+    if (typeof item[itemContent] !== 'object' && !Array.isArray(item[itemContent])) {
+      if (itemContent === 'firstName') {
+        return (
+          <span>
+            {item.firstName} {item.lastName}
+          </span>
+        );
+      } else {
+        return item[itemContent];
+      }
+    }
+  };
+
+  const ifNotExist = (item) => {
+    if (!item || item.length === 0) {
+      return <span>This element Was Deleted. Edit to add</span>;
+    }
   };
 
   return (
@@ -58,29 +84,15 @@ const TableComponent = ({
           <tbody>
             {data.map((row, index) => {
               const rowClass = index % 2 === 0 ? styles.rowBackground1 : styles.rowBackground2;
+
               return (
                 <tr className={rowClass} key={index}>
                   {columns.map((column, columnIndex) => (
                     <td key={columnIndex}>
-                      {row[column] ? (
-                        Array.isArray(row[column]) ? (
-                          row[column].map((item, itemIndex) => (
-                            <span key={itemIndex}>
-                              {item[fieldValue.arrayFirstValue]} {item[fieldValue.arraySecondValue]}
-                            </span>
-                          ))
-                        ) : typeof row[column] === 'object' ? (
-                          <span>{row[column][fieldValue.objectValue]}</span>
-                        ) : column === 'firstName' ? (
-                          <span>
-                            {row.firstName} {row.lastName}
-                          </span>
-                        ) : (
-                          row[column]
-                        )
-                      ) : (
-                        ''
-                      )}
+                      {ifArray(row[column])}
+                      {ifObject(row[column])}
+                      {ifNotArrayNotObject(row, column)}
+                      {ifNotExist(row[column])}
                     </td>
                   ))}
                   <td>
