@@ -4,9 +4,14 @@ import {
   addTrainerError,
   updateTrainerPending,
   updateTrainerSuccess,
-  updateTrainerError
+  updateTrainerError,
+  getTrainersPending,
+  getTrainersSuccess,
+  getTrainersFailure,
+  deleteTrainerPending,
+  deleteTrainerSuccess,
+  deleteTrainerFailure
 } from './actions';
-import * as actions from './actions';
 
 export const createTrainer = async (dispatch, body) => {
   try {
@@ -34,43 +39,40 @@ export const updateTrainer = async (dispatch, id, body) => {
   }
 };
 
-export const getTrainers = () => {
-  return async (dispatch) => {
-    dispatch(actions.getTrainersPending());
-
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
-      const data = await response.json();
-
-      if (response.ok) {
-        dispatch(actions.getTrainersSuccess(data.trainers));
-      } else {
-        dispatch(actions.getTrainersFailure(data.error));
-      }
-    } catch (error) {
-      dispatch(actions.getTrainersFailure(error.message));
+export const getTrainers = async (dispatch) => {
+  try {
+    const reponse = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`);
+    const data = await reponse.json();
+    const listTrainers = data.data;
+    console.log(listTrainers);
+    if (listTrainers.length === 0) {
+      dispatch(getTrainersPending(true));
+      console.log(true);
+    } else {
+      dispatch(getTrainersPending(false));
+      console.log(false);
+      dispatch(getTrainersSuccess(listTrainers));
+      console.log(getTrainersSuccess(listTrainers));
     }
-  };
+  } catch (error) {
+    dispatch(getTrainersPending(false));
+    dispatch(getTrainersFailure(true));
+  }
 };
 
 export const deleteTrainer = (id) => {
   return async (dispatch) => {
-    dispatch(actions.deleteTrainerPending());
-
     try {
+      dispatch(deleteTrainerPending(true));
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
         method: 'DELETE'
       });
-      const data = await response.json();
-
       if (response.ok) {
-        dispatch(actions.deleteTrainerSuccess());
-        dispatch(getTrainers());
-      } else {
-        dispatch(actions.deleteTrainerFailure(data.error));
+        dispatch(deleteTrainerPending(false));
+        dispatch(deleteTrainerSuccess(id));
       }
     } catch (error) {
-      dispatch(actions.deleteTrainerFailure(error.message));
+      dispatch(deleteTrainerFailure(error));
     }
   };
 };

@@ -79,34 +79,37 @@ const reducer = (state = initialState, action) => {
     case DELETE_TRAINER_PENDING: {
       return {
         ...state,
-        pending: action.payload,
-        error: null
+        pending: action.payload
       };
     }
 
     case GET_TRAINERS_SUCCESS: {
       return {
         ...state,
-        trainers: action.payload,
-        loading: false,
-        error: null
+        list: action.payload
       };
     }
 
-    case GET_TRAINERS_FAILURE:
+    case GET_TRAINERS_FAILURE: {
+      return {
+        ...state,
+        error: action.payload
+      };
+    }
+
     case DELETE_TRAINER_FAILURE: {
       return {
         ...state,
-        loading: false,
         error: action.payload
       };
     }
 
     case DELETE_TRAINER_SUCCESS: {
+      const newListTrainer = state.list.filter((trainer) => {
+        return trainer._id !== action.payload;
+      });
       return {
-        ...state,
-        loading: false,
-        error: null
+        list: [...newListTrainer]
       };
     }
 

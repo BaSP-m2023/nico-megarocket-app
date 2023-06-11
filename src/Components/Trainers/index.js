@@ -27,7 +27,6 @@ function Trainers() {
   useEffect(() => {
     setToastErroOpen(!!isError);
   }, [isError]);
-  console.log(isError);
 
   const columnsTable = ['Trainer', 'DNI', 'Phone', 'Email', 'City', 'Salary/Hour'];
   const columnsValue = ['firstName', 'dni', 'phone', 'email', 'city', 'salary'];
@@ -45,6 +44,7 @@ function Trainers() {
           deleteButton={deleteTrainer}
           columns={columnsValue}
           autoDelete={() => {}}
+          arrayAndObject={[]}
         />
       )}
       {toastErroOpen && (

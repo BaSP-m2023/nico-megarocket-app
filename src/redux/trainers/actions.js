@@ -4,10 +4,14 @@ import {
   ADD_TRAINER_ERROR,
   UPDATE_TRAINER_PENDING,
   UPDATE_TRAINER,
-  UPDATE_TRAINER_ERROR
+  UPDATE_TRAINER_ERROR,
+  GET_TRAINERS_PENDING,
+  GET_TRAINERS_SUCCESS,
+  GET_TRAINERS_FAILURE,
+  DELETE_TRAINER_PENDING,
+  DELETE_TRAINER_SUCCESS,
+  DELETE_TRAINER_FAILURE
 } from './constants';
-import * as types from './constants';
-import * as thunks from './thunks';
 
 export const addTrainerPending = (pending) => {
   return {
@@ -52,33 +56,31 @@ export const updateTrainerError = (error) => {
 };
 
 export const getTrainersPending = (pending) => ({
-  type: types.GET_TRAINERS_PENDING,
+  type: GET_TRAINERS_PENDING,
   payload: pending
 });
 
 export const getTrainersSuccess = (trainers) => ({
-  type: types.GET_TRAINERS_SUCCESS,
+  type: GET_TRAINERS_SUCCESS,
   payload: trainers
 });
 
 export const getTrainersFailure = (error) => ({
-  type: types.GET_TRAINERS_FAILURE,
+  type: GET_TRAINERS_FAILURE,
   payload: error
 });
 
 export const deleteTrainerPending = (pending) => ({
-  type: types.DELETE_TRAINER_PENDING,
+  type: DELETE_TRAINER_PENDING,
   payload: pending
 });
 
-export const deleteTrainerSuccess = () => ({
-  type: types.DELETE_TRAINER_SUCCESS
+export const deleteTrainerSuccess = (id) => ({
+  type: DELETE_TRAINER_SUCCESS,
+  payload: id
 });
 
 export const deleteTrainerFailure = (error) => ({
-  type: types.DELETE_TRAINER_FAILURE,
+  type: DELETE_TRAINER_FAILURE,
   payload: error
 });
-
-export const getTrainers = thunks.getTrainers;
-export const deleteTrainer = thunks.deleteTrainer;
