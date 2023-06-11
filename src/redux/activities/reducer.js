@@ -15,7 +15,7 @@ const activityReducer = (state = INITIAL_STATE, action) => {
     case GET_ACTIVITIES_SUCCESS: {
       return {
         ...state,
-        success: action.payload
+        list: action.payload
       };
     }
     case GET_ACTIVITIES_ERROR: {

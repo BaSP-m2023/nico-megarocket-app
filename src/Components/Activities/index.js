@@ -1,28 +1,27 @@
 import { useEffect, useState } from 'react';
 import { AddButton, Loader, TableComponent, ToastError } from '../Shared';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAllActivities } from '../../redux/activities/thunks';
 
 function Activities() {
-  const [activities, setActivities] = useState([]);
-  const [toastErroOpen, setToastErroOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [activitiesOld, setActivitiesOld] = useState([]);
 
+  const dispatch = useDispatch();
+  const activities = useSelector((state) => state.activities.list);
+  const isPending = useSelector((state) => state.activities.pending);
+  const isError = useSelector((state) => state.activities.error);
+  const [toastErroOpen, setToastErroOpen] = useState(isError);
   const history = useHistory();
 
-  const getActivities = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity`);
-      const data = await response.json();
-      setActivities(data.data);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      setToastErroOpen(true);
-    }
-  };
   useEffect(() => {
-    getActivities();
+    console.log(activities);
+    getAllActivities(dispatch);
   }, []);
+
+  useEffect(() => {
+    setToastErroOpen(!isError);
+  }, [isError]);
 
   const createMode = () => {
     history.push('activities/form', { params: { mode: 'created' } });
@@ -37,8 +36,8 @@ function Activities() {
       await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${id}`, {
         method: 'DELETE'
       });
-      const newActivity = activities.filter((activity) => activity._id !== id);
-      setActivities(newActivity);
+      const newActivity = activitiesOld.filter((activity) => activity._id !== id);
+      setActivitiesOld(newActivity);
     } catch (error) {
       console.log(error);
     }
@@ -50,7 +49,7 @@ function Activities() {
   return (
     <section>
       <AddButton entity="Activity" createMode={createMode} />
-      {loading ? (
+      {isPending ? (
         <Loader />
       ) : (
         <TableComponent
