@@ -1,71 +1,55 @@
 import { useState, useEffect } from 'react';
 import { ToastError, AddButton, TableComponent, Loader } from '../Shared';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAllAdmins, adminDelete } from '../../redux/admins/thunks';
 
 function Admins() {
-  const [admins, setAdmins] = useState([]);
-
-  const [toastErroOpen, setToastErroOpen] = useState(false);
-
-  const [toastMessage, setToastMessage] = useState('Error in database');
-
-  const [loading, setLoading] = useState(true);
+  const admins = useSelector((state) => state.admins.list);
+  const isPending = useSelector((state) => state.admins.pending);
+  const isError = useSelector((state) => state.admins.error);
+  const dispatch = useDispatch();
+  const [toastErroOpen, setToastErroOpen] = useState(isError);
 
   const history = useHistory();
   const columnTitleArray = ['Admin', 'DNI', 'Phone', 'E-Mail', 'City'];
   const columns = ['firstName', 'dni', 'phone', 'email', 'city'];
 
-  const getAdmins = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
-      const data = await response.json();
-      setAdmins(data.data);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      setToastErroOpen(true);
-    }
-  };
-
-  const deleteAdmin = async (id) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
-        method: 'DELETE'
-      });
-      const newAdmins = admins.filter((admin) => admin._id !== id);
-      setAdmins(newAdmins);
-    } catch (error) {
-      setToastErroOpen(true);
-      setToastMessage(error.message);
-    }
-  };
   const handleEditClick = (item) => {
     history.push(`/admins/form/${item._id}`, { params: { item, mode: 'edit' } });
   };
-
-  useEffect(() => {
-    getAdmins();
-  }, []);
 
   const createMode = () => {
     history.push('/admins/form', { params: { mode: 'create' } });
   };
 
+  useEffect(() => {
+    getAllAdmins(dispatch);
+  }, []);
+
+  useEffect(() => {
+    setToastErroOpen(!isError);
+  }, [isError]);
+
   return (
     <section>
-      <AddButton entity="Admin" createMode={createMode} />
-      {loading ? (
+      <div>
+        <AddButton entity="Admin" createMode={createMode} />
+      </div>
+      {isPending ? (
         <Loader />
       ) : (
         <TableComponent
           columnTitleArray={columnTitleArray}
           data={admins}
           handleClick={handleEditClick}
-          deleteButton={deleteAdmin}
+          deleteButton={adminDelete}
           columns={columns}
         />
       )}
-      {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
+      {toastErroOpen && (
+        <ToastError setToastErroOpen={setToastErroOpen} message="Error in database" />
+      )}
     </section>
   );
 }

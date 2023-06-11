@@ -24,10 +24,11 @@ const TableComponent = ({
         }
       });
   }
-  const dispatch = useDispatch();
 
   const [modalConfirm, setModalConfirm] = useState(false);
   const [idDelete, setIdDelete] = useState('');
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     arrayDeleteId.length > 0 && autoDelete(arrayDeleteId[0]);
