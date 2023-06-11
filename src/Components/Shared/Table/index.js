@@ -24,7 +24,6 @@ const TableComponent = ({
         }
       });
   }
-  const dispatch = useDispatch();
 
   const [modalConfirm, setModalConfirm] = useState(false);
   const [idDelete, setIdDelete] = useState('');
