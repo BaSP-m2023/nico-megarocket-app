@@ -8,8 +8,9 @@ import { useDispatch } from 'react-redux';
 const Form = () => {
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [modalSuccessConfirmOpen, setModalSuccessConfirmOpen] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
   const [inputValue, setInputValue] = useState('');
+  const [editMode, setEditMode] = useState(false);
+
   const location = useLocation();
   const history = useHistory();
   const { id } = useParams();
@@ -27,28 +28,9 @@ const Form = () => {
         email: params.email,
         password: params.password
       });
+      setEditMode(true);
     }
   }, []);
-
-  // const addItem = async ({ email, password }) => {
-  //   try {
-  //     const newSuperAdmin = {
-  //       email,
-  //       password
-  //     };
-  //     await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify(newSuperAdmin)
-  //     });
-  //     setSuccessMessage('Super Admin added successfully');
-  //     setModalSuccessOpen('true');
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
   const updateItem = async (updatedItem) => {
     try {
@@ -59,7 +41,6 @@ const Form = () => {
         },
         body: JSON.stringify(updatedItem)
       });
-      setSuccessMessage('Super Admin updated successfully');
       setModalSuccessOpen('true');
     } catch (error) {
       console.error(error);
@@ -91,7 +72,6 @@ const Form = () => {
     if (params.mode === 'create') {
       try {
         addSuperAdmin(dispatch, inputValue);
-        setSuccessMessage('Super Admin added successfully');
         setModalSuccessOpen('true');
       } catch (error) {
         console.error(error);
@@ -127,14 +107,23 @@ const Form = () => {
       />
       {modalSuccessConfirmOpen && (
         <ModalConfirm
-          method="Update"
+          method={editMode ? 'Edit' : 'Create'}
+          message={
+            editMode
+              ? 'Are you sure you want to edit the Super Admin?'
+              : 'Are you sure you want to add the Super Admin?'
+          }
           onConfirm={handleModalConfirmation}
           setModalConfirmOpen={setModalSuccessConfirmOpen}
-          message="Are you sure you want to update this?"
         />
       )}
       {modalSuccessOpen && (
-        <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
+        <ModalSuccess
+          setModalSuccessOpen={setModalSuccessOpen}
+          message={
+            editMode ? 'Super Admin edited successfully' : 'Super Admin created successfully'
+          }
+        />
       )}
     </form>
   );
