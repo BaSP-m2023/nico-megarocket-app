@@ -1,28 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { ModalConfirm, Inputs, Button, ModalSuccess } from '../../Shared';
+import { ModalConfirm, Inputs, Button, ModalSuccess, Loader, ToastError } from '../../Shared';
 import styles from './form.module.css';
-import { useHistory, useParams, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory, /*useParams,*/ useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import { addSuperAdmin } from '../../../redux/superAdmins/thunks';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Form = () => {
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
-  const [modalSuccessConfirmOpen, setModalSuccessConfirmOpen] = useState(false);
-  const [inputValue, setInputValue] = useState('');
+  const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
+  const [toastErrorOpen, setToastErrorOpen] = useState(false);
+
   const [editMode, setEditMode] = useState(false);
+
+  const [inputValue, setInputValue] = useState({
+    email: '',
+    password: ''
+  });
 
   const location = useLocation();
   const history = useHistory();
-  const { id } = useParams();
+  // const { id } = useParams();
   const { params } = location.state;
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.superAdmin.loading);
+  const anError = useSelector((state) => state.superAdmin.error);
+  // console.log(anError);
   useEffect(() => {
     if (params.mode === 'create') {
       setInputValue({
         email: '',
         password: ''
       });
+      setEditMode(false);
     } else {
       setInputValue({
         email: params.email,
@@ -32,20 +42,24 @@ const Form = () => {
     }
   }, []);
 
-  const updateItem = async (updatedItem) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedItem)
-      });
-      setModalSuccessOpen('true');
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  useEffect(() => {
+    setToastErrorOpen(!!anError);
+  }, [anError]);
+
+  // const updateItem = async (updatedItem) => {
+  //   try {
+  //     await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin/${id}`, {
+  //       method: 'PUT',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify(updatedItem)
+  //     });
+  //     setModalSuccessOpen('true');
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const onChangeInputEmail = (e) => {
     setInputValue({
@@ -60,24 +74,33 @@ const Form = () => {
     });
   };
 
-  const handleUpdateButtonClick = () => {
-    setModalSuccessConfirmOpen(true);
+  // const handleModalConfirmation = () => {
+  //   updateItem(inputValue);
+  //   setModalConfirmOpen(false);
+  // };
+
+  const openModal = (e) => {
+    e.preventDefault();
+    setModalConfirmOpen(true);
   };
-  const handleModalConfirmation = () => {
-    updateItem(inputValue);
-    setModalSuccessConfirmOpen(false);
+  const confirmation = () => {
+    setModalSuccessOpen(true);
+    setTimeout(() => {
+      history.goBack();
+    }, 2000);
   };
 
   const onSubmit = () => {
-    if (params.mode === 'create') {
-      try {
-        addSuperAdmin(dispatch, inputValue);
-        setModalSuccessOpen('true');
-      } catch (error) {
-        console.error(error);
+    if (!editMode) {
+      setModalConfirmOpen(false);
+      addSuperAdmin(dispatch, inputValue);
+      if (anError) {
+        confirmation();
       }
     } else {
-      handleUpdateButtonClick();
+      setModalConfirmOpen(false);
+      console.log('testin');
+      confirmation();
     }
   };
 
@@ -97,7 +120,7 @@ const Form = () => {
         nameInput={'password'}
         nameTitle={'Password'}
       />
-      <Button clickAction={onSubmit} text="Submit" />
+      <Button clickAction={openModal} text="Submit" />
       <Button
         clickAction={(e) => {
           e.preventDefault();
@@ -105,7 +128,7 @@ const Form = () => {
         }}
         text="Cancel"
       />
-      {modalSuccessConfirmOpen && (
+      {modalConfirmOpen && (
         <ModalConfirm
           method={editMode ? 'Edit' : 'Create'}
           message={
@@ -113,8 +136,8 @@ const Form = () => {
               ? 'Are you sure you want to edit the Super Admin?'
               : 'Are you sure you want to add the Super Admin?'
           }
-          onConfirm={handleModalConfirmation}
-          setModalConfirmOpen={setModalSuccessConfirmOpen}
+          onConfirm={onSubmit}
+          setModalConfirmOpen={setModalConfirmOpen}
         />
       )}
       {modalSuccessOpen && (
@@ -125,6 +148,8 @@ const Form = () => {
           }
         />
       )}
+      {toastErrorOpen && <ToastError setToastErroOpen={setToastErrorOpen} message={anError} />}
+      {isLoading && <Loader />}
     </form>
   );
 };

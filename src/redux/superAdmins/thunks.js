@@ -28,10 +28,10 @@ export const addSuperAdmin = async (dispatch, supAdminData) => {
       },
       body: JSON.stringify(supAdminData)
     });
+    const data = await response.json();
     if (!response.ok) {
       throw new Error(data.message);
     }
-    const data = await response.json();
     dispatch(postSuperAdminSuccess(data.result));
   } catch (error) {
     dispatch(postSuperAdminError(error.message));
