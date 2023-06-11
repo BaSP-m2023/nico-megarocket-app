@@ -34,10 +34,12 @@ const FormSubscription = () => {
     } else {
       const subscriptionEdited = location.state.params;
       setEditSubscriptions({
-        classId: subscriptionEdited.classId._id,
-        members: subscriptionEdited.members.map((member) => {
-          return member._id;
-        }),
+        classId: subscriptionEdited.classId ? subscriptionEdited.classId._id : '',
+        members: subscriptionEdited.members
+          ? subscriptionEdited.members.map((member) => {
+              return member._id;
+            })
+          : '',
         date: subscriptionEdited.date
       });
     }
