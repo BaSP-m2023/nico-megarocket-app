@@ -2,8 +2,12 @@ import {
   GET_SUPERADMIN_PENDING,
   GET_SUPERADMIN_SUCCESS,
   GET_SUPERADMIN_ERROR,
-  ADD_SUPERADMIN_SUCCESS,
-  EDIT_SUPERADMIN_SUCCESS,
+  POST_SUPERADMIN_PENDING,
+  POST_SUPERADMIN_SUCCESS,
+  POST_SUPERADMIN_ERROR,
+  PUT_SUPERADMIN_PENDING,
+  PUT_SUPERADMIN_SUCCESS,
+  PUT_SUPERADMIN_ERROR,
   DELETE_SUPERADMIN_PENDING,
   DELETE_SUPERADMIN_SUCCESS,
   DELETE_SUPERADMIN_ERROR
@@ -29,6 +33,46 @@ export const getSuperAdminError = (error) => {
   };
 };
 
+export const postSuperAdminPending = () => {
+  return {
+    type: POST_SUPERADMIN_PENDING
+  };
+};
+
+export const postSuperAdminSuccess = (sAdmin) => {
+  return {
+    type: POST_SUPERADMIN_SUCCESS,
+    payload: sAdmin
+  };
+};
+
+export const postSuperAdminError = (error) => {
+  return {
+    type: POST_SUPERADMIN_ERROR,
+    payload: error
+  };
+};
+
+export const putSuperAdminPending = () => {
+  return {
+    type: PUT_SUPERADMIN_PENDING
+  };
+};
+
+export const putSuperAdminSuccess = (sAdmin) => {
+  return {
+    type: PUT_SUPERADMIN_SUCCESS,
+    payload: sAdmin
+  };
+};
+
+export const putSuperAdminError = (error) => {
+  return {
+    type: PUT_SUPERADMIN_ERROR,
+    payload: error
+  };
+};
+
 export const deleteSuperAdminPending = (pending) => {
   return {
     type: DELETE_SUPERADMIN_PENDING,
@@ -47,18 +91,5 @@ export const deleteSuperAdminError = (error) => {
   return {
     type: DELETE_SUPERADMIN_ERROR,
     payload: error
-  };
-};
-export const addSuperAdminSuccess = (superAdmin) => {
-  return {
-    type: ADD_SUPERADMIN_SUCCESS,
-    payload: superAdmin
-  };
-};
-
-export const editSuperAdminSuccess = (superAdmin) => {
-  return {
-    type: EDIT_SUPERADMIN_SUCCESS,
-    payload: superAdmin
   };
 };
