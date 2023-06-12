@@ -52,14 +52,13 @@ export const addMember = (member) => {
       });
       dispatch(addMemberPending(false));
       const data = await response.json();
-      if (response.ok) {
-        dispatch(addMemberSuccess(data));
-        dispatch(addMemberError(true));
-      } else {
-        dispatch(addMemberError(data.message));
+      if (!response.ok) {
+        return dispatch(addMemberError({ error: true, message: data.message }));
       }
-    } catch (error) {
-      dispatch(addMemberError(error));
+      dispatch(addMemberError({ error: false, message: '' }));
+      dispatch(addMemberSuccess(data));
+    } catch (err) {
+      return dispatch(addMemberError({ error: true, message: err }));
     }
   };
 };

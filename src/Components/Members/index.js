@@ -49,7 +49,6 @@ function Members() {
           data={members}
           deleteButton={memberDelete}
           handleClick={handleClick}
-          autoDelete={() => {}}
         />
       )}
       {toastError && <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />}

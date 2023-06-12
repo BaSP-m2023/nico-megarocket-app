@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export const MembersForm = () => {
   const dispatch = useDispatch();
-  const isError = useSelector((state) => state.members.error);
+  const isError = useSelector((state) => state.members.errorForm);
   const [toastError, setToastErroOpen] = useState(false);
   const [modalAddConfirmOpen, setModalAddConfirmOpen] = useState(false);
   const [modalSuccess, setModalSuccessOpen] = useState(false);
@@ -27,39 +27,36 @@ export const MembersForm = () => {
     });
   };
 
-  const onConfirmFunction = () => {
+  const onConfirmFunction = async () => {
     if (!id) {
-      setModalSuccessOpen(true);
-      setTimeout(() => {
-        history.goBack();
-      }, 1000);
-    } else {
-      setModalSuccessOpen(true);
-      setTimeout(() => {
-        history.goBack();
-      }, 1000);
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!id) {
+      console.log({ isError });
       dispatch(addMember(member));
-      if (isError.length === '' || isError === true) {
+      if (isError.error === false) {
         setToastErroOpen(false);
-        setModalAddConfirmOpen(true);
+        setModalSuccessOpen(true);
+        setTimeout(() => {
+          history.goBack();
+        }, 1000);
       } else {
         setToastErroOpen(true);
       }
     } else {
       dispatch(editMember(id, member));
-      if (isError.length === '' || isError === true) {
+      if (isError.error === false) {
         setToastErroOpen(false);
-        setModalAddConfirmOpen(true);
+        setModalSuccessOpen(true);
+        setTimeout(() => {
+          history.goBack();
+        }, 1000);
       } else {
         setToastErroOpen(true);
       }
     }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setModalAddConfirmOpen(true);
   };
 
   useEffect(() => {
@@ -91,8 +88,6 @@ export const MembersForm = () => {
       });
     }
   }, []);
-
-  useEffect(() => {}, [isError]);
 
   return (
     <div className={styles.container}>
@@ -218,7 +213,7 @@ export const MembersForm = () => {
           <Button text="Cancel" clickAction={() => history.goBack()} />
         </div>
       </form>
-      {toastError && <ToastError setToastErroOpen={setToastErroOpen} message={isError} />}
+      {toastError && <ToastError setToastErroOpen={setToastErroOpen} message={isError.message} />}
     </div>
   );
 };

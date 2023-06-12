@@ -15,7 +15,8 @@ import {
 
 const INITIAL_STATE = {
   list: [],
-  error: 'There was an error'
+  errorForm: { error: false, message: '' },
+  error: ''
 };
 
 const memberReducer = (state = INITIAL_STATE, action) => {
@@ -58,7 +59,7 @@ const memberReducer = (state = INITIAL_STATE, action) => {
     case ADD_MEMBER_ERROR: {
       return {
         ...state,
-        error: action.payload
+        errorForm: action.payload
       };
     }
 
