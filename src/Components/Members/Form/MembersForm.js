@@ -29,28 +29,25 @@ export const MembersForm = () => {
 
   const onConfirmFunction = async () => {
     if (!id) {
-      console.log({ isError });
-      dispatch(addMember(member));
-      if (isError.error === false) {
+      const addMemberResponse = await dispatch(addMember(member));
+      if (addMemberResponse.type === 'ADD_MEMBER_SUCCESS') {
         setToastErroOpen(false);
         setModalSuccessOpen(true);
-        setTimeout(() => {
+        return setTimeout(() => {
           history.goBack();
         }, 1000);
-      } else {
-        setToastErroOpen(true);
       }
+      return setToastErroOpen(true);
     } else {
-      dispatch(editMember(id, member));
-      if (isError.error === false) {
+      const editMemberResponse = await dispatch(editMember(id, member));
+      if (editMemberResponse.type === 'EDIT_MEMBER_SUCCESS') {
         setToastErroOpen(false);
         setModalSuccessOpen(true);
-        setTimeout(() => {
+        return setTimeout(() => {
           history.goBack();
         }, 1000);
-      } else {
-        setToastErroOpen(true);
       }
+      return setToastErroOpen(true);
     }
   };
 

@@ -21,10 +21,10 @@ export const getAllMembers = async (dispatch) => {
     const data = await reponse.json();
     const membersList = data.data;
     dispatch(getMembersPending(false));
-    dispatch(getMembersSuccess(membersList));
+    return dispatch(getMembersSuccess(membersList));
   } catch (error) {
     dispatch(getMembersPending(false));
-    dispatch(getMembersError(true));
+    return dispatch(getMembersError(true));
   }
 };
 
@@ -52,11 +52,11 @@ export const addMember = (member) => {
       });
       dispatch(addMemberPending(false));
       const data = await response.json();
-      if (!response.ok) {
-        return dispatch(addMemberError({ error: true, message: data.message }));
+      if (response.ok) {
+        dispatch(addMemberError({ error: false, message: 'No error' }));
+        return dispatch(addMemberSuccess(data));
       }
-      dispatch(addMemberError({ error: false, message: '' }));
-      dispatch(addMemberSuccess(data));
+      return dispatch(addMemberError({ error: true, message: data.message }));
     } catch (err) {
       return dispatch(addMemberError({ error: true, message: err }));
     }
@@ -77,13 +77,12 @@ export const editMember = (id, member) => {
       dispatch(editMemberPending(false));
       const data = await response.json();
       if (response.ok) {
-        dispatch(editMemberSuccess(data));
-        dispatch(editMemberError(true));
-      } else {
-        dispatch(editMemberError(response.message));
+        dispatch(editMemberError({ error: false, message: 'No error' }));
+        return dispatch(editMemberSuccess(data));
       }
-    } catch (error) {
-      dispatch(editMemberError(error));
+      return dispatch(editMemberError({ error: true, message: data.message }));
+    } catch (err) {
+      return dispatch(editMemberError({ error: true, message: err }));
     }
   };
 };
