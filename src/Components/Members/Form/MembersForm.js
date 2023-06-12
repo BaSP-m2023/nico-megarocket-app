@@ -1,43 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
-import { ModalConfirm } from '../../Shared';
-import { ModalSuccess } from '../../Shared';
+import { ModalConfirm, ModalSuccess, ToastError } from '../../Shared';
 import { Inputs, Button } from '../../Shared';
 import { useLocation, useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { addMember, editMember } from '../../../redux/members/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const MembersForm = () => {
-  const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
+  const dispatch = useDispatch();
+  const isError = useSelector((state) => state.members.error);
+  const [toastError, setToastErroOpen] = useState(false);
   const [modalAddConfirmOpen, setModalAddConfirmOpen] = useState(false);
+  const [modalSuccess, setModalSuccessOpen] = useState(false);
   const [member, setMember] = useState({});
   const [editMode, setEditMode] = useState(null);
   const location = useLocation();
   const history = useHistory();
   const data = location.state.params;
   const { id } = useParams();
-
-  const updateMember = async (id, memberUpdated) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(memberUpdated)
-      });
-      setModalSuccessOpen(true);
-      setSuccessMessage('Member edited successfully!');
-      setTimeout(() => {
-        history.goBack();
-      }, 1000);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleConfirmModal = () => {
-    setModalAddConfirmOpen(true);
-  };
 
   const handleChange = (e) => {
     setMember({
@@ -47,52 +27,32 @@ export const MembersForm = () => {
     });
   };
 
+  console.log(toastError);
+
+  const onConfirmFunction = () => {
+    if (!id) {
+      setModalSuccessOpen(true);
+      setTimeout(() => {
+        history.goBack();
+      }, 1000);
+    } else {
+      dispatch(editMember(id, member));
+      setModalSuccessOpen(true);
+      setTimeout(() => {
+        history.goBack();
+      }, 1000);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!id) {
-      try {
-        e.preventDefault();
-        await fetch(`${process.env.REACT_APP_API_URL}/api/member/`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            firstName: member.firstName,
-            lastName: member.lastName,
-            dni: member.dni,
-            birthday: member.birthday,
-            phone: member.phone,
-            email: member.email,
-            city: member.city,
-            postalCode: member.postalCode,
-            isActive: member.isActive,
-            membership: member.membership
-          })
-        });
-        setMember({
-          firstName: '',
-          lastName: '',
-          dni: '',
-          birthday: '',
-          phone: '',
-          email: '',
-          city: '',
-          postalCode: '',
-          isActive: false,
-          membership: ''
-        });
-        setModalSuccessOpen(true);
-        setSuccessMessage('Member added successfully!');
-        setTimeout(() => {
-          history.goBack();
-        }, 1000);
-      } catch (error) {
-        console.error(error);
-      }
+    if (isError === true) {
+      setToastErroOpen(false);
+      setModalAddConfirmOpen(true);
     } else {
-      handleConfirmModal();
+      setToastErroOpen(true);
     }
+    dispatch(addMember(member));
   };
 
   useEffect(() => {
@@ -125,14 +85,16 @@ export const MembersForm = () => {
     }
   }, []);
 
+  useEffect(() => {}, [isError]);
+
   return (
     <div className={styles.container}>
       {
         <div>
           {modalAddConfirmOpen && (
             <ModalConfirm
-              method="Update"
-              onConfirm={() => updateMember(id, member)}
+              method={editMode ? 'Update' : 'Add'}
+              onConfirm={() => onConfirmFunction()}
               setModalConfirmOpen={setModalAddConfirmOpen}
               message={
                 editMode
@@ -141,13 +103,16 @@ export const MembersForm = () => {
               }
             />
           )}
-          {modalSuccessOpen && (
-            <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
+          {modalSuccess && (
+            <ModalSuccess
+              setModalSuccessOpen={setModalSuccessOpen}
+              message={editMode ? 'Member edited' : 'Member added'}
+            />
           )}
         </div>
       }
       <h3 className={styles.title}>{editMode ? 'Edit Member' : 'Add Member'}</h3>
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form className={styles.form}>
         <section className={styles.inputGroups}>
           <div className={styles.inputGroup}>
             <div className={styles.inputContainer}>
@@ -246,6 +211,7 @@ export const MembersForm = () => {
           <Button text="Cancel" clickAction={() => history.goBack()} />
         </div>
       </form>
+      {toastError && <ToastError setToastErroOpen={setToastErroOpen} message={isError} />}
     </div>
   );
 };

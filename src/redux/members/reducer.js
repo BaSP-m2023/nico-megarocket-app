@@ -14,7 +14,8 @@ import {
 } from './constants';
 
 const INITIAL_STATE = {
-  list: []
+  list: [],
+  error: ''
 };
 
 const memberReducer = (state = INITIAL_STATE, action) => {
@@ -69,6 +70,7 @@ const memberReducer = (state = INITIAL_STATE, action) => {
     }
 
     case EDIT_MEMBER_SUCCESS: {
+      console.log(action.payload);
       const editMember = state.list.map((member) => {
         return member._id === action.payload._id ? { ...member, ...action.payload } : member;
       });
