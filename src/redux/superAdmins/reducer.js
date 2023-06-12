@@ -7,7 +7,10 @@ import {
   POST_SUPERADMIN_ERROR,
   PUT_SUPERADMIN_PENDING,
   PUT_SUPERADMIN_SUCCESS,
-  PUT_SUPERADMIN_ERROR
+  PUT_SUPERADMIN_ERROR,
+  DELETE_SUPERADMIN_PENDING,
+  DELETE_SUPERADMIN_SUCCESS,
+  DELETE_SUPERADMIN_ERROR
 } from './constants';
 
 const INITIAL_STATE = {
@@ -90,7 +93,26 @@ export const superAdminReducer = (state = INITIAL_STATE, action) => {
     case PUT_SUPERADMIN_ERROR: {
       return {
         ...state,
-        loading: false,
+        loading: false
+      };
+    }
+    case DELETE_SUPERADMIN_PENDING: {
+      return {
+        ...state,
+        pending: action.payload
+      };
+    }
+    case DELETE_SUPERADMIN_SUCCESS: {
+      const newList = state.list.filter((superAdmin) => {
+        return superAdmin._id !== action.payload;
+      });
+      return {
+        list: [...newList]
+      };
+    }
+    case DELETE_SUPERADMIN_ERROR: {
+      return {
+        ...state,
         error: action.payload
       };
     }
@@ -99,3 +121,5 @@ export const superAdminReducer = (state = INITIAL_STATE, action) => {
       return state;
   }
 };
+
+export default superAdminReducer;

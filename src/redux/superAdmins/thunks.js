@@ -2,6 +2,9 @@ import {
   getSuperAdminPending,
   getSuperAdminSuccess,
   getSuperAdminError,
+  deleteSuperAdminPending,
+  deleteSuperAdminSuccess,
+  deleteSuperAdminError,
   postSuperAdminPending,
   postSuperAdminSuccess,
   postSuperAdminError,
@@ -59,4 +62,24 @@ export const updateSuperAdmin = async (dispatch, supAdminData, id) => {
   } catch (error) {
     dispatch(putSuperAdminError(error.message));
   }
+};
+
+export const superAdminDelete = (superAdminID) => {
+  return async (dispatch) => {
+    try {
+      dispatch(deleteSuperAdminPending(true));
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/super-admin/${superAdminID}`,
+        {
+          method: 'DELETE'
+        }
+      );
+      if (response.ok) {
+        dispatch(deleteSuperAdminPending(false));
+        dispatch(deleteSuperAdminSuccess(superAdminID));
+      }
+    } catch (error) {
+      dispatch(deleteSuperAdminError(error));
+    }
+  };
 };
