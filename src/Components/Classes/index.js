@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Loader, TableComponent, ToastError } from '../Shared';
+import { ToastError, AddButton, TableComponent, Loader } from '../Shared';
 import { useHistory } from 'react-router-dom';
-import AddButton from './../Shared/AddButton/index';
+import { useSelector, useDispatch } from 'react-redux';
+import { getClasses, deleteClass } from '../../redux/classes/thunks';
 
 function Projects() {
-  const [classes, setClasses] = useState([]);
   const [toastErrorOpen, setToastErrorOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const classes = useSelector((state) => state.classes.list);
+  const loading = useSelector((state) => state.classes.pending);
+  const error = useSelector((state) => state.classes.error);
 
   const columnTitleArray = ['Activity', 'Day', 'Hour', 'Trainer', 'Slots'];
 
@@ -21,44 +24,17 @@ function Projects() {
 
   const history = useHistory();
 
-  const getClasses = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class`);
-      const data = await response.json();
-      setClasses(data.data);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      setToastMessage('Error in Database');
-      setToastErrorOpen(true);
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
-    getClasses();
+    getClasses(dispatch);
   }, []);
 
-  const deleteClassFromDB = async (id) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      setClasses([...classes.filter((classes) => classes._id !== id)]);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  useEffect(() => {
+    setToastErrorOpen(!!error);
+    setToastMessage(error);
+  }, [error]);
 
   const createMode = () => {
     history.push('/classes/ClassForm', { params: { mode: 'create' } });
-  };
-
-  const deleteClass = (id) => {
-    deleteClassFromDB(id);
   };
 
   const handleClick = (item) => {
