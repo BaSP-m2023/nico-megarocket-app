@@ -70,14 +70,19 @@ export const superAdminReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case PUT_SUPERADMIN_SUCCESS: {
-      const newList = state.list.map((supAdmin) => {
-        if (supAdmin._id === action.payload._id) {
-          return action.payload;
+      const supAdminUpdated = action.payload;
+      const updatedSupAdmins = state.list.map((supAdmins) => {
+        if (supAdmins._id === supAdmins._id) {
+          return {
+            ...supAdmins,
+            ...supAdminUpdated
+          };
         }
+        return supAdmins;
       });
       return {
         ...state,
-        list: newList,
+        list: updatedSupAdmins,
         loading: false,
         error: null
       };

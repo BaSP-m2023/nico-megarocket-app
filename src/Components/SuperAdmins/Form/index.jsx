@@ -63,6 +63,7 @@ const Form = () => {
     e.preventDefault();
     setModalConfirmOpen(true);
   };
+
   const confirmation = () => {
     setModalSuccessOpen(true);
     setTimeout(() => {

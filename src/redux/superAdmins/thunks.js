@@ -43,8 +43,6 @@ export const addSuperAdmin = async (dispatch, supAdminData) => {
 
 export const updateSuperAdmin = async (dispatch, supAdminData, id) => {
   try {
-    console.log(supAdminData);
-    console.log(id);
     dispatch(putSuperAdminPending());
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin/${id}`, {
       method: 'PUT',
