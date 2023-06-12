@@ -1,7 +1,7 @@
 import ButtonForm from '../ButtonForm';
 import styles from './table.module.css';
 import { ModalConfirm } from '../index';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 const TableComponent = ({
@@ -10,9 +10,7 @@ const TableComponent = ({
   handleClick,
   deleteButton,
   columns,
-  valueField,
-  arrayAndObject,
-  autoDelete
+  valueField
 }) => {
   const fieldValue = valueField;
 
@@ -20,20 +18,6 @@ const TableComponent = ({
   const [idDelete, setIdDelete] = useState('');
 
   const dispatch = useDispatch();
-
-  const arrayDeleteId = [];
-  {
-    arrayAndObject &&
-      data.forEach((item) => {
-        if (!item[arrayAndObject.object] || !item[arrayAndObject.array]?.length != 0) {
-          arrayDeleteId.push(item._id);
-        }
-      });
-  }
-
-  useEffect(() => {
-    arrayDeleteId.length > 0 && autoDelete(arrayDeleteId[0]);
-  }, [arrayDeleteId]);
 
   const onConfirmOpen = (id) => {
     setModalConfirm(true);

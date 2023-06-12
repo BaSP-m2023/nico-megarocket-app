@@ -27,7 +27,7 @@ const reducer = (state = initialState, action) => {
     case ADD_TRAINER: {
       return {
         ...state,
-        list: action.payload
+        list: [...state.list, action.payload]
       };
     }
 
