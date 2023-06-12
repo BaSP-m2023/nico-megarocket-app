@@ -15,7 +15,7 @@ import {
 
 export const getAllMembers = async (dispatch) => {
   try {
-    dispatch(getMembersError(false));
+    dispatch(getMembersError(''));
     dispatch(getMembersPending(true));
     const reponse = await fetch(`${process.env.REACT_APP_API_URL}/api/member`);
     const data = await reponse.json();
@@ -67,7 +67,6 @@ export const addMember = (member) => {
 export const editMember = (id, member) => {
   return async (dispatch) => {
     try {
-      dispatch(editMemberError(false));
       dispatch(editMemberPending(true));
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
         method: 'PUT',
@@ -77,11 +76,10 @@ export const editMember = (id, member) => {
         body: JSON.stringify(member)
       });
       dispatch(editMemberPending(false));
-      console.log(response);
       const data = await response.json();
       if (response.ok) {
         dispatch(editMemberSuccess(data));
-        dispatch(editMemberError(false));
+        dispatch(editMemberError(true));
       } else {
         dispatch(editMemberError(response.message));
       }
@@ -94,7 +92,6 @@ export const editMember = (id, member) => {
 export const memberDelete = (memberID) => {
   return async (dispatch) => {
     try {
-      dispatch(deleteMemberError(false));
       dispatch(deleteMemberPending(true));
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${memberID}`, {
         method: 'DELETE'

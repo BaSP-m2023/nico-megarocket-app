@@ -27,8 +27,6 @@ export const MembersForm = () => {
     });
   };
 
-  console.log(toastError);
-
   const onConfirmFunction = () => {
     if (!id) {
       setModalSuccessOpen(true);
@@ -36,7 +34,6 @@ export const MembersForm = () => {
         history.goBack();
       }, 1000);
     } else {
-      dispatch(editMember(id, member));
       setModalSuccessOpen(true);
       setTimeout(() => {
         history.goBack();
@@ -46,13 +43,23 @@ export const MembersForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isError === true) {
-      setToastErroOpen(false);
-      setModalAddConfirmOpen(true);
+    if (!id) {
+      dispatch(addMember(member));
+      if (isError.length === '' || isError === true) {
+        setToastErroOpen(false);
+        setModalAddConfirmOpen(true);
+      } else {
+        setToastErroOpen(true);
+      }
     } else {
-      setToastErroOpen(true);
+      dispatch(editMember(id, member));
+      if (isError.length === '' || isError === true) {
+        setToastErroOpen(false);
+        setModalAddConfirmOpen(true);
+      } else {
+        setToastErroOpen(true);
+      }
     }
-    dispatch(addMember(member));
   };
 
   useEffect(() => {
