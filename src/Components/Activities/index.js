@@ -17,7 +17,6 @@ function Activities() {
   }, []);
 
   useEffect(() => {
-    console.log(isError);
     setToastErroOpen(isError);
   }, [isError]);
 
