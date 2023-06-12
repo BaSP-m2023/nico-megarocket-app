@@ -43,8 +43,6 @@ function Trainers() {
           handleClick={handleClick}
           deleteButton={deleteTrainer}
           columns={columnsValue}
-          autoDelete={() => {}}
-          arrayAndObject={[]}
         />
       )}
       {toastErroOpen && (
