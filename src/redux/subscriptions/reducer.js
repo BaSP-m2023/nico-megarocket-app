@@ -13,7 +13,11 @@ import {
   DELETE_SUBSCRIPTION_ERROR
 } from './constants';
 
-const subscriptionReducer = (state = [], action) => {
+const initialState = {
+  data: []
+};
+
+const subscriptionReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_SUBSCRIPTION_SUCCESS: {
       return {
@@ -79,7 +83,7 @@ const subscriptionReducer = (state = [], action) => {
     }
 
     case DELETE_SUBSCRIPTION_SUCCESS: {
-      const newData = state.filter((subs) => {
+      const newData = state.data.filter((subs) => {
         return subs._id !== action.payload;
       });
       return {
