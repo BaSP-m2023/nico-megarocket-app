@@ -4,7 +4,10 @@ import {
   GET_SUPERADMIN_ERROR,
   POST_SUPERADMIN_PENDING,
   POST_SUPERADMIN_SUCCESS,
-  POST_SUPERADMIN_ERROR
+  POST_SUPERADMIN_ERROR,
+  PUT_SUPERADMIN_PENDING,
+  PUT_SUPERADMIN_SUCCESS,
+  PUT_SUPERADMIN_ERROR
 } from './constants';
 
 export const getSuperAdminPending = () => {
@@ -43,6 +46,26 @@ export const postSuperAdminSuccess = (sAdmin) => {
 export const postSuperAdminError = (error) => {
   return {
     type: POST_SUPERADMIN_ERROR,
+    payload: error
+  };
+};
+
+export const putSuperAdminPending = () => {
+  return {
+    type: PUT_SUPERADMIN_PENDING
+  };
+};
+
+export const putSuperAdminSuccess = (sAdmin) => {
+  return {
+    type: PUT_SUPERADMIN_SUCCESS,
+    payload: sAdmin
+  };
+};
+
+export const putSuperAdminError = (error) => {
+  return {
+    type: PUT_SUPERADMIN_ERROR,
     payload: error
   };
 };

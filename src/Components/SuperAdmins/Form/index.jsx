@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ModalConfirm, Inputs, Button, ModalSuccess, Loader, ToastError } from '../../Shared';
 import styles from './form.module.css';
-import { useHistory, /*useParams,*/ useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import { addSuperAdmin } from '../../../redux/superAdmins/thunks';
+import { useHistory, useParams, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { addSuperAdmin, updateSuperAdmin } from '../../../redux/superAdmins/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Form = () => {
@@ -19,13 +19,13 @@ const Form = () => {
 
   const location = useLocation();
   const history = useHistory();
-  // const { id } = useParams();
+  const { id } = useParams();
   const { params } = location.state;
 
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.superAdmin.loading);
   const anError = useSelector((state) => state.superAdmin.error);
-  // console.log(anError);
+
   useEffect(() => {
     if (params.mode === 'create') {
       setInputValue({
@@ -46,21 +46,6 @@ const Form = () => {
     setToastErrorOpen(!!anError);
   }, [anError]);
 
-  // const updateItem = async (updatedItem) => {
-  //   try {
-  //     await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin/${id}`, {
-  //       method: 'PUT',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify(updatedItem)
-  //     });
-  //     setModalSuccessOpen('true');
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   const onChangeInputEmail = (e) => {
     setInputValue({
       ...inputValue,
@@ -73,11 +58,6 @@ const Form = () => {
       password: e.target.value
     });
   };
-
-  // const handleModalConfirmation = () => {
-  //   updateItem(inputValue);
-  //   setModalConfirmOpen(false);
-  // };
 
   const openModal = (e) => {
     e.preventDefault();
@@ -94,13 +74,15 @@ const Form = () => {
     if (!editMode) {
       setModalConfirmOpen(false);
       addSuperAdmin(dispatch, inputValue);
-      if (anError) {
+      if (!anError) {
         confirmation();
       }
     } else {
       setModalConfirmOpen(false);
-      console.log('testin');
-      confirmation();
+      updateSuperAdmin(dispatch, inputValue, id);
+      if (!anError) {
+        confirmation();
+      }
     }
   };
 
@@ -115,7 +97,7 @@ const Form = () => {
       />
       <Inputs
         text={inputValue.password}
-        type="text"
+        type="password"
         change={onChangeInputPassword}
         nameInput={'password'}
         nameTitle={'Password'}
