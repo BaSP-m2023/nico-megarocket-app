@@ -10,6 +10,7 @@ function Admins() {
   const isError = useSelector((state) => state.admins.error);
   const dispatch = useDispatch();
   const [toastErroOpen, setToastErroOpen] = useState(isError);
+  const storeAdmins = useSelector((store) => store.admins.list);
 
   const history = useHistory();
   const columnTitleArray = ['Admin', 'DNI', 'Phone', 'E-Mail', 'City'];
@@ -25,6 +26,7 @@ function Admins() {
 
   useEffect(() => {
     getAllAdmins(dispatch);
+    console.log(storeAdmins);
   }, []);
 
   useEffect(() => {

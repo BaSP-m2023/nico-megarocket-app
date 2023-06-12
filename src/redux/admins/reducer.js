@@ -2,8 +2,12 @@ import {
   GET_ADMINS_PENDING,
   GET_ADMINS_SUCCESS,
   GET_ADMINS_ERROR,
+  ADD_ADMIN_PENDING,
   ADD_ADMIN_SUCCESS,
+  ADD_ADMIN_ERROR,
+  EDIT_ADMIN_PENDING,
   EDIT_ADMIN_SUCCESS,
+  EDIT_ADMIN_ERROR,
   DELETE_ADMIN_PENDING,
   DELETE_ADMIN_SUCCESS,
   DELETE_ADMIN_ERROR
@@ -36,20 +40,52 @@ const adminReducer = (state = INITIAL_STATE, action) => {
       };
     }
 
+    case ADD_ADMIN_PENDING: {
+      return {
+        ...state,
+        pending: action.payload,
+        error: null
+      };
+    }
+
     case ADD_ADMIN_SUCCESS: {
       return {
         ...state,
-        list: action.payload
+        list: [...state.list, action.payload],
+        error: null
+      };
+    }
+
+    case ADD_ADMIN_ERROR: {
+      return {
+        ...state,
+        error: action.payload
+      };
+    }
+
+    case EDIT_ADMIN_PENDING: {
+      return {
+        ...state,
+        pending: action.payload,
+        error: null
       };
     }
 
     case EDIT_ADMIN_SUCCESS: {
-      const editAdmin = state.list.map((admin) => {
+      // const adminUpdated = action.payload;
+      const editedAdmins = state.list.map((admin) => {
         return admin._id === action.payload._id ? { ...admin, ...action.payload } : admin;
       });
       return {
         ...state,
-        list: [...editAdmin]
+        list: [...editedAdmins]
+      };
+    }
+
+    case EDIT_ADMIN_ERROR: {
+      return {
+        ...state,
+        error: action.payload
       };
     }
 
