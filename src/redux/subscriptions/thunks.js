@@ -15,6 +15,9 @@ export const getSuscription = async (dispatch) => {
     if (data.data.length !== 0) {
       dispatch(getSubscriptionPending(false));
       dispatch(getSubscriptionSuccess(data.data));
+    } else {
+      dispatch(getSubscriptionPending(false));
+      dispatch(getSubscriptionSuccess(data.message));
     }
   } catch (error) {
     dispatch(getSubscriptionPending(false));
@@ -33,6 +36,9 @@ export const deleteSubscription = (id) => {
       if (data) {
         dispatch(deleteSubscriptionSuccess(id));
         dispatch(deleteSubscriptionPending(false));
+      } else {
+        dispatch(getSubscriptionPending(false));
+        dispatch(getSubscriptionSuccess(data.message));
       }
     } catch (error) {
       dispatch(deleteSubscriptionPending(false));
