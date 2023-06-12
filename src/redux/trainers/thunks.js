@@ -44,13 +44,10 @@ export const getTrainers = async (dispatch) => {
     const reponse = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`);
     const data = await reponse.json();
     const listTrainers = data.data;
-    console.log(listTrainers);
     if (listTrainers.length === 0) {
       dispatch(getTrainersPending(true));
-      console.log(true);
     } else {
       dispatch(getTrainersPending(false));
-      console.log(false);
       dispatch(getTrainersSuccess(listTrainers));
       console.log(getTrainersSuccess(listTrainers));
     }
