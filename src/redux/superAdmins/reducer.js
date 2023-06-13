@@ -2,8 +2,12 @@ import {
   GET_SUPERADMIN_PENDING,
   GET_SUPERADMIN_SUCCESS,
   GET_SUPERADMIN_ERROR,
-  ADD_SUPERADMIN_SUCCESS,
-  EDIT_SUPERADMIN_SUCCESS,
+  POST_SUPERADMIN_PENDING,
+  POST_SUPERADMIN_SUCCESS,
+  POST_SUPERADMIN_ERROR,
+  PUT_SUPERADMIN_PENDING,
+  PUT_SUPERADMIN_SUCCESS,
+  PUT_SUPERADMIN_ERROR,
   DELETE_SUPERADMIN_PENDING,
   DELETE_SUPERADMIN_SUCCESS,
   DELETE_SUPERADMIN_ERROR
@@ -32,7 +36,6 @@ export const superAdminReducer = (state = INITIAL_STATE, action) => {
         error: null
       };
     }
-
     case GET_SUPERADMIN_ERROR: {
       return {
         ...state,
@@ -40,33 +43,65 @@ export const superAdminReducer = (state = INITIAL_STATE, action) => {
         error: action.payload
       };
     }
-
-    case ADD_SUPERADMIN_SUCCESS: {
+    case POST_SUPERADMIN_PENDING: {
       return {
         ...state,
-        list: action.payload
+        loading: true,
+        error: null
       };
     }
-
-    case EDIT_SUPERADMIN_SUCCESS: {
-      const editSuperAdmin = state.list.map((superAdmin) => {
-        return superAdmin._id === action.payload._id
-          ? { ...superAdmin, ...action.payload }
-          : superAdmin;
+    case POST_SUPERADMIN_SUCCESS: {
+      return {
+        ...state,
+        list: [...state.list, action.payload],
+        loading: false,
+        error: null
+      };
+    }
+    case POST_SUPERADMIN_ERROR: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
+    }
+    case PUT_SUPERADMIN_PENDING: {
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+    }
+    case PUT_SUPERADMIN_SUCCESS: {
+      const supAdminUpdated = action.payload;
+      const updatedSupAdmins = state.list.map((supAdmins) => {
+        if (supAdmins._id === supAdmins._id) {
+          return {
+            ...supAdmins,
+            ...supAdminUpdated
+          };
+        }
+        return supAdmins;
       });
       return {
         ...state,
-        list: [...editSuperAdmin]
+        list: updatedSupAdmins,
+        loading: false,
+        error: null
       };
     }
-
+    case PUT_SUPERADMIN_ERROR: {
+      return {
+        ...state,
+        loading: false
+      };
+    }
     case DELETE_SUPERADMIN_PENDING: {
       return {
         ...state,
         pending: action.payload
       };
     }
-
     case DELETE_SUPERADMIN_SUCCESS: {
       const newList = state.list.filter((superAdmin) => {
         return superAdmin._id !== action.payload;
@@ -75,7 +110,6 @@ export const superAdminReducer = (state = INITIAL_STATE, action) => {
         list: [...newList]
       };
     }
-
     case DELETE_SUPERADMIN_ERROR: {
       return {
         ...state,

@@ -4,7 +4,13 @@ import {
   ADD_TRAINER_ERROR,
   UPDATE_TRAINER,
   UPDATE_TRAINER_ERROR,
-  UPDATE_TRAINER_PENDING
+  UPDATE_TRAINER_PENDING,
+  GET_TRAINERS_PENDING,
+  GET_TRAINERS_SUCCESS,
+  GET_TRAINERS_FAILURE,
+  DELETE_TRAINER_PENDING,
+  DELETE_TRAINER_SUCCESS,
+  DELETE_TRAINER_FAILURE
 } from './constants';
 
 const initialState = {
@@ -21,7 +27,7 @@ const reducer = (state = initialState, action) => {
     case ADD_TRAINER: {
       return {
         ...state,
-        list: action.payload
+        list: [...state.list, action.payload]
       };
     }
 
@@ -60,6 +66,50 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         error: action.payload
+      };
+    }
+
+    case GET_TRAINERS_PENDING: {
+      return {
+        ...state,
+        pending: action.payload
+      };
+    }
+
+    case DELETE_TRAINER_PENDING: {
+      return {
+        ...state,
+        pending: action.payload
+      };
+    }
+
+    case GET_TRAINERS_SUCCESS: {
+      return {
+        ...state,
+        list: action.payload
+      };
+    }
+
+    case GET_TRAINERS_FAILURE: {
+      return {
+        ...state,
+        error: action.payload
+      };
+    }
+
+    case DELETE_TRAINER_FAILURE: {
+      return {
+        ...state,
+        error: action.payload
+      };
+    }
+
+    case DELETE_TRAINER_SUCCESS: {
+      const newListTrainer = state.list.filter((trainer) => {
+        return trainer._id !== action.payload;
+      });
+      return {
+        list: [...newListTrainer]
       };
     }
 
