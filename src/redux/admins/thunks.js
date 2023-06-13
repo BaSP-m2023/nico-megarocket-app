@@ -16,7 +16,7 @@ import {
 export const getAllAdmins = async (dispatch) => {
   try {
     dispatch(getAdminsPending(true));
-    const reponse = await fetch(`${process.env.REACT_APP_API_URL}/api/admin`);
+    const reponse = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
     const data = await reponse.json();
     const adminsList = data.data;
     dispatch(getAdminsPending(false));
@@ -31,7 +31,7 @@ export const adminDelete = (adminID) => {
   return async (dispatch) => {
     try {
       dispatch(deleteAdminPending(true));
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admin/${adminID}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminID}`, {
         method: 'DELETE'
       });
       if (response.ok) {
@@ -47,7 +47,7 @@ export const adminDelete = (adminID) => {
 export const createAdmin = async (dispatch, adminData) => {
   try {
     dispatch(addAdminPending(true));
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admin`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -69,7 +69,7 @@ export const createAdmin = async (dispatch, adminData) => {
 export const updateAdmin = async (dispatch, id, adminData) => {
   try {
     dispatch(editAdminPending(true));
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admin/${id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'

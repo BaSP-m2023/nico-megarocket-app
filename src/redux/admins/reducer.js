@@ -43,16 +43,14 @@ const adminReducer = (state = INITIAL_STATE, action) => {
     case ADD_ADMIN_PENDING: {
       return {
         ...state,
-        pending: action.payload,
-        error: null
+        pending: action.payload
       };
     }
 
     case ADD_ADMIN_SUCCESS: {
       return {
         ...state,
-        list: [...state.list, action.payload],
-        error: null
+        list: [...state.list, action.payload]
       };
     }
 
@@ -66,8 +64,7 @@ const adminReducer = (state = INITIAL_STATE, action) => {
     case EDIT_ADMIN_PENDING: {
       return {
         ...state,
-        pending: action.payload,
-        error: null
+        pending: action.payload
       };
     }
 
