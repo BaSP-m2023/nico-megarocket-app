@@ -9,6 +9,9 @@ const SelectInput = ({ data, dataLabel, onChangeOption, setValue, name }) => {
   };
 
   const ifObject = (item) => {
+    if (typeof item.activity === 'object') {
+      return item.activity ? `${item.activity.name} -  ${item.hour}` : `incomplete ${dataLabel}`;
+    }
     if (typeof item === 'object') {
       return item ? item.name : `incomplete ${dataLabel}`;
     }
