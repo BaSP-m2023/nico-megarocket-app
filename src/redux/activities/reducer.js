@@ -37,7 +37,6 @@ const activityReducer = (state = INITIAL_STATE, action) => {
         error: action.payload
       };
     }
-
     case DELETE_ACTIVITIES_PENDING: {
       return {
         ...state,
@@ -61,7 +60,6 @@ const activityReducer = (state = INITIAL_STATE, action) => {
         error: action.payload
       };
     }
-
     case ADD_ACTIVITIES_PENDING: {
       return {
         ...state,
@@ -81,7 +79,6 @@ const activityReducer = (state = INITIAL_STATE, action) => {
         error: action.payload
       };
     }
-
     case UPDATE_ACTIVITIES_PENDING: {
       return {
         ...state,

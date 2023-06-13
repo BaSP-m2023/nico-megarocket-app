@@ -25,7 +25,6 @@ export const getAllActivities = async (dispatch) => {
     if (response.ok) {
       const data = await response.json();
       const newData = data.data;
-      console.log(newData);
       dispatch(getActivitiesPending(false));
       dispatch(getActivitiesSuccess(newData));
     } else {
@@ -63,10 +62,7 @@ export const deleteActivity = (activityId) => {
 };
 
 export const addActivity = async (dispatch, newActivity) => {
-  console.log('consolelog3');
-  console.log(newActivity, 'LA NEW ACTIVITY');
   try {
-    console.log('consolelog3');
     dispatch(addActivitiesPending(true));
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity`, {
       method: 'POST',
@@ -76,14 +72,11 @@ export const addActivity = async (dispatch, newActivity) => {
       body: JSON.stringify(newActivity)
     });
     if (response.ok) {
-      console.log('ifok');
       const data = await response.json();
       const newData = data;
-      console.log(newData);
       dispatch(addActivitiesSuccess(newData));
       dispatch(addActivitiesPending(false));
     } else {
-      console.log('ifnot');
       dispatch(addActivitiesError(true));
       dispatch(addActivitiesPending(false));
     }
@@ -106,7 +99,6 @@ export const updateActivity = async (dispatch, id, activity) => {
     });
     if (response.ok) {
       const data = await response.json();
-      console.log(data, 'la data que devuelve el update');
       dispatch(updateActivitiesPending(false));
       dispatch(updateActivitiesSuccess(data.result));
     } else {
