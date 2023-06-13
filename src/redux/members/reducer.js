@@ -2,15 +2,21 @@ import {
   GET_MEMBERS_PENDING,
   GET_MEMBERS_SUCCESS,
   GET_MEMBERS_ERROR,
+  ADD_MEMBER_PENDING,
   ADD_MEMBER_SUCCESS,
+  ADD_MEMBER_ERROR,
+  EDIT_MEMBER_PENDING,
   EDIT_MEMBER_SUCCESS,
+  EDIT_MEMBER_ERROR,
   DELETE_MEMBER_PENDING,
   DELETE_MEMBER_SUCCESS,
   DELETE_MEMBER_ERROR
 } from './constants';
 
 const INITIAL_STATE = {
-  list: []
+  list: [],
+  errorForm: { error: false, message: '' },
+  error: ''
 };
 
 const memberReducer = (state = INITIAL_STATE, action) => {
@@ -36,10 +42,31 @@ const memberReducer = (state = INITIAL_STATE, action) => {
       };
     }
 
+    case ADD_MEMBER_PENDING: {
+      return {
+        ...state,
+        pending: action.payload
+      };
+    }
+
     case ADD_MEMBER_SUCCESS: {
       return {
         ...state,
-        list: action.payload
+        list: [...state.list, action.payload]
+      };
+    }
+
+    case ADD_MEMBER_ERROR: {
+      return {
+        ...state,
+        errorForm: action.payload
+      };
+    }
+
+    case EDIT_MEMBER_PENDING: {
+      return {
+        ...state,
+        pending: action.payload
       };
     }
 
@@ -50,6 +77,13 @@ const memberReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         list: [...editMember]
+      };
+    }
+
+    case EDIT_MEMBER_ERROR: {
+      return {
+        ...state,
+        error: action.payload
       };
     }
 
