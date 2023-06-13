@@ -62,11 +62,10 @@ export const addSubscriptions = async (dispatch, newSub) => {
       body: JSON.stringify(newSub)
     });
     const data = await res.json();
+    dispatch(addSubscriptionPending(false));
     if (res.ok) {
-      dispatch(addSubscriptionPending(false));
       dispatch(addSubscriptionSuccess(data.result));
     } else {
-      dispatch(addSubscriptionPending(false));
       dispatch(addSubscriptionError(data.message));
     }
   } catch (error) {
@@ -86,11 +85,10 @@ export const updateSubscriptions = async (dispatch, id, editSub) => {
       body: JSON.stringify(editSub)
     });
     const data = await res.json();
+    dispatch(editSubscriptionPending(false));
     if (res.ok) {
-      dispatch(editSubscriptionPending(false));
       dispatch(editSubscriptionSuccess(id, data.result));
     } else {
-      dispatch(editSubscriptionPending(false));
       dispatch(editSubscriptionError(data.message));
     }
   } catch (error) {
