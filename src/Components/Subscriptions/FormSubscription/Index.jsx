@@ -70,6 +70,7 @@ const FormSubscription = () => {
   };
 
   const changeInputEdit = (e) => {
+    console.log(e.target.values);
     setEditSubscriptions({
       ...subscriptionEdit,
       [e.target.name]: e.target.name === 'members' ? [e.target.value] : e.target.value

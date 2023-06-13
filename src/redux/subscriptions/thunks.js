@@ -22,7 +22,6 @@ export const getSuscription = async (dispatch) => {
       dispatch(getSubscriptionPending(false));
       dispatch(getSubscriptionSuccess(data.data));
     } else {
-      dispatch(getSubscriptionPending(false));
       dispatch(getSubscriptionSuccess(data.message));
     }
   } catch (error) {
@@ -39,11 +38,10 @@ export const deleteSubscription = (id) => {
         method: 'DELETE'
       });
       const data = await response.json();
+      dispatch(deleteSubscriptionPending(false));
       if (data) {
         dispatch(deleteSubscriptionSuccess(id));
-        dispatch(deleteSubscriptionPending(false));
       } else {
-        dispatch(getSubscriptionPending(false));
         dispatch(getSubscriptionSuccess(data.message));
       }
     } catch (error) {
