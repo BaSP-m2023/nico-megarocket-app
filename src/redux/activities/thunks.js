@@ -20,9 +20,11 @@ export const getAllActivities = async (dispatch) => {
       }
     });
     if (response.ok) {
-      const { data } = await response.json();
+      const data = await response.json();
+      const newData = data.data;
+      console.log(newData);
       dispatch(getActivitiesPending(false));
-      dispatch(getActivitiesSuccess(data));
+      dispatch(getActivitiesSuccess(newData));
     } else {
       dispatch(getActivitiesPending(false));
       dispatch(getActivitiesError(true));
@@ -57,29 +59,34 @@ export const deleteActivity = (activityId) => {
   };
 };
 
-export const addActivity = (activity) => {
-  return async (dispatch) => {
-    try {
-      dispatch(addActivitiesPending(true));
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(activity)
-      });
-      if (response.ok) {
-        const { data } = await response.json();
-        dispatch(addActivitiesSuccess(data));
-        dispatch(addActivitiesPending(false));
-      } else {
-        dispatch(addActivitiesError(true));
-        dispatch(addActivitiesPending(false));
-      }
-    } catch (error) {
+export const addActivity = async (dispatch, newActivity) => {
+  console.log('consolelog3');
+  console.log(newActivity, 'LA NEW ACTIVITY');
+  try {
+    console.log('consolelog3');
+    dispatch(addActivitiesPending(true));
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newActivity)
+    });
+    if (response.ok) {
+      console.log('ifok');
+      const data = await response.json();
+      const newData = data;
+      console.log(newData);
+      dispatch(addActivitiesSuccess(newData));
       dispatch(addActivitiesPending(false));
+    } else {
+      console.log('ifnot');
       dispatch(addActivitiesError(true));
-      console.error(error);
+      dispatch(addActivitiesPending(false));
     }
-  };
+  } catch (error) {
+    dispatch(addActivitiesPending(false));
+    dispatch(addActivitiesError(true));
+    console.error(error);
+  }
 };

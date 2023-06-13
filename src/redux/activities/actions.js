@@ -62,10 +62,10 @@ export const addActivitiesPending = (pending) => {
   };
 };
 
-export const addActivitiesSuccess = (activity) => {
+export const addActivitiesSuccess = (list) => {
   return {
     type: ADD_ACTIVITIES_SUCCESS,
-    payload: activity
+    payload: list
   };
 };
 

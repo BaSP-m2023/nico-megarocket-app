@@ -2,9 +2,15 @@ import { useState, useEffect } from 'react';
 import style from './modalAdd.module.css';
 import { ModalConfirm, ModalSuccess, Inputs } from '../../Shared';
 import { Button } from '../../Shared/index';
+import { useDispatch } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { addActivity } from '../../../redux/activities/thunks';
 
 const ModalAddActivity = () => {
+  const dispatch = useDispatch();
+  /*const activities = useSelector((state) => state.activities.list);
+  const isPending = useSelector((state) => state.activities.pending);
+  const isError = useSelector((state) => state.activities.error);*/
   const [active, setActive] = useState(true);
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
@@ -66,7 +72,7 @@ const ModalAddActivity = () => {
     }
   };
 
-  const createActivityDB = async (bodyActivity) => {
+  /*const createActivityDB = async (bodyActivity) => {
     try {
       const activityNew = await fetch(`${process.env.REACT_APP_API_URL}/api/activity`, {
         method: 'POST',
@@ -79,7 +85,7 @@ const ModalAddActivity = () => {
     } catch (error) {
       console.error(error);
     }
-  };
+  };*/
 
   const editActivityDB = async (id, editActivities) => {
     try {
@@ -96,17 +102,19 @@ const ModalAddActivity = () => {
     }
   };
 
-  const addActivity = async ({ name, description, isActive }) => {
+  const postActivity = async ({ name, description, isActive }) => {
     let newActivity = {
       name,
       description,
       isActive
     };
-    await createActivityDB(newActivity);
+    console.log(newActivity);
+    addActivity(dispatch, newActivity);
   };
 
   const submitActivity = () => {
-    addActivity(bodyActivity);
+    console.log(postActivity);
+    postActivity(bodyActivity);
     setModalConfirmOpen(false);
     setModalSuccessOpen(true);
   };

@@ -72,7 +72,7 @@ const activityReducer = (state = INITIAL_STATE, action) => {
       const newActivity = action.payload;
       return {
         ...state,
-        list: [...state, newActivity]
+        list: [...state.list, newActivity]
       };
     }
     case ADD_ACTIVITIES_ERROR: {
