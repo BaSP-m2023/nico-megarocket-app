@@ -16,4 +16,5 @@ const rootReducer = combineReducers({
   classes: classesReducer,
   activities: activitiesReducer
 });
+
 export default rootReducer;
