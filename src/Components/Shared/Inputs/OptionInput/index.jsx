@@ -1,26 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './option-input.module.css';
 
-const SelectInput = ({ dataOptions }) => {
-  const [selectedOption, setSelectedOption] = useState('');
-
-  const handleSelect = (e) => {
-    setSelectedOption(e.target.value);
+const SelectInput = ({ data, dataLabel, onChangeOption, setValue, name }) => {
+  const ifFirstName = (item) => {
+    if (item.firstName && item.lastName) {
+      return `${item.firstName} ${item.lastName}`;
+    }
   };
+
+  const ifObject = (item) => {
+    if (typeof item === 'object') {
+      return item.activity ? `${item.activity.name} ${item.activity.hour}` : item.name;
+    }
+  };
+
   return (
     <div className={styles.containerInput}>
-      <label htmlFor="selectInput">Select an option:</label>
+      <label htmlFor="selectInput">{dataLabel}:</label>
       <select
+        onChange={onChangeOption}
+        value={setValue}
         className={styles.optionInput}
         id="selectInput"
-        value={selectedOption}
-        onChange={handleSelect}
+        name={name}
       >
-        <option value="">Default</option>
-        {dataOptions.map((select, index) => {
+        <option>Pick {name}</option>
+        {data.map((item, index) => {
           return (
-            <option key={index} value={select}>
-              {select}
+            <option key={index} value={item._id}>
+              {ifFirstName(item)}
+              {ifObject(item)}
             </option>
           );
         })}
