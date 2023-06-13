@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { Inputs, Button, ModalConfirm, ModalSuccess } from '../../Shared';
+import { Inputs, Button, ModalConfirm, ModalSuccess, OptionInput } from '../../Shared';
 import style from '../FormSubscription/modalAdd.module.css';
 import {
   addSubscriptions,
   updateSubscriptions,
   getSuscription
 } from '../../../redux/subscriptions/thunks';
+import { getClasses } from '../../../redux/classes/thunks';
+import { getAllMembers } from '../../../redux/members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
 const FormSubscription = () => {
@@ -16,26 +18,30 @@ const FormSubscription = () => {
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [bodySubscription, setBodySubscription] = useState({
     classId: '',
-    members: [],
+    members: '',
     date: ''
   });
 
   const [subscriptionEdit, setEditSubscriptions] = useState({
     classId: '',
-    members: [],
+    members: '',
     date: ''
   });
 
   const history = useHistory();
   const { id } = useParams();
   const data = useSelector((state) => state.subscription.data);
+  const classes = useSelector((state) => state.classes.list);
+  const members = useSelector((state) => state.members.list);
 
   useEffect(() => {
     getSuscription(dispatch);
+    getClasses(dispatch);
+    getAllMembers(dispatch);
     if (!id) {
       setBodySubscription({
         classId: '',
-        members: [],
+        members: '',
         date: ''
       });
     } else {
@@ -53,7 +59,10 @@ const FormSubscription = () => {
   }, [data.length === 0]);
 
   const changeInput = (e) => {
-    setBodySubscription({ ...bodySubscription, [e.target.name]: e.target.value });
+    setBodySubscription({
+      ...bodySubscription,
+      [e.target.name]: e.target.name === 'members' ? [e.target.value] : e.target.value
+    });
     const validFields = Object.values(bodySubscription).every((field) => {
       return field.length >= 3 && field !== '';
     });
@@ -63,7 +72,7 @@ const FormSubscription = () => {
   const changeInputEdit = (e) => {
     setEditSubscriptions({
       ...subscriptionEdit,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.name === 'members' ? [e.target.value] : e.target.value
     });
     if (e.target.value.length >= 3) {
       setIsValid(true);
@@ -75,7 +84,7 @@ const FormSubscription = () => {
   const createSubscriptionDB = async () => {
     const newSub = {
       classId: bodySubscription.classId,
-      members: [bodySubscription.members],
+      members: bodySubscription.members,
       date: bodySubscription.date
     };
     try {
@@ -121,19 +130,19 @@ const FormSubscription = () => {
     <section className={style.containerModal}>
       <form className={style.containerForm}>
         <h3>{id ? 'Edit subscription' : 'Add subscription'}</h3>
-        <Inputs
-          nameTitle="Class:"
-          type="text"
-          nameInput="classId"
-          change={id ? changeInputEdit : changeInput}
-          text={id ? subscriptionEdit.classId : bodySubscription.classId}
+        <OptionInput
+          data={classes}
+          dataLabel="Class"
+          onChangeOption={id ? changeInputEdit : changeInput}
+          setValue={id ? subscriptionEdit.classId : bodySubscription.classId}
+          name="classId"
         />
-        <Inputs
-          nameTitle="Member:"
-          type="text"
-          text={id ? subscriptionEdit.members : bodySubscription.members}
-          nameInput="members"
-          change={id ? changeInputEdit : changeInput}
+        <OptionInput
+          data={members}
+          dataLabel="Member"
+          onChangeOption={id ? changeInputEdit : changeInput}
+          setValue={id ? subscriptionEdit.members : bodySubscription.members}
+          name="members"
         />
         <Inputs
           nameTitle="Date:"

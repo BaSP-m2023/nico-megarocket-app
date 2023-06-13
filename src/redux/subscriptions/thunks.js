@@ -18,7 +18,7 @@ export const getSuscription = async (dispatch) => {
     dispatch(getSubscriptionPending(true));
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscription`);
     const data = await response.json();
-    if (data.data.length !== 0) {
+    if (response.ok) {
       dispatch(getSubscriptionPending(false));
       dispatch(getSubscriptionSuccess(data.data));
     } else {
