@@ -1,8 +1,9 @@
 import ButtonForm from '../ButtonForm';
 import styles from './table.module.css';
-import { ModalConfirm } from '../index';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { ModalConfirm, ModalSuccess } from '../index';
+import { useDispatch, useSelector } from 'react-redux';
+import { getClasses } from '../../../redux/classes/thunks';
 
 const TableComponent = ({
   columnTitleArray,
@@ -13,23 +14,34 @@ const TableComponent = ({
   valueField
 }) => {
   const fieldValue = valueField;
+  const [successModal, setModalSuccess] = useState(false);
 
   const [modalConfirm, setModalConfirm] = useState(false);
   const [idDelete, setIdDelete] = useState('');
 
   const dispatch = useDispatch();
+  const classs = useSelector((state) => state.classes.list);
+
+  useEffect(() => {
+    getClasses(dispatch);
+  }, []);
 
   const onConfirmOpen = (id) => {
     setModalConfirm(true);
     setIdDelete(id);
   };
 
+  const onConfirm = () => {
+    dispatch(deleteButton(idDelete));
+    setModalSuccess(true);
+  };
+
   const ifArray = (item) => {
     if (item) {
       if (Array.isArray(item)) {
-        return item.map((content, contentIndex) => (
+        return item?.map((content, contentIndex) => (
           <span key={contentIndex}>
-            {content[fieldValue.arrayFirstValue]} {content[fieldValue.arraySecondValue]}
+            {content[fieldValue?.arrayFirstValue]} {content[fieldValue?.arraySecondValue]}
           </span>
         ));
       }
@@ -38,8 +50,12 @@ const TableComponent = ({
 
   const ifObject = (item) => {
     if (item) {
+      if (item.activity) {
+        const findActivity = classs.find((act) => act._id === item._id);
+        return findActivity?.activity && `${findActivity.activity?.name} - ${findActivity?.hour}`;
+      }
       if (typeof item === 'object') {
-        return <span>{item[fieldValue.objectValue]}</span>;
+        return <span>{item[fieldValue?.objectValue]}</span>;
       }
     }
   };
@@ -49,7 +65,7 @@ const TableComponent = ({
       if (itemContent === 'firstName') {
         return (
           <span>
-            {item.firstName} {item.lastName}
+            {item?.firstName} {item?.lastName}
           </span>
         );
       } else {
@@ -59,7 +75,7 @@ const TableComponent = ({
   };
 
   const ifNotExist = (item) => {
-    if (!item || item.length === 0) {
+    if (!item || item?.length === 0) {
       return <span>This element Was Deleted. Edit to add</span>;
     }
   };
@@ -112,11 +128,14 @@ const TableComponent = ({
       )}
       {modalConfirm && (
         <ModalConfirm
-          onConfirm={() => dispatch(deleteButton(idDelete))}
+          onConfirm={() => onConfirm()}
           message="Are you sure to delete this?"
           method="Delete"
           setModalConfirmOpen={setModalConfirm}
         />
+      )}
+      {successModal && (
+        <ModalSuccess setModalSuccessOpen={setModalSuccess} message="Delete Successfully" />
       )}
     </section>
   );

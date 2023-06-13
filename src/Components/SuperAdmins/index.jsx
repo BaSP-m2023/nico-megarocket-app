@@ -40,7 +40,6 @@ const SuperAdmins = () => {
               handleClick={handleClick}
               deleteButton={superAdminDelete}
               columns={['email', 'password']}
-              autoDelete={() => {}}
             />
           )}
           {toastErrorOpen && (

@@ -1,29 +1,19 @@
 import { useEffect, useState } from 'react';
 import { AddButton, Loader, TableComponent, ToastError } from '../Shared';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getSuscription, deleteSubscription } from '../../redux/subscriptions/thunks';
 
 function Subscriptions() {
-  const [subscription, setSubscription] = useState([]);
-  const [toastErroOpen, setToastErroOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
-  const [loading, setLoading] = useState(true);
-
+  const dispatch = useDispatch();
   const history = useHistory();
+  const loading = useSelector((state) => state.subscription.pending);
+  const subscription = useSelector((state) => state.subscription.data);
+  const error = useSelector((state) => state.subscription.error);
+  const [toastError, setToastErroOpen] = useState(error);
 
-  const getSuscription = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscription`);
-      const data = await response.json();
-      setSubscription(data.data);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      setToastMessage(error);
-      setToastErroOpen(true);
-    }
-  };
   useEffect(() => {
-    getSuscription();
+    getSuscription(dispatch);
   }, []);
 
   const createMode = () => {
@@ -34,17 +24,9 @@ function Subscriptions() {
     history.push(`subscriptions/form/${item._id}`, { params: { ...item, mode: 'edit' } });
   };
 
-  const deleteSubscription = async (id) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/subscription/${id}`, {
-        method: 'DELETE'
-      });
-      const newSubscription = subscription.filter((subs) => subs._id !== id);
-      setSubscription(newSubscription);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  useEffect(() => {
+    setToastErroOpen(!!error);
+  }, [error]);
 
   const columnTitleArray = ['Classes', 'Members', 'Date'];
   const columns = ['classId', 'members', 'date'];
@@ -69,7 +51,7 @@ function Subscriptions() {
           columns={columns}
         />
       )}
-      {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
+      {toastError && <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />}
     </section>
   );
 }
