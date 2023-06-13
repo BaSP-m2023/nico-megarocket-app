@@ -64,14 +64,6 @@ const FormTrainer = () => {
     setModalUpdateConfirmOpen(true);
   };
 
-  /*  const handleModalConfirmation = () => {
-    updateTrainer(dispatch, id, trainerBody);
-    setModalUpdateConfirmOpen(false);
-    setTimeout(() => {
-      history.goBack();
-    }, 1000);
-  }; */
-
   const onChangeInputFirstName = (e) => {
     setInputForm({
       ...inputForm,
@@ -138,8 +130,9 @@ const FormTrainer = () => {
       }
     } else {
       const postTrainer = await dispatch(createTrainer(trainerBody));
+      console.log(postTrainer);
       if (postTrainer.type === 'ADD_TRAINER') {
-        setToastErrorOpen(false);
+        console.log('Entro al if');
         setModalSuccess(true);
         setTimeout(() => {
           history.goBack();

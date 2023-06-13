@@ -20,7 +20,7 @@ export const createTrainer = (body) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`, body);
       dispatch(addTrainerPending(false));
       const data = await response.json();
-      if (response.status === 200) {
+      if (response.ok) {
         dispatch(addTrainerError({ error: false, message: '' }));
         return dispatch(addTrainer(data));
       } else {
