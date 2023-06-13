@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import style from './modalAdd.module.css';
-import { ModalConfirm, ModalSuccess, Inputs } from '../../Shared';
-import { Button } from '../../Shared/index';
+import { ModalConfirm, ModalSuccess, Inputs, Button } from '../../Shared';
+import { useDispatch } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { addActivity, updateActivity } from '../../../redux/activities/thunks';
 
 const ModalAddActivity = () => {
+  const dispatch = useDispatch();
   const [active, setActive] = useState(true);
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
@@ -66,53 +68,23 @@ const ModalAddActivity = () => {
     }
   };
 
-  const createActivityDB = async (bodyActivity) => {
-    try {
-      const activityNew = await fetch(`${process.env.REACT_APP_API_URL}/api/activity`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(bodyActivity)
-      });
-      return activityNew.json();
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const editActivityDB = async (id, editActivities) => {
-    try {
-      let activityEdited = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(editActivities)
-      });
-      return activityEdited.json();
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const addActivity = async ({ name, description, isActive }) => {
+  const postActivity = async ({ name, description, isActive }) => {
     let newActivity = {
       name,
       description,
       isActive
     };
-    await createActivityDB(newActivity);
+    addActivity(dispatch, newActivity);
   };
 
   const submitActivity = () => {
-    addActivity(bodyActivity);
+    postActivity(bodyActivity);
     setModalConfirmOpen(false);
     setModalSuccessOpen(true);
   };
 
   const submitEdited = (id, activitiesEd) => {
-    editActivityDB(id, activitiesEd);
+    updateActivity(dispatch, id, activitiesEd);
     setModalConfirmOpen(false);
     setModalSuccessOpen(true);
   };
