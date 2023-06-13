@@ -2,11 +2,15 @@ import {
   GET_ADMINS_PENDING,
   GET_ADMINS_SUCCESS,
   GET_ADMINS_ERROR,
-  ADD_ADMIN_SUCCESS,
-  EDIT_ADMIN_SUCCESS,
   DELETE_ADMIN_PENDING,
   DELETE_ADMIN_SUCCESS,
-  DELETE_ADMIN_ERROR
+  DELETE_ADMIN_ERROR,
+  ADD_ADMIN_PENDING,
+  ADD_ADMIN_SUCCESS,
+  ADD_ADMIN_ERROR,
+  EDIT_ADMIN_PENDING,
+  EDIT_ADMIN_SUCCESS,
+  EDIT_ADMIN_ERROR
 } from './constants';
 
 export const getAdminsPending = (pending) => {
@@ -50,6 +54,14 @@ export const deleteAdminError = (error) => {
     payload: error
   };
 };
+
+export const addAdminPending = (pending) => {
+  return {
+    type: ADD_ADMIN_PENDING,
+    payload: pending
+  };
+};
+
 export const addAdminSuccess = (admin) => {
   return {
     type: ADD_ADMIN_SUCCESS,
@@ -57,9 +69,30 @@ export const addAdminSuccess = (admin) => {
   };
 };
 
+export const addAdminError = (error) => {
+  return {
+    type: ADD_ADMIN_ERROR,
+    payload: error
+  };
+};
+
+export const editAdminPending = (pending) => {
+  return {
+    type: EDIT_ADMIN_PENDING,
+    payload: pending
+  };
+};
+
 export const editAdminSuccess = (admin) => {
   return {
     type: EDIT_ADMIN_SUCCESS,
     payload: admin
+  };
+};
+
+export const editAdminError = (error) => {
+  return {
+    type: EDIT_ADMIN_ERROR,
+    payload: error
   };
 };

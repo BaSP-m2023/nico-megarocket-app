@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styles from './form.module.css';
 import { ModalConfirm, ToastError, ModalSuccess, Inputs, Button } from '../../Shared';
 import { useParams, useLocation, useHistory } from 'react-router-dom';
+import { createAdmin, updateAdmin } from '../../../redux/admins/thunks';
+import { useDispatch } from 'react-redux';
 
 const FormAdmin = () => {
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
@@ -23,6 +25,7 @@ const FormAdmin = () => {
   const { id } = useParams();
   const location = useLocation();
   const data = location.state.params;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (data.mode === 'create') {
@@ -52,14 +55,7 @@ const FormAdmin = () => {
 
   const addAdmins = async () => {
     try {
-      const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(inputValue)
-      });
-      const data = await resp.json();
+      createAdmin(dispatch, inputValue);
       if (!data.error) {
         if (validatePasswords()) {
           confirmation();
@@ -80,14 +76,7 @@ const FormAdmin = () => {
 
   const addEditAdmins = async () => {
     try {
-      const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(inputValue)
-      });
-      const data = await resp.json();
+      updateAdmin(dispatch, id, inputValue);
       if (!data.error) {
         if (validatePasswords()) {
           confirmation();
@@ -125,6 +114,7 @@ const FormAdmin = () => {
       history.push('/admins/');
     }, 2000);
   };
+
   const submitAdmin = () => {
     if (!editMode) {
       setModalConfirmOpen(false);

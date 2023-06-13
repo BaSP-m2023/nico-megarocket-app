@@ -28,7 +28,7 @@ function Admins() {
   }, []);
 
   useEffect(() => {
-    setToastErroOpen(!isError);
+    setToastErroOpen(!!isError);
   }, [isError]);
 
   return (

@@ -2,8 +2,12 @@ import {
   GET_MEMBERS_PENDING,
   GET_MEMBERS_SUCCESS,
   GET_MEMBERS_ERROR,
+  ADD_MEMBER_PENDING,
   ADD_MEMBER_SUCCESS,
+  ADD_MEMBER_ERROR,
+  EDIT_MEMBER_PENDING,
   EDIT_MEMBER_SUCCESS,
+  EDIT_MEMBER_ERROR,
   DELETE_MEMBER_PENDING,
   DELETE_MEMBER_SUCCESS,
   DELETE_MEMBER_ERROR
@@ -30,6 +34,13 @@ export const getMembersError = (error) => {
   };
 };
 
+export const addMemberPending = (pending) => {
+  return {
+    type: ADD_MEMBER_PENDING,
+    payload: pending
+  };
+};
+
 export const addMemberSuccess = (member) => {
   return {
     type: ADD_MEMBER_SUCCESS,
@@ -37,10 +48,31 @@ export const addMemberSuccess = (member) => {
   };
 };
 
+export const addMemberError = (error) => {
+  return {
+    type: ADD_MEMBER_ERROR,
+    payload: error
+  };
+};
+
+export const editMemberPending = (pending) => {
+  return {
+    type: EDIT_MEMBER_PENDING,
+    payload: pending
+  };
+};
+
 export const editMemberSuccess = (member) => {
   return {
     type: EDIT_MEMBER_SUCCESS,
     payload: member
+  };
+};
+
+export const editMemberError = (error) => {
+  return {
+    type: EDIT_MEMBER_ERROR,
+    payload: error
   };
 };
 
