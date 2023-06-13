@@ -46,7 +46,10 @@ const FormSubscription = () => {
   }, []);
 
   const changeInput = (e) => {
-    setBodySubscription({ ...bodySubscription, [e.target.name]: e.target.value });
+    setBodySubscription({
+      ...bodySubscription,
+      [e.target.name]: e.target.name === 'members' ? [e.target.value] : e.target.value
+    });
     const validFields = Object.values(bodySubscription).every((field) => {
       return field.length >= 3 && field !== '';
     });
@@ -54,9 +57,10 @@ const FormSubscription = () => {
   };
 
   const changeInputEdit = (e) => {
+    console.log(e.target.values);
     setEditSubscriptions({
       ...subscriptionEdit,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.name === 'members' ? [e.target.value] : e.target.value
     });
     if (e.target.value.length >= 3) {
       setIsValid(true);
