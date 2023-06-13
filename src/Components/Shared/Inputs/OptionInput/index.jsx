@@ -4,13 +4,13 @@ import styles from './option-input.module.css';
 const SelectInput = ({ data, dataLabel, onChangeOption, setValue, name }) => {
   const ifFirstName = (item) => {
     if (item.firstName && item.lastName) {
-      return `${item.firstName} ${item?.lastName}`;
+      return `${item.firstName} ${item.lastName}`;
     }
   };
 
   const ifObject = (item) => {
     if (typeof item.activity === 'object') {
-      return item.activity ? `${item.activity.name} ${item.hour}` : `incomplete ${dataLabel}`;
+      return item.activity ? `${item.activity.name} -  ${item.hour}` : `incomplete ${dataLabel}`;
     }
     if (typeof item === 'object') {
       return item ? item.name : `incomplete ${dataLabel}`;

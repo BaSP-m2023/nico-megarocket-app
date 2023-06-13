@@ -4,11 +4,18 @@ import {
   GET_CLASSES_ERROR,
   DELETE_CLASSES_PENDING,
   DELETE_CLASSES_SUCCESS,
-  DELETE_CLASSES_ERROR
+  DELETE_CLASSES_ERROR,
+  ADD_CLASSES_PENDING,
+  ADD_CLASSES_SUCCESS,
+  ADD_CLASSES_ERROR,
+  EDIT_CLASSES_PENDING,
+  EDIT_CLASSES_SUCCESS,
+  EDIT_CLASSES_ERROR
 } from './constants';
 
 const initialState = {
-  list: []
+  list: [],
+  error: ''
 };
 
 const classesReducer = (state = initialState, action) => {
@@ -46,6 +53,42 @@ const classesReducer = (state = initialState, action) => {
       };
     }
     case DELETE_CLASSES_ERROR: {
+      return {
+        ...state,
+        error: action.payload
+      };
+    }
+    case ADD_CLASSES_PENDING: {
+      return {
+        ...state,
+        pending: action.payload
+      };
+    }
+    case ADD_CLASSES_SUCCESS: {
+      return {
+        ...state,
+        success: [...state.list, action.payload]
+      };
+    }
+    case ADD_CLASSES_ERROR: {
+      return {
+        ...state,
+        error: action.payload
+      };
+    }
+    case EDIT_CLASSES_PENDING: {
+      return {
+        ...state,
+        pending: action.payload
+      };
+    }
+    case EDIT_CLASSES_SUCCESS: {
+      return {
+        ...state,
+        success: [state]
+      };
+    }
+    case EDIT_CLASSES_ERROR: {
       return {
         ...state,
         error: action.payload

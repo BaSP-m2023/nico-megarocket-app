@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { ToastError, AddButton, TableComponent, Loader } from '../Shared';
+import React, { useEffect } from 'react';
+import { AddButton, TableComponent, Loader } from '../Shared';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getClasses, deleteClass } from '../../redux/classes/thunks';
 
 function Projects() {
-  const [toastErrorOpen, setToastErrorOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
   const dispatch = useDispatch();
   const classes = useSelector((state) => state.classes.list);
   const loading = useSelector((state) => state.classes.pending);
-  const error = useSelector((state) => state.classes.error);
 
   const columnTitleArray = ['Activity', 'Day', 'Hour', 'Trainer', 'Slots'];
 
@@ -28,18 +25,13 @@ function Projects() {
     getClasses(dispatch);
   }, []);
 
-  useEffect(() => {
-    setToastErrorOpen(!!error);
-    setToastMessage(error);
-  }, [error]);
-
   const createMode = () => {
     history.push('/classes/ClassForm', { params: { mode: 'create' } });
   };
 
   const handleClick = (item) => {
     history.push(`/classes/ClassForm/${item._id}`, {
-      params: { item: item, mode: 'edit' }
+      params: { mode: 'edit' }
     });
   };
 
@@ -58,7 +50,6 @@ function Projects() {
           valueField={valueField}
         />
       )}
-      {toastErrorOpen && <ToastError setToastErroOpen={setToastErrorOpen} message={toastMessage} />}
     </section>
   );
 }

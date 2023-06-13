@@ -3,17 +3,20 @@ import { AddButton, Loader, TableComponent, ToastError } from '../Shared';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getSuscription, deleteSubscription } from '../../redux/subscriptions/thunks';
+import { getClasses } from '../../redux/classes/thunks';
 
 function Subscriptions() {
   const dispatch = useDispatch();
   const history = useHistory();
   const loading = useSelector((state) => state.subscription.pending);
   const subscription = useSelector((state) => state.subscription.data);
+  const classes = useSelector((state) => state.classes.list);
   const error = useSelector((state) => state.subscription.error);
   const [toastError, setToastErroOpen] = useState(error);
 
   useEffect(() => {
     getSuscription(dispatch);
+    getClasses(dispatch);
   }, []);
 
   const createMode = () => {
@@ -49,6 +52,7 @@ function Subscriptions() {
           deleteButton={deleteSubscription}
           valueField={valueField}
           columns={columns}
+          classes={classes}
         />
       )}
       {toastError && <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />}
