@@ -64,7 +64,7 @@ const subscriptionReducer = (state = initialState, action) => {
     case POST_SUBSCRIPTION_SUCCESS: {
       return {
         ...state,
-        data: action.payload
+        data: [...state.data, action.payload]
       };
     }
 

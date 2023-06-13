@@ -34,10 +34,13 @@ export const getSubscriptionError = (error) => {
   };
 };
 
-export const editSubscriptionSuccess = (id) => {
+export const editSubscriptionSuccess = (id, data) => {
   return {
     type: PUT_SUBSCRIPTION_SUCCESS,
-    payload: id
+    payload: {
+      id: id,
+      data: data
+    }
   };
 };
 
