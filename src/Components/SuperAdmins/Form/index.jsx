@@ -81,7 +81,6 @@ const Form = () => {
     } else {
       setModalConfirmOpen(false);
       const putSupAdmin = await dispatch(updateSuperAdmin(inputValue, id));
-      console.log(putSupAdmin);
       if (putSupAdmin.type === 'PUT_SUPERADMIN_SUCCESS') {
         confirmation();
       }
@@ -90,28 +89,33 @@ const Form = () => {
 
   return (
     <form className={styles.formSuperAdmin}>
-      <Inputs
-        text={inputValue.email}
-        type="text"
-        change={onChangeInputEmail}
-        nameInput={'email'}
-        nameTitle={'Email'}
-      />
-      <Inputs
-        text={inputValue.password}
-        type="password"
-        change={onChangeInputPassword}
-        nameInput={'password'}
-        nameTitle={'Password'}
-      />
-      <Button clickAction={openModal} text="Submit" />
-      <Button
-        clickAction={(e) => {
-          e.preventDefault();
-          history.goBack();
-        }}
-        text="Cancel"
-      />
+      <div className={styles.containerForm}>
+        <Inputs
+          text={inputValue.email}
+          type="text"
+          change={onChangeInputEmail}
+          nameInput={'email'}
+          nameTitle={'Email'}
+        />
+        <Inputs
+          text={inputValue.password}
+          type="password"
+          change={onChangeInputPassword}
+          nameInput={'password'}
+          nameTitle={'Password'}
+        />
+      </div>
+      <div className={styles.sub_buttons}>
+        <Button clickAction={openModal} text="Submit" />
+        <Button
+          clickAction={(e) => {
+            e.preventDefault();
+            history.goBack();
+          }}
+          text="Cancel"
+        />
+      </div>
+
       {modalConfirmOpen && (
         <ModalConfirm
           method={editMode ? 'Edit' : 'Create'}

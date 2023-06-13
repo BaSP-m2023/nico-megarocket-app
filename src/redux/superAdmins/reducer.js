@@ -93,7 +93,8 @@ export const superAdminReducer = (state = INITIAL_STATE, action) => {
     case PUT_SUPERADMIN_ERROR: {
       return {
         ...state,
-        loading: false
+        loading: false,
+        error: action.payload
       };
     }
     case DELETE_SUPERADMIN_PENDING: {
