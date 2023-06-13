@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import style from './modalAdd.module.css';
-import { ModalConfirm, ModalSuccess, Inputs } from '../../Shared';
-import { Button } from '../../Shared/index';
+import { ModalConfirm, ModalSuccess, Inputs, Button } from '../../Shared';
 import { useDispatch } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { addActivity, updateActivity } from '../../../redux/activities/thunks';
