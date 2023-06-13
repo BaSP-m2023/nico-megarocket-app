@@ -4,7 +4,13 @@ import {
   getClassError,
   deleteClassPending,
   deleteClassSuccess,
-  deleteClassError
+  deleteClassError,
+  addClassPending,
+  addClassSuccess,
+  addClassError,
+  editClassPending,
+  editClassSuccess,
+  editClassError
 } from './actions';
 
 export const getClasses = async (dispatch) => {
@@ -46,4 +52,38 @@ export const deleteClass = (id) => {
       console.error(error);
     }
   };
+};
+
+export const createClass = async (body, dispatch) => {
+  try {
+    dispatch(addClassPending(true));
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class`, body);
+    const data = await response.json();
+    if (response.status !== 200) {
+      dispatch(addClassPending(false));
+      dispatch(addClassError(data.error));
+    } else {
+      dispatch(addClassPending(false));
+      dispatch(addClassSuccess(body));
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const updateClass = async (id, body, dispatch) => {
+  try {
+    dispatch(editClassPending(true));
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, body);
+    const data = await response.json();
+    if (response.status !== 200) {
+      dispatch(editClassPending(false));
+      dispatch(editClassError(data.message));
+    } else {
+      dispatch(editClassPending(false));
+      dispatch(editClassSuccess(body));
+    }
+  } catch (error) {
+    console.error(error);
+  }
 };

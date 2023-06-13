@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import formStyles from '../Form/formClasses.module.css';
 import { ModalConfirm, ModalSuccess, ToastError, Button, Inputs } from '../../Shared';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getClasses, createClass, updateClass } from '../../../redux/classes/thunks';
 
 const FormClasses = () => {
   const [modalUpdateConfirmOpen, setModalUpdateConfirmOpen] = useState(false);
@@ -13,22 +15,30 @@ const FormClasses = () => {
   const { id } = useParams();
   const locationObject = useLocation();
   const updateData = locationObject.state.params;
+  const classes = useSelector((state) => state.classes.list);
+  const error = useSelector((state) => state.classes.error);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const updateItem = classes.find((item) => item._id === id);
+
+  useEffect(() => {
+    getClasses(dispatch);
+  }, []);
 
   useEffect(() => {
     {
       updateData.mode === 'edit'
         ? setInputForm({
-            hour: updateData.item.hour,
-            day: updateData.item.day,
-            trainer: updateData.item.trainer ? updateData.item.trainer.map((item) => item._id) : '',
-            activity: updateData.item.activity ? updateData.item.activity._id : '',
-            slots: updateData.item.slots
+            hour: updateItem?.hour,
+            day: updateItem?.day,
+            trainer: updateItem?.trainer ? updateItem.trainer.map((item) => item._id) : '',
+            activity: updateItem?.activity ? updateItem.activity._id : '',
+            slots: updateItem?.slots
           })
         : setInputForm({ hour: '', day: '', trainer: '', activity: '', slots: '' });
     }
-  }, []);
-
-  const history = useHistory();
+  }, [classes && classes.length === 0]);
 
   const classBody = {
     method: updateData.mode === 'edit' ? 'PUT' : 'POST',
@@ -38,53 +48,19 @@ const FormClasses = () => {
     body: JSON.stringify(inputForm)
   };
 
-  const createClass = async (body) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class`, body);
-      const data = await response.json();
-      if (data.error === true) {
-        setToastMessage(data.message);
-        setToastErrorOpen(true);
-      } else {
-        setSuccessMessage('The class has been created successfully.');
-        setModalSuccessOpen(true);
-        setTimeout(() => {
-          history.push('/classes');
-          setModalSuccessOpen(false);
-        }, 2000);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const updateClass = async (id, body) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, body);
-      const data = await response.json();
-      if (data.error === true) {
-        setToastMessage(data.message);
-        setToastErrorOpen(true);
-      } else {
-        setSuccessMessage('The class has been updated successfully.');
-        setModalSuccessOpen(true);
-        setTimeout(() => {
-          history.push('/classes');
-          setModalSuccessOpen(false);
-        }, 2000);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const handleUpdateButtonClick = () => {
     setModalUpdateConfirmOpen(true);
   };
 
   const handleModalConfirmation = () => {
-    updateClass(id, classBody);
+    updateClass(id, classBody, dispatch);
     setModalUpdateConfirmOpen(false);
+    setSuccessMessage('The class has been updated successfully.');
+    setModalSuccessOpen(true);
+    setTimeout(() => {
+      history.push('/classes');
+      setModalSuccessOpen(false);
+    }, 2000);
   };
 
   const onChangeHour = (e) => {
@@ -126,9 +102,25 @@ const FormClasses = () => {
     e.preventDefault();
 
     if (updateData.mode === 'edit') {
-      handleUpdateButtonClick();
+      if (typeof error === 'string') {
+        setToastMessage(error);
+        setToastErrorOpen(true);
+      } else {
+        handleUpdateButtonClick();
+      }
     } else {
-      createClass(classBody);
+      if (error) {
+        setToastMessage(error);
+        setToastErrorOpen(true);
+      } else {
+        createClass(classBody, dispatch);
+        setSuccessMessage('The class has been created successfully.');
+        setModalSuccessOpen(true);
+        setTimeout(() => {
+          history.push('/classes');
+          setModalSuccessOpen(false);
+        }, 2000);
+      }
     }
   };
 
