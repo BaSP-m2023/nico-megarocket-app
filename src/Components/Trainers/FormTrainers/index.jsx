@@ -130,9 +130,7 @@ const FormTrainer = () => {
       }
     } else {
       const postTrainer = await dispatch(createTrainer(trainerBody));
-      console.log(postTrainer);
       if (postTrainer.type === 'ADD_TRAINER') {
-        console.log('Entro al if');
         setModalSuccess(true);
         setTimeout(() => {
           history.goBack();
