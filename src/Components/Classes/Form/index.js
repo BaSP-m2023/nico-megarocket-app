@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import formStyles from '../Form/formClasses.module.css';
-import { ModalConfirm, ModalSuccess, ToastError, Button, Inputs } from '../../Shared';
+import { ModalConfirm, ModalSuccess, Button, Inputs, OptionInput } from '../../Shared';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getClasses, createClass, updateClass } from '../../../redux/classes/thunks';
+import { getTrainers } from '../../../redux/trainers/thunks';
+import { getAllActivities } from './../../../redux/activities/thunks';
 
 const FormClasses = () => {
   const [modalUpdateConfirmOpen, setModalUpdateConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
-  const [toastErrorOpen, setToastErrorOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
   const [inputForm, setInputForm] = useState('');
   const { id } = useParams();
   const locationObject = useLocation();
   const updateData = locationObject.state.params;
   const classes = useSelector((state) => state.classes.list);
-  const error = useSelector((state) => state.classes.error);
+  const trainers = useSelector((state) => state.trainers.list);
+  const activities = useSelector((state) => state.activities.list);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -24,6 +25,8 @@ const FormClasses = () => {
 
   useEffect(() => {
     getClasses(dispatch);
+    getTrainers(dispatch);
+    getAllActivities(dispatch);
   }, []);
 
   useEffect(() => {
@@ -102,25 +105,15 @@ const FormClasses = () => {
     e.preventDefault();
 
     if (updateData.mode === 'edit') {
-      if (typeof error === 'string') {
-        setToastMessage(error);
-        setToastErrorOpen(true);
-      } else {
-        handleUpdateButtonClick();
-      }
+      handleUpdateButtonClick();
     } else {
-      if (error) {
-        setToastMessage(error);
-        setToastErrorOpen(true);
-      } else {
-        createClass(classBody, dispatch);
-        setSuccessMessage('The class has been created successfully.');
-        setModalSuccessOpen(true);
-        setTimeout(() => {
-          history.push('/classes');
-          setModalSuccessOpen(false);
-        }, 2000);
-      }
+      createClass(classBody, dispatch);
+      setSuccessMessage('The class has been created successfully.');
+      setModalSuccessOpen(true);
+      setTimeout(() => {
+        history.push('/classes');
+        setModalSuccessOpen(false);
+      }, 2000);
     }
   };
 
@@ -150,22 +143,22 @@ const FormClasses = () => {
               nameTitle="Day"
             />
 
-            <Inputs
-              text={inputForm.trainer}
-              type={'text'}
-              isDisabled={false}
-              change={onChangeTrainer}
-              nameInput={'trainer'}
-              nameTitle="Trainer"
+            <OptionInput
+              data={trainers}
+              dataLabel="Trainers"
+              onChangeOption={onChangeTrainer}
+              setValue={inputForm.trainer}
+              name="trainer"
             />
-            <Inputs
-              text={inputForm.activity}
-              type={'text'}
-              isDisabled={false}
-              change={onChangeActivity}
-              nameInput={'activity'}
-              nameTitle="Activity"
+
+            <OptionInput
+              data={activities}
+              dataLabel="Activities"
+              onChangeOption={onChangeActivity}
+              setValue={inputForm.activity}
+              name="activity"
             />
+
             <Inputs
               text={inputForm.slots}
               type={'text'}
@@ -199,7 +192,6 @@ const FormClasses = () => {
           <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
         )}
       </div>
-      {toastErrorOpen && <ToastError setToastErroOpen={setToastErrorOpen} message={toastMessage} />}
     </div>
   );
 };
