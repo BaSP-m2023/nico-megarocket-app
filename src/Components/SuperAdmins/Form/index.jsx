@@ -71,17 +71,18 @@ const Form = () => {
     }, 2000);
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (!editMode) {
       setModalConfirmOpen(false);
-      addSuperAdmin(dispatch, inputValue);
-      if (!anError) {
+      const postSupAdmin = await dispatch(addSuperAdmin(inputValue));
+      if (postSupAdmin.type === 'POST_SUPERADMIN_SUCCESS') {
         confirmation();
       }
     } else {
       setModalConfirmOpen(false);
-      updateSuperAdmin(dispatch, inputValue, id);
-      if (!anError) {
+      const putSupAdmin = await dispatch(updateSuperAdmin(inputValue, id));
+      console.log(putSupAdmin);
+      if (putSupAdmin.type === 'PUT_SUPERADMIN_SUCCESS') {
         confirmation();
       }
     }
