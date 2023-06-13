@@ -1,9 +1,8 @@
 import ButtonForm from '../ButtonForm';
 import styles from './table.module.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ModalConfirm, ModalSuccess } from '../index';
-import { useDispatch, useSelector } from 'react-redux';
-import { getClasses } from '../../../redux/classes/thunks';
+import { useDispatch } from 'react-redux';
 
 const TableComponent = ({
   columnTitleArray,
@@ -11,7 +10,8 @@ const TableComponent = ({
   handleClick,
   deleteButton,
   columns,
-  valueField
+  valueField,
+  classes
 }) => {
   const fieldValue = valueField;
   const [successModal, setModalSuccess] = useState(false);
@@ -20,11 +20,6 @@ const TableComponent = ({
   const [idDelete, setIdDelete] = useState('');
 
   const dispatch = useDispatch();
-  const classs = useSelector((state) => state.classes.list);
-
-  useEffect(() => {
-    getClasses(dispatch);
-  }, []);
 
   const onConfirmOpen = (id) => {
     setModalConfirm(true);
@@ -51,7 +46,7 @@ const TableComponent = ({
   const ifObject = (item) => {
     if (item) {
       if (item.activity) {
-        const findActivity = classs.find((act) => act._id === item._id);
+        const findActivity = classes.find((act) => act._id === item._id);
         return findActivity?.activity && `${findActivity.activity?.name} - ${findActivity?.hour}`;
       }
       if (typeof item === 'object') {
