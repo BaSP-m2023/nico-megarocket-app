@@ -71,17 +71,17 @@ const Form = () => {
     }, 2000);
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (!editMode) {
       setModalConfirmOpen(false);
-      addSuperAdmin(dispatch, inputValue);
-      if (!anError) {
+      const postSupAdmin = await dispatch(addSuperAdmin(inputValue));
+      if (postSupAdmin.type === 'POST_SUPERADMIN_SUCCESS') {
         confirmation();
       }
     } else {
       setModalConfirmOpen(false);
-      updateSuperAdmin(dispatch, inputValue, id);
-      if (!anError) {
+      const putSupAdmin = await dispatch(updateSuperAdmin(inputValue, id));
+      if (putSupAdmin.type === 'PUT_SUPERADMIN_SUCCESS') {
         confirmation();
       }
     }
@@ -89,28 +89,33 @@ const Form = () => {
 
   return (
     <form className={styles.formSuperAdmin}>
-      <Inputs
-        text={inputValue.email}
-        type="text"
-        change={onChangeInputEmail}
-        nameInput={'email'}
-        nameTitle={'Email'}
-      />
-      <Inputs
-        text={inputValue.password}
-        type="password"
-        change={onChangeInputPassword}
-        nameInput={'password'}
-        nameTitle={'Password'}
-      />
-      <Button clickAction={openModal} text="Submit" />
-      <Button
-        clickAction={(e) => {
-          e.preventDefault();
-          history.goBack();
-        }}
-        text="Cancel"
-      />
+      <div className={styles.containerForm}>
+        <Inputs
+          text={inputValue.email}
+          type="text"
+          change={onChangeInputEmail}
+          nameInput={'email'}
+          nameTitle={'Email'}
+        />
+        <Inputs
+          text={inputValue.password}
+          type="password"
+          change={onChangeInputPassword}
+          nameInput={'password'}
+          nameTitle={'Password'}
+        />
+      </div>
+      <div className={styles.sub_buttons}>
+        <Button clickAction={openModal} text="Submit" />
+        <Button
+          clickAction={(e) => {
+            e.preventDefault();
+            history.goBack();
+          }}
+          text="Cancel"
+        />
+      </div>
+
       {modalConfirmOpen && (
         <ModalConfirm
           method={editMode ? 'Edit' : 'Create'}

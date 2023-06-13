@@ -24,44 +24,48 @@ export const getSuperAdmins = async (dispatch) => {
   }
 };
 
-export const addSuperAdmin = async (dispatch, supAdminData) => {
-  try {
-    dispatch(postSuperAdminPending());
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(supAdminData)
-    });
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.message);
+export const addSuperAdmin = (supAdminData) => {
+  return async (dispatch) => {
+    try {
+      dispatch(postSuperAdminPending());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(supAdminData)
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
+      return dispatch(postSuperAdminSuccess(data.result));
+    } catch (error) {
+      return dispatch(postSuperAdminError(error.message));
     }
-    dispatch(postSuperAdminSuccess(data.result));
-  } catch (error) {
-    dispatch(postSuperAdminError(error.message));
-  }
+  };
 };
 
-export const updateSuperAdmin = async (dispatch, supAdminData, id) => {
-  try {
-    dispatch(putSuperAdminPending());
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(supAdminData)
-    });
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.message);
+export const updateSuperAdmin = (supAdminData, id) => {
+  return async (dispatch) => {
+    try {
+      dispatch(putSuperAdminPending());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(supAdminData)
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
+      return dispatch(putSuperAdminSuccess(data));
+    } catch (error) {
+      return dispatch(putSuperAdminError(error.message));
     }
-    dispatch(putSuperAdminSuccess(data));
-  } catch (error) {
-    dispatch(putSuperAdminError(error.message));
-  }
+  };
 };
 
 export const superAdminDelete = (superAdminID) => {
