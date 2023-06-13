@@ -7,10 +7,10 @@ import {
   DELETE_ACTIVITIES_ERROR,
   ADD_ACTIVITIES_PENDING,
   ADD_ACTIVITIES_SUCCESS,
-  ADD_ACTIVITIES_ERROR
-  /*UPDATE_ACTIVITIES_PENDING,
+  ADD_ACTIVITIES_ERROR,
+  UPDATE_ACTIVITIES_PENDING,
   UPDATE_ACTIVITIES_SUCCESS,
-  UPDATE_ACTIVITIES_ERROR*/
+  UPDATE_ACTIVITIES_ERROR
 } from './constants';
 
 export const getActivitiesPending = (pending) => {
@@ -76,7 +76,7 @@ export const addActivitiesError = (error) => {
   };
 };
 
-/*export const updateActivitiesPending = (pending) => {
+export const updateActivitiesPending = (pending) => {
   return {
     type: UPDATE_ACTIVITIES_PENDING,
     payload: pending
@@ -95,4 +95,4 @@ export const updateActivitiesError = (error) => {
     type: UPDATE_ACTIVITIES_ERROR,
     payload: error
   };
-};*/
+};

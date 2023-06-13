@@ -4,7 +4,7 @@ import { ModalConfirm, ModalSuccess, Inputs } from '../../Shared';
 import { Button } from '../../Shared/index';
 import { useDispatch } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom/cjs/react-router-dom.min';
-import { addActivity } from '../../../redux/activities/thunks';
+import { addActivity, updateActivity } from '../../../redux/activities/thunks';
 
 const ModalAddActivity = () => {
   const dispatch = useDispatch();
@@ -72,22 +72,7 @@ const ModalAddActivity = () => {
     }
   };
 
-  /*const createActivityDB = async (bodyActivity) => {
-    try {
-      const activityNew = await fetch(`${process.env.REACT_APP_API_URL}/api/activity`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(bodyActivity)
-      });
-      return activityNew.json();
-    } catch (error) {
-      console.error(error);
-    }
-  };*/
-
-  const editActivityDB = async (id, editActivities) => {
+  /*const editActivityDB = async (id, editActivities) => {
     try {
       let activityEdited = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${id}`, {
         method: 'PUT',
@@ -100,7 +85,7 @@ const ModalAddActivity = () => {
     } catch (error) {
       console.error(error);
     }
-  };
+  };*/
 
   const postActivity = async ({ name, description, isActive }) => {
     let newActivity = {
@@ -120,7 +105,7 @@ const ModalAddActivity = () => {
   };
 
   const submitEdited = (id, activitiesEd) => {
-    editActivityDB(id, activitiesEd);
+    updateActivity(dispatch, id, activitiesEd);
     setModalConfirmOpen(false);
     setModalSuccessOpen(true);
   };

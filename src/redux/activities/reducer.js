@@ -7,10 +7,10 @@ import {
   DELETE_ACTIVITIES_ERROR,
   ADD_ACTIVITIES_PENDING,
   ADD_ACTIVITIES_SUCCESS,
-  ADD_ACTIVITIES_ERROR
-  /*UPDATE_ACTIVITIES_PENDING,
+  ADD_ACTIVITIES_ERROR,
+  UPDATE_ACTIVITIES_PENDING,
   UPDATE_ACTIVITIES_SUCCESS,
-  UPDATE_ACTIVITIES_ERROR*/
+  UPDATE_ACTIVITIES_ERROR
 } from './constants';
 
 const INITIAL_STATE = {
@@ -82,18 +82,20 @@ const activityReducer = (state = INITIAL_STATE, action) => {
       };
     }
 
-    /*case UPDATE_ACTIVITIES_PENDING: {
+    case UPDATE_ACTIVITIES_PENDING: {
       return {
         ...state,
         pending: action.payload
       };
     }
     case UPDATE_ACTIVITIES_SUCCESS: {
-      const newList = state.list.filter((activity) => {
-        return activity._id !== action.payload;
-      });
+      const newActivity = action.payload;
+      const newActivities = state.list.map((activity) =>
+        activity._id === newActivity._id ? { ...activity, ...newActivity } : activity
+      );
       return {
-        list: [...newList]
+        ...state,
+        list: newActivities
       };
     }
     case UPDATE_ACTIVITIES_ERROR: {
@@ -101,7 +103,7 @@ const activityReducer = (state = INITIAL_STATE, action) => {
         ...state,
         error: action.payload
       };
-    }*/
+    }
 
     default:
       return state;

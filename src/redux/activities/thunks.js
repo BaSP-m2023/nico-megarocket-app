@@ -7,7 +7,10 @@ import {
   deleteActivitiesError,
   addActivitiesPending,
   addActivitiesSuccess,
-  addActivitiesError
+  addActivitiesError,
+  updateActivitiesPending,
+  updateActivitiesSuccess,
+  updateActivitiesError
 } from './actions';
 
 export const getAllActivities = async (dispatch) => {
@@ -87,6 +90,32 @@ export const addActivity = async (dispatch, newActivity) => {
   } catch (error) {
     dispatch(addActivitiesPending(false));
     dispatch(addActivitiesError(true));
+    console.error(error);
+  }
+};
+
+export const updateActivity = async (dispatch, id, activity) => {
+  try {
+    dispatch(updateActivitiesPending(true));
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(activity)
+    });
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data, 'la data que devuelve el update');
+      dispatch(updateActivitiesPending(false));
+      dispatch(updateActivitiesSuccess(data.result));
+    } else {
+      dispatch(addActivitiesError(true));
+      dispatch(addActivitiesPending(false));
+    }
+  } catch (error) {
+    dispatch(updateActivitiesPending(false));
+    dispatch(updateActivitiesError(true));
     console.error(error);
   }
 };
