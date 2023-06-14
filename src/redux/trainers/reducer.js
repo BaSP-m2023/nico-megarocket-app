@@ -14,8 +14,11 @@ import {
 } from './constants';
 
 const initialState = {
-  list: []
+  list: [],
+  error: '',
+  formError: { error: false, message: '' }
 };
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TRAINER_PENDING: {
@@ -34,7 +37,7 @@ const reducer = (state = initialState, action) => {
     case ADD_TRAINER_ERROR: {
       return {
         ...state,
-        error: action.payload
+        formError: action.payload
       };
     }
 

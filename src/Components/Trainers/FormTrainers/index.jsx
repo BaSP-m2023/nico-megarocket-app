@@ -7,20 +7,23 @@ import { Button } from '../../Shared';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { createTrainer, updateTrainer } from '../../../redux/trainers/thunks';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const FormTrainer = () => {
   const [modalUpdateConfirmOpen, setModalUpdateConfirmOpen] = useState(false);
   const [toastErrorOpen, setToastErrorOpen] = useState(false);
   const [modalSuccess, setModalSuccess] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const [inputForm, setInputForm] = useState('');
   const { id } = useParams();
   const location = useLocation();
   const updateData = location.state.params;
   const dispatch = useDispatch();
+  const isError = useSelector((store) => store.trainers.formError);
 
   useEffect(() => {
     if (updateData.mode === 'edit') {
+      setEditMode(true);
       setInputForm({
         firstName: updateData.firstName,
         lastName: updateData.lastName,
@@ -43,6 +46,10 @@ const FormTrainer = () => {
     }
   }, []);
 
+  useEffect(() => {
+    setToastErrorOpen(!!isError);
+  }, [isError]);
+
   const history = useHistory();
 
   const trainerBody = {
@@ -55,14 +62,6 @@ const FormTrainer = () => {
 
   const handleUpdateButtonClick = () => {
     setModalUpdateConfirmOpen(true);
-  };
-
-  const handleModalConfirmation = () => {
-    updateTrainer(dispatch, id, trainerBody);
-    setModalUpdateConfirmOpen(false);
-    setTimeout(() => {
-      history.goBack();
-    }, 1000);
   };
 
   const onChangeInputFirstName = (e) => {
@@ -114,16 +113,29 @@ const FormTrainer = () => {
     });
   };
 
-  const formSubmit = (e) => {
-    e.preventDefault();
-    if (updateData.mode === 'edit') {
+  const openModal = () => {
+    setModalUpdateConfirmOpen(true);
+  };
+
+  const formSubmit = async () => {
+    if (editMode) {
       handleUpdateButtonClick();
+      const updatedTrainer = await dispatch(updateTrainer((id, trainerBody)));
+      if (updatedTrainer.type === 'UPDATE_TRAINER') {
+        setToastErrorOpen(false);
+        setModalSuccess(true);
+        setTimeout(() => {
+          history.goBack();
+        }, 1000);
+      }
     } else {
-      createTrainer(dispatch, trainerBody);
-      setModalSuccess(true);
-      setTimeout(() => {
-        history.goBack();
-      }, 1000);
+      const postTrainer = await dispatch(createTrainer(trainerBody));
+      if (postTrainer.type === 'ADD_TRAINER') {
+        setModalSuccess(true);
+        setTimeout(() => {
+          history.goBack();
+        }, 1000);
+      }
     }
   };
 
@@ -212,22 +224,27 @@ const FormTrainer = () => {
         </div>
         <div className={styles.container}>
           <Button clickAction={() => history.goBack()} text="Cancel" />
-          <Button clickAction={formSubmit} text="Save" />
+          <Button clickAction={openModal} text="Save" />
         </div>
       </form>
+
       {modalUpdateConfirmOpen && (
         <ModalConfirm
-          method="Update"
-          onConfirm={handleModalConfirmation}
+          method={editMode ? 'Edit' : 'Create'}
+          message={
+            editMode
+              ? 'Are you sure you want to edit the Trainer?'
+              : 'Are you sure you want to add the Trainer?'
+          }
+          onConfirm={formSubmit}
           setModalConfirmOpen={setModalUpdateConfirmOpen}
-          message="Are you sure you want to update this Trainer?"
         />
       )}
       {modalSuccess && (
         <ModalSuccess setModalSuccessOpen={setModalSuccess} message="Trainer added successfully" />
       )}
       {toastErrorOpen && (
-        <ToastError setToastErroOpen={setToastErrorOpen} message="Error in database" />
+        <ToastError setToastErroOpen={setToastErrorOpen} message={isError.message} />
       )}
     </div>
   );
