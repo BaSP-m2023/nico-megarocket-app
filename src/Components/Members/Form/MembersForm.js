@@ -5,6 +5,9 @@ import { Inputs, Button } from '../../Shared';
 import { useLocation, useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { addMember, editMember } from '../../../redux/members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+/* import Joi from 'joi'; */
 
 export const MembersForm = () => {
   const dispatch = useDispatch();
@@ -18,6 +21,7 @@ export const MembersForm = () => {
   const history = useHistory();
   const data = location.state.params;
   const { id } = useParams();
+  const { handleSubmit } = useForm({ mode: 'onBlur', resolver: joiResolver });
 
   const handleChange = (e) => {
     setMember({
@@ -51,7 +55,7 @@ export const MembersForm = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     setModalAddConfirmOpen(true);
   };
@@ -111,7 +115,7 @@ export const MembersForm = () => {
         </div>
       }
       <h3 className={styles.title}>{editMode ? 'Edit Member' : 'Add Member'}</h3>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <section className={styles.inputGroups}>
           <div className={styles.inputGroup}>
             <div className={styles.inputContainer}>
@@ -206,7 +210,7 @@ export const MembersForm = () => {
           </div>
         </section>
         <div className={styles.buttonContainer}>
-          <Button clickAction={handleSubmit} text={editMode ? 'Update' : 'Add'} />
+          <Button clickAction={() => {}} text={editMode ? 'Update' : 'Add'} />
           <Button text="Cancel" clickAction={() => history.goBack()} />
         </div>
       </form>
