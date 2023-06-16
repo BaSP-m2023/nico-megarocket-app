@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './navbar.module.css';
-import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
+import { NavLink, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 const member = `${process.env.PUBLIC_URL}/assets/images/member.png`;
 const home = `${process.env.PUBLIC_URL}/assets/images/home.png`;
@@ -12,15 +12,24 @@ const members = `${process.env.PUBLIC_URL}/assets/images/muscle.png`;
 const activities = `${process.env.PUBLIC_URL}/assets/images/runner.png`;
 
 export const Navbar = () => {
+  const house = useLocation().pathname;
+
   return (
     <nav className={styles.navbar}>
       <ul className={styles.rutes}>
-        <li className={styles.anchor}>
-          <NavLink to="/home" className={styles.navbarLink} activeClassName={styles.active}>
-            <img src={home} alt="icon home" />
-            Home
-          </NavLink>
-        </li>
+        {house === '/home' && (
+          <>
+            <li className={styles.anchor}>
+              <NavLink to="/home" className={styles.navbarLink} activeClassName={styles.active}>
+                <img src={home} alt="icon home" />
+                Home
+              </NavLink>
+            </li>
+            <button>admins</button>
+            <button>members</button>
+          </>
+        )}
+
         <li>
           <NavLink to="/admins" className={styles.navbarLink} activeClassName={styles.active}>
             <img src={admin} alt="icon admin" className={styles.members} />
