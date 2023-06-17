@@ -22,3 +22,8 @@
   margin-right: 20px;
   margin-bottom: 10px;
 }
+
+.error {
+  margin-top: 0;
+  color: rgb(240, 8, 8);
+}

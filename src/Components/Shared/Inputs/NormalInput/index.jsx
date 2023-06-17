@@ -14,7 +14,7 @@ const Inputs = ({ register, error, type, isDisabled, nameInput, nameTitle }) => 
         disabled={isDisabled}
         name={nameInput}
       />
-      {error && <p>{error}</p>}
+      {error && <p className={styles.error}>{error}</p>}
     </div>
   );
 };
