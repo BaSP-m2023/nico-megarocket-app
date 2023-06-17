@@ -1,155 +1,187 @@
-import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import React, { useState, useEffect } from 'react';
 import style from './modalAdd.module.css';
-import { ModalConfirm, ModalSuccess, Inputs, Button } from '../../Shared';
-import { useDispatch } from 'react-redux';
-import { useHistory, useLocation, useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { ModalConfirm, ModalSuccess, Inputs, Button, ToastError } from '../../Shared';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { addActivity, updateActivity } from '../../../redux/activities/thunks';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const ModalAddActivity = () => {
   const dispatch = useDispatch();
-  const [active, setActive] = useState(true);
-  const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
-  const [bodyActivity, setBodyActivity] = useState({
-    name: '',
-    description: '',
-    isActive: ''
-  });
-
-  const [activitiesEdit, setEditActivities] = useState({
-    name: '',
-    description: '',
-    isActive: ''
-  });
-
+  const [modalUpdateConfirmOpen, setModalUpdateConfirmOpen] = useState(false);
+  const [toastError, setToastError] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [inputForm, setInputForm] = useState('');
   const history = useHistory();
-  const dataEdit = useLocation();
-
   const { id } = useParams();
+  const location = useLocation();
+  const isError = useSelector((store) => store.activities.formError);
+  const updateData = location.state.params;
+
+  const validationSchema = Joi.object({
+    name: Joi.string()
+      .pattern(/^[A-Za-z\s]{2,30}$/)
+      .required()
+      .min(2)
+      .max(30)
+      .messages({
+        'string.base': 'Name must be a string',
+        'string.min': 'Name must be at last 2 characters',
+        'string.max': 'Name must contain at last 30 characters'
+      }),
+    description: Joi.string()
+      .regex(/^[a-zA-Z0-9]{5,}$/)
+      .required()
+      .min(2)
+      .max(50)
+      .messages({
+        'string.base': 'Description must be a string',
+        'string.min': 'Description must be at last 3 characters',
+        'string.max': 'Description invalid lenght'
+      }),
+    isActive: Joi.boolean().required().default(true)
+  });
+
+  const updateActivityData = {
+    name: updateData.name,
+    description: updateData.description,
+    isActive: updateData.isActive
+  };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(validationSchema),
+    defaultValues: {
+      ...updateActivityData
+    }
+  });
 
   useEffect(() => {
-    if (!id) {
-      setBodyActivity({
-        name: '',
-        description: '',
-        isActive: ''
-      });
+    if (updateData.mode === 'edit') {
+      setEditMode(true);
     } else {
-      const activitiesEdited = dataEdit.state.params;
-      setEditActivities({
-        name: activitiesEdited.name,
-        description: activitiesEdited.description,
-        isActive: activitiesEdited.isActive
-      });
+      setEditMode(false);
     }
   }, []);
 
-  const changeInput = (e) => {
-    const newActivity = { ...bodyActivity, [e.target.name]: e.target.value };
-    setBodyActivity(newActivity);
+  useEffect(() => {
+    setToastError(!!isError);
+  }, [isError]);
 
-    const allFieldsValid = Object.values(newActivity).every((value) => {
-      return value.length >= 3 && value !== '';
-    });
-
-    setActive(!allFieldsValid);
+  const activityBody = {
+    method: updateData.mode === 'edit' ? 'PUT' : 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(inputForm)
   };
 
-  const changeInputEdit = (e) => {
-    setEditActivities({
-      ...activitiesEdit,
-      [e.target.name]: e.target.value
-    });
+  const handleUpdateButtonClick = () => {
+    setModalUpdateConfirmOpen(true);
+  };
 
-    if (e.target.value.length >= 3) {
-      setActive(false);
+  const formSubmit = async () => {
+    if (id) {
+      handleUpdateButtonClick();
+      const putActivity = await dispatch(updateActivity(id, activityBody));
+      if (putActivity.type === 'UPDATE_ACTIVITY') {
+        setToastError(false);
+        setModalSuccessOpen(false);
+        setTimeout(() => {
+          history.goBack();
+        }, 1000);
+      }
     } else {
-      setActive(true);
+      const postActivity = await dispatch(addActivity(activityBody));
+      if (postActivity.type === 'ADD_ACTIVITY') {
+        setModalSuccessOpen(true);
+        setTimeout(() => {
+          history.goBack();
+        }, 1000);
+      }
     }
   };
 
-  const postActivity = async ({ name, description, isActive }) => {
-    let newActivity = {
-      name,
-      description,
-      isActive
-    };
-    addActivity(dispatch, newActivity);
-  };
-
-  const submitActivity = () => {
-    postActivity(bodyActivity);
-    setModalConfirmOpen(false);
-    setModalSuccessOpen(true);
-  };
-
-  const submitEdited = (id, activitiesEd) => {
-    updateActivity(dispatch, id, activitiesEd);
-    setModalConfirmOpen(false);
-    setModalSuccessOpen(true);
-  };
-
-  const handleConfirmEdit = (e) => {
-    e.preventDefault();
-    setModalConfirmOpen(true);
-  };
-
-  const goBackTable = () => {
-    setTimeout(() => {
-      history.push('/activities');
-    }, 1000);
-  };
-
-  const goBack = () => {
-    history.goBack();
+  const onSubmit = async (data) => {
+    setInputForm(data);
+    setModalUpdateConfirmOpen(true);
   };
 
   return (
     <section className={style.containerModal}>
-      <form className={style.containerForm}>
-        <h3>Add</h3>
+      <form className={style.containerForm} onSubmit={handleSubmit(onSubmit)}>
+        <h3>Activity</h3>
         <Inputs
           nameTitle="Name:"
-          type="text"
-          text={id ? activitiesEdit.name : bodyActivity.name}
-          change={id ? changeInputEdit : changeInput}
+          register={register}
           nameInput="name"
+          type="text"
+          error={errors.name?.message}
         />
         <Inputs
-          nameTitle="Description:"
+          nameTitle="description:"
           type="text"
-          text={id ? activitiesEdit.description : bodyActivity.description}
-          change={id ? changeInputEdit : changeInput}
-          nameInput="description"
+          register={register}
+          nameInput="Description"
+          error={errors.description?.message}
         />
-        <Inputs
-          nameTitle="Is active:"
-          type="text"
-          text={id ? activitiesEdit.isActive : bodyActivity.isActive}
-          change={id ? changeInputEdit : changeInput}
-          nameInput="isActive"
-        />
+        <div className={style.containerModal}>
+          <label>Status:</label>
+          <label>
+            True
+            <Inputs
+              {...register('isActive', {
+                required: { value: true, message: 'This field is required' }
+              })}
+              type="radio"
+              name="isActive"
+              value={true}
+            />
+          </label>
+          <label>
+            False
+            <Inputs
+              {...register('isActive', {
+                required: { value: true, message: 'This field is required' }
+              })}
+              type="radio"
+              name="isActive"
+              value={false}
+            />
+          </label>
+        </div>
         <div className={style.containerAddButton}>
-          <Button clickAction={goBack} text="Cancel" />
-          <Button clickAction={handleConfirmEdit} text="Save" disabled={active} />
+          <Button clickAction={() => history.goBack()} text="Cancel" />
+          <Button text="Reset" type={'cancel'} />
+          <Button clickAction={() => {}} text="Save" />
         </div>
       </form>
-      {modalConfirmOpen && (
+      {modalUpdateConfirmOpen && (
         <ModalConfirm
-          method="Confirm"
-          onConfirm={() => {
-            !id ? submitActivity() : submitEdited(id, activitiesEdit);
-          }}
-          message="Are you sure you want to perform this action?"
-          setModalConfirmOpen={setModalConfirmOpen}
+          method={editMode ? 'Edit' : 'Create'}
+          onConfirm={formSubmit}
+          message={
+            editMode
+              ? 'Are you sure you want to edit this Activity?'
+              : 'Are you sure you want to add this Activity?'
+          }
+          setModalConfirmOpen={setModalUpdateConfirmOpen}
         />
       )}
       {modalSuccessOpen && (
-        <>
-          <ModalSuccess message="¡Success!" setModalSuccessOpen={setModalSuccessOpen} />
-          {setModalSuccessOpen && goBackTable()}
-        </>
+        <ModalSuccess
+          setModalSuccessOpen={setModalSuccessOpen}
+          message="Activity added successfully"
+        />
       )}
+      {toastError && <ToastError setToastErroOpen={setToastError} message={isError.message} />}
     </section>
   );
 };
