@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getClasses, deleteClass } from '../../redux/classes/thunks';
 
-function Projects() {
+function Classes() {
   const dispatch = useDispatch();
   const classes = useSelector((state) => state.classes.list);
   const loading = useSelector((state) => state.classes.pending);
@@ -54,4 +54,4 @@ function Projects() {
   );
 }
 
-export default Projects;
+export default Classes;
