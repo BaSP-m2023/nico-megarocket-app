@@ -3,16 +3,6 @@
   border: 1px solid;
   height: 25px;
   border-radius: 4px;
-  margin-bottom: 20px;
-}
-
-.normalInput:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  color: #666;
-  border: 1px solid #cccccc;
-  background-color: #cccccc;
-  box-shadow: none;
 }
 
 .nameLabel label {
@@ -26,4 +16,9 @@
 .error {
   margin-top: 0;
   color: rgb(240, 8, 8);
+}
+
+.errorInput {
+  border: 2px solid red;
+  margin-top: 0;
 }

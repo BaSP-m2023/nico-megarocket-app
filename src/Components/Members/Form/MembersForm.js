@@ -30,27 +30,88 @@ const MembersForm = () => {
         'string.base': 'The first name must be a text string',
         'string.empty': 'The first name is a required field',
         'string.min': 'The first name must be at least 3 characters',
-        'string.max': 'The first name must be at least 15 characters',
+        'string.max': 'The first name must be at most 15 characters',
         'string.pattern.base': 'The first name must contain only letters'
       })
       .required(),
-    lastName: Joi.string().min(3).max(15).required(),
-    dni: Joi.number().min(10000000).max(99999999).integer(),
-    birthday: Joi.date().required(),
-    phone: Joi.string().min(10).required().messages({
-      'number.min': 'Phone number must be at least 10 digits',
-      'number.max': 'Phone number must be at most 10 digits'
+
+    lastName: Joi.string()
+      .min(3)
+      .max(15)
+      .messages({
+        'string.base': 'The last name must be a text string',
+        'string.empty': 'The last name is a required field',
+        'string.min': 'The last name must be at least 3 characters',
+        'string.max': 'The last name must be at most 15 characters'
+      })
+      .required(),
+
+    dni: Joi.number().min(10000000).max(99999999).integer().messages({
+      'number.base': 'The DNI must be a number',
+      'number.empty': 'The DNI is a required field',
+      'number.min': 'The DNI must be at least 10,000,000',
+      'number.max': 'The DNI must be at most 99,999,999',
+      'number.integer': 'The DNI must be an integer'
     }),
-    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
-    city: Joi.string().min(3).max(15).required(),
-    postalCode: Joi.string().min(4).max(5).required().messages({
-      'number.min': 'Postal code must be at least 4 digits',
-      'number.max': 'Postal code must be at most 5 digits'
-    }),
+
+    birthday: Joi.date()
+      .messages({
+        'date.base': 'The birthday must be a valid date',
+        'date.empty': 'The birthday is a required field'
+      })
+      .required(),
+
+    phone: Joi.string()
+      .min(10)
+      .messages({
+        'string.base': 'The phone number must be a text string',
+        'string.empty': 'The phone number is a required field',
+        'string.min': 'The phone number must be at least 10 digits'
+      })
+      .required(),
+
+    email: Joi.string()
+      .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+      .messages({
+        'string.base': 'The email must be a text string',
+        'string.empty': 'The email is a required field',
+        'string.email': 'The email must be a valid email address',
+        'string.minDomainSegments': 'The email must have at least 2 domain segments',
+        'string.tlds.allow': 'The email must have a valid top-level domain (com or net)'
+      }),
+
+    city: Joi.string()
+      .min(3)
+      .max(15)
+      .messages({
+        'string.base': 'The city must be a text string',
+        'string.empty': 'The city is a required field',
+        'string.min': 'The city must be at least 3 characters',
+        'string.max': 'The city must be at most 15 characters'
+      })
+      .required(),
+
+    postalCode: Joi.string()
+      .min(4)
+      .max(5)
+      .messages({
+        'string.base': 'The postal code must be a text string',
+        'string.empty': 'The postal code is a required field',
+        'string.min': 'The postal code must be at least 4 digits',
+        'string.max': 'The postal code must be at most 5 digits'
+      })
+      .required(),
+
     membership: Joi.string().valid('Black', 'Classic', 'Only_classes').messages({
-      'any.only': 'Membership must be one of Black, Classic, or Only_classes'
+      'any.only': 'The membership must be one of Black, Classic, or Only_classes'
     }),
-    isActive: Joi.boolean().required()
+
+    isActive: Joi.boolean()
+      .messages({
+        'boolean.base': 'The isActive field must be a boolean',
+        'boolean.empty': 'The isActive field is a required field'
+      })
+      .required()
   });
 
   const memberUpdate = {
