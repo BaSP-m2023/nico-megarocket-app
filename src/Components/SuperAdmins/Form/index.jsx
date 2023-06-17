@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ModalConfirm, Inputs, Button, ModalSuccess, Loader, ToastError } from '../../Shared';
 import styles from './form.module.css';
 import { useHistory, useParams, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import { /* addSuperAdmin,*/ updateSuperAdmin } from '../../../redux/superAdmins/thunks';
+import { addSuperAdmin, updateSuperAdmin } from '../../../redux/superAdmins/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
@@ -26,11 +26,6 @@ const Form = () => {
   const [toastErrorOpen, setToastErrorOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
-  // const [inputValue, setInputValue] = useState({
-  //   email: '',
-  //   password: ''
-  // });
-
   const location = useLocation();
   const history = useHistory();
   const { id } = useParams();
@@ -39,6 +34,7 @@ const Form = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.superAdmin.loading);
   const anError = useSelector((state) => state.superAdmin.error);
+  const [supAdm, setSupAdm] = useState({});
 
   const editSupAdm = {
     email: params.email,
@@ -68,24 +64,6 @@ const Form = () => {
     setToastErrorOpen(!!anError);
   }, [anError]);
 
-  // const onChangeInputEmail = (e) => {
-  //   setInputValue({
-  //     ...inputValue,
-  //     email: e.target.value
-  //   });
-  // };
-  // const onChangeInputPassword = (e) => {
-  //   setInputValue({
-  //     ...inputValue,
-  //     password: e.target.value
-  //   });
-  // };
-
-  const openModal = (e) => {
-    e.preventDefault();
-    setModalConfirmOpen(true);
-  };
-
   const confirmation = () => {
     setModalSuccessOpen(true);
     setTimeout(() => {
@@ -93,17 +71,21 @@ const Form = () => {
     }, 2000);
   };
 
-  const onSubmit = async (data) => {
+  const openModal = async (data) => {
+    setModalConfirmOpen(true);
+    setSupAdm(data);
+  };
+
+  const onSubmit = async () => {
     if (!editMode) {
-      // setModalConfirmOpen(false);
-      // const postSupAdmin = await dispatch(addSuperAdmin(data));
-      // if (postSupAdmin.type === 'POST_SUPERADMIN_SUCCESS') {
-      //   confirmation();
-      // }
-      console.log(data);
-    } else {
       setModalConfirmOpen(false);
-      const putSupAdmin = await dispatch(updateSuperAdmin(data, id));
+      const postSupAdmin = await dispatch(addSuperAdmin(supAdm));
+      if (postSupAdmin.type === 'POST_SUPERADMIN_SUCCESS') {
+        confirmation();
+      }
+    } else {
+      setModalConfirmOpen(true);
+      const putSupAdmin = await dispatch(updateSuperAdmin(supAdm, id));
       if (putSupAdmin.type === 'PUT_SUPERADMIN_SUCCESS') {
         confirmation();
       }
@@ -111,7 +93,7 @@ const Form = () => {
   };
 
   return (
-    <form className={styles.formSuperAdmin} onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.formSuperAdmin} onSubmit={handleSubmit(openModal)}>
       <div className={styles.containerForm}>
         <Inputs
           type="email"
@@ -129,7 +111,7 @@ const Form = () => {
         />
       </div>
       <div className={styles.sub_buttons}>
-        <Button clickAction={openModal} text="Submit" />
+        <Button clickAction={() => {}} text="Submit" />
         <Button
           clickAction={(e) => {
             e.preventDefault();
