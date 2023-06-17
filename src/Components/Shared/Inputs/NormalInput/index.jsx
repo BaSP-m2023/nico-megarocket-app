@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './disable-input.module.css';
 
-const Inputs = ({ text, type, isDisabled, change, nameInput, nameTitle }) => {
+const Inputs = ({ text, type, isDisabled, change, nameInput, nameTitle, register, error }) => {
   return (
     <div className={styles.nameLabel}>
       <label>{nameTitle}</label>
@@ -14,7 +14,9 @@ const Inputs = ({ text, type, isDisabled, change, nameInput, nameTitle }) => {
         value={text}
         name={nameInput}
         onChange={change}
+        {...register(nameInput)}
       />
+      {error && <p>{error}</p>}
     </div>
   );
 };
