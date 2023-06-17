@@ -54,6 +54,14 @@
   margin-left: 5px;
 }
 
+.containerSocial a img {
+  transition: all .2s;
+}
+
+.containerSocial a img:hover {
+  transform: scale(1.3);
+}
+
 @media screen and (min-width: 750px) {
   .main {
     padding: 0 20%;

@@ -79,3 +79,39 @@
   color: #ffffff;
   filter: brightness(0) invert();
 }
+
+.containerContactInformation {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 9rem;
+  height: 18rem;
+  gap: .8rem;
+}
+
+.containerContactInformation h5 {
+  color: #ffffff;
+  text-decoration: underline;
+  text-align: center;
+}
+
+.containerContactInformation a {
+  display: flex;
+  gap: .5rem;
+  max-width: 8rem;
+  text-decoration: none;
+  color: #373867;
+  font-size: .8rem;
+  font-weight: 500;
+  transition: all .1s;
+}
+
+.containerContactInformation a:hover {
+  transform: scale(1.03);
+
+}
+
+.containerContactInformation a img {
+  width: .8rem;
+  height: .8rem;
+}

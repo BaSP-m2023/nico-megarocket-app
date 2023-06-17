@@ -11,6 +11,8 @@ const suscription = `${process.env.PUBLIC_URL}/assets/images/suscription.png`;
 const members = `${process.env.PUBLIC_URL}/assets/images/muscle.png`;
 const activities = `${process.env.PUBLIC_URL}/assets/images/runner.png`;
 const login = `${process.env.PUBLIC_URL}/assets/images/login.png`;
+const mail = `${process.env.PUBLIC_URL}/assets/images/mail.png`;
+const phone = `${process.env.PUBLIC_URL}/assets/images/phone.png`;
 
 export const Navbar = () => {
   const house = useLocation().pathname;
@@ -38,6 +40,22 @@ export const Navbar = () => {
                 Members
               </NavLink>
             </li>
+            <div className={styles.containerContactInformation}>
+              <h5>Contact information</h5>
+              <a href="mailto:RocketGym@RRA.com">
+                <img src={mail} alt="icon mail" /> @RocketGym
+              </a>
+              <a href="tel:000 000-0000" target="_blank" rel="noreferrer">
+                <img src={phone} alt="icon phone" /> (000) 000-0000
+              </a>
+              <a
+                href="https://www.google.com/maps/place/Pl.+Independencia,+Montevideo,+Departamento+de+Montevideo"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img src={hombeB} alt="icon home" /> 1234 Plaza Indepentencia, Montevideo, Uruguay
+              </a>
+            </div>
           </>
         )}
         {house.startsWith('/admin') && (
