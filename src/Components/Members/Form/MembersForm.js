@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
-export const MembersForm = () => {
+const MembersForm = () => {
   const dispatch = useDispatch();
   const isError = useSelector((state) => state.members.errorForm);
   const [toastError, setToastErroOpen] = useState(false);
@@ -266,3 +266,5 @@ export const MembersForm = () => {
     </div>
   );
 };
+
+export default MembersForm;
