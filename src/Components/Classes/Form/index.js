@@ -61,7 +61,7 @@ const FormClasses = () => {
     setSuccessMessage('The class has been updated successfully.');
     setModalSuccessOpen(true);
     setTimeout(() => {
-      history.push('/classes');
+      history.push('/admin/classes');
       setModalSuccessOpen(false);
     }, 2000);
   };

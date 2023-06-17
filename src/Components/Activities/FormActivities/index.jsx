@@ -96,7 +96,7 @@ const ModalAddActivity = () => {
 
   const goBackTable = () => {
     setTimeout(() => {
-      history.push('/activities');
+      history.push('/admin/activities');
     }, 1000);
   };
 

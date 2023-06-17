@@ -6,7 +6,7 @@ import { useLocation, useHistory, useParams } from 'react-router-dom/cjs/react-r
 import { addMember, editMember } from '../../../redux/members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
-export const MembersForm = () => {
+const MembersForm = () => {
   const dispatch = useDispatch();
   const isError = useSelector((state) => state.members.errorForm);
   const [toastError, setToastErroOpen] = useState(false);
@@ -214,3 +214,5 @@ export const MembersForm = () => {
     </div>
   );
 };
+
+export default MembersForm;

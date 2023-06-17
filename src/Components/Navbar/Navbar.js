@@ -14,7 +14,7 @@ const login = `${process.env.PUBLIC_URL}/assets/images/login.png`;
 const mail = `${process.env.PUBLIC_URL}/assets/images/mail.png`;
 const phone = `${process.env.PUBLIC_URL}/assets/images/phone.png`;
 
-export const Navbar = () => {
+const Navbar = () => {
   const house = useLocation().pathname;
 
   return (
@@ -172,3 +172,5 @@ export const Navbar = () => {
     </nav>
   );
 };
+
+export default Navbar;

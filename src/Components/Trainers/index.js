@@ -13,11 +13,11 @@ function Trainers() {
   const dispatch = useDispatch();
 
   const createMode = () => {
-    history.push('trainers/form/', { params: { mode: 'created' } });
+    history.push('/admin/trainers/form/', { params: { mode: 'created' } });
   };
 
   const handleClick = (item) => {
-    history.push(`trainers/form/${item._id}`, { params: { ...item, mode: 'edit' } });
+    history.push(`/admin/trainers/form/${item._id}`, { params: { ...item, mode: 'edit' } });
   };
 
   useEffect(() => {

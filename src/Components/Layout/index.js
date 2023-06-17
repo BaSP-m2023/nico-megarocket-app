@@ -1,23 +1,25 @@
-import Admins from '../Admins/index';
-import Classes from '../Classes';
-import Members from '../Members';
-import { MembersForm } from '../Members/Form/MembersForm';
-import Subscriptions from '../Subscriptions';
-import SuperAdmins from '../SuperAdmins';
-import Trainers from '../Trainers';
-import FormSuperAdmin from '../SuperAdmins/Form/index';
-import FormTrainer from '../Trainers/FormTrainers';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import Activities from '../Activities';
-import FormActivity from '../Activities/FormActivities';
-import Home from '../Home/index';
-import Header from '../Header/index';
-import { Navbar } from '../Navbar/Navbar';
-import Footer from '../Footer/index';
-import FormClasses from '../Classes/Form';
 import styles from './layout.module.css';
-import FormAdmin from '../Admins/Form/index';
-import FormSubscriptions from '../Subscriptions/FormSubscription/Index';
+import Header from '../Header/index';
+import Navbar from '../Navbar/Navbar';
+import Footer from '../Footer/index';
+
+const Activities = React.lazy(() => import('../Activities'));
+const AdminClasses = React.lazy(() => import('../Users/Admin/classes'));
+const AdminTrainers = React.lazy(() => import('../Users/Admin/trainers'));
+const AdminMembers = React.lazy(() => import('../Users/Admin/members'));
+const AdminSubscriptions = React.lazy(() => import('../Users/Admin/subscriptions'));
+const AdminProfile = React.lazy(() => import('../Users/Admin/profile'));
+const Member = React.lazy(() => import('../Users/Member'));
+const MemberActivities = React.lazy(() => import('../Users/Member/activities'));
+const MemberClasses = React.lazy(() => import('../Users/Member/classes'));
+const MembersForm = React.lazy(() => import('../Members/Form/MembersForm'));
+const MemberProfile = React.lazy(() => import('../Users/Member/profile'));
+const FormActivity = React.lazy(() => import('../Activities/FormActivities'));
+const FormClasses = React.lazy(() => import('../Classes/Form'));
+const FormTrainer = React.lazy(() => import('../Trainers/FormTrainers'));
+const FormSubscriptions = React.lazy(() => import('../Subscriptions/FormSubscription/Index'));
 
 function Layout() {
   return (
@@ -31,26 +33,30 @@ function Layout() {
             </aside>
           </div>
           <div className={styles.switchContainer}>
-            <Switch>
-              <Route path="/home" component={Home} />
-              <Route exact path="/activities" component={Activities} />
-              <Route path="/activities/form/:id?" component={FormActivity} />
-              <Route exact path="/admins" component={Admins} />
-              <Route path="/admins/form/:id?" component={FormAdmin} />
-              <Route exact path="/classes" component={Classes} />
-              <Route path="/classes/ClassForm/:id?" component={FormClasses} />
-              <Route exact path="/members" component={Members} />
-              <Route path="/members/form/:id?" component={MembersForm} />
-              <Route exact path="/subscriptions" component={Subscriptions} />
-              <Route path="/subscriptions/form/:id?" component={FormSubscriptions} />
-              <Route exact path="/super-admins" component={SuperAdmins} />
-              <Route path="/super-admins/form/:id?" component={FormSuperAdmin} />
-              <Route exact path="/trainers" component={Trainers} />
-              <Route path="/trainers/form/:id?" component={FormTrainer} />
-              <Route exact path="/">
-                <Redirect to="/home" />
-              </Route>
-            </Switch>
+            <React.Suspense>
+              <Switch>
+                <Route exact path="/admin/activities" component={Activities} />
+                <Route path="/admin/activities/form/:id?" component={FormActivity} />
+                <Route exact path="/admin/classes" component={AdminClasses} />
+                <Route path="/admin/classes/ClassForm/:id?" component={FormClasses} />
+                <Route exact path="/admin/trainers" component={AdminTrainers} />
+                <Route path="/admin/trainers/form/:id?" component={FormTrainer} />
+                <Route exact path="/admin/members" component={AdminMembers} />
+                <Route path="/admin/members/form/:id?" component={MembersForm} />
+                <Route exact path="/admin/subscriptions" component={AdminSubscriptions} />
+                <Route path="/admin/subscriptions/form/:id?" component={FormSubscriptions} />
+                <Route exact path="/admin/profile" component={AdminProfile} />
+                <Route exact path="/member" component={Member}>
+                  <Redirect to="/member/classes" />
+                </Route>
+                <Route path="/member/classes" component={MemberClasses} />
+                <Route path="/member/activities" component={MemberActivities} />
+                <Route path="/member/profile" component={MemberProfile} />
+                <Route exact path="/">
+                  <Redirect to="/home" />
+                </Route>
+              </Switch>
+            </React.Suspense>
           </div>
         </div>
         <Footer />

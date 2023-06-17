@@ -21,11 +21,11 @@ function Activities() {
   }, [isError]);
 
   const createMode = () => {
-    history.push('activities/form', { params: { mode: 'created' } });
+    history.push('/admin/activities/form', { params: { mode: 'created' } });
   };
 
   const handleClick = (item) => {
-    history.push(`activities/form/${item._id}`, { params: { ...item, mode: 'edit' } });
+    history.push(`/admin/activities/form/${item._id}`, { params: { ...item, mode: 'edit' } });
   };
 
   const columnTitleArray = ['Name', 'Description'];
@@ -43,7 +43,6 @@ function Activities() {
           handleClick={handleClick}
           deleteButton={deleteActivity}
           columns={columns}
-          autoDelete={() => {}}
         />
       )}
       {toastErroOpen && (
