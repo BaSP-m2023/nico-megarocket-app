@@ -20,11 +20,11 @@ function Subscriptions() {
   }, []);
 
   const createMode = () => {
-    history.push('subscriptions/form/', { params: { mode: 'created' } });
+    history.push('/admin/subscriptions/form/', { params: { mode: 'created' } });
   };
 
   const handleClick = (item) => {
-    history.push(`subscriptions/form/${item._id}`, { params: { ...item, mode: 'edit' } });
+    history.push(`/admin/subscriptions/form/${item._id}`, { params: { ...item, mode: 'edit' } });
   };
 
   useEffect(() => {

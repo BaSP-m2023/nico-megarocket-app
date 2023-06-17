@@ -44,3 +44,74 @@
   transform: scale(1.05);
   color: #ffffff;
 }
+
+.rutes .homeButtons {
+  display: flex;
+  align-items: center;
+  border: solid #373867;
+  border-radius: .2rem;
+  width: 8.5rem;
+  height: 1.6rem;
+  background-color: #ffffff;
+  transition: all .2s;
+}
+
+.rutes .homeButtons .navbarLinkButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+  font-weight: 700;
+}
+
+.rutes .homeButtons .navbarLinkButtons img {
+  width: 1rem;
+  height: 1rem;
+}
+
+.rutes .homeButtons:hover {
+  background-color: #373867d3;
+}
+
+.rutes .homeButtons .navbarLinkButtons:hover {
+  color: #ffffff;
+  filter: brightness(0) invert();
+}
+
+.containerContactInformation {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 9rem;
+  height: 18rem;
+  gap: .8rem;
+}
+
+.containerContactInformation h5 {
+  color: #ffffff;
+  text-decoration: underline;
+  text-align: center;
+}
+
+.containerContactInformation a {
+  display: flex;
+  gap: .5rem;
+  max-width: 8rem;
+  text-decoration: none;
+  color: #373867;
+  font-size: .8rem;
+  font-weight: 500;
+  transition: all .1s;
+}
+
+.containerContactInformation a:hover {
+  transform: scale(1.03);
+
+}
+
+.containerContactInformation a img {
+  width: .8rem;
+  height: .8rem;
+}

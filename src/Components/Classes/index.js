@@ -26,11 +26,11 @@ function Classes() {
   }, []);
 
   const createMode = () => {
-    history.push('/classes/ClassForm', { params: { mode: 'create' } });
+    history.push('/admin/classes/ClassForm', { params: { mode: 'create' } });
   };
 
   const handleClick = (item) => {
-    history.push(`/classes/ClassForm/${item._id}`, {
+    history.push(`/admin/classes/ClassForm/${item._id}`, {
       params: { mode: 'edit' }
     });
   };
