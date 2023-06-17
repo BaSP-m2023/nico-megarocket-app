@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from './form.module.css';
 import { ModalConfirm, ModalSuccess, ToastError } from '../../Shared';
 import { Inputs, Button } from '../../Shared';
@@ -7,7 +7,7 @@ import { addMember, editMember } from '../../../redux/members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-/* import Joi from 'joi'; */
+import Joi from 'joi';
 
 export const MembersForm = () => {
   const dispatch = useDispatch();
@@ -16,20 +16,66 @@ export const MembersForm = () => {
   const [modalAddConfirmOpen, setModalAddConfirmOpen] = useState(false);
   const [modalSuccess, setModalSuccessOpen] = useState(false);
   const [member, setMember] = useState({});
-  const [editMode, setEditMode] = useState(null);
   const location = useLocation();
   const history = useHistory();
   const data = location.state.params;
   const { id } = useParams();
-  const { handleSubmit } = useForm({ mode: 'onBlur', resolver: joiResolver });
 
-  const handleChange = (e) => {
-    setMember({
-      ...member,
-      [e.target.name]: e.target.value,
-      isActive: true
-    });
+  const schema = Joi.object({
+    firstName: Joi.string()
+      .min(3)
+      .max(15)
+      .regex(/^[a-zA-Z ]+$/)
+      .messages({
+        'string.base': 'The first name must be a text string',
+        'string.empty': 'The first name is a required field',
+        'string.min': 'The first name must be at least 3 characters',
+        'string.max': 'The first name must be at least 15 characters',
+        'string.pattern.base': 'The first name must contain only letters'
+      })
+      .required(),
+    lastName: Joi.string().min(3).max(15).required(),
+    dni: Joi.number().min(10000000).max(99999999).integer(),
+    birthday: Joi.date().required(),
+    phone: Joi.string().min(10).required().messages({
+      'number.min': 'Phone number must be at least 10 digits',
+      'number.max': 'Phone number must be at most 10 digits'
+    }),
+    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+    city: Joi.string().min(3).max(15).required(),
+    postalCode: Joi.string().min(4).max(5).required().messages({
+      'number.min': 'Postal code must be at least 4 digits',
+      'number.max': 'Postal code must be at most 5 digits'
+    }),
+    membership: Joi.string().valid('Black', 'Classic', 'Only_classes').messages({
+      'any.only': 'Membership must be one of Black, Classic, or Only_classes'
+    }),
+    isActive: Joi.boolean().required()
+  });
+
+  const memberUpdate = {
+    firstName: data.firstName,
+    lastName: data.lastName,
+    dni: data.dni,
+    birthday: data.birthday,
+    phone: data.phone,
+    city: data.city,
+    isActive: data.isActive,
+    postalCode: data.postalCode,
+    email: data.email,
+    membership: data.membership
   };
+
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(schema),
+    defaultValues: { ...memberUpdate }
+  });
 
   const onConfirmFunction = async () => {
     if (!id) {
@@ -55,40 +101,10 @@ export const MembersForm = () => {
     }
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
+    setMember(data);
     setModalAddConfirmOpen(true);
   };
-
-  useEffect(() => {
-    if (id) {
-      setEditMode(true);
-      setMember({
-        firstName: data.firstName,
-        lastName: data.lastName,
-        dni: data.dni,
-        birthday: data.birthday,
-        phone: data.phone,
-        email: data.email,
-        city: data.city,
-        postalCode: data.postalCode,
-        membership: data.membership
-      });
-    } else {
-      setEditMode(false);
-      setMember({
-        firstName: '',
-        lastName: '',
-        dni: '',
-        birthday: '',
-        phone: '',
-        email: '',
-        city: '',
-        postalCode: '',
-        membership: ''
-      });
-    }
-  }, []);
 
   return (
     <div className={styles.container}>
@@ -96,11 +112,11 @@ export const MembersForm = () => {
         <div>
           {modalAddConfirmOpen && (
             <ModalConfirm
-              method={editMode ? 'Update' : 'Add'}
+              method={id ? 'Update' : 'Add'}
               onConfirm={() => onConfirmFunction()}
               setModalConfirmOpen={setModalAddConfirmOpen}
               message={
-                editMode
+                id
                   ? 'Are sure do you want update this member?'
                   : 'Are sure do you want add this member?'
               }
@@ -109,48 +125,48 @@ export const MembersForm = () => {
           {modalSuccess && (
             <ModalSuccess
               setModalSuccessOpen={setModalSuccessOpen}
-              message={editMode ? 'Member edited' : 'Member added'}
+              message={id ? 'Member edited' : 'Member added'}
             />
           )}
         </div>
       }
-      <h3 className={styles.title}>{editMode ? 'Edit Member' : 'Add Member'}</h3>
+      <h3 className={styles.title}>{id ? 'Edit Member' : 'Add Member'}</h3>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <section className={styles.inputGroups}>
           <div className={styles.inputGroup}>
             <div className={styles.inputContainer}>
               <Inputs
+                error={errors.firstName?.message}
+                register={register}
                 nameTitle="Name"
-                text={member.firstName}
                 type="text"
-                change={handleChange}
                 nameInput="firstName"
               />
             </div>
             <div className={styles.inputContainer}>
               <Inputs
+                error={errors.lastName?.message}
+                register={register}
                 nameTitle="Lastname"
-                text={member.lastName}
                 type="text"
-                change={handleChange}
                 nameInput="lastName"
               />
             </div>
             <div className={styles.inputContainer}>
               <Inputs
+                error={errors.dni?.message}
+                register={register}
                 nameTitle="DNI"
-                text={member.dni}
                 type="text"
-                change={handleChange}
                 nameInput="dni"
               />
             </div>
             <div className={styles.inputContainer}>
               <Inputs
+                error={errors.birthday?.message}
+                register={register}
                 nameTitle="Birthday"
-                text={member.birthday}
                 type="date"
-                change={handleChange}
                 nameInput="birthday"
                 required
               />
@@ -159,58 +175,90 @@ export const MembersForm = () => {
           <div className={styles.inputGroup}>
             <div className={styles.inputContainer}>
               <Inputs
+                error={errors.phone?.message}
+                register={register}
                 nameTitle="Phone"
-                text={member.phone}
                 type="number"
-                change={handleChange}
                 nameInput="phone"
                 required
               />
             </div>
             <div className={styles.inputContainer}>
               <Inputs
+                error={errors.email?.message}
+                register={register}
                 nameTitle="Email"
-                text={member.email}
                 type="email"
-                change={handleChange}
                 nameInput="email"
                 required
               />
             </div>
             <div className={styles.inputContainer}>
               <Inputs
+                error={errors.city?.message}
+                register={register}
                 nameTitle="City"
-                text={member.city}
                 type="text"
-                change={handleChange}
                 nameInput="city"
                 required
               />
             </div>
             <div className={styles.inputContainer}>
               <Inputs
+                error={errors.postalCode?.message}
+                register={register}
                 nameTitle="Postal Code"
-                text={member.postalCode}
                 type="number"
-                change={handleChange}
                 nameInput="postalCode"
                 required
               />
             </div>
             <div className={styles.inputContainer}>
               <Inputs
+                error={errors.membership?.message}
+                register={register}
                 nameTitle="Membership"
-                text={member.membership}
                 type="text"
-                change={handleChange}
                 nameInput="membership"
                 required
               />
             </div>
+            <div className={styles.inputContainer}>
+              <label className={styles.nameLabel}>Status</label>
+              <div className={styles.radioContainer}>
+                <div>
+                  <label>
+                    Active
+                    <input
+                      {...register('isActive', {
+                        required: { value: true, message: 'This field is required' }
+                      })}
+                      type="radio"
+                      name="isActive"
+                      value={true}
+                    />
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    Inactive
+                    <input
+                      {...register('isActive', {
+                        required: { value: true, message: 'This field is required' }
+                      })}
+                      type="radio"
+                      name="isActive"
+                      value={false}
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
         <div className={styles.buttonContainer}>
-          <Button clickAction={() => {}} text={editMode ? 'Update' : 'Add'} />
+          <Button clickAction={() => {}} text={id ? 'Update' : 'Add'} />
+          <Button clickAction={() => reset()} text="Reset" />
           <Button text="Cancel" clickAction={() => history.goBack()} />
         </div>
       </form>
