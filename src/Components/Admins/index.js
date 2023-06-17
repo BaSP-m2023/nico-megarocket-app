@@ -16,7 +16,7 @@ function Admins() {
   const columns = ['firstName', 'dni', 'phone', 'email', 'city'];
 
   const handleEditClick = (item) => {
-    history.push(`/admins/form/${item._id}`, { params: { item, mode: 'edit' } });
+    history.push(`/admins/form/${item._id}`, { params: { ...item, mode: 'edit' } });
   };
 
   const createMode = () => {

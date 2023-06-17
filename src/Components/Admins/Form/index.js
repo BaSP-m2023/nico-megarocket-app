@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { /* useEffect,  */ useState } from 'react';
 import styles from './form.module.css';
 import { ModalConfirm, ToastError, ModalSuccess, Inputs, Button } from '../../Shared';
 import { useParams, useLocation, useHistory } from 'react-router-dom';
@@ -10,9 +10,8 @@ import { joiResolver } from '@hookform/resolvers/joi';
 
 const FormAdmin = () => {
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
-  const [editMode, setEditMode] = useState(false);
+  /*   const [editMode, setEditMode] = useState(false); */
   const [inputValue, setInputValue] = useState('');
-  const [repeatPass, setRepeatPass] = useState('');
   const [toastErroOpen, setToastErroOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('Error in database');
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
@@ -23,25 +22,29 @@ const FormAdmin = () => {
   const dispatch = useDispatch();
 
   const schema = Joi.object({
-    firstName: Joi.string().min(3).max(15),
-    lastName: Joi.string().min(3).max(15),
-    dni: Joi.number().min(10000000).max(99999999),
-    phone: Joi.string().min(9).max(12),
-    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
-    city: Joi.string().min(2).max(10),
+    firstName: Joi.string().min(3).max(15).required(),
+    lastName: Joi.string().min(3).max(15).required(),
+    dni: Joi.number().min(10000000).max(99999999).required(),
+    phone: Joi.string().min(9).max(12).required(),
+    email: Joi.string()
+      .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+      .required(),
+    city: Joi.string().min(2).max(10).required(),
     password: Joi.string()
       .min(8)
-      .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
+      .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/),
+    repeatPassword: Joi.string().valid(Joi.ref('password'))
   });
 
   const adminUpdated = {
-    firstName: data.item.firstName,
-    lastName: data.item.lastName,
-    dni: data.item.dni,
-    phone: data.item.phone,
-    email: data.item.email,
-    city: data.item.city,
-    password: data.item.password
+    firstName: data.firstName,
+    lastName: data.lastName,
+    dni: data.dni,
+    phone: data.phone,
+    email: data.email,
+    city: data.city,
+    password: data.password,
+    repeatPassword: data.password
   };
 
   const {
@@ -56,9 +59,10 @@ const FormAdmin = () => {
     }
   });
 
-  useEffect(() => {
+  /*  useEffect(() => {
     if (data.mode === 'create') {
-      /* setInputValue({
+      setEditMode(false);
+      setInputValue({
         firstName: '',
         lastName: '',
         phone: '',
@@ -66,9 +70,9 @@ const FormAdmin = () => {
         city: '',
         dni: '',
         password: ''
-      }); */
+      });
     } else {
-      /* setInputValue({
+      setInputValue({
         firstName: data.item.firstName,
         lastName: data.item.lastName,
         phone: data.item.phone,
@@ -76,23 +80,18 @@ const FormAdmin = () => {
         city: data.item.city,
         dni: data.item.dni,
         password: data.item.password
-      }); */
-      setRepeatPass(data.item.password);
+      });
       setEditMode(true);
     }
-  }, []);
+  }, []); */
+
+  // const pass = watch('password');
 
   const addAdmins = async () => {
     try {
       createAdmin(dispatch, inputValue);
       if (!data.error) {
-        if (validatePasswords()) {
-          confirmation();
-        } else {
-          setModalConfirmOpen(false);
-          setToastErroOpen(true);
-          setToastMessage('Passwords must match ');
-        }
+        confirmation();
       } else {
         throw new Error(data.message);
       }
@@ -107,14 +106,7 @@ const FormAdmin = () => {
     try {
       updateAdmin(dispatch, id, inputValue);
       if (!data.error) {
-        if (validatePasswords()) {
-          confirmation();
-          setModalSuccessOpen(true);
-        } else {
-          setModalConfirmOpen(false);
-          setToastErroOpen(true);
-          setToastMessage('Passwords must match ');
-        }
+        confirmation();
       } else {
         throw new Error(data.message);
       }
@@ -124,17 +116,8 @@ const FormAdmin = () => {
     }
   };
 
-  const openModal = (e) => {
-    e.preventDefault();
+  const openModal = () => {
     setModalConfirmOpen(true);
-  };
-
-  const validatePasswords = () => {
-    if (inputValue.password === repeatPass) {
-      return true;
-    } else {
-      return false;
-    }
   };
 
   const confirmation = () => {
@@ -145,7 +128,7 @@ const FormAdmin = () => {
   };
 
   const submitAdmin = () => {
-    if (!editMode) {
+    if (!id) {
       setModalConfirmOpen(false);
       addAdmins();
     } else {
@@ -154,16 +137,17 @@ const FormAdmin = () => {
     }
   };
 
-  const handleInputChange = (e) => {
-    setInputValue({ ...inputValue, [e.target.name]: e.target.value });
-  };
-  const handleRepeatPasswordChange = (e) => {
-    const { value } = e.target;
-    setRepeatPass(value);
-  };
-
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (dataAdmin) => {
+    const newAdmin = {
+      firstName: dataAdmin.firstName,
+      lastName: dataAdmin.lastName,
+      dni: dataAdmin.dni,
+      phone: dataAdmin.phone,
+      email: dataAdmin.email,
+      city: dataAdmin.city,
+      password: dataAdmin.password
+    };
+    setInputValue(newAdmin);
     openModal();
   };
 
@@ -173,78 +157,73 @@ const FormAdmin = () => {
         <div className={styles.subContainer}>
           <div className={styles.sub_buttons}>
             <Inputs
-              register={register}
-              text={inputValue.firstName}
-              type="text"
               nameTitle="Name"
-              isDisabled={false}
-              change={handleInputChange}
+              register={register}
               nameInput="firstName"
+              type="text"
+              isDisabled={false}
               error={errors.firstName?.message}
             />
             <Inputs
+              nameTitle="LastName"
               register={register}
-              type="text"
-              nameTitle="Last Name"
-              isDisabled={false}
               nameInput="lastName"
+              type="text"
+              isDisabled={false}
               error={errors.lastName?.message}
             />
           </div>
           <div className={styles.sub_buttons}>
             <Inputs
-              register={register}
-              type="text"
               nameTitle="DNI"
-              isDisabled={false}
+              register={register}
               nameInput="dni"
+              type="text"
+              isDisabled={false}
               error={errors.dni?.message}
             />
             <Inputs
-              register={register}
-              type="text"
               nameTitle="Phone"
-              isDisabled={false}
+              register={register}
               nameInput="phone"
+              type="text"
+              isDisabled={false}
               error={errors.phone?.message}
             />
           </div>
           <div className={styles.sub_buttons}>
             <Inputs
-              register={register}
-              type="email"
               nameTitle="E-Mail"
-              isDisabled={false}
+              register={register}
               nameInput="email"
+              type="email"
+              isDisabled={false}
               error={errors.email?.message}
             />
             <Inputs
-              register={register}
-              type="text"
               nameTitle="City"
-              isDisabled={false}
+              register={register}
               nameInput="city"
+              type="text"
+              isDisabled={false}
               error={errors.city?.message}
             />
           </div>
           <div className={styles.sub_buttons}>
             <Inputs
-              register={register}
-              text={inputValue.password}
-              type="password"
               nameTitle="Password"
-              isDisabled={false}
-              change={handleInputChange}
+              register={register}
               nameInput="password"
+              type="password"
+              isDisabled={false}
               error={errors.password?.message}
             />
             <Inputs
-              register={register}
-              type="password"
               nameTitle="Repeat Password"
+              register={register}
+              nameInput="repeatPassword"
+              type="password"
               isDisabled={false}
-              change={handleRepeatPasswordChange}
-              nameInput="repeat-password"
               error={errors.repeatPassword?.message}
             />
           </div>
@@ -264,9 +243,9 @@ const FormAdmin = () => {
 
       {modalConfirmOpen && (
         <ModalConfirm
-          method={editMode ? 'Edit' : 'Create'}
+          method={id ? 'Edit' : 'Create'}
           message={
-            editMode
+            id
               ? 'Are you sure you want to edit the admin?'
               : 'Are you sure you want to add the admin?'
           }
@@ -276,7 +255,7 @@ const FormAdmin = () => {
       )}
       {modalSuccessOpen && (
         <ModalSuccess
-          message={editMode ? 'Admin edited successfully' : 'Admin created successfully'}
+          message={id ? 'Admin edited successfully' : 'Admin created successfully'}
           setModalSuccessOpen={setModalSuccessOpen}
         />
       )}
