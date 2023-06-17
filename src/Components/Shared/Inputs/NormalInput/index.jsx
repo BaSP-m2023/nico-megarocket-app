@@ -7,14 +7,12 @@ const Inputs = ({ register, error, type, isDisabled, nameInput, nameTitle }) => 
       <label>{nameTitle}</label>
       <input
         {...register(nameInput, { required: { value: true, message: 'This field is required' } })}
-        className={
-          type === 'disable' ? `${styles.disableInput} ${styles.normalInput}` : styles.normalInput
-        }
+        className={error ? `${styles.errorInput} ${styles.normalInput}` : styles.normalInput}
         type={type}
         disabled={isDisabled}
         name={nameInput}
       />
-      {error && <p>{error}</p>}
+      {error && <p className={styles.error}>{error}</p>}
     </div>
   );
 };

@@ -13,9 +13,8 @@
 .form {
   display: grid;
   gap: 20px;
-  margin-bottom:20px;
+  margin-bottom: 20px;
 }
-
 
 .inputGroups {
   display: flex;
@@ -35,7 +34,7 @@
   padding: 10px 0;
   cursor: pointer;
   text-transform: uppercase;
-  margin-button:10px;
+  margin-button: 10px;
 }
 
 .submitButton:hover {
@@ -46,9 +45,29 @@
 .inputContainer {
   display: flex;
   flex-direction: column;
+  margin: 5px 0;
 }
 
-.buttonContainer{
-  display:flex;
-  gap:20px;
+.buttonContainer {
+  display: flex;
+  gap: 20px;
+}
+
+.nameLabel {
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.radioContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radioContainer div{
+ margin: 0 10px;
+ font-size: 15px;
 }
