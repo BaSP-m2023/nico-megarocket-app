@@ -5,7 +5,7 @@ function Button({ clickAction, text, disabled = false }) {
   return (
     <div>
       <button
-        type="submit"
+        type={text.toLowerCase() === 'reset' ? 'button' : 'submit'}
         className={text.toLowerCase() === 'cancel' ? styles.btnCancel : styles.btnAccept}
         onClick={clickAction}
         disabled={disabled}
