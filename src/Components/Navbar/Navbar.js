@@ -11,7 +11,7 @@ const suscription = `${process.env.PUBLIC_URL}/assets/images/suscription.png`;
 const members = `${process.env.PUBLIC_URL}/assets/images/muscle.png`;
 const activities = `${process.env.PUBLIC_URL}/assets/images/runner.png`;
 
-export const Navbar = () => {
+const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <ul className={styles.rutes}>
@@ -70,3 +70,5 @@ export const Navbar = () => {
     </nav>
   );
 };
+
+export default Navbar;

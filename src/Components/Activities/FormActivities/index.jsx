@@ -33,15 +33,14 @@ const ModalAddActivity = () => {
         'string.max': 'Name must contain at last 30 characters'
       }),
     description: Joi.string()
-      .regex(/^[a-zA-Z0-9]{5,}$/)
-      .required()
       .min(2)
       .max(50)
       .messages({
         'string.base': 'Description must be a string',
         'string.min': 'Description must be at last 3 characters',
         'string.max': 'Description invalid lenght'
-      }),
+      })
+      .required(),
     isActive: Joi.boolean().required().default(true)
   });
 
@@ -75,14 +74,6 @@ const ModalAddActivity = () => {
     setToastError(!!isError);
   }, [isError]);
 
-  const activityBody = {
-    method: updateData.mode === 'edit' ? 'PUT' : 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(inputForm)
-  };
-
   const handleUpdateButtonClick = () => {
     setModalUpdateConfirmOpen(true);
   };
@@ -90,8 +81,8 @@ const ModalAddActivity = () => {
   const formSubmit = async () => {
     if (id) {
       handleUpdateButtonClick();
-      const putActivity = await dispatch(updateActivity(id, activityBody));
-      if (putActivity.type === 'UPDATE_ACTIVITY') {
+      const putActivity = await updateActivity(dispatch, id, inputForm);
+      if (putActivity.type === 'UPDATE_ACTIVITIES_SUCCESS') {
         setToastError(false);
         setModalSuccessOpen(false);
         setTimeout(() => {
@@ -99,8 +90,9 @@ const ModalAddActivity = () => {
         }, 1000);
       }
     } else {
-      const postActivity = await dispatch(addActivity(activityBody));
-      if (postActivity.type === 'ADD_ACTIVITY') {
+      const postActivity = await addActivity(dispatch, inputForm);
+      console.log(postActivity);
+      if (postActivity.type === 'ADD_ACTIVITIES_SUCCESS') {
         setModalSuccessOpen(true);
         setTimeout(() => {
           history.goBack();
@@ -112,6 +104,7 @@ const ModalAddActivity = () => {
   const onSubmit = async (data) => {
     setInputForm(data);
     setModalUpdateConfirmOpen(true);
+    console.log(data);
   };
 
   return (
@@ -126,17 +119,17 @@ const ModalAddActivity = () => {
           error={errors.name?.message}
         />
         <Inputs
-          nameTitle="description:"
+          nameTitle="Description:"
           type="text"
           register={register}
-          nameInput="Description"
+          nameInput="description"
           error={errors.description?.message}
         />
         <div className={style.containerModal}>
           <label>Status:</label>
           <label>
             True
-            <Inputs
+            <input
               {...register('isActive', {
                 required: { value: true, message: 'This field is required' }
               })}
@@ -147,7 +140,7 @@ const ModalAddActivity = () => {
           </label>
           <label>
             False
-            <Inputs
+            <input
               {...register('isActive', {
                 required: { value: true, message: 'This field is required' }
               })}
