@@ -1,4 +1,4 @@
-import React, { /* useEffect,  */ useState } from 'react';
+import React, { useState } from 'react';
 import styles from './form.module.css';
 import { ModalConfirm, ToastError, ModalSuccess, Inputs, Button } from '../../Shared';
 import { useParams, useLocation, useHistory } from 'react-router-dom';
