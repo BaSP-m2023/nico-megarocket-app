@@ -34,7 +34,7 @@ const ModalAddActivity = () => {
       }),
     description: Joi.string()
       .min(2)
-      .max(50)
+      .max(100)
       .messages({
         'string.base': 'Description must be a string',
         'string.min': 'Description must be at last 3 characters',
