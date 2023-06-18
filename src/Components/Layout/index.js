@@ -19,6 +19,8 @@ const MemberProfile = React.lazy(() => import('../Users/Member/profile'));
 const FormActivity = React.lazy(() => import('../Activities/FormActivities'));
 const FormClasses = React.lazy(() => import('../Classes/Form'));
 const FormTrainer = React.lazy(() => import('../Trainers/FormTrainers'));
+const Admin = React.lazy(() => import('../Admins/'));
+const SuperAdmin = React.lazy(() => import('../SuperAdmins/index'));
 const FormSubscriptions = React.lazy(() => import('../Subscriptions/FormSubscription/Index'));
 
 function Layout() {
@@ -48,6 +50,11 @@ function Layout() {
                 <Route exact path="/admin/profile" component={AdminProfile} />
                 <Route exact path="/member" component={Member}>
                   <Redirect to="/member/classes" />
+                </Route>
+                <Route exact path="/superAdmin/admin" component={Admin}></Route>
+                <Route exact path="/superAdmin/superadmin" component={SuperAdmin}></Route>
+                <Route exact path="/superAdmin/">
+                  <Redirect to="/home" />
                 </Route>
                 <Route path="/member/classes" component={MemberClasses} />
                 <Route path="/member/activities" component={MemberActivities} />
