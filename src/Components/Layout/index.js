@@ -22,6 +22,8 @@ const FormTrainer = React.lazy(() => import('../Trainers/FormTrainers'));
 const Admin = React.lazy(() => import('../Admins/'));
 const SuperAdmin = React.lazy(() => import('../SuperAdmins/index'));
 const FormSubscriptions = React.lazy(() => import('../Subscriptions/FormSubscription/Index'));
+const FormAdmin = React.lazy(() => import('../Admins/Form/index'));
+const FormSupAdmin = React.lazy(() => import('../SuperAdmins/Form/index'));
 
 function Layout() {
   return (
@@ -52,7 +54,9 @@ function Layout() {
                   <Redirect to="/member/classes" />
                 </Route>
                 <Route exact path="/superAdmin/admin" component={Admin}></Route>
+                <Route path="/superAdmin/admin/form/:id?" component={FormAdmin} />
                 <Route exact path="/superAdmin/superadmin" component={SuperAdmin}></Route>
+                <Route path="/superAdmin/superadmin/form/:id?" component={FormSupAdmin} />
                 <Route exact path="/superAdmin/">
                   <Redirect to="/home" />
                 </Route>

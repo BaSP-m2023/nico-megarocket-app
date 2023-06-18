@@ -1,40 +1,11 @@
-.form {
-    margin-top: 50px;
-    margin-bottom: 50px;
-    color: #373867;
-    font-weight: bold;
-    width: 650px;
+.form{
+  margin: 30px 0;
 }
-.containerForm{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.container{
+  display:flex;
+  gap:20px;
 }
-.subContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #373867;
-    padding: 20px;
-    
-}
-.sub_buttons{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  width: 100%;
-}
-.inputContainer{
-    display: flex;
-    flex-direction: column;
-    width: 45%;
-}
+
 .buttonContainer{
-  margin-top: 10px;
-  gap: 40px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  display:flex;
 }
