@@ -3,38 +3,38 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80%;
+  margin-top: 50px;
+  width: 400px;
 }
-
+.form{
+  padding-bottom: 30px;
+  box-shadow: -5px 6px 30px -7px rgba(0, 0, 0, 0.75);
+  border-radius: 15px;
+}
 .formTitle {
   margin-bottom: 70 px;
   font-family: 'Roboto', sans-serif;
   color: #373867;
   font-size: 30px;
 }
-
 .inputs {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-
 .inputs input {
   padding-left: 5px;
 }
-
 .buttons {
   display: flex;
   justify-content: space-between;
   width: 250px;
 }
-
 .buttons button:hover {
   opacity: 0.9;
   cursor: pointer;
 }
-
 .cancelButton button:hover {
   color: #fff;
   background-color: #ea3354;

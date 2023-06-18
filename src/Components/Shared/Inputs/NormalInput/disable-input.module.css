@@ -4,7 +4,6 @@
   height: 25px;
   border-radius: 4px;
 }
-
 .nameLabel label {
   display: flex;
   flex-direction: column;
@@ -12,13 +11,19 @@
   margin-right: 20px;
   margin-bottom: 10px;
 }
-
 .error {
   margin-top: 0;
   color: rgb(240, 8, 8);
+  font-size: 12px;
+  width: 255px;
+  height: 30px;
+  text-align: center;
 }
-
 .errorInput {
   border: 2px solid red;
   margin-top: 0;
+}
+.spaceErrorMsg{
+  margin-top: 0;
+  height: 30px;
 }

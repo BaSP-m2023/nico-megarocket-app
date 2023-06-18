@@ -1,22 +1,47 @@
 .btnAccept {
+  margin: 5px;
+  width: 70px;
+  height: 40px;
   background-color: #aace9b;
-  color: #373867;
   border: none;
   cursor: pointer;
   border-radius: 11.5px;
-  font-size: 20px;
+  color: black;
+  text-transform: uppercase;
+  line-height: 20px;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: 0.2s;
+  font-size: 14px;
   font-weight: 500;
-  padding: 10px;
-  margin: 5px;
 }
 .btnCancel {
-  background: #ffffff;
-  color: #373867;
-  border: 1px solid #373867;
+  margin: 5px;
+  width: 70px;
+  height: 40px;
+  background-color: transparent;
+  border: solid black 1px;
   cursor: pointer;
   border-radius: 11.5px;
-  font-size: 20px;
+  color: black;
+  text-transform: uppercase;
+  line-height: 20px;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: 0.2s;
+  font-size: 14px;
   font-weight: 500;
-  padding: 10px;
-  margin: 5px;
+}
+
+.btnCancel:hover,
+.btnAccept:hover {
+  background-color: #373867;
+  color: white;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+  font-size: 12px;
 }

@@ -1,21 +1,41 @@
+import styles from './form.module.css';
 import React, { useState, useEffect } from 'react';
 import { ModalConfirm, Inputs, Button, ModalSuccess, Loader, ToastError } from '../../Shared';
-import styles from './form.module.css';
 import { useHistory, useParams, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import { addSuperAdmin, updateSuperAdmin } from '../../../redux/superAdmins/thunks';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
+
+const schema = Joi.object({
+  email: Joi.string()
+    .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+    .messages({
+      'string.base': 'The email must be a text string',
+      'string.empty': 'The email is a required field',
+      'string.email': 'The email must be a valid email address',
+      'string.minDomainSegments': 'The email must have at least 2 domain segments',
+      'string.tlds.allow': 'The email must have a valid top-level domain (.com or .net)'
+    }),
+  password: Joi.string()
+    .min(8)
+    .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
+    .required()
+    .messages({
+      'string.pattern.base':
+        'The password must contain at least one lowercase letter, one uppercase letter, and one digit',
+      'string.min': 'The password must be at least 8 characters long',
+      'string.empty': 'The password field is required'
+    })
+});
 
 const Form = () => {
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
   const [toastErrorOpen, setToastErrorOpen] = useState(false);
-
   const [editMode, setEditMode] = useState(false);
-
-  const [inputValue, setInputValue] = useState({
-    email: '',
-    password: ''
-  });
+  const [supAdm, setSupAdm] = useState({});
 
   const location = useLocation();
   const history = useHistory();
@@ -26,18 +46,28 @@ const Form = () => {
   const isLoading = useSelector((state) => state.superAdmin.loading);
   const anError = useSelector((state) => state.superAdmin.error);
 
+  const editSupAdm = {
+    email: params.email,
+    password: params.password
+  };
+
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors }
+  } = useForm({
+    resolver: joiResolver(schema),
+    mode: 'onBlur',
+    defaultValues: {
+      ...editSupAdm
+    }
+  });
+
   useEffect(() => {
     if (params.mode === 'create') {
-      setInputValue({
-        email: '',
-        password: ''
-      });
       setEditMode(false);
     } else {
-      setInputValue({
-        email: params.email,
-        password: params.password
-      });
       setEditMode(true);
     }
   }, []);
@@ -46,24 +76,6 @@ const Form = () => {
     setToastErrorOpen(!!anError);
   }, [anError]);
 
-  const onChangeInputEmail = (e) => {
-    setInputValue({
-      ...inputValue,
-      email: e.target.value
-    });
-  };
-  const onChangeInputPassword = (e) => {
-    setInputValue({
-      ...inputValue,
-      password: e.target.value
-    });
-  };
-
-  const openModal = (e) => {
-    e.preventDefault();
-    setModalConfirmOpen(true);
-  };
-
   const confirmation = () => {
     setModalSuccessOpen(true);
     setTimeout(() => {
@@ -71,16 +83,21 @@ const Form = () => {
     }, 2000);
   };
 
+  const openModal = async (data) => {
+    setModalConfirmOpen(true);
+    setSupAdm(data);
+  };
+
   const onSubmit = async () => {
     if (!editMode) {
       setModalConfirmOpen(false);
-      const postSupAdmin = await dispatch(addSuperAdmin(inputValue));
+      const postSupAdmin = await dispatch(addSuperAdmin(supAdm));
       if (postSupAdmin.type === 'POST_SUPERADMIN_SUCCESS') {
         confirmation();
       }
     } else {
-      setModalConfirmOpen(false);
-      const putSupAdmin = await dispatch(updateSuperAdmin(inputValue, id));
+      setModalConfirmOpen(true);
+      const putSupAdmin = await dispatch(updateSuperAdmin(supAdm, id));
       if (putSupAdmin.type === 'PUT_SUPERADMIN_SUCCESS') {
         confirmation();
       }
@@ -88,32 +105,35 @@ const Form = () => {
   };
 
   return (
-    <form className={styles.formSuperAdmin}>
-      <div className={styles.containerForm}>
-        <Inputs
-          text={inputValue.email}
-          type="text"
-          change={onChangeInputEmail}
-          nameInput={'email'}
-          nameTitle={'Email'}
-        />
-        <Inputs
-          text={inputValue.password}
-          type="password"
-          change={onChangeInputPassword}
-          nameInput={'password'}
-          nameTitle={'Password'}
-        />
-      </div>
-      <div className={styles.sub_buttons}>
-        <Button clickAction={openModal} text="Submit" />
-        <Button
-          clickAction={(e) => {
-            e.preventDefault();
-            history.goBack();
-          }}
-          text="Cancel"
-        />
+    <form className={styles.formSuperAdmin} onSubmit={handleSubmit(openModal)}>
+      <div className={styles.wholeContainer}>
+        <div className={styles.containerForm}>
+          <Inputs
+            type="email"
+            nameInput={'email'}
+            nameTitle={'Email'}
+            register={register}
+            error={errors.email?.message}
+          />
+          <Inputs
+            type="password"
+            nameInput={'password'}
+            nameTitle={'Password'}
+            register={register}
+            error={errors.password?.message}
+          />
+        </div>
+        <div className={styles.sub_buttons}>
+          <Button clickAction={() => {}} text="Submit" />
+          <Button clickAction={() => reset()} text="Reset" />
+          <Button
+            clickAction={(e) => {
+              e.preventDefault();
+              history.goBack();
+            }}
+            text="Cancel"
+          />
+        </div>
       </div>
 
       {modalConfirmOpen && (
