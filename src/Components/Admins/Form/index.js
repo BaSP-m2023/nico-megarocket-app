@@ -156,8 +156,8 @@ const FormAdmin = () => {
   return (
     <div className={styles.containerForm}>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.subContainer}>
-          <div className={styles.sub_buttons}>
+        <div className={styles.container}>
+          <div className={styles.groupContainer}>
             <Inputs
               nameTitle="Name"
               register={register}
@@ -174,8 +174,6 @@ const FormAdmin = () => {
               isDisabled={false}
               error={errors.lastName?.message}
             />
-          </div>
-          <div className={styles.sub_buttons}>
             <Inputs
               nameTitle="DNI"
               register={register}
@@ -193,7 +191,7 @@ const FormAdmin = () => {
               error={errors.phone?.message}
             />
           </div>
-          <div className={styles.sub_buttons}>
+          <div className={styles.groupContainer}>
             <Inputs
               nameTitle="E-Mail"
               register={register}
@@ -210,8 +208,6 @@ const FormAdmin = () => {
               isDisabled={false}
               error={errors.city?.message}
             />
-          </div>
-          <div className={styles.sub_buttons}>
             <Inputs
               nameTitle="Password"
               register={register}
