@@ -12,7 +12,7 @@ const Inputs = ({ register, error, type, isDisabled, nameInput, nameTitle }) => 
         disabled={isDisabled}
         name={nameInput}
       />
-      {error && <p className={styles.error}>{error}</p>}
+      {error ? <p className={styles.error}>{error}</p> : <p className={styles.spaceErrorMsg}></p>}
     </div>
   );
 };
