@@ -7,12 +7,53 @@ import { getClasses, createClass, updateClass } from '../../../redux/classes/thu
 import { getTrainers } from '../../../redux/trainers/thunks';
 import { getAllActivities } from './../../../redux/activities/thunks';
 import { useForm } from 'react-hook-form';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
+
+const schema = Joi.object({
+  hour: Joi.string()
+    .pattern(/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/)
+    .required()
+    .messages({
+      'string.pattern.base': 'Hour format is HH:mm'
+    }),
+  day: Joi.string()
+    .valid('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
+    .messages({
+      'any.only':
+        'The days can only be Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday'
+    })
+    .required(),
+  trainer: Joi.alternatives()
+    .try(
+      Joi.array().items(Joi.string().hex().length(24).required()),
+      Joi.string().hex().length(24).required()
+    )
+    .messages({
+      'alternatives.types': 'Trainer must be an array or a hexadecimal ID',
+      'string.hex': 'Trainer must be a hexadecimal ID',
+      'string.length': 'Trainer must have exactly 24 characters'
+    }),
+  activity: Joi.string().hex().length(24).required().messages({
+    'string.hex': 'Activity has to be a hexadecimal ID',
+    'string.length': 'Activity must have exactly 24 characters',
+    'string.base': 'Activity must be chosen',
+    'any.required': 'Activity is required'
+  }),
+  slots: Joi.number().min(1).max(20).required().messages({
+    'number.base': 'Slots must be a number',
+    'number.min': 'Slots must be at least 1',
+    'number.max': 'Slots cannot exceed 20',
+    'any.required': 'Slots is required'
+  })
+});
 
 const FormClasses = () => {
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [updClass, setUpdClass] = useState({});
   const [trainerChange, setTrainerChange] = useState('');
+
   const { id } = useParams();
   const locationObject = useLocation();
   const updateData = locationObject.state.params;
@@ -34,9 +75,11 @@ const FormClasses = () => {
     register,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors }
   } = useForm({
     mode: 'onBlur',
+    resolver: joiResolver(schema),
     defaultValues: {
       ...classesData
     }
@@ -58,14 +101,20 @@ const FormClasses = () => {
   };
 
   const openModal = async (data) => {
-    if (typeof data.trainer === 'object') {
-      setTrainerChange(data.trainer[0]);
+    if (trainerChange === undefined) {
+      const classArrayTrainer = { ...data, trainer: [data.trainer] };
+      setModalConfirmOpen(true);
+      setUpdClass(classArrayTrainer);
     } else {
-      setTrainerChange(data.trainer);
+      if (typeof data.trainer === 'object') {
+        setTrainerChange(data.trainer[0]);
+      } else {
+        setTrainerChange(data.trainer);
+      }
+      const classArrayTrainer = { ...data, trainer: [trainerChange] };
+      setModalConfirmOpen(true);
+      setUpdClass(classArrayTrainer);
     }
-    const classArrayTrainer = { ...data, trainer: [trainerChange] };
-    setModalConfirmOpen(true);
-    setUpdClass(classArrayTrainer);
   };
 
   const formSubmit = async () => {
@@ -146,6 +195,7 @@ const FormClasses = () => {
             <span className={formStyles.cancelButton}>
               <Button clickAction={() => history.push('/admin/classes')} text="Cancel" />
             </span>
+            <Button clickAction={() => reset()} text="Reset" />
             <Button
               clickAction={() => {}}
               text={updateData.mode === 'edit' ? 'Update' : 'Create'}
