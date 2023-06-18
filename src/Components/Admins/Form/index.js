@@ -10,7 +10,6 @@ import { joiResolver } from '@hookform/resolvers/joi';
 
 const FormAdmin = () => {
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
-  /*   const [editMode, setEditMode] = useState(false); */
   const [inputValue, setInputValue] = useState('');
   const [toastErroOpen, setToastErroOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('Error in database');
@@ -61,34 +60,6 @@ const FormAdmin = () => {
     }
   });
 
-  /*  useEffect(() => {
-    if (data.mode === 'create') {
-      setEditMode(false);
-      setInputValue({
-        firstName: '',
-        lastName: '',
-        phone: '',
-        email: '',
-        city: '',
-        dni: '',
-        password: ''
-      });
-    } else {
-      setInputValue({
-        firstName: data.item.firstName,
-        lastName: data.item.lastName,
-        phone: data.item.phone,
-        email: data.item.email,
-        city: data.item.city,
-        dni: data.item.dni,
-        password: data.item.password
-      });
-      setEditMode(true);
-    }
-  }, []); */
-
-  // const pass = watch('password');
-
   const addAdmins = async () => {
     try {
       createAdmin(dispatch, inputValue);
@@ -125,7 +96,7 @@ const FormAdmin = () => {
   const confirmation = () => {
     setModalSuccessOpen(true);
     setTimeout(() => {
-      history.push('/admins/');
+      history.push('/superAdmin/admin');
     }, 2000);
   };
 
@@ -233,7 +204,7 @@ const FormAdmin = () => {
           <Button
             clickAction={(e) => {
               e.preventDefault();
-              history.push('/admins/');
+              history.goBack();
             }}
             text="Cancel"
           />

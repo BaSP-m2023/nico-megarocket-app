@@ -16,11 +16,11 @@ function Admins() {
   const columns = ['firstName', 'dni', 'phone', 'email', 'city'];
 
   const handleEditClick = (item) => {
-    history.push(`/admins/form/${item._id}`, { params: { ...item, mode: 'edit' } });
+    history.push(`/superAdmin/admin/form/${item._id}`, { params: { ...item, mode: 'edit' } });
   };
 
   const createMode = () => {
-    history.push('/admins/form', { params: { mode: 'create' } });
+    history.push('/superAdmin/admin/form/', { params: { mode: 'create' } });
   };
 
   useEffect(() => {
