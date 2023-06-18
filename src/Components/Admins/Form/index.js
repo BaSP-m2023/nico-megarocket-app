@@ -32,7 +32,8 @@ const FormAdmin = () => {
     city: Joi.string().min(2).max(10).required(),
     password: Joi.string()
       .min(8)
-      .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/),
+      .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
+      .message('The password must have at least one Uppercase,a number and 8 characters.'),
     repeatPassword: Joi.string().valid(Joi.ref('password'))
   });
 
@@ -50,6 +51,7 @@ const FormAdmin = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm({
     mode: 'onBlur',
@@ -230,6 +232,7 @@ const FormAdmin = () => {
         </div>
 
         <div className={styles.buttonContainer}>
+          <Button text="reset" clickAction={() => reset()} />
           <Button text="Save" clickAction={() => {}} />
           <Button
             clickAction={(e) => {
