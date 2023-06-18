@@ -7,3 +7,8 @@
 .buttonsGroup{
   display:flex;
 }
+
+.inputContainer{
+  display:grid;
+  margin-left:20px;
+}

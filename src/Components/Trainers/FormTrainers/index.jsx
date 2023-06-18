@@ -108,7 +108,7 @@ const FormTrainer = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.form}>
           <div className={styles.groupContainer}>
-            <div className={styles.inputContainer}>
+            <div>
               <Inputs
                 nameTitle="First Name"
                 register={register}
@@ -117,7 +117,7 @@ const FormTrainer = () => {
                 error={errors.firstName?.message}
               />
             </div>
-            <div className={styles.inputContainer}>
+            <div>
               <Inputs
                 nameTitle="Last Name"
                 register={register}
@@ -126,7 +126,7 @@ const FormTrainer = () => {
                 error={errors.lastName?.message}
               />
             </div>
-            <div className={styles.inputContainer}>
+            <div>
               <Inputs
                 nameTitle="DNI"
                 register={register}
@@ -135,7 +135,7 @@ const FormTrainer = () => {
                 error={errors.dni?.message}
               />
             </div>
-            <div className={styles.inputContainer}>
+            <div>
               <Inputs
                 nameTitle="Phone"
                 register={register}
@@ -146,7 +146,7 @@ const FormTrainer = () => {
             </div>
           </div>
           <div className={styles.groupContainer}>
-            <div className={styles.inputContainer}>
+            <div>
               <Inputs
                 nameTitle="Email"
                 register={register}
@@ -155,7 +155,7 @@ const FormTrainer = () => {
                 error={errors.email?.message}
               />
             </div>
-            <div className={styles.inputContainer}>
+            <div>
               <Inputs
                 nameTitle="City"
                 register={register}
@@ -164,7 +164,7 @@ const FormTrainer = () => {
                 error={errors.city?.message}
               />
             </div>
-            <div className={styles.inputContainer}>
+            <div>
               <Inputs
                 nameTitle="Salary"
                 register={register}
@@ -176,7 +176,7 @@ const FormTrainer = () => {
             <div className={styles.inputContainer}>
               <label>Status</label>
               <label>
-                True
+                Active
                 <input
                   {...register('isActive', {
                     required: { value: true, message: 'This field is required' }
@@ -186,17 +186,19 @@ const FormTrainer = () => {
                   value={true}
                 />
               </label>
-              <label>
-                false
-                <input
-                  {...register('isActive', {
-                    required: { value: true, message: 'This field is required' }
-                  })}
-                  type="radio"
-                  name="isActive"
-                  value={false}
-                />
-              </label>
+              <div>
+                <label>
+                  Inactive
+                  <input
+                    {...register('isActive', {
+                      required: { value: true, message: 'This field is required' }
+                    })}
+                    type="radio"
+                    name="isActive"
+                    value={false}
+                  />
+                </label>
+              </div>
             </div>
           </div>
         </div>
