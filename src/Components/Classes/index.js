@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getClasses, deleteClass } from '../../redux/classes/thunks';
 
-function Projects() {
+function Classes() {
   const dispatch = useDispatch();
   const classes = useSelector((state) => state.classes.list);
   const loading = useSelector((state) => state.classes.pending);
@@ -26,11 +26,11 @@ function Projects() {
   }, []);
 
   const createMode = () => {
-    history.push('/classes/ClassForm', { params: { mode: 'create' } });
+    history.push('/admin/classes/ClassForm', { params: { mode: 'create' } });
   };
 
   const handleClick = (item) => {
-    history.push(`/classes/ClassForm/${item._id}`, {
+    history.push(`/admin/classes/ClassForm/${item._id}`, {
       params: { mode: 'edit' }
     });
   };
@@ -54,4 +54,4 @@ function Projects() {
   );
 }
 
-export default Projects;
+export default Classes;

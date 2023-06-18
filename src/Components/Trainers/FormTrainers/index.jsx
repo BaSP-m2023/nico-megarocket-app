@@ -16,7 +16,6 @@ const FormTrainer = () => {
   const [modalUpdateConfirmOpen, setModalUpdateConfirmOpen] = useState(false);
   const [toastErrorOpen, setToastErrorOpen] = useState(false);
   const [modalSuccess, setModalSuccess] = useState(false);
-  const [editMode, setEditMode] = useState(false);
   const [inputForm, setInputForm] = useState('');
   const { id } = useParams();
   const location = useLocation();
@@ -49,6 +48,7 @@ const FormTrainer = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm({
     mode: 'onBlur',
@@ -57,31 +57,6 @@ const FormTrainer = () => {
       ...updateTrainerData
     }
   });
-
-  useEffect(() => {
-    if (updateData.mode === 'edit') {
-      setEditMode(true);
-      /* setInputForm({
-        firstName: updateData.firstName,
-        lastName: updateData.lastName,
-        dni: updateData.dni,
-        phone: updateData.phone,
-        email: updateData.email,
-        city: updateData.city,
-        salary: updateData.salary
-      }); */
-    } else {
-      // setInputForm({
-      //   firstName: '',
-      //   lastName: '',
-      //   dni: '',
-      //   phone: '',
-      //   email: '',
-      //   city: '',
-      //   salary: ''
-      // });
-    }
-  }, []);
 
   useEffect(() => {
     setToastErrorOpen(!!isError);
@@ -124,16 +99,15 @@ const FormTrainer = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
     setInputForm(data);
     setModalUpdateConfirmOpen(true);
   };
 
   return (
     <div>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.subContainer}>
-          <div className={styles.container}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.form}>
+          <div className={styles.groupContainer}>
             <div className={styles.inputContainer}>
               <Inputs
                 nameTitle="First Name"
@@ -152,8 +126,6 @@ const FormTrainer = () => {
                 error={errors.lastName?.message}
               />
             </div>
-          </div>
-          <div className={styles.container}>
             <div className={styles.inputContainer}>
               <Inputs
                 nameTitle="DNI"
@@ -173,7 +145,7 @@ const FormTrainer = () => {
               />
             </div>
           </div>
-          <div className={styles.container}>
+          <div className={styles.groupContainer}>
             <div className={styles.inputContainer}>
               <Inputs
                 nameTitle="Email"
@@ -192,8 +164,6 @@ const FormTrainer = () => {
                 error={errors.city?.message}
               />
             </div>
-          </div>
-          <div className={styles.container}>
             <div className={styles.inputContainer}>
               <Inputs
                 nameTitle="Salary"
@@ -203,44 +173,45 @@ const FormTrainer = () => {
                 error={errors.salary?.message}
               />
             </div>
+            <div className={styles.inputContainer}>
+              <label>Status</label>
+              <label>
+                True
+                <input
+                  {...register('isActive', {
+                    required: { value: true, message: 'This field is required' }
+                  })}
+                  type="radio"
+                  name="isActive"
+                  value={true}
+                />
+              </label>
+              <label>
+                false
+                <input
+                  {...register('isActive', {
+                    required: { value: true, message: 'This field is required' }
+                  })}
+                  type="radio"
+                  name="isActive"
+                  value={false}
+                />
+              </label>
+            </div>
           </div>
         </div>
-        <div className={styles.inputContainer}>
-          <label>Status</label>
-          <label>
-            True
-            <input
-              {...register('isActive', {
-                required: { value: true, message: 'This field is required' }
-              })}
-              type="radio"
-              name="isActive"
-              value={true}
-            />
-          </label>
-          <label>
-            false
-            <input
-              {...register('isActive', {
-                required: { value: true, message: 'This field is required' }
-              })}
-              type="radio"
-              name="isActive"
-              value={false}
-            />
-          </label>
-        </div>
-        <div className={styles.container}>
-          <Button clickAction={() => history.goBack()} text="Cancel" />
+        <div className={styles.buttonsGroup}>
           <Button text="Save" clickAction={() => {}} />
+          <Button text="Reset" clickAction={() => reset()} />
+          <Button clickAction={() => history.goBack()} text="Cancel" />
         </div>
       </form>
 
       {modalUpdateConfirmOpen && (
         <ModalConfirm
-          method={editMode ? 'Edit' : 'Create'}
+          method={id ? 'Edit' : 'Create'}
           message={
-            editMode
+            id
               ? 'Are you sure you want to edit the Trainer?'
               : 'Are you sure you want to add the Trainer?'
           }
