@@ -119,7 +119,7 @@ const FormSubscription = () => {
 
   const returnToTable = () => {
     setTimeout(() => {
-      history.push('/subscriptions');
+      history.push('/admin/subscriptions');
     }, 1000);
   };
 

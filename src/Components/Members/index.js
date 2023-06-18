@@ -15,11 +15,11 @@ function Members() {
   const history = useHistory();
 
   const handleClick = (item) => {
-    history.push(`members/form/${item._id}`, { params: { mode: 'edit', ...item } });
+    history.push(`/admin/members/form/${item._id}`, { params: { mode: 'edit', ...item } });
   };
 
   const createMode = () => {
-    history.push(`members/form/`, { params: { mode: 'create' } });
+    history.push(`/admin/members/form/`, { params: { mode: 'create' } });
   };
 
   useEffect(() => {
@@ -40,9 +40,7 @@ function Members() {
         <AddButton entity="Member" createMode={createMode} />
       </div>
       {isPending && <Loader />}
-      {!members.length ? (
-        <p>No active Members</p>
-      ) : (
+      {!isPending && (
         <TableComponent
           columns={columns}
           columnTitleArray={columnTitleArray}
