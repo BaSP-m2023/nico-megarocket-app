@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getClasses, createClass, updateClass } from '../../../redux/classes/thunks';
 import { getTrainers } from '../../../redux/trainers/thunks';
 import { getAllActivities } from './../../../redux/activities/thunks';
+import { useForm } from 'react-hook-form';
 
 const FormClasses = () => {
   const [modalUpdateConfirmOpen, setModalUpdateConfirmOpen] = useState(false);
@@ -22,6 +23,8 @@ const FormClasses = () => {
   const history = useHistory();
 
   const updateItem = classes.find((item) => item._id === id);
+
+  const { register, handleSubmit } = useForm();
 
   useEffect(() => {
     getClasses(dispatch);
@@ -119,28 +122,28 @@ const FormClasses = () => {
 
   return (
     <div className={formStyles.container}>
-      <form className={formStyles.form}>
+      <form className={formStyles.form} onSubmit={handleSubmit}>
         <div className={formStyles.container}>
           <h2 className={formStyles.formTitle}>
             {updateData.mode === 'edit' ? 'Update' : 'Create'} Class
           </h2>
           <div className={formStyles.inputs}>
             <Inputs
-              text={inputForm.hour}
               type={'text'}
               isDisabled={false}
               change={onChangeHour}
               nameInput={'hour'}
               nameTitle="Hour"
+              register={register}
             />
 
             <Inputs
-              text={inputForm.day}
               type={'text'}
               isDisabled={false}
               change={onChangeDay}
               nameInput={'day'}
               nameTitle="Day"
+              register={register}
             />
 
             <OptionInput
@@ -160,12 +163,12 @@ const FormClasses = () => {
             />
 
             <Inputs
-              text={inputForm.slots}
               type={'text'}
               isDisabled={false}
               change={onChangeSlots}
               nameInput={'slots'}
               nameTitle="Slots"
+              register={register}
             />
           </div>
           <div className={formStyles.buttons}>
