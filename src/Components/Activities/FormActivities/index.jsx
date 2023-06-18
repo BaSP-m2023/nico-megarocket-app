@@ -52,6 +52,7 @@ const ModalAddActivity = () => {
 
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors }
   } = useForm({
@@ -152,7 +153,7 @@ const ModalAddActivity = () => {
         </div>
         <div className={style.containerAddButton}>
           <Button clickAction={() => history.goBack()} text="Cancel" />
-          <Button text="Reset" type={'cancel'} />
+          <Button clickAction={() => reset()} text="Reset" />
           <Button clickAction={() => {}} text="Save" />
         </div>
       </form>
