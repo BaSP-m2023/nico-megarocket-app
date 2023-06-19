@@ -26,8 +26,6 @@ const FormSubscription = () => {
   const members = useSelector((state) => state.members.list);
   const data = location.state.params;
 
-  console.log(data);
-
   const schema = Joi.object({
     date: Joi.date().required().messages({
       'date.base': 'Date must be a valid date',
@@ -64,18 +62,24 @@ const FormSubscription = () => {
     getAllMembers(dispatch);
   }, []);
 
-  const onConfirm = () => {
+  const onConfirm = async () => {
     if (!id) {
-      addSubscriptions(dispatch, subscription);
+      const addSubscriptionResponse = await addSubscriptions(dispatch, subscription);
+      if (addSubscriptionResponse.type === 'POST_SUBSCRIPTION_SUCCESS') {
+        setModalSuccessOpen(true);
+        return setTimeout(() => {
+          history.goBack();
+        }, 1000);
+      }
     } else {
-      updateSubscriptions(dispatch, id, subscription);
+      const editSubscriptionResponse = await updateSubscriptions(dispatch, id, subscription);
+      if (editSubscriptionResponse.type === 'PUT_SUBSCRIPTION_SUCCESS') {
+        setModalSuccessOpen(true);
+        return setTimeout(() => {
+          history.goBack();
+        }, 1000);
+      }
     }
-  };
-
-  const returnToTable = () => {
-    setTimeout(() => {
-      history.push('/admin/subscriptions');
-    }, 1000);
   };
 
   const goBack = () => {
@@ -85,7 +89,7 @@ const FormSubscription = () => {
   const onSubmit = (newData) => {
     const newSub = {
       classId: newData.classId,
-      members: newData.members,
+      members: [newData.members],
       date: newData.date
     };
     setModalConfirmOpen(true);
@@ -136,10 +140,7 @@ const FormSubscription = () => {
         />
       )}
       {modalSuccessOpen && (
-        <>
-          <ModalSuccess message="Success!" setModalSuccessOpen={setModalSuccessOpen} />
-          {setModalSuccessOpen && returnToTable()}
-        </>
+        <ModalSuccess message="Success!" setModalSuccessOpen={setModalSuccessOpen} />
       )}
     </section>
   );

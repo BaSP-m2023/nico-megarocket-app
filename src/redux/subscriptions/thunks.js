@@ -40,13 +40,12 @@ export const deleteSubscription = (id) => {
       const data = await response.json();
       dispatch(deleteSubscriptionPending(false));
       if (data) {
-        dispatch(deleteSubscriptionSuccess(id));
-      } else {
-        dispatch(getSubscriptionSuccess(data.message));
+        return dispatch(deleteSubscriptionSuccess(id));
       }
+      return dispatch(getSubscriptionSuccess(data.message));
     } catch (error) {
       dispatch(deleteSubscriptionPending(false));
-      dispatch(deleteSubscriptionError(error));
+      return dispatch(deleteSubscriptionError(error));
     }
   };
 };
@@ -64,13 +63,12 @@ export const addSubscriptions = async (dispatch, newSub) => {
     const data = await res.json();
     dispatch(addSubscriptionPending(false));
     if (res.ok) {
-      dispatch(addSubscriptionSuccess(data.result));
-    } else {
-      dispatch(addSubscriptionError(data.message));
+      return dispatch(addSubscriptionSuccess(data.result));
     }
+    return dispatch(addSubscriptionError(data.message));
   } catch (error) {
     dispatch(addSubscriptionPending(false));
-    dispatch(addSubscriptionError(error));
+    return dispatch(addSubscriptionError(error));
   }
 };
 
@@ -87,12 +85,11 @@ export const updateSubscriptions = async (dispatch, id, editSub) => {
     const data = await res.json();
     dispatch(editSubscriptionPending(false));
     if (res.ok) {
-      dispatch(editSubscriptionSuccess(id, data.result));
-    } else {
-      dispatch(editSubscriptionError(data.message));
+      return dispatch(editSubscriptionSuccess(id, data.result));
     }
+    return dispatch(editSubscriptionError(data.message));
   } catch (error) {
     dispatch(editSubscriptionPending(false));
-    dispatch(editSubscriptionError(error));
+    return dispatch(editSubscriptionError(error));
   }
 };
