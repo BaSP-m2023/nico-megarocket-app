@@ -1,5 +1,5 @@
 import React from 'react';
-import Members from '../../../Members';
+import Members from 'Components/Members';
 
 const AdminMembers = () => {
   return (

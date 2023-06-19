@@ -1,14 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { Inputs, Button, ModalConfirm, ModalSuccess, OptionInput } from '../../Shared';
+import { Inputs, Button, ModalConfirm, ModalSuccess, OptionInput } from 'Components/Shared';
 import style from '../FormSubscription/modalAdd.module.css';
-import {
-  addSubscriptions,
-  updateSubscriptions,
-  getSuscription
-} from '../../../redux/subscriptions/thunks';
-import { getClasses } from '../../../redux/classes/thunks';
-import { getAllMembers } from '../../../redux/members/thunks';
+import { addSubscriptions, updateSubscriptions, getSuscription } from 'redux/subscriptions/thunks';
+import { getClasses } from 'redux/classes/thunks';
+import { getAllMembers } from 'redux/members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
 const FormSubscription = () => {

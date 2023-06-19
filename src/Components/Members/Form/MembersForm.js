@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import styles from './form.module.css';
-import { ModalConfirm, ModalSuccess, ToastError } from '../../Shared';
-import { Inputs, Button } from '../../Shared';
+import { ModalConfirm, ModalSuccess, ToastError, Inputs, Button } from 'Components/Shared';
 import { useLocation, useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
-import { addMember, editMember } from '../../../redux/members/thunks';
+import { addMember, editMember } from 'redux/members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
