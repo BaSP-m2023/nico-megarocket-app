@@ -40,24 +40,12 @@ const FormSubscription = () => {
     getAllMembers(dispatch);
   }, []);
 
-  const createSubscriptionDB = async () => {
-    try {
+  const onConfirm = () => {
+    if (!id) {
       addSubscriptions(dispatch, subscription);
-      fn;
-    } catch (error) {
-      console.error(error);
+    } else {
+      updateSubscriptions(dispatch, id, subscription);
     }
-  };
-  const fn = () => {
-    submitSubscription;
-    submitEditedSubscription;
-  };
-  const submitSubscription = () => {
-    createSubscriptionDB();
-  };
-
-  const submitEditedSubscription = (id) => {
-    updateSubscriptions(dispatch, id, subscription);
   };
 
   const returnToTable = () => {
@@ -118,7 +106,7 @@ const FormSubscription = () => {
       {modalConfirmOpen && (
         <ModalConfirm
           method="Confirm"
-          onConfirm={{}}
+          onConfirm={onConfirm}
           message="Are you sure?"
           setModalConfirmOpen={setModalConfirmOpen}
         />
