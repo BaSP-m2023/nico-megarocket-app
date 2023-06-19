@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, useLocation } from 'react-router-dom';
 import { Inputs, Button, ModalConfirm, ModalSuccess, OptionInput } from '../../Shared';
 import style from '../FormSubscription/modalAdd.module.css';
 import {
@@ -11,19 +11,41 @@ import { getClasses } from '../../../redux/classes/thunks';
 import { getAllMembers } from '../../../redux/members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-/* import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi'; */
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 
 const FormSubscription = () => {
   const dispatch = useDispatch();
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [subscription, setSubscription] = useState({});
-
   const history = useHistory();
   const { id } = useParams();
+  const location = useLocation();
   const classes = useSelector((state) => state.classes.list);
   const members = useSelector((state) => state.members.list);
+  const data = location.state.params;
+
+  console.log(data);
+
+  const schema = Joi.object({
+    date: Joi.date().required().messages({
+      'date.base': 'Date must be a valid date',
+      'any.required': 'Date is required'
+    }),
+    members: Joi.string().required().invalid('Pick members').messages({
+      'any.only': 'Please select a member'
+    }),
+    classId: Joi.string().required().invalid('Pick classId').messages({
+      'any.only': 'Please select a class'
+    })
+  });
+
+  const subscriptionUpdated = {
+    classId: data.classId?._id,
+    members: data.members?.map((member) => member._id),
+    date: data.date
+  };
 
   const {
     register,
@@ -31,7 +53,9 @@ const FormSubscription = () => {
     handleSubmit,
     formState: { errors }
   } = useForm({
-    mode: 'onBlur'
+    mode: 'onBlur',
+    resolver: joiResolver(schema),
+    defaultValues: { ...subscriptionUpdated }
   });
 
   useEffect(() => {
@@ -58,11 +82,11 @@ const FormSubscription = () => {
     history.goBack();
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = (newData) => {
     const newSub = {
-      classId: data.classId,
-      members: data.members,
-      date: data.date
+      classId: newData.classId,
+      members: newData.members,
+      date: newData.date
     };
     setModalConfirmOpen(true);
     setSubscription(newSub);
