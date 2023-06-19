@@ -1,10 +1,10 @@
 import { useForm } from 'react-hook-form';
 import React, { useState, useEffect } from 'react';
 import style from './modalAdd.module.css';
-import { ModalConfirm, ModalSuccess, Inputs, Button, ToastError } from '../../Shared';
+import { ModalConfirm, ModalSuccess, Inputs, Button, ToastError } from 'Components/Shared';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { addActivity, updateActivity } from '../../../redux/activities/thunks';
+import { addActivity, updateActivity } from 'redux/activities/thunks';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 

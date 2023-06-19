@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styles from './form.module.css';
-import { ModalConfirm, ToastError, ModalSuccess, Inputs, Button } from '../../Shared';
+import { ModalConfirm, ToastError, ModalSuccess, Inputs, Button } from 'Components/Shared';
 import { useParams, useLocation, useHistory } from 'react-router-dom';
-import { createAdmin, updateAdmin } from '../../../redux/admins/thunks';
+import { createAdmin, updateAdmin } from 'redux/admins/thunks';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
