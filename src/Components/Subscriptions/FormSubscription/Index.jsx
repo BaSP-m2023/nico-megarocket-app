@@ -10,111 +10,54 @@ import {
 import { getClasses } from '../../../redux/classes/thunks';
 import { getAllMembers } from '../../../redux/members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+/* import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi'; */
 
 const FormSubscription = () => {
   const dispatch = useDispatch();
-  const [isValid, setIsValid] = useState(true);
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
-  const [bodySubscription, setBodySubscription] = useState({
-    classId: '',
-    members: '',
-    date: ''
-  });
-
-  const [subscriptionEdit, setEditSubscriptions] = useState({
-    classId: '',
-    members: '',
-    date: ''
-  });
+  const [subscription, setSubscription] = useState({});
 
   const history = useHistory();
   const { id } = useParams();
-  const data = useSelector((state) => state.subscription.data);
   const classes = useSelector((state) => state.classes.list);
   const members = useSelector((state) => state.members.list);
+
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur'
+  });
 
   useEffect(() => {
     getSuscription(dispatch);
     getClasses(dispatch);
     getAllMembers(dispatch);
-    if (!id) {
-      setBodySubscription({
-        classId: '',
-        members: '',
-        date: ''
-      });
-    } else {
-      const subEdit = data.find((sub) => sub._id === id);
-      setEditSubscriptions({
-        classId: subEdit?.classId ? subEdit?.classId._id : '',
-        members: subEdit?.members
-          ? subEdit?.members.map((member) => {
-              return member._id;
-            })
-          : '',
-        date: subEdit?.date
-      });
-    }
-  }, [data.length === 0]);
-
-  const changeInput = (e) => {
-    setBodySubscription({
-      ...bodySubscription,
-      [e.target.name]: e.target.name === 'members' ? [e.target.value] : e.target.value
-    });
-    const validFields = Object.values(bodySubscription).every((field) => {
-      return field.length >= 3 && field !== '';
-    });
-    setIsValid(!validFields);
-  };
-
-  const changeInputEdit = (e) => {
-    console.log(e.target.values);
-    setEditSubscriptions({
-      ...subscriptionEdit,
-      [e.target.name]: e.target.name === 'members' ? [e.target.value] : e.target.value
-    });
-    if (e.target.value.length >= 3) {
-      setIsValid(true);
-    } else {
-      setIsValid(false);
-    }
-  };
+  }, []);
 
   const createSubscriptionDB = async () => {
-    const newSub = {
-      classId: bodySubscription.classId,
-      members: bodySubscription.members,
-      date: bodySubscription.date
-    };
     try {
-      addSubscriptions(dispatch, newSub);
+      addSubscriptions(dispatch, subscription);
+      fn;
     } catch (error) {
       console.error(error);
     }
   };
-
+  const fn = () => {
+    submitSubscription;
+    submitEditedSubscription;
+  };
   const submitSubscription = () => {
-    setModalConfirmOpen(false);
-    setModalSuccessOpen(true);
     createSubscriptionDB();
   };
 
-  const submitEditedSubscription = (id, subscriptionsEdition) => {
-    const editedSub = {
-      classId: subscriptionsEdition.classId,
-      members: subscriptionsEdition.members,
-      date: subscriptionsEdition.date
-    };
-    updateSubscriptions(dispatch, id, editedSub);
-    setModalConfirmOpen(false);
-    setModalSuccessOpen(true);
-  };
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    setModalConfirmOpen(true);
+  const submitEditedSubscription = (id) => {
+    updateSubscriptions(dispatch, id, subscription);
   };
 
   const returnToTable = () => {
@@ -127,42 +70,55 @@ const FormSubscription = () => {
     history.goBack();
   };
 
+  const onSubmit = (data) => {
+    const newSub = {
+      classId: data.classId,
+      members: data.members,
+      date: data.date
+    };
+    setModalConfirmOpen(true);
+    setSubscription(newSub);
+  };
+
   return (
     <section className={style.containerModal}>
-      <form className={style.containerForm}>
+      <form className={style.containerForm} onSubmit={handleSubmit(onSubmit)}>
         <h3>{id ? 'Edit subscription' : 'Add subscription'}</h3>
         <OptionInput
           data={classes}
           dataLabel="Class"
-          onChangeOption={id ? changeInputEdit : changeInput}
-          setValue={id ? subscriptionEdit.classId : bodySubscription.classId}
+          setValue={{}}
+          aValue={{}}
           name="classId"
+          register={register}
+          error={errors.classId?.message}
         />
         <OptionInput
           data={members}
           dataLabel="Member"
-          onChangeOption={id ? changeInputEdit : changeInput}
-          setValue={id ? subscriptionEdit.members : bodySubscription.members}
+          setValue={{}}
+          aValue={{}}
           name="members"
+          register={register}
+          error={errors.members?.message}
         />
         <Inputs
           nameTitle="Date:"
-          type="date"
-          text={id ? subscriptionEdit.date : bodySubscription.date}
           nameInput="date"
-          change={id ? changeInputEdit : changeInput}
+          type="date"
+          register={register}
+          error={errors.date?.message}
         />
         <div className={style.containerAdd}>
           <Button clickAction={goBack} text="Cancel" />
-          <Button clickAction={handleClick} text="Save" disabled={!isValid} />
+          <Button clickAction={() => reset()} text="Reset" />
+          <Button clickAction={() => {}} text="Save" />
         </div>
       </form>
       {modalConfirmOpen && (
         <ModalConfirm
           method="Confirm"
-          onConfirm={() => {
-            !id ? submitSubscription() : submitEditedSubscription(id, subscriptionEdit);
-          }}
+          onConfirm={{}}
           message="Are you sure?"
           setModalConfirmOpen={setModalConfirmOpen}
         />
