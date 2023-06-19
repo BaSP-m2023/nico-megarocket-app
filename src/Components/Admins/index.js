@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { ToastError, AddButton, TableComponent, Loader } from '../Shared';
+import { ToastError, AddButton, TableComponent, Loader } from 'Components/Shared';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllAdmins, adminDelete } from '../../redux/admins/thunks';
+import { getAllAdmins, adminDelete } from 'redux/admins/thunks';
 
 function Admins() {
   const admins = useSelector((state) => state.admins.list);

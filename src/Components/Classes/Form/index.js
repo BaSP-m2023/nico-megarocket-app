@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import formStyles from '../Form/formClasses.module.css';
-import { ModalConfirm, ModalSuccess, Button, Inputs, OptionInput } from '../../Shared';
+import { ModalConfirm, ModalSuccess, Button, Inputs, OptionInput } from 'Components/Shared';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getClasses, createClass, updateClass } from '../../../redux/classes/thunks';
-import { getTrainers } from '../../../redux/trainers/thunks';
-import { getAllActivities } from './../../../redux/activities/thunks';
+import { getClasses, createClass, updateClass } from 'redux/classes/thunks';
+import { getTrainers } from 'redux/trainers/thunks';
+import { getAllActivities } from 'redux/activities/thunks';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';

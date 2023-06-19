@@ -1,5 +1,5 @@
 import React from 'react';
-import Subscriptions from '../../../Subscriptions';
+import Subscriptions from 'Components/Subscriptions';
 
 const AdminSubscriptions = () => {
   return (

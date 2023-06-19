@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import styles from './form.module.css';
-import { ModalConfirm, ModalSuccess } from '../../Shared';
-import { ToastError } from '../../Shared';
-import { Inputs } from '../../Shared';
-import { Button } from '../../Shared';
+import { ModalConfirm, ModalSuccess, ToastError, Inputs, Button } from 'Components/Shared';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { createTrainer, updateTrainer } from '../../../redux/trainers/thunks';
+import { createTrainer, updateTrainer } from 'redux/trainers/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
 const FormTrainer = () => {

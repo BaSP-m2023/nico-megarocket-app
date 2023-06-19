@@ -1,8 +1,8 @@
 import styles from './form.module.css';
 import React, { useState, useEffect } from 'react';
-import { ModalConfirm, Inputs, Button, ModalSuccess, Loader, ToastError } from '../../Shared';
+import { ModalConfirm, Inputs, Button, ModalSuccess, Loader, ToastError } from 'Components/Shared';
 import { useHistory, useParams, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import { addSuperAdmin, updateSuperAdmin } from '../../../redux/superAdmins/thunks';
+import { addSuperAdmin, updateSuperAdmin } from 'redux/superAdmins/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
