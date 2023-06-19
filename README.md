@@ -3,6 +3,7 @@
 Mega Rocket App is a software project that offers a platform to administer and manage a gym. It provides essential functionalities to manage members, register trainers, schedule classes.
 
 ### WEEK 13
+
 ## INTRODUCTION
 
 This week, the Devs team worked on implementing Redux in the project. To improve the efficiency, readabilitily and maintainability of the code.
@@ -11,11 +12,23 @@ We restructured the application's state management system. Previously, each comp
 
 Currently, with the implementation of Redux in our application, we have achieved more efficient code because all the information is consolidated in a global state called store and can only be modified through the use of reducers. Thanks to this, we have achieved cleaner code by avoiding "prop drilling," Redux eliminates the need for passing data through multiple nested child components. This reduces the complexity of passing data between components and improves overall code cleanliness.
 
+### WEEK 14
+
+## OBJETIVES FOR THE PROBLEM
+
+For this week we had the objective of making use of the Hook and JOI libraries in React to update the respective Forms and carry out the corresponding routing to achieve their correct operation.
+Everything mentioned above should respect what is shown in the Figma screenflow, where the styles of each object shown in the tabs are clarified, as well as an adequate use for its correct performance.
+
+In turn, we should begin to diagram the users with the role of Admin and Members. Each one of them had to have separate views with their functionalities that differentiated them from each other.
+
+In order to meet these objectives, the developers were subdivided into two groups to arrive on time and in a proper way to the assigned delivery date.
+
 ### Benefits of Redux implementation
+
 - Improved Code Efficiency
-<br>
+  <br>
 - Enhanced Code Readability
-<br>
+  <br>
 - Better Code Maintainability
 
 ## Initial Setup
@@ -47,9 +60,6 @@ You will also see any lint errors in the console.
     npm run lint:fix
 
 <br>
-
-
-
 
 ## Members
 
