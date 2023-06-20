@@ -11,7 +11,6 @@ const AdminTrainers = React.lazy(() => import('../Users/Admin/trainers'));
 const AdminMembers = React.lazy(() => import('../Users/Admin/members'));
 const AdminSubscriptions = React.lazy(() => import('../Users/Admin/subscriptions'));
 const AdminProfile = React.lazy(() => import('../Users/Admin/profile'));
-const Member = React.lazy(() => import('../Users/Member'));
 const MemberActivities = React.lazy(() => import('../Users/Member/activities'));
 const MemberClasses = React.lazy(() => import('../Users/Member/classes'));
 const MembersForm = React.lazy(() => import('../Members/Form/MembersForm'));
@@ -39,6 +38,13 @@ function Layout() {
           <div className={styles.switchContainer}>
             <React.Suspense>
               <Switch>
+                <Route exact path="/superAdmin/admin" component={Admin} />
+                <Route path="/superAdmin/admin/form/:id?" component={FormAdmin} />
+                <Route exact path="/superAdmin/superadmin" component={SuperAdmin} />
+                <Route path="/superAdmin/superadmin/form/:id?" component={FormSupAdmin} />
+                <Route exact path="/superAdmin/">
+                  <Redirect to="/home" />
+                </Route>
                 <Route exact path="/admin/activities" component={Activities} />
                 <Route path="/admin/activities/form/:id?" component={FormActivity} />
                 <Route exact path="/admin/classes" component={AdminClasses} />
@@ -50,15 +56,8 @@ function Layout() {
                 <Route exact path="/admin/subscriptions" component={AdminSubscriptions} />
                 <Route path="/admin/subscriptions/form/:id?" component={FormSubscriptions} />
                 <Route exact path="/admin/profile" component={AdminProfile} />
-                <Route exact path="/member" component={Member}>
+                <Route exact path="/member/">
                   <Redirect to="/member/classes" />
-                </Route>
-                <Route exact path="/superAdmin/admin" component={Admin}></Route>
-                <Route path="/superAdmin/admin/form/:id?" component={FormAdmin} />
-                <Route exact path="/superAdmin/superadmin" component={SuperAdmin}></Route>
-                <Route path="/superAdmin/superadmin/form/:id?" component={FormSupAdmin} />
-                <Route exact path="/superAdmin/">
-                  <Redirect to="/home" />
                 </Route>
                 <Route path="/member/classes" component={MemberClasses} />
                 <Route path="/member/activities" component={MemberActivities} />
