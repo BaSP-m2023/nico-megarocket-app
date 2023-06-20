@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './option-input.module.css';
 
-const SelectInput = ({ data, dataLabel, aValue, setValue, name, register, error }) => {
+const SelectInput = ({ data, dataLabel, name, register, error }) => {
   const ifFirstName = (item) => {
     if (item.firstName && item.lastName) {
       return `${item.firstName} ${item.lastName}`;
@@ -21,12 +21,7 @@ const SelectInput = ({ data, dataLabel, aValue, setValue, name, register, error 
     <div className={styles.containerInput}>
       <label htmlFor="selectInput">{dataLabel}:</label>
       <select
-        onChange={(e) => {
-          setValue(name, e.target.value);
-        }}
-        value={aValue[name]}
         className={error ? `${styles.errorInput} ${styles.optionInput}` : styles.optionInput}
-        id="selectInput"
         name={name}
         {...register(name, { required: { value: true, message: 'This field is required' } })}
       >

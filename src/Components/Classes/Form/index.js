@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import formStyles from '../Form/formClasses.module.css';
-import { ModalConfirm, ModalSuccess, Button, Inputs, OptionInput } from 'Components/Shared';
+import { ModalConfirm, ModalSuccess, Button, Inputs, OptionInput, Loader } from 'Components/Shared';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getClasses, createClass, updateClass } from 'redux/classes/thunks';
@@ -40,7 +40,7 @@ const schema = Joi.object({
     'string.base': 'Activity must be chosen',
     'any.required': 'Activity is required'
   }),
-  slots: Joi.number().min(1).max(20).required().messages({
+  slots: Joi.number().min(0).max(20).required().messages({
     'number.base': 'Slots must be a number',
     'number.min': 'Slots must be at least 1',
     'number.max': 'Slots cannot exceed 20',
@@ -52,7 +52,6 @@ const FormClasses = () => {
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [updClass, setUpdClass] = useState({});
-  const [trainerChange, setTrainerChange] = useState('');
 
   const { id } = useParams();
   const locationObject = useLocation();
@@ -63,6 +62,7 @@ const FormClasses = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const updateItem = classes.find((item) => item._id === id);
+  const isLoading = useSelector((state) => state.classes.pending);
 
   const classesData = {
     activity: updateItem?.activity ? updateItem.activity._id : '',
@@ -71,10 +71,10 @@ const FormClasses = () => {
     slots: updateItem?.slots,
     trainer: updateItem?.trainer ? updateItem.trainer.map((item) => item._id) : []
   };
+
   const {
     register,
     handleSubmit,
-    setValue,
     reset,
     formState: { errors }
   } = useForm({
@@ -89,7 +89,6 @@ const FormClasses = () => {
     getClasses(dispatch);
     getTrainers(dispatch);
     getAllActivities(dispatch);
-    setTrainerChange(classesData.trainer[0]);
   }, []);
 
   const classBody = {
@@ -101,20 +100,12 @@ const FormClasses = () => {
   };
 
   const openModal = async (data) => {
-    if (trainerChange === undefined) {
-      const classArrayTrainer = { ...data, trainer: [data.trainer] };
-      setModalConfirmOpen(true);
-      setUpdClass(classArrayTrainer);
-    } else {
-      if (typeof data.trainer === 'object') {
-        setTrainerChange(data.trainer[0]);
-      } else {
-        setTrainerChange(data.trainer);
-      }
-      const classArrayTrainer = { ...data, trainer: [trainerChange] };
-      setModalConfirmOpen(true);
-      setUpdClass(classArrayTrainer);
+    let trainerArray = data.trainer;
+    if (typeof data.trainer !== 'object') {
+      trainerArray = [data.trainer];
     }
+    setModalConfirmOpen(true);
+    setUpdClass({ ...data, trainer: trainerArray });
   };
 
   const formSubmit = async () => {
@@ -135,74 +126,74 @@ const FormClasses = () => {
       }, 2000);
     }
   };
-
   return (
     <div className={formStyles.container}>
-      <form className={formStyles.form} onSubmit={handleSubmit(openModal)}>
-        <div className={formStyles.container}>
-          <h2 className={formStyles.formTitle}>
-            {updateData.mode === 'edit' ? 'Update' : 'Create'} Class
-          </h2>
-          <div className={formStyles.inputs}>
-            <Inputs
-              type={'text'}
-              isDisabled={false}
-              nameInput={'hour'}
-              nameTitle="Hour"
-              register={register}
-              error={errors.hour?.message}
-            />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <form className={formStyles.form} onSubmit={handleSubmit(openModal)}>
+          <div className={formStyles.container}>
+            <h2 className={formStyles.formTitle}>
+              {updateData.mode === 'edit' ? 'Update' : 'Create'} Class
+            </h2>
+            <div className={formStyles.inputs}>
+              <Inputs
+                type={'text'}
+                isDisabled={false}
+                nameInput={'hour'}
+                nameTitle="Hour"
+                register={register}
+                error={errors.hour?.message}
+              />
 
-            <Inputs
-              type={'text'}
-              isDisabled={false}
-              nameInput={'day'}
-              nameTitle="Day"
-              register={register}
-              error={errors.day?.message}
-            />
+              <Inputs
+                type={'text'}
+                isDisabled={false}
+                nameInput={'day'}
+                nameTitle="Day"
+                register={register}
+                error={errors.day?.message}
+              />
 
-            <OptionInput
-              data={trainers}
-              dataLabel="Trainers"
-              setValue={setValue}
-              aValue={classesData.trainer}
-              name="trainer"
-              register={register}
-              error={errors.trainer?.message}
-            />
+              <OptionInput
+                data={trainers}
+                dataLabel="Trainers"
+                name="trainer"
+                register={register}
+                error={errors.trainer?.message}
+              />
 
-            <OptionInput
-              data={activities}
-              dataLabel="Activities"
-              setValue={setValue}
-              aValue={classesData.activity}
-              name="activity"
-              register={register}
-              error={errors.activity?.message}
-            />
+              <OptionInput
+                data={activities}
+                dataLabel="Activities"
+                name="activity"
+                register={register}
+                error={errors.activity?.message}
+              />
 
-            <Inputs
-              type={'text'}
-              isDisabled={false}
-              nameInput={'slots'}
-              nameTitle="Slots"
-              register={register}
-              error={errors.slots?.message}
-            />
+              <Inputs
+                type={'text'}
+                isDisabled={false}
+                nameInput={'slots'}
+                nameTitle="Slots"
+                register={register}
+                error={errors.slots?.message}
+              />
+            </div>
+            <div className={formStyles.buttons}>
+              <span className={formStyles.cancelButton}>
+                <Button clickAction={() => history.push('/admin/classes')} text="Cancel" />
+              </span>
+              <Button clickAction={() => reset()} text="Reset" />
+              <Button
+                clickAction={() => {}}
+                text={updateData.mode === 'edit' ? 'Update' : 'Create'}
+              />
+            </div>
           </div>
-          <div className={formStyles.buttons}>
-            <span className={formStyles.cancelButton}>
-              <Button clickAction={() => history.push('/admin/classes')} text="Cancel" />
-            </span>
-            <Button clickAction={() => reset()} text="Reset" />
-            <Button
-              clickAction={() => {}}
-              text={updateData.mode === 'edit' ? 'Update' : 'Create'}
-            />
-          </div>
-        </div>
-      </form>
+        </form>
+      )}
+
       {modalConfirmOpen && (
         <ModalConfirm
           method={updateData.mode === 'edit' ? 'Edit' : 'Create'}
