@@ -1,0 +1,94 @@
+.tableContainer{
+  width: 70%;
+  height: 60%;
+  margin-top: 30px;
+  background-color: #e2e2e2;
+  border-radius: 10px;
+}
+
+.tdContainer {
+  border: 10px solid #e2e2e2;
+  border-radius: 10px;
+  border-width: 4px;
+  height: 52px;
+  background-color: #FFFFFF;
+  width: 15%;
+}
+
+.trContainer {
+  border-radius: 10px;
+}
+
+.trContainer2 {
+  background-color: rgba(170, 206, 155, 0.3);
+  text-align: center;
+}
+
+.tdContainer p {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  border-radius: 15px;
+}
+
+.daysContainer {
+  background-color: rgba(55, 56, 103, 0.3);
+  border-radius: 5px;
+  width: 8%;
+  height: 73px;
+}
+
+.classesContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #49a37a;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+  background-color: #49a37a;
+  width: 100%;
+  height: 100%;
+}
+
+.nameClasses {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 14px;
+  align-items: center;
+  color:#373867
+}
+
+.slotsClasses {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  align-items: center;
+  color:#373867
+}
+
+
+.classesFullContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #E0E0E0;
+  width: 100%;
+  height: 56px;
+}
+
+.nameFullClasses {
+  
+}
+
+.slotsFullClasses{
+  color:#e00b0b
+}
+
+

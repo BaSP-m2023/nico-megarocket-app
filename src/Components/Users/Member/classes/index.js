@@ -27,16 +27,13 @@ const MemberClasses = () => {
   const tableItem = (item, day, time) => {
     if (item.hour === time && item.day === day) {
       return (
-        <div className={styles.enabled}>
-          <span>{item.activity.name}</span>
-          <span>{item.slots}</span>
-        </div>
-      );
-    } else if (item.slots === 0) {
-      return (
-        <div className={styles.disabled}>
-          <p>{item.activity.name}</p>
-          <p>{item.slots}</p>
+        <div className={item.slots === 0 ? styles.classesFullContainer : styles.classesContainer}>
+          <p className={item.slots === 0 ? styles.nameFullClasses : styles.nameClasses}>
+            {item.activity.name}
+          </p>
+          <p className={item.slots === 0 ? styles.slotsFullClasses : styles.slotsClasses}>
+            {item.slots} Slots
+          </p>
         </div>
       );
     }
@@ -46,16 +43,20 @@ const MemberClasses = () => {
     <table className={styles.tableContainer}>
       <thead>
         <tr>
-          <th>Times</th>
+          <th className={styles.daysContainer}>Times</th>
           {daysArray.map((item, index) => {
-            return <th key={index}>{item}</th>;
+            return (
+              <th className={styles.daysContainer} key={index}>
+                {item}
+              </th>
+            );
           })}
         </tr>
       </thead>
       <tbody>
         {hoursArray.map((row, index) => {
           return (
-            <tr className={styles.trContainer} key={index}>
+            <tr className={styles.trContainer2} key={index}>
               <td className={styles.trContainer}>{row}</td>
               {daysArray.map((day) => {
                 return (
