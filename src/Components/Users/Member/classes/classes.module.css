@@ -50,10 +50,16 @@
   background-color: #49a37a;
   width: 100%;
   height: 100%;
+  cursor: pointer;
 }
 
+.classesContainer:hover {
+  background-color: rgb(73, 163, 122, 0.9);
+}
+
+
 .nameClasses {
-  font-family: 'Roboto';
+  font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 12px;
@@ -63,7 +69,7 @@
 }
 
 .slotsClasses {
-  font-family: 'Roboto';
+  font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -81,10 +87,6 @@
   background-color: #E0E0E0;
   width: 100%;
   height: 56px;
-}
-
-.nameFullClasses {
-  
 }
 
 .slotsFullClasses{
