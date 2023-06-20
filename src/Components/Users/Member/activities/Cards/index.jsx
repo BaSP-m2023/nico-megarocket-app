@@ -21,7 +21,6 @@ function Cards({ title, description, image }) {
           <div className={styles.modalContent}>
             <h3>{title}</h3>
             <p>{description}</p>
-            {/* Otros elementos del modal */}
             <button onClick={() => setIsModalOpen(false)}>Close</button>
           </div>
         </div>
