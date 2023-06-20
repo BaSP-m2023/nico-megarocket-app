@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './activityCard.module.css';
+import styles from '../modals/activityModal.module.css';
 
 const activityModal = ({ title, description, imageName, onClose }) => {
   return (
