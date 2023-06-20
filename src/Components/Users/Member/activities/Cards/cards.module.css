@@ -28,11 +28,11 @@
   padding: 15px;
 }
 
-.card a {
+.card button {
   display: block;
   margin: 20px 40px;
   margin-top: 50px;
-  background-color: #AACE9B;;
+  background-color: #AACE9B;
   color: #373867;
   padding: 15px 20px;
   text-align: center;
