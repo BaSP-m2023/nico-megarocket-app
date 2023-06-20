@@ -1,5 +1,6 @@
-import styles from './cards.module.css';
 import React, { useState } from 'react';
+import styles from './cards.module.css';
+import ActivityModal from '../../modals/activityModal';
 
 function Cards({ title, description, image }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -7,25 +8,39 @@ function Cards({ title, description, image }) {
   const handleButtonClick = () => {
     setIsModalOpen(true);
   };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className={styles.container}>
-      <div className={styles.card}>
-        <img className={styles.cardImage} src={image}></img>
-        <h2>{title}</h2>
-        <p>{description}</p>
-        <button onClick={handleButtonClick}>Learn More</button>
-      </div>
-
-      {isModalOpen && (
-        <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <h3>{title}</h3>
-            <p>{description}</p>
-            <button onClick={() => setIsModalOpen(false)}>Close</button>
-          </div>
+      <div className={styles.cardContainer}>
+        <div className={styles.imgContainer}>
+          <img
+            className={styles.cardImage}
+            src={`${process.env.PUBLIC_URL}/assets/images/${image}`}
+            alt={`image ${title}`}
+          />
         </div>
+        <div className={styles.dataContainer}>
+          <h2 className={styles.title}>{title}</h2>
+          <p className={styles.textDescription}>{description}</p>
+          <button className={styles.cardButton} onClick={handleButtonClick}>
+            Learn More
+          </button>
+        </div>
+      </div>
+      {isModalOpen && (
+        <ActivityModal
+          title={title}
+          description={description}
+          imageName={image}
+          onClose={handleCloseModal}
+        />
       )}
     </div>
   );
 }
+
 export default Cards;
