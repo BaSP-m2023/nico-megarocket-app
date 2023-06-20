@@ -1,0 +1,52 @@
+.container {
+display: flex;
+justify-content: center;
+align-items: center;
+position: fixed;
+background-color: #00000078;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+z-index: 1;
+}
+
+.activityCard {
+width: 35%;
+height: 15rem;
+background-color: #fff;
+display: flex;
+}
+
+.activityCardImage {
+width: 40%;
+height: 100%;
+background-size: cover;
+}
+
+h2 {
+  margin: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #373867;
+}
+
+p {
+  margin: 20px;
+  margin-top: 10px;
+  font-size: 15px;
+  color: #373867;
+}
+
+button {
+  position: relative;
+  background-color: #AACE9B;
+  color:#373867;
+  font-weight: bold;
+  border: none;
+  padding: 10px 20px;
+  right: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  float: right;
+}
