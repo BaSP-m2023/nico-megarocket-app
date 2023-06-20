@@ -38,9 +38,9 @@ function Layout() {
           <div className={styles.switchContainer}>
             <React.Suspense>
               <Switch>
-                <Route exact path="/superAdmin/admin" component={Admin}></Route>
+                <Route exact path="/superAdmin/admin" component={Admin} />
                 <Route path="/superAdmin/admin/form/:id?" component={FormAdmin} />
-                <Route exact path="/superAdmin/superadmin" component={SuperAdmin}></Route>
+                <Route exact path="/superAdmin/superadmin" component={SuperAdmin} />
                 <Route path="/superAdmin/superadmin/form/:id?" component={FormSupAdmin} />
                 <Route exact path="/superAdmin/">
                   <Redirect to="/home" />
