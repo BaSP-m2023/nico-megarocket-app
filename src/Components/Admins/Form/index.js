@@ -1,23 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './form.module.css';
-import { ModalConfirm, ToastError, ModalSuccess, Inputs, Button } from '../../Shared';
+import { ModalConfirm, ToastError, ModalSuccess, Inputs, Button } from 'Components/Shared';
 import { useParams, useLocation, useHistory } from 'react-router-dom';
-import { createAdmin, updateAdmin } from '../../../redux/admins/thunks';
+import { createAdmin, updateAdmin } from 'redux/admins/thunks';
 import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const FormAdmin = () => {
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
-  const [editMode, setEditMode] = useState(false);
-  const [inputValue, setInputValue] = useState({
-    firstName: '',
-    lastName: '',
-    phone: '',
-    email: '',
-    city: '',
-    dni: '',
-    password: ''
-  });
-  const [repeatPass, setRepeatPass] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [toastErroOpen, setToastErroOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('Error in database');
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
@@ -27,43 +20,51 @@ const FormAdmin = () => {
   const data = location.state.params;
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (data.mode === 'create') {
-      setInputValue({
-        firstName: '',
-        lastName: '',
-        phone: '',
-        email: '',
-        city: '',
-        dni: '',
-        password: ''
-      });
-    } else {
-      setInputValue({
-        firstName: data.item.firstName,
-        lastName: data.item.lastName,
-        phone: data.item.phone,
-        email: data.item.email,
-        city: data.item.city,
-        dni: data.item.dni,
-        password: data.item.password
-      });
-      setRepeatPass(data.item.password);
-      setEditMode(true);
+  const schema = Joi.object({
+    firstName: Joi.string().min(3).max(15).required(),
+    lastName: Joi.string().min(3).max(15).required(),
+    dni: Joi.number().min(10000000).max(99999999).required(),
+    phone: Joi.string().min(9).max(12).required(),
+    email: Joi.string()
+      .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+      .required(),
+    city: Joi.string().min(2).max(10).required(),
+    password: Joi.string()
+      .min(8)
+      .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
+      .message('The password must have at least one Uppercase,a number and 8 characters.'),
+    repeatPassword: Joi.string().valid(Joi.ref('password'))
+  });
+
+  const adminUpdated = {
+    firstName: data.firstName,
+    lastName: data.lastName,
+    dni: data.dni,
+    phone: data.phone,
+    email: data.email,
+    city: data.city,
+    password: data.password,
+    repeatPassword: data.password
+  };
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(schema),
+    defaultValues: {
+      ...adminUpdated
     }
-  }, []);
+  });
 
   const addAdmins = async () => {
     try {
       createAdmin(dispatch, inputValue);
       if (!data.error) {
-        if (validatePasswords()) {
-          confirmation();
-        } else {
-          setModalConfirmOpen(false);
-          setToastErroOpen(true);
-          setToastMessage('Passwords must match ');
-        }
+        confirmation();
       } else {
         throw new Error(data.message);
       }
@@ -78,14 +79,7 @@ const FormAdmin = () => {
     try {
       updateAdmin(dispatch, id, inputValue);
       if (!data.error) {
-        if (validatePasswords()) {
-          confirmation();
-          setModalSuccessOpen(true);
-        } else {
-          setModalConfirmOpen(false);
-          setToastErroOpen(true);
-          setToastMessage('Passwords must match ');
-        }
+        confirmation();
       } else {
         throw new Error(data.message);
       }
@@ -95,28 +89,19 @@ const FormAdmin = () => {
     }
   };
 
-  const openModal = (e) => {
-    e.preventDefault();
+  const openModal = () => {
     setModalConfirmOpen(true);
-  };
-
-  const validatePasswords = () => {
-    if (inputValue.password === repeatPass) {
-      return true;
-    } else {
-      return false;
-    }
   };
 
   const confirmation = () => {
     setModalSuccessOpen(true);
     setTimeout(() => {
-      history.push('/admins/');
+      history.push('/superAdmin/admin');
     }, 2000);
   };
 
   const submitAdmin = () => {
-    if (!editMode) {
+    if (!id) {
       setModalConfirmOpen(false);
       addAdmins();
     } else {
@@ -125,98 +110,101 @@ const FormAdmin = () => {
     }
   };
 
-  const handleInputChange = (e) => {
-    setInputValue({ ...inputValue, [e.target.name]: e.target.value });
-  };
-  const handleRepeatPasswordChange = (e) => {
-    const { value } = e.target;
-    setRepeatPass(value);
+  const onSubmit = async (dataAdmin) => {
+    const newAdmin = {
+      firstName: dataAdmin.firstName,
+      lastName: dataAdmin.lastName,
+      dni: dataAdmin.dni,
+      phone: dataAdmin.phone,
+      email: dataAdmin.email,
+      city: dataAdmin.city,
+      password: dataAdmin.password
+    };
+    setInputValue(newAdmin);
+    openModal();
   };
 
   return (
     <div className={styles.containerForm}>
-      <form className={styles.form}>
-        <div className={styles.subContainer}>
-          <div className={styles.sub_buttons}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.container}>
+          <div className={styles.groupContainer}>
             <Inputs
-              text={inputValue.firstName}
-              type="text"
               nameTitle="Name"
-              isDisabled={false}
-              change={handleInputChange}
+              register={register}
               nameInput="firstName"
+              type="text"
+              isDisabled={false}
+              error={errors.firstName?.message}
             />
             <Inputs
-              text={inputValue.lastName}
-              type="text"
-              nameTitle="Last Name"
-              isDisabled={false}
-              change={handleInputChange}
+              nameTitle="LastName"
+              register={register}
               nameInput="lastName"
-            />
-          </div>
-          <div className={styles.sub_buttons}>
-            <Inputs
-              text={inputValue.dni}
               type="text"
+              isDisabled={false}
+              error={errors.lastName?.message}
+            />
+            <Inputs
               nameTitle="DNI"
-              isDisabled={false}
-              change={handleInputChange}
+              register={register}
               nameInput="dni"
+              type="text"
+              isDisabled={false}
+              error={errors.dni?.message}
             />
             <Inputs
-              text={inputValue.phone}
-              type="text"
               nameTitle="Phone"
-              isDisabled={false}
-              change={handleInputChange}
+              register={register}
               nameInput="phone"
-            />
-          </div>
-          <div className={styles.sub_buttons}>
-            <Inputs
-              text={inputValue.email}
-              type="email"
-              nameTitle="E-Mail"
-              isDisabled={false}
-              change={handleInputChange}
-              nameInput="email"
-            />
-            <Inputs
-              text={inputValue.city}
               type="text"
-              nameTitle="City"
               isDisabled={false}
-              change={handleInputChange}
-              nameInput="city"
+              error={errors.phone?.message}
             />
           </div>
-          <div className={styles.sub_buttons}>
+          <div className={styles.groupContainer}>
             <Inputs
-              text={inputValue.password}
-              type="password"
-              nameTitle="Password"
+              nameTitle="E-Mail"
+              register={register}
+              nameInput="email"
+              type="email"
               isDisabled={false}
-              change={handleInputChange}
-              nameInput="password"
+              error={errors.email?.message}
             />
             <Inputs
-              text={repeatPass}
-              type="password"
-              nameTitle="Repeat Password"
+              nameTitle="City"
+              register={register}
+              nameInput="city"
+              type="text"
               isDisabled={false}
-              change={handleRepeatPasswordChange}
-              nameInput="repeat-password"
+              error={errors.city?.message}
+            />
+            <Inputs
+              nameTitle="Password"
+              register={register}
+              nameInput="password"
+              type="password"
+              isDisabled={false}
+              error={errors.password?.message}
+            />
+            <Inputs
+              nameTitle="Repeat Password"
+              register={register}
+              nameInput="repeatPassword"
+              type="password"
+              isDisabled={false}
+              error={errors.repeatPassword?.message}
             />
           </div>
         </div>
 
         <div className={styles.buttonContainer}>
-          <Button clickAction={openModal} text="Save" />
+          <Button text="reset" clickAction={() => reset()} />
+          <Button text="Save" clickAction={() => {}} />
           <Button
             clickAction={(e) => {
               e.preventDefault();
-              history.push('/admins/');
+              history.goBack();
             }}
             text="Cancel"
           />
@@ -225,9 +213,9 @@ const FormAdmin = () => {
 
       {modalConfirmOpen && (
         <ModalConfirm
-          method={editMode ? 'Edit' : 'Create'}
+          method={id ? 'Edit' : 'Create'}
           message={
-            editMode
+            id
               ? 'Are you sure you want to edit the admin?'
               : 'Are you sure you want to add the admin?'
           }
@@ -237,7 +225,7 @@ const FormAdmin = () => {
       )}
       {modalSuccessOpen && (
         <ModalSuccess
-          message={editMode ? 'Admin edited successfully' : 'Admin created successfully'}
+          message={id ? 'Admin edited successfully' : 'Admin created successfully'}
           setModalSuccessOpen={setModalSuccessOpen}
         />
       )}

@@ -1,5 +1,5 @@
 import React from 'react';
-import Classes from '../../../Classes';
+import Classes from 'Components/Classes';
 
 const AdminClasses = () => {
   return (

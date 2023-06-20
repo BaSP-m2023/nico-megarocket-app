@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './option-input.module.css';
 
-const SelectInput = ({ data, dataLabel, onChangeOption, setValue, name }) => {
+const SelectInput = ({ data, dataLabel, name, register, error }) => {
   const ifFirstName = (item) => {
     if (item.firstName && item.lastName) {
       return `${item.firstName} ${item.lastName}`;
@@ -21,11 +21,9 @@ const SelectInput = ({ data, dataLabel, onChangeOption, setValue, name }) => {
     <div className={styles.containerInput}>
       <label htmlFor="selectInput">{dataLabel}:</label>
       <select
-        onChange={onChangeOption}
-        value={setValue}
-        className={styles.optionInput}
-        id="selectInput"
+        className={error ? `${styles.errorInput} ${styles.optionInput}` : styles.optionInput}
         name={name}
+        {...register(name, { required: { value: true, message: 'This field is required' } })}
       >
         <option>Pick {name}</option>
         {data.map((item, index) => {
@@ -37,6 +35,7 @@ const SelectInput = ({ data, dataLabel, onChangeOption, setValue, name }) => {
           );
         })}
       </select>
+      {error ? <p className={styles.error}>{error}</p> : <p className={styles.spaceErrorMsg}></p>}
     </div>
   );
 };

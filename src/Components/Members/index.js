@@ -1,9 +1,8 @@
-import { TableComponent, AddButton } from '../Shared';
+import { TableComponent, AddButton, ToastError, Loader } from 'Components/Shared';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllMembers, memberDelete } from '../../redux/members/thunks';
-import { ToastError, Loader } from '../Shared';
+import { getAllMembers, memberDelete } from 'redux/members/thunks';
 
 function Members() {
   const dispatch = useDispatch();

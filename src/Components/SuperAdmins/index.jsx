@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { ToastError, AddButton, TableComponent, Loader } from '../Shared';
-import { getSuperAdmins, superAdminDelete } from '../../redux/superAdmins/thunks';
+import { ToastError, AddButton, TableComponent, Loader } from 'Components/Shared';
+import { getSuperAdmins, superAdminDelete } from 'redux/superAdmins/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 
 const SuperAdmins = () => {

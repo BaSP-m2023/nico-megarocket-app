@@ -1,177 +1,142 @@
 import { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
-import { Inputs, Button, ModalConfirm, ModalSuccess, OptionInput } from '../../Shared';
+import { useHistory, useParams, useLocation } from 'react-router-dom';
+import { Inputs, Button, ModalConfirm, ModalSuccess, OptionInput } from 'Components/Shared';
 import style from '../FormSubscription/modalAdd.module.css';
-import {
-  addSubscriptions,
-  updateSubscriptions,
-  getSuscription
-} from '../../../redux/subscriptions/thunks';
-import { getClasses } from '../../../redux/classes/thunks';
-import { getAllMembers } from '../../../redux/members/thunks';
+import { addSubscriptions, updateSubscriptions, getSuscription } from 'redux/subscriptions/thunks';
+import { getClasses } from 'redux/classes/thunks';
+import { getAllMembers } from 'redux/members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 
 const FormSubscription = () => {
   const dispatch = useDispatch();
-  const [isValid, setIsValid] = useState(true);
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
-  const [bodySubscription, setBodySubscription] = useState({
-    classId: '',
-    members: '',
-    date: ''
-  });
-
-  const [subscriptionEdit, setEditSubscriptions] = useState({
-    classId: '',
-    members: '',
-    date: ''
-  });
-
+  const [subscription, setSubscription] = useState({});
   const history = useHistory();
   const { id } = useParams();
-  const data = useSelector((state) => state.subscription.data);
+  const location = useLocation();
   const classes = useSelector((state) => state.classes.list);
   const members = useSelector((state) => state.members.list);
+  const data = location.state.params;
+
+  const schema = Joi.object({
+    date: Joi.date().required().messages({
+      'date.base': 'Date must be a valid date',
+      'any.required': 'Date is required'
+    }),
+    members: Joi.string().required().invalid('Pick members').messages({
+      'any.only': 'Please select a member'
+    }),
+    classId: Joi.string().required().invalid('Pick classId').messages({
+      'any.only': 'Please select a class'
+    })
+  });
+
+  const subscriptionUpdated = {
+    classId: data.classId?._id,
+    members: data.members?.map((member) => member._id),
+    date: data.date
+  };
+
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(schema),
+    defaultValues: { ...subscriptionUpdated }
+  });
 
   useEffect(() => {
     getSuscription(dispatch);
     getClasses(dispatch);
     getAllMembers(dispatch);
+  }, []);
+
+  const onConfirm = async () => {
     if (!id) {
-      setBodySubscription({
-        classId: '',
-        members: '',
-        date: ''
-      });
+      const addSubscriptionResponse = await addSubscriptions(dispatch, subscription);
+      if (addSubscriptionResponse.type === 'POST_SUBSCRIPTION_SUCCESS') {
+        setModalSuccessOpen(true);
+        return setTimeout(() => {
+          history.goBack();
+        }, 1000);
+      }
     } else {
-      const subEdit = data.find((sub) => sub._id === id);
-      setEditSubscriptions({
-        classId: subEdit?.classId ? subEdit?.classId._id : '',
-        members: subEdit?.members
-          ? subEdit?.members.map((member) => {
-              return member._id;
-            })
-          : '',
-        date: subEdit?.date
-      });
+      const editSubscriptionResponse = await updateSubscriptions(dispatch, id, subscription);
+      if (editSubscriptionResponse.type === 'PUT_SUBSCRIPTION_SUCCESS') {
+        setModalSuccessOpen(true);
+        return setTimeout(() => {
+          history.goBack();
+        }, 1000);
+      }
     }
-  }, [data.length === 0]);
-
-  const changeInput = (e) => {
-    setBodySubscription({
-      ...bodySubscription,
-      [e.target.name]: e.target.name === 'members' ? [e.target.value] : e.target.value
-    });
-    const validFields = Object.values(bodySubscription).every((field) => {
-      return field.length >= 3 && field !== '';
-    });
-    setIsValid(!validFields);
-  };
-
-  const changeInputEdit = (e) => {
-    console.log(e.target.values);
-    setEditSubscriptions({
-      ...subscriptionEdit,
-      [e.target.name]: e.target.name === 'members' ? [e.target.value] : e.target.value
-    });
-    if (e.target.value.length >= 3) {
-      setIsValid(true);
-    } else {
-      setIsValid(false);
-    }
-  };
-
-  const createSubscriptionDB = async () => {
-    const newSub = {
-      classId: bodySubscription.classId,
-      members: bodySubscription.members,
-      date: bodySubscription.date
-    };
-    try {
-      addSubscriptions(dispatch, newSub);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const submitSubscription = () => {
-    setModalConfirmOpen(false);
-    setModalSuccessOpen(true);
-    createSubscriptionDB();
-  };
-
-  const submitEditedSubscription = (id, subscriptionsEdition) => {
-    const editedSub = {
-      classId: subscriptionsEdition.classId,
-      members: subscriptionsEdition.members,
-      date: subscriptionsEdition.date
-    };
-    updateSubscriptions(dispatch, id, editedSub);
-    setModalConfirmOpen(false);
-    setModalSuccessOpen(true);
-  };
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    setModalConfirmOpen(true);
-  };
-
-  const returnToTable = () => {
-    setTimeout(() => {
-      history.push('/admin/subscriptions');
-    }, 1000);
   };
 
   const goBack = () => {
     history.goBack();
   };
 
+  const onSubmit = (newData) => {
+    const newSub = {
+      classId: newData.classId,
+      members: [newData.members],
+      date: newData.date
+    };
+    setModalConfirmOpen(true);
+    setSubscription(newSub);
+  };
+
   return (
     <section className={style.containerModal}>
-      <form className={style.containerForm}>
+      <form className={style.containerForm} onSubmit={handleSubmit(onSubmit)}>
         <h3>{id ? 'Edit subscription' : 'Add subscription'}</h3>
         <OptionInput
           data={classes}
           dataLabel="Class"
-          onChangeOption={id ? changeInputEdit : changeInput}
-          setValue={id ? subscriptionEdit.classId : bodySubscription.classId}
+          setValue={{}}
+          aValue={{}}
           name="classId"
+          register={register}
+          error={errors.classId?.message}
         />
         <OptionInput
           data={members}
           dataLabel="Member"
-          onChangeOption={id ? changeInputEdit : changeInput}
-          setValue={id ? subscriptionEdit.members : bodySubscription.members}
+          setValue={{}}
+          aValue={{}}
           name="members"
+          register={register}
+          error={errors.members?.message}
         />
         <Inputs
           nameTitle="Date:"
-          type="date"
-          text={id ? subscriptionEdit.date : bodySubscription.date}
           nameInput="date"
-          change={id ? changeInputEdit : changeInput}
+          type="date"
+          register={register}
+          error={errors.date?.message}
         />
         <div className={style.containerAdd}>
           <Button clickAction={goBack} text="Cancel" />
-          <Button clickAction={handleClick} text="Save" disabled={!isValid} />
+          <Button clickAction={() => reset()} text="Reset" />
+          <Button clickAction={() => {}} text="Save" />
         </div>
       </form>
       {modalConfirmOpen && (
         <ModalConfirm
           method="Confirm"
-          onConfirm={() => {
-            !id ? submitSubscription() : submitEditedSubscription(id, subscriptionEdit);
-          }}
+          onConfirm={onConfirm}
           message="Are you sure?"
           setModalConfirmOpen={setModalConfirmOpen}
         />
       )}
       {modalSuccessOpen && (
-        <>
-          <ModalSuccess message="Success!" setModalSuccessOpen={setModalSuccessOpen} />
-          {setModalSuccessOpen && returnToTable()}
-        </>
+        <ModalSuccess message="Success!" setModalSuccessOpen={setModalSuccessOpen} />
       )}
     </section>
   );

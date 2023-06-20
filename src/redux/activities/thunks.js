@@ -74,16 +74,15 @@ export const addActivity = async (dispatch, newActivity) => {
     if (response.ok) {
       const data = await response.json();
       const newData = data;
-      dispatch(addActivitiesSuccess(newData));
       dispatch(addActivitiesPending(false));
+      return dispatch(addActivitiesSuccess(newData));
     } else {
-      dispatch(addActivitiesError(true));
       dispatch(addActivitiesPending(false));
+      return dispatch(addActivitiesError(true));
     }
   } catch (error) {
     dispatch(addActivitiesPending(false));
-    dispatch(addActivitiesError(true));
-    console.error(error);
+    return dispatch(addActivitiesError(true));
   }
 };
 
@@ -100,14 +99,13 @@ export const updateActivity = async (dispatch, id, activity) => {
     if (response.ok) {
       const data = await response.json();
       dispatch(updateActivitiesPending(false));
-      dispatch(updateActivitiesSuccess(data.result));
+      return dispatch(updateActivitiesSuccess(data.result));
     } else {
-      dispatch(addActivitiesError(true));
       dispatch(addActivitiesPending(false));
+      return dispatch(addActivitiesError(true));
     }
   } catch (error) {
     dispatch(updateActivitiesPending(false));
-    dispatch(updateActivitiesError(true));
-    console.error(error);
+    return dispatch(updateActivitiesError(true));
   }
 };

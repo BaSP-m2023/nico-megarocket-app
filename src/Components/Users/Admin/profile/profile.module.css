@@ -1,0 +1,61 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profilePhotoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.editPhotoButton {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  left: 52px;
+  bottom: 37px;
+  width: 30px;
+  height: 30px;
+  z-index: 10;
+}
+
+.adminName {
+  margin-top: -20px;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: rgba(55, 56, 103, 1);
+}
+
+.adminInfoTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(55, 56, 103, 1);
+}
+
+.adminInfoContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(236, 236, 236, 1);
+}
+
+.adminInfoPlaceholder {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(55, 56, 103, 0.4);
+}
+
+.adminInfo {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(55, 56, 103, 1);
+}
+
+.editInfoBtn:hover {
+  cursor: pointer;
+}

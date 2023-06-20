@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { AddButton, Loader, TableComponent, ToastError } from '../Shared';
+import { AddButton, Loader, TableComponent, ToastError } from 'Components/Shared';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTrainers, deleteTrainer } from '../../redux/trainers/thunks';
+import { getTrainers, deleteTrainer } from 'redux/trainers/thunks';
 
 function Trainers() {
   const [toastErroOpen, setToastErroOpen] = useState(false);
