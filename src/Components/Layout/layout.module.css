@@ -8,9 +8,9 @@
 aside {
   position: sticky;
   top: 0;
-  left:0;
+  left: 0;
   background-color: #aace9b;
-  height:100vh;
+  height: 100vh;
 }
 
 .mainContainer {
@@ -30,5 +30,5 @@ aside {
 
 .asideContainer {
   height: auto;
-  width:15%;
+  width: 15%;
 }
