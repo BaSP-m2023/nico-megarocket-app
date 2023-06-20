@@ -17,12 +17,13 @@ font-size: 15px;
 }
 
 .error {
-  margin-top: 0;
+  margin-top: 3px;
+  margin-left: 5px;
   color: rgb(240, 8, 8);
   font-size: 12px;
   width: 255px;
   height: 30px;
-  text-align: center;
+  text-align: left;
 }
 .spaceErrorMsg{
   margin-top: 0;

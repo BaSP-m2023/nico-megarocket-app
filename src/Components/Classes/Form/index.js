@@ -40,7 +40,7 @@ const schema = Joi.object({
     'string.base': 'Activity must be chosen',
     'any.required': 'Activity is required'
   }),
-  slots: Joi.number().min(1).max(20).required().messages({
+  slots: Joi.number().min(0).max(20).required().messages({
     'number.base': 'Slots must be a number',
     'number.min': 'Slots must be at least 1',
     'number.max': 'Slots cannot exceed 20',
