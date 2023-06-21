@@ -58,7 +58,7 @@
   text-decoration: none;
 }
 
-.card:hover {
+.cardContainer:hover {
   transform: scale(1.03);
   transition: all 1s ease;
 }
