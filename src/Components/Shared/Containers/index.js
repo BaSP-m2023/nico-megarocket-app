@@ -5,6 +5,13 @@ function DivContainer({ item }) {
   const [toggle, setToggle] = useState(true);
   const handleToggle = () => {
     setToggle(!toggle);
+    const audioLabel = document.createElement('audio');
+    if (toggle) {
+      audioLabel.setAttribute('src', `${process.env.PUBLIC_URL}/assets/sounds/yeahBuddy.mp3`);
+    } else {
+      audioLabel.setAttribute('src', `${process.env.PUBLIC_URL}/assets/sounds/lightWeight.mp3`);
+    }
+    audioLabel.play();
   };
   return (
     <>
