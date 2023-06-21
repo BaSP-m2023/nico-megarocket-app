@@ -1,15 +1,21 @@
-import React from 'react';
-import mockData from './mockData.json';
+import React, { useState, useEffect } from 'react';
+import Data from './mockData.json';
 import styles from './profile.module.css';
-const profilePicture = `${process.env.PUBLIC_URL}/assets/images/profilePicture.png`;
 
 const MemberProfile = () => {
+  const profilePicture = `${process.env.PUBLIC_URL}/assets/images/profilePicture.png`;
+  const [mockData, setMockData] = useState([]);
+
+  useEffect(() => {
+    setMockData(Data[0]);
+  }, []);
+
   return (
     <div className={styles.container}>
       <h1>PROFILE</h1>
       <div className={styles.topContainer}>
         <img src={profilePicture} alt="Picture of Profile" />
-        <h3>{mockData[0].name}</h3>
+        <h3>{mockData.name}</h3>
       </div>
       <div className={styles.botContainer}>
         <div className={styles.containerTitle}>
@@ -22,8 +28,8 @@ const MemberProfile = () => {
               <p>Birthday:</p>
             </div>
             <div className={styles.personalContainerText}>
-              <p>{mockData[0].name}</p>
-              <p>{mockData[0].birthday}</p>
+              <p>{mockData.name}</p>
+              <p>{mockData.birthday}</p>
             </div>
           </div>
           <div className={styles.personalContainerBot}>
@@ -32,8 +38,8 @@ const MemberProfile = () => {
               <p>Phone:</p>
             </div>
             <div className={styles.personalContainerText}>
-              <p>{mockData[0].address}</p>
-              <p>{mockData[0].phone}</p>
+              <p>{mockData.address}</p>
+              <p>{mockData.phone}</p>
             </div>
           </div>
         </div>
@@ -42,7 +48,7 @@ const MemberProfile = () => {
         </div>
         <div className={styles.containerEmail}>
           <p className={styles.containerEmailTitle}>Email:</p>
-          <p className={styles.containerEmailText}>{mockData[0].email}</p>
+          <p className={styles.containerEmailText}>{mockData.email}</p>
         </div>
       </div>
     </div>
