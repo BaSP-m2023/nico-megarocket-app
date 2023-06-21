@@ -44,17 +44,21 @@
 }
 
 .cardButton {
+  width: 110px;
+  height: 34px;
   display: block;
   position: unset;
   margin-top: 10px;
   margin-left: 20px;
+  border-radius: 5px;
   background-color: #AACE9B;
   color: #373867;
+  font-weight: bold;
   text-align: center;
   text-decoration: none;
 }
 
-.card:hover {
+.cardContainer:hover {
   transform: scale(1.03);
   transition: all 1s ease;
 }
