@@ -11,8 +11,8 @@ const activityModal = ({ title, description, imageName, onClose }) => {
           alt={`image ${title}`}
         />
         <div>
-          <h2>{title}</h2>
-          <p>{description}</p>
+          <h2 className={styles.subtitle}>{title}</h2>
+          <p className={styles.description}>{description}</p>
           <button className={styles.activityButton} onClick={onClose}>
             Close
           </button>
