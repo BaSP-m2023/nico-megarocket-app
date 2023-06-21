@@ -2,17 +2,17 @@
   width: 70%;
   height: 60%;
   margin-top: 30px;
-  background-color: #e2e2e2;
   border-radius: 10px;
+  background-color: #e2e2e2;
 }
 
 .tdContainer {
+  height: 52px;
+  width: 15%;
   border: 10px solid #e2e2e2;
   border-radius: 10px;
   border-width: 4px;
-  height: 52px;
   background-color: #FFFFFF;
-  width: 15%;
 }
 
 .trContainer {
@@ -26,71 +26,16 @@
 
 .tdContainer p {
   text-align: center;
-  margin: 0;
+  margin: 0px 0px 0px 0px;
   padding: 0;
   border-radius: 15px;
 }
 
 .daysContainer {
-  background-color: rgba(55, 56, 103, 0.3);
-  border-radius: 5px;
   width: 8%;
   height: 73px;
-}
-
-.classesContainer {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-  border: 1px solid #49a37a;
+  background-color: rgba(55, 56, 103, 0.3);
   border-radius: 5px;
-  align-items: center;
-  justify-content: center;
-  background-color: #49a37a;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-}
-
-.classesContainer:hover {
-  background-color: rgb(73, 163, 122, 0.9);
-}
-
-
-.nameClasses {
-  font-family: 'Roboto', sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 12px;
-  line-height: 14px;
-  align-items: center;
-  color:#373867
-}
-
-.slotsClasses {
-  font-family: 'Roboto', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
-  align-items: center;
-  color:#373867
-}
-
-
-.classesFullContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #E0E0E0;
-  width: 100%;
-  height: 56px;
-}
-
-.slotsFullClasses{
-  color:#e00b0b
 }
 
 

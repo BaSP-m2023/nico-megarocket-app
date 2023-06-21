@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from 'Components/Users/Member/classes/classes.module.css';
 import { getClasses } from 'redux/classes/thunks';
+import DivContainer from 'Components/Shared/Containers';
 
 const MemberClasses = () => {
   const dispatch = useDispatch();
@@ -26,16 +27,7 @@ const MemberClasses = () => {
   ];
   const tableItem = (item, day, time) => {
     if (item.hour === time && item.day === day) {
-      return (
-        <div className={item.slots === 0 ? styles.classesFullContainer : styles.classesContainer}>
-          <p className={item.slots === 0 ? styles.nameFullClasses : styles.nameClasses}>
-            {item.activity.name}
-          </p>
-          <p className={item.slots === 0 ? styles.slotsFullClasses : styles.slotsClasses}>
-            {item.slots} Slots
-          </p>
-        </div>
-      );
+      return <DivContainer item={item} key={item._id} />;
     }
   };
 
