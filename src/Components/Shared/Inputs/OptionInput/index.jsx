@@ -2,6 +2,8 @@ import React from 'react';
 import styles from './option-input.module.css';
 
 const SelectInput = ({ data, dataLabel, name, register, error }) => {
+  const daysArray = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
   const ifFirstName = (item) => {
     if (item.firstName && item.lastName) {
       return `${item.firstName} ${item.lastName}`;
@@ -15,6 +17,15 @@ const SelectInput = ({ data, dataLabel, name, register, error }) => {
     if (typeof item === 'object') {
       return item ? item.name : `incomplete ${dataLabel}`;
     }
+    if (typeof item !== 'object') {
+      return item;
+    }
+  };
+
+  const ifDayArray = (item) => {
+    if (daysArray.find((day) => day === item)) {
+      return item;
+    }
   };
 
   return (
@@ -25,12 +36,13 @@ const SelectInput = ({ data, dataLabel, name, register, error }) => {
         name={name}
         {...register(name, { required: { value: true, message: 'This field is required' } })}
       >
-        <option>Pick {name}</option>
+        <option value="">Pick {name}</option>
         {data.map((item, index) => {
           return (
-            <option key={index} value={item._id}>
+            <option key={index} value={item._id ? item._id : item}>
               {ifFirstName(item)}
               {ifObject(item)}
+              {ifDayArray(item)}
             </option>
           );
         })}

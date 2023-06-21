@@ -64,6 +64,8 @@ const FormClasses = () => {
   const updateItem = classes.find((item) => item._id === id);
   const isLoading = useSelector((state) => state.classes.pending);
 
+  const daysArray = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
   const classesData = {
     activity: updateItem?.activity ? updateItem.activity._id : '',
     day: updateItem?.day,
@@ -126,6 +128,19 @@ const FormClasses = () => {
       }, 2000);
     }
   };
+
+  const Hours = [
+    '08:00',
+    '09:00',
+    '10:00',
+    '11:00',
+    '12:00',
+    '13:00',
+    '14:00',
+    '15:00',
+    '16:00',
+    '17:00'
+  ];
   return (
     <div className={formStyles.container}>
       {isLoading ? (
@@ -137,20 +152,18 @@ const FormClasses = () => {
               {updateData.mode === 'edit' ? 'Update' : 'Create'} Class
             </h2>
             <div className={formStyles.inputs}>
-              <Inputs
-                type={'text'}
-                isDisabled={false}
-                nameInput={'hour'}
-                nameTitle="Hour"
+              <OptionInput
+                data={Hours}
+                dataLabel="Hour"
+                name="hour"
                 register={register}
                 error={errors.hour?.message}
               />
 
-              <Inputs
-                type={'text'}
-                isDisabled={false}
-                nameInput={'day'}
-                nameTitle="Day"
+              <OptionInput
+                data={daysArray}
+                dataLabel="Day"
+                name="day"
                 register={register}
                 error={errors.day?.message}
               />
