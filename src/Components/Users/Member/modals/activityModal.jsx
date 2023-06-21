@@ -10,9 +10,13 @@ const activityModal = ({ title, description, imageName, onClose }) => {
           src={`${process.env.PUBLIC_URL}/assets/images/${imageName}`}
           alt={`image ${title}`}
         />
-        <h2>{title}</h2>
-        <p>{description}</p>
-        <button onClick={onClose}>Close</button>
+        <div>
+          <h2>{title}</h2>
+          <p>{description}</p>
+          <button className={styles.activityButton} onClick={onClose}>
+            Close
+          </button>
+        </div>
       </div>
     </div>
   );
