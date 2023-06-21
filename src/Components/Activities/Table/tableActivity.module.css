@@ -1,0 +1,84 @@
+.containerTableActivity {
+  display: flex;
+  flex-direction: column;
+  width: 60rem;
+  margin: 2rem;
+  color: #32326a;
+}
+
+.addActivityButton {
+  display: flex;
+  align-self:flex-end;
+  background-color: #32326a00;
+  border: none;
+  margin: 0 2rem 2rem 0;
+  width: 8rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #32326a;
+  cursor: pointer;
+}
+
+.containerTable {
+  border-radius: 0.2rem;
+  box-shadow: rgba(0, 0, 0, 0.37) 0 0.4rem 0.9rem;
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.containerTable thead {
+  background-color: #37386710;
+  border-radius: 0.2rem;
+  height: 3.5rem;
+}
+
+.containerTable thead tr {
+  background-color: #37386710;
+}
+
+.containerTable thead tr th{
+  padding-left: 7rem;
+}
+
+.containerEachOneActivity tr {
+  height: 3.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.containerEachOneActivity tr td {
+  padding-left: 7rem;
+  max-width: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.containerEachOneActivity tr td::first-letter {
+  text-transform: uppercase;
+}
+
+.containerEachOneActivity tr:nth-child(even) {
+  background-color: #aace9b3f;
+}
+
+.iconsTable {
+  background-color: #32326a00;
+  border: none;
+  cursor: pointer;
+}
+
+.iconsTable img:hover {
+  transition: all 0.1s;
+  transform: scale(1.15);
+}
+
+.containerTableEmpty {
+  position: relative;
+  left: 25em;
+}
+
+.containerTableEmpty div {
+  width: 100%;
+}

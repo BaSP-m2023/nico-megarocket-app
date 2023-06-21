@@ -1,0 +1,49 @@
+table {
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+}
+
+th, tr {
+  color: #373867;
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background-color: rgba(170, 206, 155, 0.3);
+}
+
+.tableTitle {
+  background-color: rgba(219, 219, 219, 0.945);
+  padding: 8px 0px 8px 0px;
+}
+
+.tableContainerTitle {
+  width: 65px;
+  padding: 0px 15px 0px 15px;
+}
+
+.tableContainerBtn {
+  width: 5px;
+}
+
+.tableBtn {
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+}
+
+.tableBtnImg:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+.tableBtnImg:active {
+  transform: scale(0.9);
+}
+
+.tableBtnImg {
+  border: none;
+  padding: 0;
+  width: 15px;
+  height: 15px;
+}

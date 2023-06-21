@@ -1,0 +1,78 @@
+.containerModal {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  color: #373867;
+}
+
+.containerForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: white;
+  width: 30rem;
+  border-radius: 1rem;
+}
+
+.containerForm h3 {
+  text-align: center;
+  font-size: 2rem;
+}
+
+.containerForm div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.containerForm div input {
+  height: 1.3rem;
+  border-width: 2px;
+  border-color: #373867;
+}
+
+.containerForm span {
+  display: flex;
+  align-self: flex-end;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.containerForm .containerAddButton {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  margin-top: 1.5rem;
+}
+
+.containerForm .containerAddButton button {
+  width: 5.3rem;
+  height: 2.2rem;
+  border-radius: 0.3rem;
+  color: #373867;
+  background-color: white;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.containerForm .containerAddButton button:nth-child(even) {
+  background-color: #AACE9B;
+  border: none;
+}
+
+.containerForm .containerAddButton button:nth-child(even):hover {
+  background-color: #a0e184;
+}
+
+.containerForm .containerAddButton button:hover {
+  background-color: rgba(0, 0, 0, 0.157);
+}
+
+.containerForm .containerAddButton .buttonDisabled {
+  background-color: #c3ccbe !important;
+}

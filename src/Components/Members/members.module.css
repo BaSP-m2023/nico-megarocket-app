@@ -1,0 +1,55 @@
+:root {
+  --Green:#AACE9B;
+  --Blue:#373867;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom:20px;
+}
+
+.title{
+  color: var(--Blue);
+}
+
+.button {
+  padding:10px 30px;
+  background-color:var(--Green);
+  cursor:pointer;
+  border:none;
+  border-radius:5px;
+  margin-bottom:10px;
+}
+
+.button:hover{
+  background-color:var(--Blue);
+  color:white;
+  flex-direction: column;
+}
+
+.letterColour {
+  color: #373867;;
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+}
+
+.addContainer {
+  display: flex;
+  align-items: center;
+  color: #373867;
+  cursor: pointer;
+}
+
+.imgSize {
+  height: 15px;
+  width: 15px;
+  margin: 0 10px;
+}
