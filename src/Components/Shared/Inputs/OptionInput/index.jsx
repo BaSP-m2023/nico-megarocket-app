@@ -17,6 +17,9 @@ const SelectInput = ({ data, dataLabel, name, register, error }) => {
     if (typeof item === 'object') {
       return item ? item.name : `incomplete ${dataLabel}`;
     }
+    if (typeof item !== 'object') {
+      return item;
+    }
   };
 
   const ifDayArray = (item) => {
