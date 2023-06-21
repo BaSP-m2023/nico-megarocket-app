@@ -64,6 +64,8 @@ const FormClasses = () => {
   const updateItem = classes.find((item) => item._id === id);
   const isLoading = useSelector((state) => state.classes.pending);
 
+  const daysArray = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
   const classesData = {
     activity: updateItem?.activity ? updateItem.activity._id : '',
     day: updateItem?.day,
@@ -146,11 +148,10 @@ const FormClasses = () => {
                 error={errors.hour?.message}
               />
 
-              <Inputs
-                type={'text'}
-                isDisabled={false}
-                nameInput={'day'}
-                nameTitle="Day"
+              <OptionInput
+                data={daysArray}
+                dataLabel="Day"
+                name="day"
                 register={register}
                 error={errors.day?.message}
               />
