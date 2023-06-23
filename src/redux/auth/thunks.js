@@ -5,12 +5,15 @@ const {
   // signUpSuccess,
   // signUpPending,
   // signUpError,
-  // logOutError,
-  // logOutSuccess,
-  // logOutPending,
+  logOutError,
+  logOutSuccess,
+  logOutPending,
   getAuthenticationPending,
   getAuthenticationSuccess,
-  getAuthenticationError
+  getAuthenticationError,
+  signUpPending,
+  signUpError,
+  signUpSuccess
 } = require('./actions');
 
 import { firebaseApp } from 'helper/firebase';
@@ -29,6 +32,46 @@ export const login = (credentials) => {
       return dispatch(loginSuccess({ role, token }));
     } catch (error) {
       return dispatch(loginError(error.toString()));
+    }
+  };
+};
+
+export const signUpMember = (data) => {
+  return async (dispatch) => {
+    dispatch(signUpPending());
+    try {
+      const response = fetch(`${process.env.REACT_APP_API_URL}/api/member/`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      const res = await response.json();
+      if (response.error) {
+        throw new Error(response.message);
+      }
+      await dispatch(signUpSuccess(data));
+      return res;
+    } catch (error) {
+      return dispatch(signUpError(error.toString()));
+    }
+  };
+};
+
+export const logout = () => {
+  return async (dispatch) => {
+    dispatch(logOutPending());
+    try {
+      await firebaseApp.auth().signOut();
+      dispatch(logOutSuccess());
+      sessionStorage.removeItem('token', '');
+      sessionStorage.removeItem('role', '');
+      return { error: false, message: 'Logout successfully' };
+    } catch (error) {
+      dispatch(logOutError(error));
+      return { error: true, message: 'Error' };
     }
   };
 };
