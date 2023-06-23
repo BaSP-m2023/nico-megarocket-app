@@ -8,7 +8,9 @@ import {
   LOGOUT_PENDING,
   LOGOUT_SUCCESS,
   LOGOUT_ERROR,
-  SET_AUTHENTICATION
+  GET_AUTHENTICATION_PENDING,
+  GET_AUTHENTICATION_SUCCESS,
+  GET_AUTHENTICATION_ERROR
 } from './constants';
 
 export const loginPending = () => {
@@ -70,9 +72,22 @@ export const logOutError = (error) => {
   };
 };
 
-export const setAuthentication = (role) => {
+export const getAuthenticationPending = () => {
   return {
-    type: SET_AUTHENTICATION,
-    payload: { role }
+    type: GET_AUTHENTICATION_PENDING
+  };
+};
+
+export const getAuthenticationSuccess = (data) => {
+  return {
+    type: GET_AUTHENTICATION_SUCCESS,
+    payload: data
+  };
+};
+
+export const getAuthenticationError = (error) => {
+  return {
+    type: GET_AUTHENTICATION_ERROR,
+    payload: error
   };
 };
