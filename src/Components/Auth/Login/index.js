@@ -1,6 +1,6 @@
-import React /*, { useState }*/ from 'react';
+import React from 'react';
 import styles from './login.module.css';
-import { /* useParams, useLocation,*/ useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Inputs, Button } from 'Components/Shared';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -60,44 +60,46 @@ function LoginForm() {
           history.push('/trainer');
           break;
         default:
-          history.psuh('/auth/login');
+          history.push('/auth/login');
       }
     }
   };
 
   return (
-    <div>
-      <form className={styles.formSuperAdmin} onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.wholeContainer}>
-          <div className={styles.containerForm}>
-            <Inputs
-              type="email"
-              nameInput={'email'}
-              nameTitle={'Email'}
-              register={register}
-              error={errors.email?.message}
-            />
-            <Inputs
-              type="password"
-              nameInput={'password'}
-              nameTitle={'Password'}
-              register={register}
-              error={errors.password?.message}
-            />
-          </div>
-          <div className={styles.sub_buttons}>
-            <Button clickAction={() => {}} text="Submit" />
-            <Button
-              clickAction={(e) => {
-                e.preventDefault();
-                history.goBack();
-              }}
-              text="Cancel"
-            />
-          </div>
+    <form className={styles.formSuperAdmin} onSubmit={handleSubmit(onSubmit)}>
+      <div className={styles.wholeContainer}>
+        <h1 className={styles.titleLogin}>Log In</h1>
+        <div className={styles.containerForm}>
+          <Inputs
+            type="email"
+            nameInput={'email'}
+            nameTitle={'Email'}
+            register={register}
+            error={errors.email?.message}
+          />
+          <Inputs
+            type="password"
+            nameInput={'password'}
+            nameTitle={'Password'}
+            register={register}
+            error={errors.password?.message}
+          />
         </div>
-      </form>
-    </div>
+        <div>
+          <button
+            className={styles.forgotPass}
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          >
+            Forgot your password?
+          </button>
+        </div>
+        <div className={styles.sub_buttons}>
+          <Button className={styles.buttonLogin} clickAction={() => {}} text="Enter" />
+        </div>
+      </div>
+    </form>
   );
 }
 
