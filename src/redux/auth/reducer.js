@@ -72,8 +72,9 @@ const authReducer = (state = initialState, action) => {
         role: action.payload.role
       };
     }
-    default:
+    default: {
       return state;
+    }
   }
 };
 
