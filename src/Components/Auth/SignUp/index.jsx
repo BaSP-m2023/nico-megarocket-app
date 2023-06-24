@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './form.module.css';
+import styles from './signUp.module.css';
 import { Inputs, Button } from 'Components/Shared';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useDispatch } from 'react-redux';
@@ -8,7 +8,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import { signUpMember } from 'redux/auth/thunks';
 
-const MembersForm = () => {
+const SignForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -134,9 +134,9 @@ const MembersForm = () => {
 
   return (
     <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <section className={styles.inputGroups}>
-          <div className={styles.inputGroup}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.form}>
+          <div className={styles.groupContainer}>
             <div className={styles.inputContainer}>
               <Inputs
                 error={errors.firstName?.message}
@@ -174,8 +174,6 @@ const MembersForm = () => {
                 required
               />
             </div>
-          </div>
-          <div className={styles.inputGroup}>
             <div className={styles.inputContainer}>
               <Inputs
                 error={errors.phone?.message}
@@ -186,26 +184,8 @@ const MembersForm = () => {
                 required
               />
             </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                error={errors.email?.message}
-                register={register}
-                nameTitle="Email"
-                type="email"
-                nameInput="email"
-                required
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                error={errors.password?.message}
-                register={register}
-                nameTitle="Password"
-                type="password"
-                nameInput="password"
-                required
-              />
-            </div>
+          </div>
+          <div className={styles.groupContainer}>
             <div className={styles.inputContainer}>
               <Inputs
                 error={errors.city?.message}
@@ -237,39 +217,29 @@ const MembersForm = () => {
               />
             </div>
             <div className={styles.inputContainer}>
-              <label className={styles.nameLabel}>Status</label>
-              <div className={styles.radioContainer}>
-                <div>
-                  <label>
-                    Active
-                    <input
-                      {...register('isActive', {
-                        required: { value: true, message: 'This field is required' }
-                      })}
-                      type="radio"
-                      name="isActive"
-                      value={true}
-                    />
-                  </label>
-                </div>
-                <div>
-                  <label>
-                    Inactive
-                    <input
-                      {...register('isActive', {
-                        required: { value: true, message: 'This field is required' }
-                      })}
-                      type="radio"
-                      name="isActive"
-                      value={false}
-                    />
-                  </label>
-                </div>
-              </div>
+              <Inputs
+                error={errors.email?.message}
+                register={register}
+                nameTitle="Email"
+                type="email"
+                nameInput="email"
+                required
+              />
+            </div>
+            <div className={styles.inputContainer}>
+              <Inputs
+                error={errors.password?.message}
+                register={register}
+                nameTitle="Password"
+                type="password"
+                nameInput="password"
+                required
+              />
             </div>
           </div>
-        </section>
-        <div className={styles.buttonContainer}>
+        </div>
+
+        <div className={styles.buttonsGroup}>
           <Button clickAction={() => {}} text="Submit" />
           <Button text="Cancel" clickAction={() => history.goBack()} />
         </div>
@@ -278,4 +248,4 @@ const MembersForm = () => {
   );
 };
 
-export default MembersForm;
+export default SignForm;
