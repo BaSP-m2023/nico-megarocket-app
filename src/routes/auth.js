@@ -1,6 +1,7 @@
-/* import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
- */
-/* const routes = [
+import Layout from 'Components/Layout';
+import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
+
+const routes = [
   {
     name: 'Login',
     path: '/auth/login'
@@ -10,9 +11,22 @@
     path: '/auth/sign-up'
   }
 ];
- */
+
 const AuthRoute = () => {
-  return <div>AuthRoute</div>;
+  const { url } = useRouteMatch();
+  let Login;
+  let SignUp;
+  let NotAllowed;
+  return (
+    <Layout rotes={routes}>
+      <Switch>
+        <Route path={`${url}/login`} component={Login} />
+        <Route path={`${url}/sign-up`} component={SignUp} />
+        <Route path={`${url}/login`} component={NotAllowed} />
+        <Redirect path={`${url}/login`} />
+      </Switch>
+    </Layout>
+  );
 };
 
 export default AuthRoute;
