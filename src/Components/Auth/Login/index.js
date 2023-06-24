@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './login.module.css';
 import { useHistory } from 'react-router-dom';
 import { Inputs, Button } from 'Components/Shared';
@@ -31,6 +31,7 @@ const schema = Joi.object({
 });
 
 function LoginForm() {
+  const [errorPop, setErrorPop] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
   const {
@@ -59,8 +60,9 @@ function LoginForm() {
         case 'TRAINER':
           history.push('/trainer');
           break;
-        default:
-          history.push('/auth/login');
+        default: {
+          setErrorPop(true);
+        }
       }
     }
   };
@@ -85,6 +87,24 @@ function LoginForm() {
             error={errors.password?.message}
           />
         </div>
+        {errorPop ? (
+          <div className={styles.boxError}>
+            <div className={styles.lineError}>
+              <div className={styles.errorLogo}>!</div>
+              LogIn Denied
+              <div
+                onClick={() => {
+                  setErrorPop(false);
+                }}
+                className={styles.close_icon}
+              ></div>
+            </div>
+            <p className={styles.MsgError}>The username or password is incorrect</p>
+          </div>
+        ) : (
+          <div className={styles.emptyBox}></div>
+        )}
+
         <div>
           <button
             className={styles.forgotPass}

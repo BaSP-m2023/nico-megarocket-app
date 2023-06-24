@@ -11,7 +11,7 @@
   flex-direction: column;
   align-items: center;
   width: 486px;
-  height: 550px;
+  height: 579px;
   border-radius: 10px;
   box-shadow: 0px 20px 30px -5px rgba(0, 0, 0, 0.75);
 }
@@ -27,7 +27,7 @@
   align-items: center;
 }
 .forgotPass{
-  margin-top: 85px;
+  margin-top: 35px;
   background:none;
   border: none;
   cursor: pointer;
@@ -37,4 +37,74 @@
 }
 .sub_buttons{
  margin-top: 15px;
+}
+.boxError{
+  display: flex;
+  flex-direction: column;
+  width: 255px;
+  height: 70px;
+  border-radius: 5px;
+  border: 1px solid #F13312;
+}
+.lineError{
+  display: flex;
+  flex-direction: row;
+  height: 16px;
+  font-size: 14px;
+  align-items: center;
+  margin-top: 10px;
+  font-weight: bolder;
+  text-transform: uppercase;
+  color: #F13312;
+}
+.errorLogo{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  margin-left: 5px;
+  width: 25px;
+  height: 25px;
+  background-color: red;
+  color: #FFFFFF;
+  font-weight: bold;
+  border-radius: 25px;
+}
+.MsgError{
+  font-size: 12px;
+  text-align: center;
+  color: #F13312;
+  font-weight: 500;
+}
+.emptyBox{
+  display: flex;
+  flex-direction: column;
+  width: 255px;
+  height: 70px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+}
+.close_icon{
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  margin-left: 90px;
+  position: relative;
+}
+.close_icon:before,
+.close_icon:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 15px;
+  height: 2px;
+  background-color: red;
+  transform-origin: center;
+}
+.close_icon:before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.close_icon:after {
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
