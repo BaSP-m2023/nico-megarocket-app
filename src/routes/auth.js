@@ -18,7 +18,7 @@ const AuthRoute = () => {
   let SignUp;
   let NotAllowed;
   return (
-    <Layout rotes={routes}>
+    <Layout routes={routes}>
       <Switch>
         <Route path={`${url}/login`} component={Login} />
         <Route path={`${url}/sign-up`} component={SignUp} />
