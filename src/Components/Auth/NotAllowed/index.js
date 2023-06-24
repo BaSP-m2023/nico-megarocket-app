@@ -1,7 +1,7 @@
 import React from 'react';
 
 const NotAllowed = () => {
-  return <div>NotAllowed</div>;
+  return <div>Access not allowed</div>;
 };
 
 export default NotAllowed;
