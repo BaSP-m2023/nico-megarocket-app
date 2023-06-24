@@ -22,7 +22,7 @@ const AuthRoute = () => {
       <Switch>
         <Route path={`${url}/login`} component={Login} />
         <Route path={`${url}/sign-up`} component={SignUp} />
-        <Route path={`${url}/login`} component={NotAllowed} />
+        <Route path={`${url}/not-allowed`} component={NotAllowed} />
         <Redirect path={`${url}/login`} />
       </Switch>
     </Layout>
