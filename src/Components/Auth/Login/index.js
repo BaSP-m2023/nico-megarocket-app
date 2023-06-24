@@ -45,7 +45,23 @@ function LoginForm() {
   const onSubmit = async (data) => {
     if (Object.values(errors).length === 0) {
       const responseLogin = await dispatch(login(data));
-      console.log(responseLogin);
+      const role = responseLogin.payload.role;
+      switch (role) {
+        case 'SUPER_ADMIN':
+          history.push('/superAdmin/admin');
+          break;
+        case 'ADMIN':
+          history.push('/admin');
+          break;
+        case 'MEMBER':
+          history.push('/member');
+          break;
+        case 'TRAINER':
+          history.push('/trainer');
+          break;
+        default:
+          history.psuh('/auth/login');
+      }
     }
   };
 
