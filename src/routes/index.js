@@ -1,15 +1,28 @@
-/* import { lazy, Suspense } from 'react';
+import { Suspense } from 'react';
 import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
-import PrivateRoute from './privateRoute'; */
+import PrivateRoute from './privateRoute';
 
-/* const SuperAdminRoutes = '';
+const SuperAdminRoutes = '';
 const AdminRoutes = '';
 const TrainerRoutes = '';
-const MemberRoute = '';
-const AuthRoute = ''; */
+const MemberRoutes = '';
+const AuthRoute = '';
 
 const Routes = () => {
-  return <p>Route</p>;
+  return (
+    <BrowserRouter>
+      <Suspense fallback={<div />}>
+        <Switch>
+          <PrivateRoute path="/super-admin" role="SUPER_ADMIN" component={SuperAdminRoutes} />
+          <PrivateRoute path="/admin" role="ADMIN" component={AdminRoutes} />
+          <PrivateRoute path="/member" role="MEMBER" component={MemberRoutes} />
+          <PrivateRoute path="/trainer" role="TRAINER" component={TrainerRoutes} />
+          <Route path="/auth" component={AuthRoute} />
+          <Redirect to="/auth" />
+        </Switch>
+      </Suspense>
+    </BrowserRouter>
+  );
 };
 
 export default Routes;
