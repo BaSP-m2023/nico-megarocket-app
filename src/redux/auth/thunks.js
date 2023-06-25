@@ -28,7 +28,6 @@ export const login = (credentials) => {
       } = await firebaseResponse.user.getIdTokenResult();
       return dispatch(loginSuccess({ role, token }));
     } catch (error) {
-      console.log(error);
       return dispatch(loginError(error.toString()));
     }
   };
