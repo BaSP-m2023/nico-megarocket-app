@@ -24,6 +24,7 @@ const FormSubscriptions = React.lazy(() => import('../Subscriptions/FormSubscrip
 const FormAdmin = React.lazy(() => import('../Admins/Form/index'));
 const FormSignUp = React.lazy(() => import('../Auth/SignUp/index'));
 const FormSupAdmin = React.lazy(() => import('../SuperAdmins/Form/index'));
+const FormLogin = React.lazy(() => import('../Auth/Login/index'));
 
 function Layout() {
   return (
@@ -67,6 +68,7 @@ function Layout() {
                 <Route exact path="/">
                   <Redirect to="/home" />
                 </Route>
+                <Route path="/auth/login" component={FormLogin} />
               </Switch>
             </React.Suspense>
           </div>

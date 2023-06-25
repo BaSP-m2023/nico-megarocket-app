@@ -73,7 +73,7 @@ const SignForm = () => {
 
     password: Joi.string()
       .min(8)
-      .pattern(/^(?=.[a-z])(?=.[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
+      .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
       .required()
       .messages({
         'string.pattern.base':
@@ -228,12 +228,11 @@ const SignForm = () => {
             </div>
             <div className={styles.inputContainer}>
               <Inputs
-                error={errors.password?.message}
-                register={register}
-                nameTitle="Password"
                 type="password"
-                nameInput="password"
-                required
+                nameInput={'password'}
+                nameTitle={'Password'}
+                register={register}
+                error={errors.password?.message}
               />
             </div>
           </div>
