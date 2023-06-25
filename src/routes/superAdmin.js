@@ -16,17 +16,17 @@ const routes = [
   }
 ];
 
-const superAdmin = () => {
+const SuperAdminRoutes = () => {
   const { url } = useRouteMatch();
   return (
     <Layout routes={routes}>
       <Switch>
         <Route exact path={`${url}/superAdmin/admin`} component={Admin} />
-        <Route exact path={`${url}/superAdmin/admin/form/:id?`} component={FormAdmin} />
+        <Route path={`${url}/superAdmin/admin/form/:id?`} component={FormAdmin} />
         <Redirect path={`${url}/login`} />
       </Switch>
     </Layout>
   );
 };
 
-export default superAdmin;
+export default SuperAdminRoutes;

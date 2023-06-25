@@ -25,7 +25,7 @@ const routes = [
   }
 ];
 
-const member = () => {
+const MemberRoutes = () => {
   const { url } = useRouteMatch();
   return (
     <Layout routes={routes}>
@@ -39,4 +39,4 @@ const member = () => {
   );
 };
 
-export default member;
+export default MemberRoutes;
