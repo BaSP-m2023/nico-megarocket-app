@@ -1,9 +1,8 @@
 import React from 'react';
 import Layout from 'Components/Layout';
 import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
-
-const Admin = React.lazy(() => import('../Admins/'));
-const FormAdmin = React.lazy(() => import('../Admins/Form/index'));
+import Admin from 'Components/Admins/';
+import FormAdmin from 'Components/Admins/Form';
 
 const routes = [
   {

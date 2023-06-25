@@ -1,10 +1,9 @@
 import React from 'react';
 import Layout from 'Components/Layout';
 import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
-
-const MemberActivities = React.lazy(() => import('../Users/Member/activities'));
-const MemberClasses = React.lazy(() => import('../Users/Member/classes'));
-const MemberProfile = React.lazy(() => import('../Users/Member/profile'));
+import MemberActivities from 'Components/Users/Member/activities';
+import MemberClasses from 'Components/Users/Member/classes';
+import MemberProfile from 'Components/Users/Member/profile';
 
 const routes = [
   {
