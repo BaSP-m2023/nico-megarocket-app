@@ -1,13 +1,13 @@
 import React from 'react';
 import styles from './modalConfirm.module.css';
 
-const ModalConfirm = ({ message, method, onConfirm, setModalConfirmOpen }) => {
+const ModalConfirm = ({ message, method, onConfirm, setModalConfirmOpen, testId }) => {
   const onConfirmFunction = () => {
     onConfirm(), setTimeout(() => setModalConfirmOpen(false), 800);
   };
 
   return (
-    <div className={styles.modalAlert}>
+    <div className={styles.modalAlert} data-testid={testId}>
       <div className={styles.modalStyles}>
         <img
           className={styles.close_icon}

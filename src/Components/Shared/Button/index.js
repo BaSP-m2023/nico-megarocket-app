@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './button.module.css';
 
-function Button({ clickAction, text, disabled = false }) {
+function Button({ clickAction, text, disabled = false, testId }) {
   return (
-    <div>
+    <div data-testid={testId}>
       <button
         type={text.toLowerCase() === 'reset' ? 'button' : 'submit'}
         className={text.toLowerCase() === 'cancel' ? styles.btnCancel : styles.btnAccept}

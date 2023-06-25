@@ -34,10 +34,10 @@ function Admins() {
   return (
     <section>
       <div>
-        <AddButton entity="Admin" createMode={createMode} />
+        <AddButton entity="Admin" createMode={createMode} testId="add-admin-btn" />
       </div>
       {isPending ? (
-        <Loader />
+        <Loader testId="admin-table-loader" />
       ) : (
         <TableComponent
           columnTitleArray={columnTitleArray}
@@ -45,10 +45,15 @@ function Admins() {
           handleClick={handleEditClick}
           deleteButton={adminDelete}
           columns={columns}
+          testId="admin-table"
         />
       )}
       {toastErroOpen && (
-        <ToastError setToastErroOpen={setToastErroOpen} message="Error in database" />
+        <ToastError
+          setToastErroOpen={setToastErroOpen}
+          message="Error in database"
+          testId="admin-list-toast-error"
+        />
       )}
     </section>
   );

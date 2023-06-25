@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './container.module.css';
 
-function DivContainer({ item }) {
+function DivContainer({ item, testId }) {
   const [toggle, setToggle] = useState(true);
   const handleToggle = () => {
     setToggle(!toggle);
@@ -19,6 +19,7 @@ function DivContainer({ item }) {
         <div
           className={toggle ? styles.classesContainer : styles.selectedContainer}
           onClick={() => handleToggle()}
+          data-testid={testId}
         >
           <p className={toggle ? styles.textClasses : styles.textSelectedClasses}>
             {item.activity.name}
@@ -28,7 +29,7 @@ function DivContainer({ item }) {
           </p>
         </div>
       ) : (
-        <div className={item.slots === 0 && styles.classesFullContainer}>
+        <div className={item.slots === 0 && styles.classesFullContainer} data-testid={testId}>
           <p className={item.slots === 0 ? styles.nameFullClasses : styles.nameClasses}>
             {item.activity.name}
           </p>
