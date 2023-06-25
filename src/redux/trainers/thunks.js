@@ -33,11 +33,20 @@ export const createTrainer = (body) => {
   };
 };
 
+const token = sessionStorage.getItem('token');
+
 export const updateTrainer = (id, body) => {
   return async (dispatch) => {
     try {
       dispatch(updateTrainerPending(true));
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, body);
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/trainer/${id}`,
+        {
+          method: 'PUT',
+          headers: { token: token }
+        },
+        body
+      );
       const data = await response.json();
       dispatch(updateTrainerPending(false));
       return dispatch(updateTrainerSuccess(data));
@@ -50,7 +59,10 @@ export const updateTrainer = (id, body) => {
 
 export const getTrainers = async (dispatch) => {
   try {
-    const reponse = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`);
+    const reponse = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`, {
+      method: 'GET',
+      headers: { token: token }
+    });
     const data = await reponse.json();
     const listTrainers = data.data;
     if (listTrainers.length === 0) {
@@ -70,7 +82,8 @@ export const deleteTrainer = (id) => {
     try {
       dispatch(deleteTrainerPending(true));
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { token: token }
       });
       if (response.ok) {
         dispatch(deleteTrainerPending(false));

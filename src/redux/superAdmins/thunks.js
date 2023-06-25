@@ -13,10 +13,15 @@ import {
   putSuperAdminError
 } from './actions';
 
+const token = sessionStorage.getItem('token');
+
 export const getSuperAdmins = async (dispatch) => {
   try {
     dispatch(getSuperAdminPending());
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin`, {
+      method: 'PUT',
+      headers: { token: token }
+    });
     const data = await response.json();
     dispatch(getSuperAdminSuccess(data.data));
   } catch (error) {
@@ -53,7 +58,8 @@ export const updateSuperAdmin = (supAdminData, id) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token: token
         },
         body: JSON.stringify(supAdminData)
       });
@@ -75,7 +81,8 @@ export const superAdminDelete = (superAdminID) => {
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/api/super-admin/${superAdminID}`,
         {
-          method: 'DELETE'
+          method: 'DELETE',
+          headers: { token: token }
         }
       );
       if (response.ok) {

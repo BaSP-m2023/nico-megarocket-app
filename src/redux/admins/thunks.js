@@ -12,11 +12,15 @@ import {
   editAdminSuccess,
   editAdminError
 } from './actions';
+const token = sessionStorage.getItem('token');
 
 export const getAllAdmins = async (dispatch) => {
   try {
     dispatch(getAdminsPending(true));
-    const reponse = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
+    const reponse = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
+      method: 'GET',
+      headers: { token: token }
+    });
     const data = await reponse.json();
     const adminsList = data.data;
     dispatch(getAdminsPending(false));
@@ -32,7 +36,8 @@ export const adminDelete = (adminID) => {
     try {
       dispatch(deleteAdminPending(true));
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminID}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { token: token }
       });
       if (response.ok) {
         dispatch(deleteAdminPending(false));
@@ -72,7 +77,8 @@ export const updateAdmin = async (dispatch, id, adminData) => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        token: token
       },
       body: JSON.stringify(adminData)
     });
