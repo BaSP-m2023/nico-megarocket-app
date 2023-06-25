@@ -2,10 +2,10 @@ import React, { Suspense } from 'react';
 import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
 import PrivateRoute from './privateRoute';
 
-const SuperAdminRoutes = '';
+const SuperAdminRoutes = React.lazy(() => import('./superAdmin'));
 const AdminRoutes = React.lazy(() => import('./admin'));
 const TrainerRoutes = '';
-const MemberRoutes = '';
+const MemberRoutes = React.lazy(() => import('./members'));
 const AuthRoute = React.lazy(() => import('./auth'));
 
 const Routes = () => {
