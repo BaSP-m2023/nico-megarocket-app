@@ -40,6 +40,7 @@ const FormTrainer = () => {
     dni: updateData.dni,
     phone: updateData.phone,
     email: updateData.email,
+    password: updateData.password,
     city: updateData.city,
     salary: updateData.salary,
     isActive: updateData.isActive
