@@ -37,8 +37,8 @@ export const signUpMember = (data) => {
   return async (dispatch) => {
     dispatch(signUpPending());
     try {
-      await firebaseApp.auth.createUserWithEmailAndPassword(data.email, data.password);
-      const response = fetch(`${process.env.REACT_APP_API_URL}/api/member/`, {
+      //await firebaseApp.auth().createUserWithEmailAndPassword(data.email, data.password);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -46,12 +46,10 @@ export const signUpMember = (data) => {
         },
         body: JSON.stringify(data)
       });
-      const res = await response.json();
       if (response.error) {
         throw new Error(response.message);
       }
-      await dispatch(signUpSuccess(data));
-      return res;
+      return dispatch(signUpSuccess(data));
     } catch (error) {
       return dispatch(signUpError(error.toString()));
     }

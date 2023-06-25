@@ -128,7 +128,9 @@ const SignForm = () => {
   const onSubmit = async (data) => {
     if (Object.values(errors).length === 0) {
       const responseSignUp = await dispatch(signUpMember(data));
-      console.log(responseSignUp);
+      if (responseSignUp.type === 'SIGN_UP_SUCCESS') {
+        history.push('/auth/login');
+      }
     }
   };
 
@@ -139,105 +141,126 @@ const SignForm = () => {
           <div className={styles.groupContainer}>
             <div className={styles.inputContainer}>
               <Inputs
+                nameInput="firstName"
+                nameTitle="Name"
+                register={register}
+                type="text"
                 error={errors.firstName?.message}
-                register={register}
-                nameTitle={'Name'}
-                type="text"
-                nameInput={'firstName'}
               />
             </div>
             <div className={styles.inputContainer}>
               <Inputs
-                error={errors.lastName?.message}
-                register={register}
                 nameTitle="Lastname"
-                type="text"
                 nameInput="lastName"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                error={errors.dni?.message}
                 register={register}
-                nameTitle="DNI"
                 type="text"
+                error={errors.lastName?.message}
+              />
+            </div>
+            <div className={styles.inputContainer}>
+              <Inputs
+                nameTitle="DNI"
                 nameInput="dni"
+                register={register}
+                type="text"
+                error={errors.dni?.message}
               />
             </div>
             <div className={styles.inputContainer}>
               <Inputs
-                error={errors.birthday?.message}
-                register={register}
-                nameTitle="Birthday"
-                type="date"
                 nameInput="birthday"
-                required
+                nameTitle="Birthday"
+                register={register}
+                type="date"
+                error={errors.birthday?.message}
               />
             </div>
             <div className={styles.inputContainer}>
               <Inputs
-                error={errors.phone?.message}
-                register={register}
-                nameTitle="Phone"
-                type="number"
                 nameInput="phone"
-                required
+                nameTitle="Phone"
+                register={register}
+                type="number"
+                error={errors.phone?.message}
               />
             </div>
           </div>
           <div className={styles.groupContainer}>
             <div className={styles.inputContainer}>
               <Inputs
-                error={errors.city?.message}
-                register={register}
-                nameTitle="City"
-                type="text"
                 nameInput="city"
-                required
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                error={errors.postalCode?.message}
+                nameTitle="City"
                 register={register}
-                nameTitle="Postal Code"
-                type="number"
-                nameInput="postalCode"
-                required
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                error={errors.membership?.message}
-                register={register}
-                nameTitle="Membership"
                 type="text"
+                error={errors.city?.message}
+              />
+            </div>
+            <div className={styles.inputContainer}>
+              <Inputs
+                nameInput="postalCode"
+                nameTitle="Postal Code"
+                register={register}
+                type="number"
+                error={errors.postalCode?.message}
+              />
+            </div>
+            <div className={styles.inputContainer}>
+              <Inputs
                 nameInput="membership"
-                required
+                nameTitle="Membership"
+                register={register}
+                type="text"
+                error={errors.membership?.message}
               />
             </div>
             <div className={styles.inputContainer}>
               <Inputs
-                error={errors.email?.message}
-                register={register}
                 nameTitle="Email"
-                type="email"
                 nameInput="email"
-                required
+                register={register}
+                type="email"
+                error={errors.email?.message}
               />
             </div>
             <div className={styles.inputContainer}>
               <Inputs
-                type="password"
-                nameInput={'password'}
-                nameTitle={'Password'}
+                nameTitle="Password"
+                nameInput="password"
                 register={register}
+                type="password"
                 error={errors.password?.message}
               />
             </div>
+            <div className={styles.radioContainer}>
+              <div>
+                <label>
+                  Active
+                  <input
+                    {...register('isActive', {
+                      required: { value: true, message: 'This field is required' }
+                    })}
+                    type="radio"
+                    name="isActive"
+                    value={true}
+                  />
+                </label>
+              </div>
+              <div>
+                <label>
+                  Inactive
+                  <input
+                    {...register('isActive', {
+                      required: { value: true, message: 'This field is required' }
+                    })}
+                    type="radio"
+                    name="isActive"
+                    value={false}
+                  />
+                </label>
+              </div>
+            </div>
           </div>
         </div>
-
         <div className={styles.buttonsGroup}>
           <Button clickAction={() => {}} text="Submit" />
           <Button text="Cancel" clickAction={() => history.goBack()} />

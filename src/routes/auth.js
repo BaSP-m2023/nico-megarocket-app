@@ -1,6 +1,6 @@
 import Layout from 'Components/Layout';
 import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
-import { SignForm } from '../Components/Auth/SignUp/index';
+import SignForm from '../Components/Auth/SignUp/index';
 import LoginForm from 'Components/Auth/Login';
 import NotAllowed from 'Components/Auth/NotAllowed';
 import Home from 'Components/Home';
