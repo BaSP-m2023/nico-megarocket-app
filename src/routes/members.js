@@ -8,10 +8,6 @@ const MemberProfile = React.lazy(() => import('../Users/Member/profile'));
 
 const routes = [
   {
-    name: 'Home',
-    path: '/'
-  },
-  {
     name: 'Classes',
     path: '/member/classes'
   },
@@ -34,9 +30,9 @@ const member = () => {
   return (
     <Layout routes={routes}>
       <Switch>
-        <Route path={`${url}/member/classes`} component={MemberClasses} />
-        <Route path={`${url}/member/activities`} component={MemberActivities} />
-        <Route path={`${url}/member/profile`} component={MemberProfile} />
+        <Route exact path={`${url}/member/classes`} component={MemberClasses} />
+        <Route exact path={`${url}/member/activities`} component={MemberActivities} />
+        <Route exact path={`${url}/member/profile`} component={MemberProfile} />
         <Redirect path={`${url}/login`} />
       </Switch>
     </Layout>
