@@ -1,13 +1,12 @@
 .btnAccept {
   margin: 5px;
-  width: 70px;
+  width: 80px;
   height: 40px;
   background-color: #aace9b;
   border: none;
   cursor: pointer;
-  border-radius: 11.5px;
+  border-radius: 5px;
   color: black;
-  text-transform: uppercase;
   line-height: 20px;
   text-align: center;
   user-select: none;
@@ -19,14 +18,13 @@
 }
 .btnCancel {
   margin: 5px;
-  width: 70px;
+  width: 80px;
   height: 40px;
   background-color: transparent;
   border: solid black 1px;
   cursor: pointer;
-  border-radius: 11.5px;
+  border-radius: 5px;
   color: black;
-  text-transform: uppercase;
   line-height: 20px;
   text-align: center;
   user-select: none;
