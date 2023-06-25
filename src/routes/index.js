@@ -1,12 +1,12 @@
-import { Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
 import PrivateRoute from './privateRoute';
 
 const SuperAdminRoutes = '';
-const AdminRoutes = '';
+const AdminRoutes = React.lazy(() => import('./admin'));
 const TrainerRoutes = '';
 const MemberRoutes = '';
-const AuthRoute = '';
+const AuthRoute = React.lazy(() => import('./auth'));
 
 const Routes = () => {
   return (
