@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { AddButton, TableComponent, Loader } from '../Shared';
+import { AddButton, TableComponent, Loader } from 'Components/Shared';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getClasses, deleteClass } from '../../redux/classes/thunks';
+import { getClasses, deleteClass } from 'redux/classes/thunks';
 
 function Classes() {
   const dispatch = useDispatch();

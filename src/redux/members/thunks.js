@@ -13,11 +13,16 @@ import {
   deleteMemberError
 } from './actions';
 
+const token = sessionStorage.getItem('token');
+
 export const getAllMembers = async (dispatch) => {
   try {
     dispatch(getMembersError(''));
     dispatch(getMembersPending(true));
-    const reponse = await fetch(`${process.env.REACT_APP_API_URL}/api/member`);
+    const reponse = await fetch(`${process.env.REACT_APP_API_URL}/api/member`, {
+      method: 'GET',
+      headers: { token: token }
+    });
     const data = await reponse.json();
     const membersList = data.data;
     dispatch(getMembersPending(false));
@@ -70,7 +75,8 @@ export const editMember = (id, member) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-type': 'application/json'
+          'Content-type': 'application/json',
+          token: token
         },
         body: JSON.stringify(member)
       });
@@ -92,7 +98,8 @@ export const memberDelete = (memberID) => {
     try {
       dispatch(deleteMemberPending(true));
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${memberID}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { token: token }
       });
       if (response.ok) {
         dispatch(deleteMemberPending(false));

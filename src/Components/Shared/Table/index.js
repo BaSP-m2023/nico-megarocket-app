@@ -70,7 +70,7 @@ const TableComponent = ({
   };
 
   const ifNotExist = (item) => {
-    if (!item || item?.length === 0) {
+    if (item?.length === 0) {
       return <span>This element Was Deleted. Edit to add</span>;
     }
   };

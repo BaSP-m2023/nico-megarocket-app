@@ -1,17 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import formStyles from '../Form/formClasses.module.css';
-import { ModalConfirm, ModalSuccess, Button, Inputs, OptionInput } from '../../Shared';
+import { ModalConfirm, ModalSuccess, Button, Inputs, OptionInput, Loader } from 'Components/Shared';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getClasses, createClass, updateClass } from '../../../redux/classes/thunks';
-import { getTrainers } from '../../../redux/trainers/thunks';
-import { getAllActivities } from './../../../redux/activities/thunks';
+import { getClasses, createClass, updateClass } from 'redux/classes/thunks';
+import { getTrainers } from 'redux/trainers/thunks';
+import { getAllActivities } from 'redux/activities/thunks';
+import { useForm } from 'react-hook-form';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
+
+const schema = Joi.object({
+  hour: Joi.string()
+    .pattern(/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/)
+    .required()
+    .messages({
+      'string.pattern.base': 'Hour format is HH:mm'
+    }),
+  day: Joi.string()
+    .valid('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
+    .messages({
+      'any.only':
+        'The days can only be Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday'
+    })
+    .required(),
+  trainer: Joi.alternatives()
+    .try(
+      Joi.array().items(Joi.string().hex().length(24).required()),
+      Joi.string().hex().length(24).required()
+    )
+    .messages({
+      'alternatives.types': 'Trainer must be an array or a hexadecimal ID',
+      'string.hex': 'Trainer must be a hexadecimal ID',
+      'string.length': 'Trainer must have exactly 24 characters'
+    }),
+  activity: Joi.string().hex().length(24).required().messages({
+    'string.hex': 'Activity has to be a hexadecimal ID',
+    'string.length': 'Activity must have exactly 24 characters',
+    'string.base': 'Activity must be chosen',
+    'any.required': 'Activity is required'
+  }),
+  slots: Joi.number().min(0).max(20).required().messages({
+    'number.base': 'Slots must be a number',
+    'number.min': 'Slots must be at least 1',
+    'number.max': 'Slots cannot exceed 20',
+    'any.required': 'Slots is required'
+  })
+});
 
 const FormClasses = () => {
-  const [modalUpdateConfirmOpen, setModalUpdateConfirmOpen] = useState(false);
+  const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
-  const [inputForm, setInputForm] = useState('');
+  const [updClass, setUpdClass] = useState({});
+
   const { id } = useParams();
   const locationObject = useLocation();
   const updateData = locationObject.state.params;
@@ -20,8 +61,31 @@ const FormClasses = () => {
   const activities = useSelector((state) => state.activities.list);
   const dispatch = useDispatch();
   const history = useHistory();
-
   const updateItem = classes.find((item) => item._id === id);
+  const isLoading = useSelector((state) => state.classes.pending);
+
+  const daysArray = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  const classesData = {
+    activity: updateItem?.activity ? updateItem.activity._id : '',
+    day: updateItem?.day,
+    hour: updateItem?.hour,
+    slots: updateItem?.slots,
+    trainer: updateItem?.trainer ? updateItem.trainer.map((item) => item._id) : []
+  };
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(schema),
+    defaultValues: {
+      ...classesData
+    }
+  });
 
   useEffect(() => {
     getClasses(dispatch);
@@ -29,167 +93,142 @@ const FormClasses = () => {
     getAllActivities(dispatch);
   }, []);
 
-  useEffect(() => {
-    {
-      updateData.mode === 'edit'
-        ? setInputForm({
-            hour: updateItem?.hour,
-            day: updateItem?.day,
-            trainer: updateItem?.trainer ? updateItem.trainer.map((item) => item._id) : '',
-            activity: updateItem?.activity ? updateItem.activity._id : '',
-            slots: updateItem?.slots
-          })
-        : setInputForm({ hour: '', day: '', trainer: '', activity: '', slots: '' });
-    }
-  }, [classes && classes.length === 0]);
-
   const classBody = {
     method: updateData.mode === 'edit' ? 'PUT' : 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(inputForm)
+    body: JSON.stringify(updClass)
   };
 
-  const handleUpdateButtonClick = () => {
-    setModalUpdateConfirmOpen(true);
+  const openModal = async (data) => {
+    let trainerArray = data.trainer;
+    if (typeof data.trainer !== 'object') {
+      trainerArray = [data.trainer];
+    }
+    setModalConfirmOpen(true);
+    setUpdClass({ ...data, trainer: trainerArray });
   };
 
-  const handleModalConfirmation = () => {
-    updateClass(id, classBody, dispatch);
-    setModalUpdateConfirmOpen(false);
-    setSuccessMessage('The class has been updated successfully.');
-    setModalSuccessOpen(true);
-    setTimeout(() => {
-      history.push('/admin/classes');
-      setModalSuccessOpen(false);
-    }, 2000);
-  };
-
-  const onChangeHour = (e) => {
-    setInputForm({
-      ...inputForm,
-      hour: e.target.value
-    });
-  };
-
-  const onChangeDay = (e) => {
-    setInputForm({
-      ...inputForm,
-      day: e.target.value
-    });
-  };
-
-  const onChangeTrainer = (e) => {
-    setInputForm({
-      ...inputForm,
-      trainer: [e.target.value]
-    });
-  };
-
-  const onChangeActivity = (e) => {
-    setInputForm({
-      ...inputForm,
-      activity: e.target.value
-    });
-  };
-
-  const onChangeSlots = (e) => {
-    setInputForm({
-      ...inputForm,
-      slots: e.target.value
-    });
-  };
-
-  const formSubmit = (e) => {
-    e.preventDefault();
-
+  const formSubmit = async () => {
     if (updateData.mode === 'edit') {
-      handleUpdateButtonClick();
-    } else {
-      createClass(classBody, dispatch);
-      setSuccessMessage('The class has been created successfully.');
-      setModalSuccessOpen(true);
+      setModalConfirmOpen(false);
+      await updateClass(id, classBody, dispatch);
+      await setModalSuccessOpen(true);
       setTimeout(() => {
-        history.push('/classes');
+        history.push('/admin/classes');
+        setModalSuccessOpen(false);
+      }, 2000);
+    } else {
+      await createClass(classBody, dispatch);
+      await setModalSuccessOpen(true);
+      setTimeout(() => {
+        history.goBack();
         setModalSuccessOpen(false);
       }, 2000);
     }
   };
 
+  const Hours = [
+    '08:00',
+    '09:00',
+    '10:00',
+    '11:00',
+    '12:00',
+    '13:00',
+    '14:00',
+    '15:00',
+    '16:00',
+    '17:00'
+  ];
   return (
     <div className={formStyles.container}>
-      <form className={formStyles.form}>
-        <div className={formStyles.container}>
-          <h2 className={formStyles.formTitle}>
-            {updateData.mode === 'edit' ? 'Update' : 'Create'} Class
-          </h2>
-          <div className={formStyles.inputs}>
-            <Inputs
-              text={inputForm.hour}
-              type={'text'}
-              isDisabled={false}
-              change={onChangeHour}
-              nameInput={'hour'}
-              nameTitle="Hour"
-            />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <form className={formStyles.form} onSubmit={handleSubmit(openModal)}>
+          <div className={formStyles.container}>
+            <h2 className={formStyles.formTitle}>
+              {updateData.mode === 'edit' ? 'Update' : 'Create'} Class
+            </h2>
+            <div className={formStyles.inputs}>
+              <OptionInput
+                data={Hours}
+                dataLabel="Hour"
+                name="hour"
+                register={register}
+                error={errors.hour?.message}
+              />
 
-            <Inputs
-              text={inputForm.day}
-              type={'text'}
-              isDisabled={false}
-              change={onChangeDay}
-              nameInput={'day'}
-              nameTitle="Day"
-            />
+              <OptionInput
+                data={daysArray}
+                dataLabel="Day"
+                name="day"
+                register={register}
+                error={errors.day?.message}
+              />
 
-            <OptionInput
-              data={trainers}
-              dataLabel="Trainers"
-              onChangeOption={onChangeTrainer}
-              setValue={inputForm.trainer}
-              name="trainer"
-            />
+              <OptionInput
+                data={trainers}
+                dataLabel="Trainers"
+                name="trainer"
+                register={register}
+                error={errors.trainer?.message}
+              />
 
-            <OptionInput
-              data={activities}
-              dataLabel="Activities"
-              onChangeOption={onChangeActivity}
-              setValue={inputForm.activity}
-              name="activity"
-            />
+              <OptionInput
+                data={activities}
+                dataLabel="Activities"
+                name="activity"
+                register={register}
+                error={errors.activity?.message}
+              />
 
-            <Inputs
-              text={inputForm.slots}
-              type={'text'}
-              isDisabled={false}
-              change={onChangeSlots}
-              nameInput={'slots'}
-              nameTitle="Slots"
-            />
+              <Inputs
+                type={'text'}
+                isDisabled={false}
+                nameInput={'slots'}
+                nameTitle="Slots"
+                register={register}
+                error={errors.slots?.message}
+              />
+            </div>
+            <div className={formStyles.buttons}>
+              <span className={formStyles.cancelButton}>
+                <Button clickAction={() => history.push('/admin/classes')} text="Cancel" />
+              </span>
+              <Button clickAction={() => reset()} text="Reset" />
+              <Button
+                clickAction={() => {}}
+                text={updateData.mode === 'edit' ? 'Update' : 'Create'}
+              />
+            </div>
           </div>
-          <div className={formStyles.buttons}>
-            <span className={formStyles.cancelButton}>
-              <Button clickAction={() => history.goBack()} text="Cancel" />
-            </span>
-            <Button
-              clickAction={formSubmit}
-              text={updateData.mode === 'edit' ? 'Update' : 'Create'}
-            />
-          </div>
-        </div>
-      </form>
-      {modalUpdateConfirmOpen && (
+        </form>
+      )}
+
+      {modalConfirmOpen && (
         <ModalConfirm
-          method="Update"
-          onConfirm={handleModalConfirmation}
-          setModalConfirmOpen={setModalUpdateConfirmOpen}
-          message="Are you sure you want to update this?"
+          method={updateData.mode === 'edit' ? 'Edit' : 'Create'}
+          onConfirm={formSubmit}
+          setModalConfirmOpen={setModalConfirmOpen}
+          message={
+            updateData.mode === 'edit'
+              ? 'Are you sure you want to update this?'
+              : 'Are you sure you want to create this?'
+          }
         />
       )}
       <div>
         {modalSuccessOpen && (
-          <ModalSuccess setModalSuccessOpen={setModalSuccessOpen} message={successMessage} />
+          <ModalSuccess
+            setModalSuccessOpen={setModalSuccessOpen}
+            message={
+              updateData.mode === 'edit'
+                ? 'The class has been updated successfully'
+                : 'The class has been created successfully'
+            }
+          />
         )}
       </div>
     </div>

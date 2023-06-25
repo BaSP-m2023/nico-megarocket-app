@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { AddButton, Loader, TableComponent, ToastError } from '../Shared';
+import { AddButton, Loader, TableComponent, ToastError } from 'Components/Shared';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getSuscription, deleteSubscription } from '../../redux/subscriptions/thunks';
-import { getClasses } from '../../redux/classes/thunks';
+import { getSuscription, deleteSubscription } from 'redux/subscriptions/thunks';
+import { getClasses } from 'redux/classes/thunks';
 
 function Subscriptions() {
   const dispatch = useDispatch();
