@@ -27,7 +27,7 @@ const MemberClasses = () => {
   ];
   const tableItem = (item, day, time) => {
     if (item.hour === time && item.day === day) {
-      return <DivContainer item={item} key={item._id} />;
+      return <DivContainer item={item} key={item._id} testId="classes-container" />;
     }
   };
 

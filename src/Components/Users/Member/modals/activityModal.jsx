@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from '../modals/activityModal.module.css';
 
-const activityModal = ({ title, description, imageName, onClose }) => {
+const activityModal = ({ title, description, imageName, onClose, testId }) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-testid={testId}>
       <div className={styles.activityCard}>
         <img
           className={styles.activityCardImage}
