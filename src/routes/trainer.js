@@ -1,6 +1,9 @@
 import React from 'react';
 import Layout from 'Components/Layout';
-import { Switch, /* Route */ Redirect, useRouteMatch } from 'react-router-dom';
+import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
+
+import TrainerProfile from 'Components/Users/Trainer/profile';
+import TrainersClasses from 'Components/Users/Trainer/classes';
 
 const routes = [
   {
@@ -22,7 +25,8 @@ const TrainerRoutes = () => {
   return (
     <Layout routes={routes}>
       <Switch>
-        {/* <Route exact path={`${url}/member/classes`} component={MemberClasses} /> */}
+        <Route exact path={`${url}/trainers/classes`} component={TrainersClasses} />
+        <Route exact path={`${url}/trainers/profile`} component={TrainerProfile} />
         <Redirect path={`${url}/login`} />
       </Switch>
     </Layout>
