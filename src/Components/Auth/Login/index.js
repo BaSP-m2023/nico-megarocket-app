@@ -46,7 +46,6 @@ function LoginForm() {
   const onSubmit = async (data) => {
     if (Object.values(errors).length === 0) {
       const responseLogin = await dispatch(login(data));
-      console.log(responseLogin);
       const role = responseLogin.payload.role;
       switch (role) {
         case 'SUPER_ADMIN':
