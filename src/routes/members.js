@@ -8,15 +8,18 @@ import MemberProfile from 'Components/Users/Member/profile';
 const routes = [
   {
     name: 'Classes',
-    path: '/member/classes'
+    path: '/member/classes',
+    icon: 'class.png'
   },
   {
     name: 'Activities',
-    path: '/member/activities'
+    path: '/member/activities',
+    icon: 'runner.png'
   },
   {
     name: 'Profile',
-    path: '/member/profile'
+    path: '/member/profile',
+    icon: 'member.png'
   }
 ];
 

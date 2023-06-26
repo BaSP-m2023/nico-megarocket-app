@@ -12,19 +12,23 @@ import AdminProfile from 'Components/Users/Admin/profile';
 const routes = [
   {
     name: 'Classes',
-    path: '/admin/classes'
+    path: '/admin/classes',
+    icon: 'class.png'
   },
   {
     name: 'Members',
-    path: '/admin/members'
+    path: '/admin/members',
+    icon: 'member.png'
   },
   {
     name: 'Trainers',
-    path: '/admin/trainers'
+    path: '/admin/trainers',
+    icon: 'trainer.png'
   },
   {
     name: 'Profile',
-    path: '/admin/profile'
+    path: '/admin/profile',
+    icon: 'member.png'
   }
 ];
 
