@@ -5,20 +5,6 @@ import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/index';
 
 function Layout(props) {
-  const routes = [
-    {
-      name: 'Home',
-      path: '/'
-    },
-    {
-      name: 'Login',
-      path: '/auth/login'
-    },
-    {
-      name: 'Sign Up',
-      path: '/auth/sign-up'
-    }
-  ];
   console.log(props, 'layout');
   return (
     <div className={styles.container}>
@@ -26,10 +12,10 @@ function Layout(props) {
       <div className={styles.mainContainer}>
         <div className={styles.asideContainer}>
           <aside>
-            <Navbar routes={routes} />
+            <Navbar routes={props.routes} />
           </aside>
         </div>
-        <div className={styles.switchContainer}>Home{props.children}</div>
+        <div className={styles.switchContainer}>{props.children}</div>
       </div>
       <Footer />
     </div>

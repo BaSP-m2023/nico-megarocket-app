@@ -11,20 +11,19 @@ const TrainerRoutes = React.lazy(() => import('./trainer'));
 const MemberRoutes = React.lazy(() => import('./members'));
 const AuthRoute = React.lazy(() => import('./auth'));
 
-const dispatch = useDispatch();
-const token = sessionStorage.getItem('token');
-
-useEffect(() => {
-  tokenListener();
-}, []);
-
-useEffect(() => {
-  if (token) {
-    dispatch(getAuth(token));
-  }
-}, [token]);
-
 const Routes = () => {
+  const dispatch = useDispatch();
+  const token = sessionStorage.getItem('token');
+  useEffect(() => {
+    tokenListener();
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(getAuth(token));
+    }
+  }, [token]);
+
   return (
     <BrowserRouter>
       <Suspense fallback={<div />}>
@@ -34,7 +33,7 @@ const Routes = () => {
           <PrivateRoute path="/member" role="MEMBER" component={MemberRoutes} />
           <PrivateRoute path="/trainer" role="TRAINER" component={TrainerRoutes} />
           <Route path="/auth" component={AuthRoute} />
-          <Redirect to="/auth" />
+          <Redirect to="/" />
         </Switch>
       </Suspense>
     </BrowserRouter>
