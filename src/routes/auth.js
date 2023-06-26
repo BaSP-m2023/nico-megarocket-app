@@ -22,7 +22,6 @@ const routes = [
 
 const AuthRoute = () => {
   const { url } = useRouteMatch();
-  console.log(url);
   return (
     <Layout routes={routes}>
       <Switch>
