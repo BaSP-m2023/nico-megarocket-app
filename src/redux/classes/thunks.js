@@ -26,7 +26,6 @@ export const getClasses = async (dispatch) => {
     }
   } catch (error) {
     dispatch(getClassPending(false));
-    console.error(error);
   }
 };
 
@@ -49,7 +48,6 @@ export const deleteClass = (id) => {
       }
     } catch (error) {
       dispatch(deleteClassPending(false));
-      console.error(error);
     }
   };
 };
@@ -67,7 +65,6 @@ export const createClass = async (body, dispatch) => {
     }
   } catch (error) {
     dispatch(addClassPending(false));
-    console.error(error);
   }
 };
 
@@ -83,7 +80,6 @@ export const updateClass = async (id, body, dispatch) => {
       body: JSON.stringify(body)
     });
     const data = await response.json();
-    console.log(data);
     dispatch(editClassPending(false));
     if (response.status !== 200) {
       return dispatch(editClassError(data.message));
