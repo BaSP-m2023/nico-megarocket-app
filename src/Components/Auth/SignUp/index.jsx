@@ -135,8 +135,8 @@ const SignForm = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
         <div className={styles.form}>
           <div className={styles.groupContainer}>
             <div className={styles.inputContainer}>
@@ -262,7 +262,7 @@ const SignForm = () => {
           </div>
         </div>
         <div className={styles.buttonsGroup}>
-          <Button clickAction={() => {}} text="Submit" />
+          <Button clickAction={() => {}} text="Sign In" />
           <Button text="Cancel" clickAction={() => history.goBack()} />
         </div>
       </form>

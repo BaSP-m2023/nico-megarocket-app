@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import { ModalConfirm, ModalSuccess, ToastError, Inputs, Button } from 'Components/Shared';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
 import { createTrainer, updateTrainer } from 'redux/trainers/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -26,6 +25,10 @@ const FormTrainer = () => {
     dni: Joi.number().min(10000000).max(99999999),
     phone: Joi.string().min(9).max(12).required(),
     email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+    password: Joi.string()
+      .min(8)
+      .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
+      .message('The password must have at least one Uppercase,a number and 8 characters.'),
     city: Joi.string().min(5).max(25),
     salary: Joi.number(),
     isActive: Joi.boolean().required()
@@ -37,6 +40,7 @@ const FormTrainer = () => {
     dni: updateData.dni,
     phone: updateData.phone,
     email: updateData.email,
+    password: updateData.password,
     city: updateData.city,
     salary: updateData.salary,
     isActive: updateData.isActive
@@ -54,10 +58,6 @@ const FormTrainer = () => {
       ...updateTrainerData
     }
   });
-
-  useEffect(() => {
-    setToastErrorOpen(!!isError);
-  }, [isError]);
 
   const history = useHistory();
 
@@ -99,6 +99,10 @@ const FormTrainer = () => {
     setInputForm(data);
     setModalUpdateConfirmOpen(true);
   };
+
+  useEffect(() => {
+    setToastErrorOpen(!!isError);
+  }, [isError]);
 
   return (
     <div>
@@ -145,15 +149,6 @@ const FormTrainer = () => {
           <div className={styles.groupContainer}>
             <div>
               <Inputs
-                nameTitle="Email"
-                register={register}
-                nameInput="email"
-                type="text"
-                error={errors.email?.message}
-              />
-            </div>
-            <div>
-              <Inputs
                 nameTitle="City"
                 register={register}
                 nameInput="city"
@@ -168,6 +163,26 @@ const FormTrainer = () => {
                 nameInput="salary"
                 type="number"
                 error={errors.salary?.message}
+              />
+            </div>
+
+            <div>
+              <Inputs
+                nameTitle="Email"
+                register={register}
+                nameInput="email"
+                type="text"
+                error={errors.email?.message}
+              />
+            </div>
+
+            <div>
+              <Inputs
+                nameTitle="Password"
+                register={register}
+                nameInput="password"
+                type="password"
+                error={errors.password?.message}
               />
             </div>
             <div className={styles.inputContainer}>
