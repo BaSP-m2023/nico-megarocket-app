@@ -71,7 +71,6 @@ export const createClass = async (body, dispatch) => {
 export const updateClass = async (id, body, dispatch) => {
   try {
     dispatch(editClassPending(true));
-    console.log(body);
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
       method: 'PUT',
       headers: {
