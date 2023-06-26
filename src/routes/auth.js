@@ -8,7 +8,7 @@ import Home from 'Components/Home';
 const routes = [
   {
     name: 'Home',
-    path: '/'
+    path: '/auth'
   },
   {
     name: 'Login',
@@ -22,13 +22,14 @@ const routes = [
 
 const AuthRoute = () => {
   const { url } = useRouteMatch();
+  console.log(url);
   return (
     <Layout routes={routes}>
       <Switch>
-        <Route path={`${url}/`} component={Home} />
-        <Route path={`${url}/login`} component={LoginForm} />
-        <Route path={`${url}/sign-up`} component={SignForm} />
-        <Route path={`${url}/not-allowed`} component={NotAllowed} />
+        <Route exact path={`${url}/`} component={Home} />
+        <Route exact path={`${url}/login`} component={LoginForm} />
+        <Route exact path={`${url}/sign-up`} component={SignForm} />
+        <Route exact path={`${url}/not-allowed`} component={NotAllowed} />
         <Redirect path={`${url}/login`} />
       </Switch>
     </Layout>
