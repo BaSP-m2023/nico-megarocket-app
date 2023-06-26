@@ -8,15 +8,11 @@ import TrainersClasses from 'Components/Users/Trainer/classes';
 const routes = [
   {
     name: 'Classes',
-    path: '/trainers/classes'
+    path: '/trainer/classes'
   },
   {
     name: 'Profile',
-    path: '/trainers/profile'
-  },
-  {
-    name: 'Log Out',
-    path: '/'
+    path: '/trainer/profile'
   }
 ];
 
@@ -25,9 +21,10 @@ const TrainerRoutes = () => {
   return (
     <Layout routes={routes}>
       <Switch>
-        <Route exact path={`${url}/trainers/classes`} component={TrainersClasses} />
-        <Route exact path={`${url}/trainers/profile`} component={TrainerProfile} />
-        <Redirect path={`${url}/login`} />
+        <Route exact path={`${url}/`} component={TrainersClasses} />
+        <Route exact path={`${url}/classes`} component={TrainersClasses} />
+        <Route exact path={`${url}/profile`} component={TrainerProfile} />
+        <Redirect path={`${url}/classes`} />
       </Switch>
     </Layout>
   );
