@@ -26,7 +26,7 @@ const MemberActivities = () => {
             title={item.name}
             description={item.description}
             image={ivo()}
-            testId={item.name}
+            testId={`${item.name}-card`}
           />
         );
       })}
