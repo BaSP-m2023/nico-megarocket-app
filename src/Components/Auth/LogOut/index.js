@@ -13,7 +13,7 @@ function LogOut() {
   };
   return (
     <div>
-      <Button clickAction={logoutAction} text="Log Out" testId="" />
+      <Button clickAction={logoutAction} text="Log Out" testId="log-out-btn" />
     </div>
   );
 }
