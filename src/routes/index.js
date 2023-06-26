@@ -4,7 +4,7 @@ import PrivateRoute from './privateRoute';
 
 const SuperAdminRoutes = React.lazy(() => import('./superAdmin'));
 const AdminRoutes = React.lazy(() => import('./admin'));
-const TrainerRoutes = '';
+const TrainerRoutes = React.lazy(() => import('./trainer'));
 const MemberRoutes = React.lazy(() => import('./members'));
 const AuthRoute = React.lazy(() => import('./auth'));
 
