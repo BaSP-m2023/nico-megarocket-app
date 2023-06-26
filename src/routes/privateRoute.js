@@ -7,9 +7,6 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
   const token = sessionStorage.getItem('token');
   const error = useSelector((state) => state.auth?.error);
 
-  console.log(role);
-  console.log(token);
-  console.log(error);
   return (
     <Route
       {...rest}

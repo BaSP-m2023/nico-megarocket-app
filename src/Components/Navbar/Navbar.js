@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './navbar.module.css';
 import { NavLink /*, useLocation*/ } from 'react-router-dom';
+import LogOut from 'Components/Auth/LogOut';
 
 // const member = `${process.env.PUBLIC_URL}/assets/images/member.png`;
 // const home = `${process.env.PUBLIC_URL}/assets/images/home.png`;
@@ -15,8 +16,7 @@ const hombeB = `${process.env.PUBLIC_URL}/assets/images/HomeB.png`;
 // const phone = `${process.env.PUBLIC_URL}/assets/images/phone.png`;
 
 const Navbar = (props) => {
-  // const house = useLocation().pathname;
-  console.log(props.routes);
+  const token = sessionStorage.getItem('token');
   return (
     <nav className={styles.navbar}>
       <ul className={styles.rutes}>
@@ -29,6 +29,7 @@ const Navbar = (props) => {
           </li>
         ))}
       </ul>
+      {!!token && <LogOut />}
     </nav>
   );
 };

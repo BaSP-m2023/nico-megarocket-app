@@ -8,20 +8,17 @@ const routes = [
   {
     name: 'Admin',
     path: '/superAdmin/admin'
-  },
-  {
-    name: 'Log Out',
-    path: '/'
   }
 ];
 
 const SuperAdminRoutes = () => {
   const { url } = useRouteMatch();
+  console.log(url);
   return (
     <Layout routes={routes}>
       <Switch>
-        <Route exact path={`${url}/superAdmin/admin`} component={Admin} />
-        <Route path={`${url}/superAdmin/admin/form/:id?`} component={FormAdmin} />
+        <Route exact path={`${url}/admin`} component={Admin} />
+        <Route path={`${url}/admin/form/:id?`} component={FormAdmin} />
         <Redirect path={`${url}/login`} />
       </Switch>
     </Layout>

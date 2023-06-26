@@ -5,7 +5,6 @@ import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/index';
 
 function Layout(props) {
-  console.log(props, 'layout');
   return (
     <div className={styles.container}>
       <Header />
