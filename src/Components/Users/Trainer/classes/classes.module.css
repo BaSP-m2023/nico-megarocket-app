@@ -1,0 +1,41 @@
+.tableContainer{
+  width: 70%;
+  height: 60%;
+  margin-top: 30px;
+  border-radius: 10px;
+  background-color: #e2e2e2;
+}
+
+.tdContainer {
+  height: 52px;
+  width: 15%;
+  border: 10px solid #e2e2e2;
+  border-radius: 10px;
+  border-width: 4px;
+  background-color: #FFFFFF;
+}
+
+.trContainer {
+  border-radius: 10px;
+}
+
+.trContainer2 {
+  background-color: rgba(170, 206, 155, 0.3);
+  text-align: center;
+}
+
+.tdContainer p {
+  text-align: center;
+  margin: 0px 0px 0px 0px;
+  padding: 0;
+  border-radius: 15px;
+}
+
+.daysContainer {
+  width: 8%;
+  height: 73px;
+  background-color: rgba(55, 56, 103, 0.3);
+  border-radius: 5px;
+}
+
+
