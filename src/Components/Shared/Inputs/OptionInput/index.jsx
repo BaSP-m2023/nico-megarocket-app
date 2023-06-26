@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './option-input.module.css';
 
-const SelectInput = ({ data, dataLabel, name, register, error }) => {
+const SelectInput = ({ data, dataLabel, name, register, error, testId }) => {
   const ifFirstName = (item) => {
     if (item.firstName && item.lastName) {
       return `${item.firstName} ${item.lastName}`;
@@ -21,7 +21,7 @@ const SelectInput = ({ data, dataLabel, name, register, error }) => {
   };
 
   return (
-    <div className={styles.containerInput}>
+    <div className={styles.containerInput} data-testid={testId}>
       <label htmlFor="selectInput">{dataLabel}:</label>
       <select
         className={error ? `${styles.errorInput} ${styles.optionInput}` : styles.optionInput}

@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './button.module.css';
 
-function ButtonForm({ nameImg, onAction }) {
+function ButtonForm({ nameImg, onAction, testId }) {
   return (
-    <div>
+    <div data-testid={testId}>
       <img
         className={styles.icon}
         onClick={onAction}

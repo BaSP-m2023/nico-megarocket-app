@@ -36,9 +36,9 @@ function Members() {
   return (
     <section>
       <div>
-        <AddButton entity="Member" createMode={createMode} />
+        <AddButton entity="Member" createMode={createMode} testId="add-member-btn" />
       </div>
-      {isPending && <Loader />}
+      {isPending && <Loader testId="member-table-loader" />}
       {!isPending && (
         <TableComponent
           columns={columns}
@@ -46,9 +46,16 @@ function Members() {
           data={members}
           deleteButton={memberDelete}
           handleClick={handleClick}
+          testId="members-table"
         />
       )}
-      {toastError && <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />}
+      {toastError && (
+        <ToastError
+          setToastErroOpen={setToastErroOpen}
+          message="Error in Database"
+          testId="member-list-toast-error"
+        />
+      )}
     </section>
   );
 }

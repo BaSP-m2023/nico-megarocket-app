@@ -37,9 +37,9 @@ function Classes() {
 
   return (
     <section>
-      <AddButton entity={'Class'} createMode={createMode} />{' '}
+      <AddButton entity={'Class'} createMode={createMode} testId="add-class-btn" />{' '}
       {loading ? (
-        <Loader />
+        <Loader testId="classes-table-loader" />
       ) : (
         <TableComponent
           columnTitleArray={columnTitleArray}
@@ -48,6 +48,7 @@ function Classes() {
           deleteButton={deleteClass}
           columns={columns}
           valueField={valueField}
+          testId="classes-table"
         />
       )}
     </section>

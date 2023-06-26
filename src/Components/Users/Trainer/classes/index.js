@@ -4,7 +4,7 @@ import styles from 'Components/Users/Member/classes/classes.module.css';
 import { getClasses } from 'redux/classes/thunks';
 import DivContainer from 'Components/Shared/Containers';
 
-const MemberClasses = () => {
+const TrainersClasses = () => {
   const dispatch = useDispatch();
   const classes = useSelector((state) => state.classes.list);
 
@@ -27,7 +27,7 @@ const MemberClasses = () => {
   ];
   const tableItem = (item, day, time) => {
     if (item.hour === time && item.day === day) {
-      return <DivContainer item={item} key={item._id} testId="classes-container" />;
+      return <DivContainer item={item} key={item._id} />;
     }
   };
 
@@ -67,4 +67,4 @@ const MemberClasses = () => {
   );
 };
 
-export default MemberClasses;
+export default TrainersClasses;

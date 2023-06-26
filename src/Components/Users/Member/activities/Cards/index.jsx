@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './cards.module.css';
 import ActivityModal from '../../modals/activityModal';
 
-function Cards({ title, description, image }) {
+function Cards({ title, description, image, testId }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleButtonClick = () => {
@@ -14,7 +14,7 @@ function Cards({ title, description, image }) {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-testid={testId}>
       <div className={styles.cardContainer}>
         <div className={styles.imgContainer}>
           <img
@@ -37,6 +37,7 @@ function Cards({ title, description, image }) {
           description={description}
           imageName={image}
           onClose={handleCloseModal}
+          testId="activity-modal"
         />
       )}
     </div>

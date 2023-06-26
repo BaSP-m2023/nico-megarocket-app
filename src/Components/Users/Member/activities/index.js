@@ -21,7 +21,13 @@ const MemberActivities = () => {
     <div className={styles.mainContainer}>
       {activities.map((item) => {
         return (
-          <Cards key={item._id} title={item.name} description={item.description} image={ivo()} />
+          <Cards
+            key={item._id}
+            title={item.name}
+            description={item.description}
+            image={ivo()}
+            testId={`${item.name}-card`}
+          />
         );
       })}
     </div>
