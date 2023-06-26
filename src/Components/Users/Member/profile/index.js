@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Data from './mockData.json';
 import styles from './profile.module.css';
 
-const MemberProfile = () => {
+const MemberProfile = (testId) => {
   const profilePicture = `${process.env.PUBLIC_URL}/assets/images/profilePicture.png`;
   const [mockData, setMockData] = useState([]);
 
@@ -11,13 +11,13 @@ const MemberProfile = () => {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-testid={testId}>
       <h1>PROFILE</h1>
-      <div className={styles.topContainer}>
+      <div className={styles.topContainer} data-testid="photo-container">
         <img src={profilePicture} alt="Picture of Profile" />
         <h3>{mockData.name}</h3>
       </div>
-      <div className={styles.botContainer}>
+      <div className={styles.botContainer} data-testid="info-container">
         <div className={styles.containerTitle}>
           <h2>PERSONAL INFORMATION</h2>
         </div>

@@ -136,6 +136,7 @@ const FormAdmin = () => {
               type="text"
               isDisabled={false}
               error={errors.firstName?.message}
+              testId="input-admin-name"
             />
             <Inputs
               nameTitle="LastName"
@@ -144,6 +145,7 @@ const FormAdmin = () => {
               type="text"
               isDisabled={false}
               error={errors.lastName?.message}
+              testId="input-admin-lastname"
             />
             <Inputs
               nameTitle="DNI"
@@ -152,6 +154,7 @@ const FormAdmin = () => {
               type="text"
               isDisabled={false}
               error={errors.dni?.message}
+              testId="input-admin-dni"
             />
             <Inputs
               nameTitle="Phone"
@@ -160,6 +163,7 @@ const FormAdmin = () => {
               type="text"
               isDisabled={false}
               error={errors.phone?.message}
+              testId="input-admin-phone"
             />
           </div>
           <div className={styles.groupContainer}>
@@ -170,6 +174,7 @@ const FormAdmin = () => {
               type="email"
               isDisabled={false}
               error={errors.email?.message}
+              testId="input-admin-email"
             />
             <Inputs
               nameTitle="City"
@@ -178,6 +183,7 @@ const FormAdmin = () => {
               type="text"
               isDisabled={false}
               error={errors.city?.message}
+              testId="input-admin-city"
             />
             <Inputs
               nameTitle="Password"
@@ -186,6 +192,7 @@ const FormAdmin = () => {
               type="password"
               isDisabled={false}
               error={errors.password?.message}
+              testId="input-admin-password"
             />
             <Inputs
               nameTitle="Repeat Password"
@@ -194,19 +201,21 @@ const FormAdmin = () => {
               type="password"
               isDisabled={false}
               error={errors.repeatPassword?.message}
+              testId="input-admin-repeat-password"
             />
           </div>
         </div>
 
         <div className={styles.buttonContainer}>
-          <Button text="reset" clickAction={() => reset()} />
-          <Button text="Save" clickAction={() => {}} />
+          <Button text="reset" clickAction={() => reset()} testId="admin-reset-btn" />
+          <Button text="Save" clickAction={() => {}} testId="admin-save-btn" />
           <Button
             clickAction={(e) => {
               e.preventDefault();
               history.goBack();
             }}
             text="Cancel"
+            testId="admin-cancel-btn"
           />
         </div>
       </form>
@@ -221,15 +230,23 @@ const FormAdmin = () => {
           }
           onConfirm={submitAdmin}
           setModalConfirmOpen={setModalConfirmOpen}
+          testId="admin-modal-confirm"
         />
       )}
       {modalSuccessOpen && (
         <ModalSuccess
           message={id ? 'Admin edited successfully' : 'Admin created successfully'}
           setModalSuccessOpen={setModalSuccessOpen}
+          testId="admin-modal-success"
         />
       )}
-      {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
+      {toastErroOpen && (
+        <ToastError
+          setToastErroOpen={setToastErroOpen}
+          message={toastMessage}
+          testId="admin-form-toast-error"
+        />
+      )}
     </div>
   );
 };

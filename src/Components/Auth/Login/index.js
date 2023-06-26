@@ -78,6 +78,7 @@ function LoginForm() {
             nameTitle={'Email'}
             register={register}
             error={errors.email?.message}
+            testId="login-input-email"
           />
           <Inputs
             type="password"
@@ -85,10 +86,11 @@ function LoginForm() {
             nameTitle={'Password'}
             register={register}
             error={errors.password?.message}
+            testId="login-input-password"
           />
         </div>
         {errorPop ? (
-          <div className={styles.boxError}>
+          <div className={styles.boxError} data-testid="login-error-pop">
             <div className={styles.lineError}>
               <div className={styles.errorLogo}>!</div>
               LogIn Denied
@@ -102,10 +104,10 @@ function LoginForm() {
             <p className={styles.MsgError}>The username or password is incorrect</p>
           </div>
         ) : (
-          <div className={styles.emptyBox}></div>
+          <div className={styles.emptyBox} data-testid="login-error-pop"></div>
         )}
 
-        <div>
+        <div data-testid="password-forgot-btn">
           <button
             className={styles.forgotPass}
             onClick={(e) => {
@@ -116,7 +118,12 @@ function LoginForm() {
           </button>
         </div>
         <div className={styles.sub_buttons}>
-          <Button className={styles.buttonLogin} clickAction={() => {}} text="Enter" />
+          <Button
+            className={styles.buttonLogin}
+            clickAction={() => {}}
+            text="Enter"
+            testId="enter-login-btn"
+          />
         </div>
       </div>
     </form>

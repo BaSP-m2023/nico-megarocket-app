@@ -23,19 +23,19 @@ const Navbar = () => {
         {house.includes('/home') && (
           <>
             <li className={styles.homeButtons}>
-              <NavLink to="/home" className={styles.navbarLinkButtons}>
+              <NavLink to="/home" className={styles.navbarLinkButtons} data-testid="home-btn">
                 <img src={hombeB} alt="icon home" />
                 Home
               </NavLink>
             </li>
             <li className={styles.homeButtons}>
-              <NavLink to="/admin" className={styles.navbarLinkButtons}>
+              <NavLink to="/admin" className={styles.navbarLinkButtons} data-testid="admin-btn">
                 <img src={login} alt="icon login" />
                 Admins
               </NavLink>
             </li>
             <li className={styles.homeButtons}>
-              <NavLink to="/member" className={styles.navbarLinkButtons}>
+              <NavLink to="/member" className={styles.navbarLinkButtons} data-testid="member-btn">
                 <img src={login} alt="icon login" />
                 Members
               </NavLink>
@@ -61,7 +61,12 @@ const Navbar = () => {
         {house.startsWith('/admin') && (
           <>
             <li className={styles.anchor}>
-              <NavLink to="/home" className={styles.navbarLink} activeClassName={styles.active}>
+              <NavLink
+                to="/home"
+                className={styles.navbarLink}
+                activeClassName={styles.active}
+                data-testid="admin-home-btn"
+              >
                 <img src={home} alt="icon home" />
                 Home
               </NavLink>
@@ -71,6 +76,7 @@ const Navbar = () => {
                 to="/admin/classes"
                 className={styles.navbarLink}
                 activeClassName={styles.active}
+                data-testid="admin-classes-btn"
               >
                 <img src={classs} alt="icon class" />
                 Classes
@@ -81,6 +87,7 @@ const Navbar = () => {
                 to="/admin/trainers"
                 className={styles.navbarLink}
                 activeClassName={styles.active}
+                data-testid="admin-trainers-btn"
               >
                 <img src={trainer} alt="icon trainer" />
                 Trainers
@@ -91,6 +98,7 @@ const Navbar = () => {
                 to="/admin/activities"
                 className={styles.navbarLink}
                 activeClassName={styles.active}
+                data-testid="admin-activities-btn"
               >
                 <img src={activities} alt="icon activities" />
                 Activities
@@ -101,6 +109,7 @@ const Navbar = () => {
                 to="/admin/subscriptions"
                 className={styles.navbarLink}
                 activeClassName={styles.active}
+                data-testid="admin-subscriptions-btn"
               >
                 <img src={suscription} alt="icon suscription" />
                 Subscriptions
@@ -111,6 +120,7 @@ const Navbar = () => {
                 to="/admin/members"
                 className={styles.navbarLink}
                 activeClassName={styles.active}
+                data-testid="admin-members-btn"
               >
                 <img src={members} alt="icon member" />
                 Members
@@ -121,6 +131,7 @@ const Navbar = () => {
                 to="/admin/profile"
                 className={styles.navbarLink}
                 activeClassName={styles.active}
+                data-testid="admin-profile-btn"
               >
                 <img src={member} alt="icon member" />
                 Profile
@@ -131,7 +142,12 @@ const Navbar = () => {
         {house.startsWith('/member') && (
           <>
             <li className={styles.anchor}>
-              <NavLink to="/home" className={styles.navbarLink} activeClassName={styles.active}>
+              <NavLink
+                to="/home"
+                className={styles.navbarLink}
+                activeClassName={styles.active}
+                data-testid="member-home-btn"
+              >
                 <img src={home} alt="icon home" />
                 Home
               </NavLink>
@@ -141,6 +157,7 @@ const Navbar = () => {
                 to="/member/classes"
                 className={styles.navbarLink}
                 activeClassName={styles.active}
+                data-testid="member-classes-btn"
               >
                 <img src={classs} alt="icon class" />
                 Classes
@@ -151,6 +168,7 @@ const Navbar = () => {
                 to="/member/activities"
                 className={styles.navbarLink}
                 activeClassName={styles.active}
+                data-testid="member-activities-btn"
               >
                 <img src={activities} alt="icon activities" />
                 Activities
@@ -161,6 +179,7 @@ const Navbar = () => {
                 to="/member/profile"
                 className={styles.navbarLink}
                 activeClassName={styles.active}
+                data-testid="member-profile-btn"
               >
                 <img src={member} alt="icon member" />
                 Profile

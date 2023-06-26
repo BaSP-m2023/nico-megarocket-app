@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './error-placeholder-input.css';
 
-const ErrorInput = ({ value, type, error, change, placeholder }) => {
+const ErrorInput = ({ value, type, error, change, placeholder, testId }) => {
   const [focus, setFocus] = useState(false);
 
   const handleFocus = () => {
@@ -15,7 +15,7 @@ const ErrorInput = ({ value, type, error, change, placeholder }) => {
   const inputClassName = `input ${error && !focus ? 'error' : ''}`;
 
   return (
-    <div className="input-container">
+    <div className="input-container" data-testid={testId}>
       <input
         className={inputClassName}
         type={type}

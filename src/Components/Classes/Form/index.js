@@ -144,7 +144,7 @@ const FormClasses = () => {
   return (
     <div className={formStyles.container}>
       {isLoading ? (
-        <Loader />
+        <Loader testId="classes-form-loader" />
       ) : (
         <form className={formStyles.form} onSubmit={handleSubmit(openModal)}>
           <div className={formStyles.container}>
@@ -158,6 +158,7 @@ const FormClasses = () => {
                 name="hour"
                 register={register}
                 error={errors.hour?.message}
+                testId="classes-hour-input"
               />
 
               <OptionInput
@@ -166,6 +167,7 @@ const FormClasses = () => {
                 name="day"
                 register={register}
                 error={errors.day?.message}
+                testId="classes-day-input"
               />
 
               <OptionInput
@@ -174,6 +176,7 @@ const FormClasses = () => {
                 name="trainer"
                 register={register}
                 error={errors.trainer?.message}
+                testId="classes-trainer-input"
               />
 
               <OptionInput
@@ -182,6 +185,7 @@ const FormClasses = () => {
                 name="activity"
                 register={register}
                 error={errors.activity?.message}
+                testId="classes-activity-input"
               />
 
               <Inputs
@@ -191,16 +195,22 @@ const FormClasses = () => {
                 nameTitle="Slots"
                 register={register}
                 error={errors.slots?.message}
+                testId="classes-slots-input"
               />
             </div>
             <div className={formStyles.buttons}>
               <span className={formStyles.cancelButton}>
-                <Button clickAction={() => history.push('/admin/classes')} text="Cancel" />
+                <Button
+                  clickAction={() => history.push('/admin/classes')}
+                  text="Cancel"
+                  testId="classes-cancel-btn"
+                />
               </span>
-              <Button clickAction={() => reset()} text="Reset" />
+              <Button clickAction={() => reset()} text="Reset" testId="classes-reset-btn" />
               <Button
                 clickAction={() => {}}
                 text={updateData.mode === 'edit' ? 'Update' : 'Create'}
+                testId="classes-save-btn"
               />
             </div>
           </div>
@@ -217,6 +227,7 @@ const FormClasses = () => {
               ? 'Are you sure you want to update this?'
               : 'Are you sure you want to create this?'
           }
+          testId="classes-modal-confirm"
         />
       )}
       <div>
@@ -228,6 +239,7 @@ const FormClasses = () => {
                 ? 'The class has been updated successfully'
                 : 'The class has been created successfully'
             }
+            testId="classes-modal-success"
           />
         )}
       </div>

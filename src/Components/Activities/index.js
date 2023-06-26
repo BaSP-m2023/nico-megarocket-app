@@ -33,9 +33,9 @@ function Activities() {
 
   return (
     <section>
-      <AddButton entity="Activity" createMode={createMode} />
+      <AddButton entity="Activity" createMode={createMode} testId="add-activity-btn" />
       {isPending ? (
-        <Loader />
+        <Loader testId="activity-table-loader" />
       ) : (
         <TableComponent
           columnTitleArray={columnTitleArray}
@@ -43,10 +43,15 @@ function Activities() {
           handleClick={handleClick}
           deleteButton={deleteActivity}
           columns={columns}
+          testId="activity-table"
         />
       )}
       {toastErroOpen && (
-        <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
+        <ToastError
+          setToastErroOpen={setToastErroOpen}
+          message="Error in Database"
+          testId="activity-list-toast-error"
+        />
       )}
     </section>
   );
