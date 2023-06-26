@@ -37,7 +37,6 @@ export const signUpMember = (data) => {
   return async (dispatch) => {
     dispatch(signUpPending());
     try {
-      //await firebaseApp.auth().createUserWithEmailAndPassword(data.email, data.password);
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/`, {
         method: 'POST',
         headers: {
