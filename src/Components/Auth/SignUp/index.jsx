@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './signUp.module.css';
-import { Inputs, Button } from 'Components/Shared';
+import { Inputs, OptionInput, Button } from 'Components/Shared';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -104,9 +104,11 @@ const SignForm = () => {
       })
       .required(),
 
-    membership: Joi.string().valid('Black', 'Classic', 'Only_classes').messages({
-      'any.only': 'The membership must be one of Black, Classic, or Only_classes'
-    }),
+    membership: Joi.string()
+      .messages({
+        'alternatives.types': 'Membership most be required'
+      })
+      .required(),
 
     isActive: Joi.boolean()
       .messages({
@@ -133,6 +135,8 @@ const SignForm = () => {
       }
     }
   };
+
+  const memberships = ['Classic', 'Black', 'Only classes'];
 
   return (
     <div>
@@ -205,12 +209,13 @@ const SignForm = () => {
               />
             </div>
             <div className={styles.inputContainer}>
-              <Inputs
-                nameInput="membership"
-                nameTitle="Membership"
+              <OptionInput
+                data={memberships}
+                name="membership"
+                dataLabel="Membership"
                 register={register}
-                type="text"
                 error={errors.membership?.message}
+                testId="member-memberships-input"
               />
             </div>
             <div className={styles.inputContainer}>
