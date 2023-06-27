@@ -108,8 +108,8 @@ const MembersForm = () => {
       })
       .required(),
 
-    membership: Joi.string().valid('Black', 'Classic', 'Only_classes').messages({
-      'any.only': 'The membership must be one of Black, Classic, or Only_classes'
+    membership: Joi.string().valid('Black', 'Classic', 'Only Classes').messages({
+      'any.only': 'The membership must be one of Black, Classic, or Only Classes'
     }),
 
     isActive: Joi.boolean()
@@ -173,7 +173,7 @@ const MembersForm = () => {
     setModalAddConfirmOpen(true);
   };
 
-  const memberships = ['Classic', 'Black', 'Only classes'];
+  const memberships = ['Classic', 'Black', 'Only Classes'];
 
   return (
     <div className={styles.container}>
