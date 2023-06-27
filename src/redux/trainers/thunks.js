@@ -39,14 +39,7 @@ export const updateTrainer = (id, body) => {
   return async (dispatch) => {
     try {
       dispatch(updateTrainerPending(true));
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/trainer/${id}`,
-        {
-          method: 'PUT',
-          headers: { token: token }
-        },
-        body
-      );
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, body);
       const data = await response.json();
       dispatch(updateTrainerPending(false));
       return dispatch(updateTrainerSuccess(data));
