@@ -64,6 +64,15 @@ const TableComponent = ({
             {item?.firstName} {item?.lastName}
           </span>
         );
+      } else if (itemContent === 'date') {
+        const date = new Date(item.date);
+        const format = {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        };
+        const dateFixed = date.toLocaleDateString(format);
+        return item?.date && dateFixed;
       } else {
         return item[itemContent];
       }

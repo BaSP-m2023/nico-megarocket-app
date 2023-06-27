@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import styles from './form.module.css';
-import { ModalConfirm, ModalSuccess, ToastError, Inputs, Button } from 'Components/Shared';
+import {
+  ModalConfirm,
+  ModalSuccess,
+  ToastError,
+  Inputs,
+  Button,
+  OptionInput
+} from 'Components/Shared';
 import { useLocation, useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { addMember, editMember } from 'redux/members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
@@ -166,6 +173,8 @@ const MembersForm = () => {
     setModalAddConfirmOpen(true);
   };
 
+  const memberships = ['Classic', 'Black', 'Only classes'];
+
   return (
     <div className={styles.container}>
       {
@@ -284,12 +293,12 @@ const MembersForm = () => {
               />
             </div>
             <div className={styles.inputContainer}>
-              <Inputs
-                error={errors.membership?.message}
+              <OptionInput
+                data={memberships}
+                name="membership"
+                dataLabel="Membership"
                 register={register}
-                nameTitle="Membership"
-                type="text"
-                nameInput="membership"
+                error={errors.membership?.message}
                 required
                 testId="input-member-membership"
               />

@@ -7,11 +7,8 @@ import FormAdmin from 'Components/Admins/Form';
 const routes = [
   {
     name: 'Admin',
-    path: '/superAdmin/admin'
-  },
-  {
-    name: 'Log Out',
-    path: '/'
+    path: '/superAdmin/admin',
+    icon: 'admin.png'
   }
 ];
 
@@ -20,8 +17,8 @@ const SuperAdminRoutes = () => {
   return (
     <Layout routes={routes}>
       <Switch>
-        <Route exact path={`${url}/superAdmin/admin`} component={Admin} />
-        <Route path={`${url}/superAdmin/admin/form/:id?`} component={FormAdmin} />
+        <Route exact path={`${url}/admin`} component={Admin} />
+        <Route path={`${url}/admin/form/:id?`} component={FormAdmin} />
         <Redirect path={`${url}/login`} />
       </Switch>
     </Layout>

@@ -8,19 +8,18 @@ import MemberProfile from 'Components/Users/Member/profile';
 const routes = [
   {
     name: 'Classes',
-    path: '/member/classes'
+    path: '/member/classes',
+    icon: 'class.png'
   },
   {
     name: 'Activities',
-    path: '/member/activities'
+    path: '/member/activities',
+    icon: 'runner.png'
   },
   {
     name: 'Profile',
-    path: '/member/profile'
-  },
-  {
-    name: 'Log Out',
-    path: '/'
+    path: '/member/profile',
+    icon: 'member.png'
   }
 ];
 
@@ -29,9 +28,10 @@ const MemberRoutes = () => {
   return (
     <Layout routes={routes}>
       <Switch>
-        <Route exact path={`${url}/member/classes`} component={MemberClasses} />
-        <Route exact path={`${url}/member/activities`} component={MemberActivities} />
-        <Route exact path={`${url}/member/profile`} component={MemberProfile} />
+        <Route exact path={`${url}/`} component={MemberClasses} />
+        <Route exact path={`${url}/classes`} component={MemberClasses} />
+        <Route exact path={`${url}/activities`} component={MemberActivities} />
+        <Route exact path={`${url}/profile`} component={MemberProfile} />
         <Redirect path={`${url}/login`} />
       </Switch>
     </Layout>
