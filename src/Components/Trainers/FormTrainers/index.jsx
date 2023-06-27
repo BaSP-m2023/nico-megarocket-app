@@ -18,7 +18,7 @@ const FormTrainer = () => {
   const updateData = location.state.params;
   const dispatch = useDispatch();
   const isError = useSelector((store) => store.trainers.formError);
-
+  const token = sessionStorage.getItem('token');
   const schema = Joi.object({
     firstName: Joi.string().min(3).max(30).required(),
     lastName: Joi.string().min(3).max(30).required(),
@@ -64,7 +64,8 @@ const FormTrainer = () => {
   const trainerBody = {
     method: updateData.mode === 'edit' ? 'PUT' : 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      token: token
     },
     body: JSON.stringify(inputForm)
   };
@@ -101,7 +102,9 @@ const FormTrainer = () => {
   };
 
   useEffect(() => {
-    setToastErrorOpen(!!isError);
+    if (!location.pathname === '/api/auth/') {
+      setToastErrorOpen(!!isError);
+    }
   }, [isError]);
 
   return (
@@ -176,42 +179,17 @@ const FormTrainer = () => {
               />
             </div>
 
-            <div>
-              <Inputs
-                nameTitle="Password"
-                register={register}
-                nameInput="password"
-                type="password"
-                error={errors.password?.message}
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <label>Status</label>
-              <label>
-                Active
-                <input
-                  {...register('isActive', {
-                    required: { value: true, message: 'This field is required' }
-                  })}
-                  type="radio"
-                  name="isActive"
-                  value={true}
-                />
-              </label>
+            {!id && (
               <div>
-                <label>
-                  Inactive
-                  <input
-                    {...register('isActive', {
-                      required: { value: true, message: 'This field is required' }
-                    })}
-                    type="radio"
-                    name="isActive"
-                    value={false}
-                  />
-                </label>
+                <Inputs
+                  nameTitle="Password"
+                  register={register}
+                  nameInput="password"
+                  type="password"
+                  error={errors.password?.message}
+                />
               </div>
-            </div>
+            )}
           </div>
         </div>
         <div className={styles.buttonsGroup}>
