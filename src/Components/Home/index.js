@@ -16,9 +16,9 @@ function Home() {
     <section className={styles.container}>
       <section className={styles.sectionHead}>
         <div className={styles.containerSectionHead}>
-          <h1>MEGA ROCKET WEB</h1>
+          <h1 className={styles.Title}>MEGA ROCKET WEB</h1>
           <h2 id={styles.sectionHeadWelcome}>WELCOME</h2>
-          <p>
+          <p className={styles.Text}>
             Mega Rocket web is a monthly management system for members and trainers so that they can
             dynamically sign up for their activities in the gym
           </p>
@@ -35,7 +35,7 @@ function Home() {
               <img src={gymCalendarIconTime} alt="Calendar icon with clock" />
               Shift reservations
             </span>
-            <p>
+            <p className={styles.Text}>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
               has been the industrys standard dummy text ever since the 1500s, when an unknown
               printer took a galley of type and scrambled it to make a type specimen book.
@@ -46,7 +46,7 @@ function Home() {
               <img src={gymCalendarIcon} alt="Calendar icon" />
               Scheduling & opening hours
             </span>
-            <p>
+            <p className={styles.Text}>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
               has been the industrys standard dummy text ever since the 1500s, when an unknown
               printer took a galley of type and scrambled it to make a type specimen book.
@@ -57,7 +57,7 @@ function Home() {
               <img src={gymIconList} alt="List icon" />
               Membership management
             </span>
-            <p>
+            <p className={styles.Text}>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
               has been the industrys standard dummy text ever since the 1500s, when an unknown
               printer took a galley of type and scrambled it to make a type specimen book.
@@ -68,7 +68,7 @@ function Home() {
               <img src={gymIconMessage} alt="Message icon" />
               Contact form & suggestions
             </span>
-            <p>
+            <p className={styles.Text}>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
               has been the industrys standard dummy text ever since the 1500s, when an unknown
               printer took a galley of type and scrambled it to make a type specimen book.
@@ -78,10 +78,10 @@ function Home() {
       </section>
       <section className={styles.sectionAbout}>
         <h2 className={styles.sectionTitle}>About Mega Rocket</h2>
-        <div className={styles.sectionAboutFlexcontainer}>
+        <div className={styles.sectionAboutFlexContainer}>
           <article className={styles.sectionAboutContainer} id={styles.sectionAboutContainerTop}>
             <img src={gymImageGym} alt="The inside of a gym" />
-            <p className={styles.sectionAboutTextdesktop}>
+            <p className={styles.sectionAboutTextDesktop}>
               Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam
               facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam. Aenean ornare
               velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante
@@ -89,7 +89,7 @@ function Home() {
               varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla
               amet lorem feugiat tempus aliquam.
             </p>
-            <p className={styles.sectionAboutTextmobile}>
+            <p className={styles.sectionAboutTextMobile}>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
               has been the industrys standard dummy text ever since the 1500s (...)
             </p>
@@ -101,7 +101,7 @@ function Home() {
               src={gymImageGymOne}
               alt="A man running in a treadmill"
             />
-            <p className={styles.sectionAboutTextdesktop}>
+            <p className={styles.sectionAboutTextDesktop}>
               Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam
               facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam. Aenean ornare
               velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante
@@ -109,7 +109,7 @@ function Home() {
               varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla
               amet lorem feugiat tempus aliquam.
             </p>
-            <p className={styles.sectionAboutTextmobile}>
+            <p className={styles.sectionAboutTextMobile}>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
               has been the industrys standard dummy text ever since the 1500s (...)
             </p>
