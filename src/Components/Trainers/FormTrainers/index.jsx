@@ -182,7 +182,7 @@ const FormTrainer = () => {
                 nameTitle="Password"
                 register={register}
                 nameInput="password"
-                type="text"
+                type="password"
                 error={errors.password?.message}
               />
             </div>
@@ -191,7 +191,7 @@ const FormTrainer = () => {
                 nameTitle="RepeatPassword"
                 register={register}
                 nameInput="repeatPassword"
-                type="number"
+                type="password"
                 error={errors.repeatPassword?.message}
               />
             </div>
