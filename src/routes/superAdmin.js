@@ -7,13 +7,13 @@ import FormAdmin from 'Components/Admins/Form';
 const routes = [
   {
     name: 'Admin',
-    path: '/superAdmin/admin'
+    path: '/superAdmin/admin',
+    icon: 'admin.png'
   }
 ];
 
 const SuperAdminRoutes = () => {
   const { url } = useRouteMatch();
-  console.log(url);
   return (
     <Layout routes={routes}>
       <Switch>

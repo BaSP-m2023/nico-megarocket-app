@@ -12,19 +12,23 @@ import AdminProfile from 'Components/Users/Admin/profile';
 const routes = [
   {
     name: 'Classes',
-    path: '/admin/classes'
+    path: '/admin/classes',
+    icon: 'class.png'
   },
   {
     name: 'Members',
-    path: '/admin/members'
+    path: '/admin/members',
+    icon: 'member.png'
   },
   {
     name: 'Trainers',
-    path: '/admin/trainers'
+    path: '/admin/trainers',
+    icon: 'trainer.png'
   },
   {
     name: 'Profile',
-    path: '/admin/profile'
+    path: '/admin/profile',
+    icon: 'member.png'
   }
 ];
 
@@ -35,12 +39,12 @@ const AdminRoutes = () => {
       <Switch>
         <Route exact path={`${url}/`} component={Classes} />
         <Route exact path={`${url}/classes`} component={Classes} />
-        <Route path={`${url}/classes/form/:id?`} component={FormClasses} />
+        <Route exact path={`${url}/classes/ClassForm/:id?`} component={FormClasses} />
         <Route exact path={`${url}/trainers`} component={Trainers} />
         <Route path={`${url}/trainers/form/:id?`} component={FormTrainer} />
         <Route exact path={`${url}/members`} component={Members} />
         <Route path={`${url}/members/form/:id?`} component={MembersForm} />
-        <Route exact path={`${url}/admin/profile`} component={AdminProfile} />
+        <Route exact path={`${url}/profile`} component={AdminProfile} />
         <Redirect path={`${url}/login`} />
       </Switch>
     </Layout>

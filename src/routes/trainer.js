@@ -8,11 +8,13 @@ import TrainersClasses from 'Components/Users/Trainer/classes';
 const routes = [
   {
     name: 'Classes',
-    path: '/trainer/classes'
+    path: '/trainer/classes',
+    icon: 'class.png'
   },
   {
     name: 'Profile',
-    path: '/trainer/profile'
+    path: '/trainer/profile',
+    icon: 'member.png'
   }
 ];
 
