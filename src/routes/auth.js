@@ -8,15 +8,18 @@ import Home from 'Components/Home';
 const routes = [
   {
     name: 'Home',
-    path: '/auth'
+    path: '/auth',
+    icon: 'HomeB.png'
   },
   {
     name: 'Login',
-    path: '/auth/login'
+    path: '/auth/login',
+    icon: 'login.png'
   },
   {
     name: 'Sign Up',
-    path: '/auth/sign-up'
+    path: '/auth/sign-up',
+    icon: 'sign-up.png'
   }
 ];
 
