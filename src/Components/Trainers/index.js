@@ -11,7 +11,6 @@ function Trainers() {
   const trainers = useSelector((state) => state.trainers.list);
   const history = useHistory();
   const dispatch = useDispatch();
-
   const createMode = () => {
     history.push('/admin/trainers/form/', { params: { mode: 'created' } });
   };
@@ -43,6 +42,7 @@ function Trainers() {
           handleClick={handleClick}
           deleteButton={deleteTrainer}
           columns={columnsValue}
+          trainers={trainers}
         />
       )}
       {toastErroOpen && (
