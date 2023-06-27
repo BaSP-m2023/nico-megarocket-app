@@ -14,12 +14,12 @@ function LogOut() {
   };
 
   return (
-    <div className={styles.logButton} onClick={logoutAction}>
+    <div className={styles.logButton} onClick={logoutAction} data-testId="log-out-btn">
       <img
         className={styles.logImg}
         src={`${process.env.PUBLIC_URL}/assets/images/logout.png`}
         alt={'log out icon'}
-      ></img>
+      />
       <p className={styles.logText}>Log Out</p>
     </div>
   );
