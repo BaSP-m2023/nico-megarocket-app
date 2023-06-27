@@ -22,4 +22,18 @@ describe('My Login application', () => {
     expect(LoginPage.emailError).toHaveTextContaining('The email is a required field');
     expect(LoginPage.pswError).toHaveTextContaining('The password is a required field');
   });
+
+  it('should show an error with an invalid email', async () => {
+    LoginPage.emailInput.setValue('usuario');
+    await expect(LoginPage.emailError).toBeDisplayed();
+    expect(LoginPage.emailError).toHaveTextContaining('The email must be a valid email address');
+  });
+
+  it('should show an error with an invalid password', async () => {
+    LoginPage.pswInput.setValue('user');
+    await expect(LoginPage.pswError).toBeDisplayed();
+    expect(LoginPage.pswError).toHaveTextContaining(
+      'The password must contain at least one lowercase letter, one uppercase letter, and one digit'
+    );
+  });
 });
