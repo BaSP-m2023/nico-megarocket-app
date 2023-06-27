@@ -13,23 +13,21 @@ import {
   editSubscriptionError
 } from './actions';
 
-export const getSuscription = () => {
-  return async (dispatch) => {
-    try {
-      dispatch(getSubscriptionPending(true));
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscription`);
-      const data = await response.json();
-      if (response.ok) {
-        dispatch(getSubscriptionPending(false));
-        return dispatch(getSubscriptionSuccess(data.data));
-      } else {
-        return dispatch(getSubscriptionSuccess(data.message));
-      }
-    } catch (error) {
+export const getSuscription = async (dispatch) => {
+  try {
+    dispatch(getSubscriptionPending(true));
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscription`);
+    const data = await response.json();
+    if (response.ok) {
       dispatch(getSubscriptionPending(false));
-      return dispatch(getSubscriptionError(true));
+      return dispatch(getSubscriptionSuccess(data.data));
+    } else {
+      return dispatch(getSubscriptionSuccess(data.message));
     }
-  };
+  } catch (error) {
+    dispatch(getSubscriptionPending(false));
+    return dispatch(getSubscriptionError(true));
+  }
 };
 
 export const deleteSubscription = (id) => {
@@ -75,6 +73,7 @@ export const addSubscriptions = async (dispatch, newSub) => {
 };
 
 export const updateSubscriptions = async (dispatch, id, editSub) => {
+  console.log(editSub);
   try {
     dispatch(editSubscriptionPending(true));
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscription/${id}`, {
