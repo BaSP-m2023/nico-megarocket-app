@@ -20,13 +20,13 @@ export const getSuscription = async (dispatch) => {
     const data = await response.json();
     if (response.ok) {
       dispatch(getSubscriptionPending(false));
-      dispatch(getSubscriptionSuccess(data.data));
+      return dispatch(getSubscriptionSuccess(data.data));
     } else {
-      dispatch(getSubscriptionSuccess(data.message));
+      return dispatch(getSubscriptionSuccess(data.message));
     }
   } catch (error) {
     dispatch(getSubscriptionPending(false));
-    dispatch(getSubscriptionError(true));
+    return dispatch(getSubscriptionError(true));
   }
 };
 

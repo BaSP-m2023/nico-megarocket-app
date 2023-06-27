@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from './container.module.css';
 import ModalConfirm from '../Modals/ModalConfirm';
 import { updateClass } from 'redux/classes/thunks';
+
 import { useDispatch } from 'react-redux';
 
 function DivContainer({ item, testId }) {
