@@ -59,6 +59,9 @@ function DivContainer({ item, testId }) {
     } else {
       audioLabel.setAttribute('src', `${process.env.PUBLIC_URL}/assets/sounds/lightWeight.mp3`);
 
+      const slotAdd = { slots: item.slots + 1 };
+      await updateClass(idToUpdate, slotAdd, dispatch);
+
       const memberWithoutCurrent = susbscription[0].members.filter(
         (memberInArray) => memberInArray._id !== member._id
       );
@@ -66,9 +69,6 @@ function DivContainer({ item, testId }) {
       await updateSubscriptions(dispatch, subscriptionID, {
         members: memberIds
       });
-
-      const slotAdd = { slots: item.slots };
-      await updateClass(idToUpdate, slotAdd, dispatch);
     }
     audioLabel.play();
   };
