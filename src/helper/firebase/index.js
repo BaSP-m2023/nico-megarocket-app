@@ -33,7 +33,6 @@ export const getFirebaseUidFromToken = async () => {
     const idCurrentUser = decodedToken.claims.email;
     return idCurrentUser;
   } catch (error) {
-    console.error('Firebase Error:', error);
-    throw error;
+    return error;
   }
 };

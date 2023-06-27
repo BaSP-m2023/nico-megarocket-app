@@ -73,7 +73,6 @@ export const addSubscriptions = async (dispatch, newSub) => {
 };
 
 export const updateSubscriptions = async (dispatch, id, editSub) => {
-  console.log(editSub);
   try {
     dispatch(editSubscriptionPending(true));
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscription/${id}`, {
