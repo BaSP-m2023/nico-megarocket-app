@@ -5,15 +5,15 @@ import { ButtonForm } from '../../../Shared';
 const profilePic = `${process.env.PUBLIC_URL}/assets/images/profile-img.png`;
 const editProfilePicBtn = `${process.env.PUBLIC_URL}/assets/images/image.png`;
 
-const AdminProfile = ({ fullName, height, weight, sex, city, document, email }) => {
+const AdminProfile = ({ fullName, height, weight, sex, city, document, email, testId }) => {
   return (
-    <section className={styles.container}>
-      <div className={styles.profilePhotoContainer}>
+    <section className={styles.container} data-testid={testId}>
+      <div className={styles.profilePhotoContainer} data-testid="photo-container">
         <img src={profilePic} alt="profile image" />
         <img className={styles.editPhotoButton} src={editProfilePicBtn} alt="camera" />
         <h1 className={styles.adminName}>{fullName} Carlos Villagran</h1>
       </div>
-      <div className={styles.profileInfoContainer}>
+      <div className={styles.profileInfoContainer} data-testid="info-container">
         <h2 className={styles.adminInfoTitle}>Personal Information</h2>
         <p className={styles.adminInfoContainer}>
           <span className={styles.adminInfoPlaceholder}>Name</span>
@@ -47,7 +47,11 @@ const AdminProfile = ({ fullName, height, weight, sex, city, document, email }) 
         </p>
         <p className={styles.adminInfoContainer}>
           <span className={styles.adminInfoPlaceholder}>Edit profile</span>
-          <ButtonForm className={styles.editInfoBtn} nameImg="edit-profile-icon.png" />{' '}
+          <ButtonForm
+            className={styles.editInfoBtn}
+            nameImg="edit-profile-icon.png"
+            testId="profile-edit-btn"
+          />{' '}
         </p>
       </div>
     </section>

@@ -26,7 +26,6 @@ export const getClasses = async (dispatch) => {
     }
   } catch (error) {
     dispatch(getClassPending(false));
-    console.error(error);
   }
 };
 
@@ -49,7 +48,6 @@ export const deleteClass = (id) => {
       }
     } catch (error) {
       dispatch(deleteClassPending(false));
-      console.error(error);
     }
   };
 };
@@ -67,23 +65,27 @@ export const createClass = async (body, dispatch) => {
     }
   } catch (error) {
     dispatch(addClassPending(false));
-    console.error(error);
   }
 };
 
 export const updateClass = async (id, body, dispatch) => {
   try {
     dispatch(editClassPending(true));
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, body);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
     const data = await response.json();
     dispatch(editClassPending(false));
     if (response.status !== 200) {
-      dispatch(editClassError(data.message));
+      return dispatch(editClassError(data.message));
     } else {
-      dispatch(editClassSuccess(body));
+      return dispatch(editClassSuccess(body));
     }
   } catch (error) {
-    dispatch(editClassPending(false));
-    console.error(error);
+    return dispatch(editClassPending(false));
   }
 };

@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import { ModalConfirm, ModalSuccess, ToastError, Inputs, Button } from 'Components/Shared';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
 import { createTrainer, updateTrainer } from 'redux/trainers/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -62,10 +61,6 @@ const FormTrainer = () => {
     }
   });
 
-  useEffect(() => {
-    setToastErrorOpen(!!isError);
-  }, [isError]);
-
   const history = useHistory();
 
   const trainerBody = {
@@ -106,6 +101,10 @@ const FormTrainer = () => {
     setInputForm(data);
     setModalUpdateConfirmOpen(true);
   };
+
+  useEffect(() => {
+    setToastErrorOpen(!!isError);
+  }, [isError]);
 
   return (
     <div>
@@ -152,15 +151,6 @@ const FormTrainer = () => {
           <div className={styles.groupContainer}>
             <div>
               <Inputs
-                nameTitle="Email"
-                register={register}
-                nameInput="email"
-                type="text"
-                error={errors.email?.message}
-              />
-            </div>
-            <div>
-              <Inputs
                 nameTitle="City"
                 register={register}
                 nameInput="city"
@@ -177,6 +167,17 @@ const FormTrainer = () => {
                 error={errors.salary?.message}
               />
             </div>
+
+            <div>
+              <Inputs
+                nameTitle="Email"
+                register={register}
+                nameInput="email"
+                type="text"
+                error={errors.email?.message}
+              />
+            </div>
+
             <div>
               <Inputs
                 nameTitle="Password"

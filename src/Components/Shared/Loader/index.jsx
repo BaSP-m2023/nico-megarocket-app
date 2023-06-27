@@ -1,8 +1,8 @@
 import style from './loader.module.css';
 
-const Loader = () => {
+const Loader = (testId) => {
   return (
-    <div className={style.backgroundLoader}>
+    <div className={style.backgroundLoader} data-testid={testId}>
       <div className={style.containerLoader}>
         <div className={style.loadsRoller}>
           <div></div>

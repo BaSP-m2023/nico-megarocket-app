@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from './modalSuccess.module.css';
 
-const ModalSuccess = ({ setModalSuccessOpen, message }) => {
+const ModalSuccess = ({ setModalSuccessOpen, message, testId }) => {
   const onClose = () => {
     setModalSuccessOpen(false);
   };
   return (
-    <div className={styles.modalAlert}>
+    <div className={styles.modalAlert} data-testid={testId}>
       <div className={styles.modalStyles}>
         <img
           className={styles.close_icon}

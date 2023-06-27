@@ -23,6 +23,17 @@ In turn, we should begin to diagram the users with the role of Admin and Members
 
 In order to meet these objectives, the developers were subdivided into two groups to arrive on time and in a proper way to the assigned delivery date.
 
+### WEEK 15
+
+## OBJETIVES FOR THIS WEEK
+
+We had to update our operation of the website, implementing security in the system using the platform Firebase for managing user access, taking into account the different roles that exist in the system (Member, Admin).
+
+To solve this problem, we implemented the Firebase library for Node projects, and we had to add the credentials in all environment variables to connect the Firebase project with the Frontend and Backend applications by MegaRocket.
+Then, we develop Sign-up, Login and Logout functionalities.
+
+For this, the endpoints and routes had to be transformed into private ones, except for the routes and/or endpoints that are public, based on the problem of week 01. That is, an existing user must be logged in.
+
 ### Benefits of Redux implementation
 
 - Improved Code Efficiency

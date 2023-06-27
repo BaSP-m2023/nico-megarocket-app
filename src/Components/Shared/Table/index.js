@@ -11,7 +11,8 @@ const TableComponent = ({
   deleteButton,
   columns,
   valueField,
-  classes
+  classes,
+  testId
 }) => {
   const fieldValue = valueField;
   const [successModal, setModalSuccess] = useState(false);
@@ -63,6 +64,15 @@ const TableComponent = ({
             {item?.firstName} {item?.lastName}
           </span>
         );
+      } else if (itemContent === 'date') {
+        const date = new Date(item.date);
+        const format = {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        };
+        const dateFixed = date.toLocaleDateString(format);
+        return item?.date && dateFixed;
       } else {
         return item[itemContent];
       }
@@ -76,7 +86,7 @@ const TableComponent = ({
   };
 
   return (
-    <section className={styles.container}>
+    <section className={styles.container} data-testid={testId}>
       {data?.length === 0 ? (
         <div className={styles.noneTrainer}>
           <h3>The list is empty</h3>
@@ -107,12 +117,17 @@ const TableComponent = ({
                     </td>
                   ))}
                   <td>
-                    <ButtonForm nameImg="pencil-edit.svg" onAction={() => handleClick(row)} />
+                    <ButtonForm
+                      nameImg="pencil-edit.svg"
+                      onAction={() => handleClick(row)}
+                      testId="edit-btn"
+                    />
                   </td>
                   <td>
                     <ButtonForm
                       nameImg="trash-delete.svg"
                       onAction={() => onConfirmOpen(row._id)}
+                      testId="delete-btn"
                     />
                   </td>
                 </tr>
@@ -127,10 +142,15 @@ const TableComponent = ({
           message="Are you sure to delete this?"
           method="Delete"
           setModalConfirmOpen={setModalConfirm}
+          testId="delete-confirm-modal"
         />
       )}
       {successModal && (
-        <ModalSuccess setModalSuccessOpen={setModalSuccess} message="Delete Successfully" />
+        <ModalSuccess
+          setModalSuccessOpen={setModalSuccess}
+          message="Delete Successfully"
+          testId="delete-success-modal"
+        />
       )}
     </section>
   );

@@ -118,6 +118,7 @@ const ModalAddActivity = () => {
           nameInput="name"
           type="text"
           error={errors.name?.message}
+          testId="input-activity-name"
         />
         <Inputs
           nameTitle="Description:"
@@ -125,6 +126,7 @@ const ModalAddActivity = () => {
           register={register}
           nameInput="description"
           error={errors.description?.message}
+          testId="input-activity-description"
         />
         <div className={style.containerModal}>
           <label>Status:</label>
@@ -152,9 +154,9 @@ const ModalAddActivity = () => {
           </label>
         </div>
         <div className={style.containerAddButton}>
-          <Button clickAction={() => history.goBack()} text="Cancel" />
-          <Button clickAction={() => reset()} text="Reset" />
-          <Button clickAction={() => {}} text="Save" />
+          <Button clickAction={() => history.goBack()} text="Cancel" testId="activity-cancel-btn" />
+          <Button clickAction={() => reset()} text="Reset" testId="activity-reset-btn" />
+          <Button clickAction={() => {}} text="Save" testId="activity-save-btn" />
         </div>
       </form>
       {modalUpdateConfirmOpen && (
@@ -167,15 +169,23 @@ const ModalAddActivity = () => {
               : 'Are you sure you want to add this Activity?'
           }
           setModalConfirmOpen={setModalUpdateConfirmOpen}
+          testId="activity-modal-confirm"
         />
       )}
       {modalSuccessOpen && (
         <ModalSuccess
           setModalSuccessOpen={setModalSuccessOpen}
           message="Activity added successfully"
+          testId="activity-modal-success"
         />
       )}
-      {toastError && <ToastError setToastErroOpen={setToastError} message={isError.message} />}
+      {toastError && (
+        <ToastError
+          setToastErroOpen={setToastError}
+          message={isError.message}
+          testId="activity-form-toast-error"
+        />
+      )}
     </section>
   );
 };

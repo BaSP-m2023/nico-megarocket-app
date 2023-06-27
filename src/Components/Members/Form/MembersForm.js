@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import styles from './form.module.css';
-import { ModalConfirm, ModalSuccess, ToastError, Inputs, Button } from 'Components/Shared';
+import {
+  ModalConfirm,
+  ModalSuccess,
+  ToastError,
+  Inputs,
+  Button,
+  OptionInput
+} from 'Components/Shared';
 import { useLocation, useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { addMember, editMember } from 'redux/members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
@@ -166,6 +173,8 @@ const MembersForm = () => {
     setModalAddConfirmOpen(true);
   };
 
+  const memberships = ['Classic', 'Black', 'Only classes'];
+
   return (
     <div className={styles.container}>
       {
@@ -180,12 +189,14 @@ const MembersForm = () => {
                   ? 'Are sure do you want update this member?'
                   : 'Are sure do you want add this member?'
               }
+              testId="member-modal-confirm"
             />
           )}
           {modalSuccess && (
             <ModalSuccess
               setModalSuccessOpen={setModalSuccessOpen}
               message={id ? 'Member edited' : 'Member added'}
+              testId="member-modal-success"
             />
           )}
         </div>
@@ -201,6 +212,7 @@ const MembersForm = () => {
                 nameTitle="Name"
                 type="text"
                 nameInput="firstName"
+                testId="input-member-name"
               />
             </div>
             <div className={styles.inputContainer}>
@@ -210,6 +222,7 @@ const MembersForm = () => {
                 nameTitle="Lastname"
                 type="text"
                 nameInput="lastName"
+                testId="input-member-lastname"
               />
             </div>
             <div className={styles.inputContainer}>
@@ -219,6 +232,7 @@ const MembersForm = () => {
                 nameTitle="DNI"
                 type="text"
                 nameInput="dni"
+                testId="input-member-dni"
               />
             </div>
             <div className={styles.inputContainer}>
@@ -229,6 +243,7 @@ const MembersForm = () => {
                 type="date"
                 nameInput="birthday"
                 required
+                testId="input-member-birthday"
               />
             </div>
           </div>
@@ -241,6 +256,7 @@ const MembersForm = () => {
                 type="number"
                 nameInput="phone"
                 required
+                testId="input-member-phone"
               />
             </div>
             <div className={styles.inputContainer}>
@@ -251,6 +267,7 @@ const MembersForm = () => {
                 type="email"
                 nameInput="email"
                 required
+                testId="input-member-email"
               />
             </div>
             <div className={styles.inputContainer}>
@@ -261,6 +278,7 @@ const MembersForm = () => {
                 type="text"
                 nameInput="city"
                 required
+                testId="input-member-city"
               />
             </div>
             <div className={styles.inputContainer}>
@@ -271,16 +289,18 @@ const MembersForm = () => {
                 type="number"
                 nameInput="postalCode"
                 required
+                testId="input-member-postalcode"
               />
             </div>
             <div className={styles.inputContainer}>
-              <Inputs
-                error={errors.membership?.message}
+              <OptionInput
+                data={memberships}
+                name="membership"
+                dataLabel="Membership"
                 register={register}
-                nameTitle="Membership"
-                type="text"
-                nameInput="membership"
+                error={errors.membership?.message}
                 required
+                testId="input-member-membership"
               />
             </div>
             <div className={styles.inputContainer}>
@@ -317,12 +337,18 @@ const MembersForm = () => {
           </div>
         </section>
         <div className={styles.buttonContainer}>
-          <Button clickAction={() => {}} text={id ? 'Update' : 'Add'} />
-          <Button clickAction={() => reset()} text="Reset" />
-          <Button text="Cancel" clickAction={() => history.goBack()} />
+          <Button clickAction={() => {}} text={id ? 'Update' : 'Add'} testId="member-save-btn" />
+          <Button clickAction={() => reset()} text="Reset" testId="member-reset-btn" />
+          <Button text="Cancel" clickAction={() => history.goBack()} testId="member-cancel-btn" />
         </div>
       </form>
-      {toastError && <ToastError setToastErroOpen={setToastErroOpen} message={isError.message} />}
+      {toastError && (
+        <ToastError
+          setToastErroOpen={setToastErroOpen}
+          message={isError.message}
+          testId="member-form-toast-error"
+        />
+      )}
     </div>
   );
 };

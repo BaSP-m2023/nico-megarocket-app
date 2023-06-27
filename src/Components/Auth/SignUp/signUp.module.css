@@ -1,0 +1,20 @@
+.container{
+  margin: 30px 0;
+  padding:30px;
+  border-radius: 10px;
+  box-shadow: 0px 20px 30px -5px rgba(0, 0, 0, 0.75);
+}
+
+.form {
+  margin: 30px 0;
+  display: flex;
+  gap: 20px;
+}
+
+.buttonsGroup {
+  display: flex;
+}
+
+.inputContainer {
+  display: grid;
+}
