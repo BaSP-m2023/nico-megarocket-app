@@ -24,7 +24,7 @@ describe('My Login application', () => {
   });
 
   it('should show an error with an invalid email', async () => {
-    LoginPage.emailInput.setValue('usuario');
+    LoginPage.emailInput.setValue('user');
     await expect(LoginPage.emailError).toBeDisplayed();
     expect(LoginPage.emailError).toHaveTextContaining('The email must be a valid email address');
   });
@@ -35,5 +35,13 @@ describe('My Login application', () => {
     expect(LoginPage.pswError).toHaveTextContaining(
       'The password must contain at least one lowercase letter, one uppercase letter, and one digit'
     );
+  });
+
+  it('should show an error with incorrect credentials', async () => {
+    LoginPage.emailInput.setValue('user@gmail.com');
+    LoginPage.pswInput.setValue('User1234');
+    await LoginPage.enterBtn.click();
+    await expect(LoginPage.loginError).toBeDisplayed();
+    expect(LoginPage.loginErrorMsg).toHaveTextContaining('The username or password is incorrect');
   });
 });

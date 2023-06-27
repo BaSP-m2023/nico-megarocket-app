@@ -19,6 +19,14 @@ class LoginPage {
   get enterBtn() {
     return $('[data-testid="enter-login-btn"]>button');
   }
+
+  get loginError() {
+    return $('[data-testid="login-error-pop"]');
+  }
+
+  get loginErrorMsg() {
+    return $('[data-testid="login-error-pop"]>p');
+  }
 }
 
 module.exports = new LoginPage();
