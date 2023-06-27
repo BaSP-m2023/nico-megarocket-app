@@ -28,7 +28,12 @@ const FormTrainer = () => {
     email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
     city: Joi.string().min(5).max(25),
     salary: Joi.number(),
-    isActive: Joi.boolean().required()
+    isActive: Joi.boolean().required(),
+    password: Joi.string()
+      .min(8)
+      .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
+      .message('The password must have at least one Uppercase,a number and 8 characters.'),
+    repeatPassword: Joi.string().valid(Joi.ref('password'))
   });
 
   const updateTrainerData = {
@@ -39,7 +44,9 @@ const FormTrainer = () => {
     email: updateData.email,
     city: updateData.city,
     salary: updateData.salary,
-    isActive: updateData.isActive
+    isActive: updateData.isActive,
+    password: updateData.password,
+    repeatPassword: updateData.password
   };
 
   const {
@@ -74,25 +81,25 @@ const FormTrainer = () => {
   };
 
   const formSubmit = async () => {
-    if (id) {
-      handleUpdateButtonClick();
-      const updatedTrainer = await dispatch(updateTrainer(id, trainerBody));
-      if (updatedTrainer.type === 'UPDATE_TRAINER') {
-        setToastErrorOpen(false);
-        setModalSuccess(true);
-        setTimeout(() => {
-          history.goBack();
-        }, 1000);
+      if (id) {
+        handleUpdateButtonClick();
+        const updatedTrainer = await dispatch(updateTrainer(id, trainerBody));
+        if (updatedTrainer.type === 'UPDATE_TRAINER') {
+          setToastErrorOpen(false);
+          setModalSuccess(true);
+          setTimeout(() => {
+            history.goBack();
+          }, 1000);
+        }
+      } else {
+        const postTrainer = await dispatch(createTrainer(trainerBody));
+        if (postTrainer.type === 'ADD_TRAINER') {
+          setModalSuccess(true);
+          setTimeout(() => {
+            history.goBack();
+          }, 1000);
+        }
       }
-    } else {
-      const postTrainer = await dispatch(createTrainer(trainerBody));
-      if (postTrainer.type === 'ADD_TRAINER') {
-        setModalSuccess(true);
-        setTimeout(() => {
-          history.goBack();
-        }, 1000);
-      }
-    }
   };
 
   const onSubmit = async (data) => {
@@ -168,6 +175,24 @@ const FormTrainer = () => {
                 nameInput="salary"
                 type="number"
                 error={errors.salary?.message}
+              />
+            </div>
+            <div>
+              <Inputs
+                nameTitle="Password"
+                register={register}
+                nameInput="password"
+                type="text"
+                error={errors.password?.message}
+              />
+            </div>
+            <div>
+              <Inputs
+                nameTitle="RepeatPassword"
+                register={register}
+                nameInput="repeatPassword"
+                type="number"
+                error={errors.repeatPassword?.message}
               />
             </div>
             <div className={styles.inputContainer}>
