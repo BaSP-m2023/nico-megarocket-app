@@ -60,7 +60,7 @@ const AdminRoutes = () => {
         <Route path={`${url}/members/form/:id?`} component={MembersForm} />
         <Route exact path={`${url}/profile`} component={AdminProfile} />
         <Route exact path={`${url}/subscription`} component={AdminSubscriptions} />
-        <Route path={`${url}/subscription/form/:id?`} component={FormSubscription} />
+        <Route path={`${url}/subscriptions/form/:id?`} component={FormSubscription} />
         <Route exact path={`${url}/activities`} component={Activities} />
         <Route path={`${url}/activities/form/:id?`} component={ModalAddActivity} />
         <Redirect path={`${url}/login`} />
