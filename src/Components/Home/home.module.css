@@ -1,11 +1,543 @@
 .container {
-  flex: 1;
   display: flex;
-  width:50%;
-  margin: 0 auto;
   flex-direction: column;
-  justify-content: center;
+  padding: 0px;
+  margin: 0px;
+  font-family: 'Roboto', sans-serif;
+  width: 100%;
+}
+
+.containerBody {
+  display: flex;
+  flex-direction: column;
+  margin-top: 73px;
+}
+
+.Title {
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 47px;
+  color: #373867;
+}
+
+.Text {
+  font-size: 20px;
+  line-height: 23px;
+  color: #373867;
+}
+
+.sectionTitle {
+  margin-top: 0px;
+  text-align: center;
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 8px;
+  text-decoration-color: #49A37B;
+  font-size: 30px;
+  line-height: 35px;
+  color: #373867;
+}
+
+.sectionHead {
+  display: flex;
+  flex-direction: column;
   align-items: center;
- 
+  margin-bottom: 30px;
+}
+
+.containerSectionHead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.containerSectionHead h1 {
+  margin-bottom: 0px;
+}
+
+#sectionHeadWelcome {
+  display: none;
+}
+
+.spanSectionHead {
+  width: 100%;
+  text-align: center;
+}
+
+.sectionHead span img {
+  width: 90%;
+}
+
+.sectionFeatures {
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.sectionFeaturesArticles {
+  margin-top: 30px;
+}
+
+.sectionFeaturesTitles {
+  width: 100%;
+  text-transform: capitalize;
+  font-weight: 876;
+  font-size: 16px;
+  line-height: 28px;
+  color: #373867;
+}
+
+.sectionFeaturesArticles img {
+  vertical-align: middle;
+  margin-left: 50px;
+}
+
+.sectionFeaturesArticles p {
+  width: 95%;
+  margin: 20px 20px 20px;
+  font-size: 14px;
+}
+
+.sectionAboutContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.sectionAboutContainer p {
+  width: 95%;
+  margin: 20px 10px 20px 20px;
+}
+
+.sectionAboutTextDesktop {
+  display: none;
+}
+
+.sectionAboutContainer img {
+  width: 90%;
+  margin: 0px 10px 0px 10px;
+}
+
+.sectionAboutContainer button {
+  width: 82px;
+  height: 32px;
+  border: 1px solid #373867;
+  border-radius: 5px;
+  background: #FFFFFF;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+  color: #373867;
+  margin-bottom: 20px;
+}
+
+.sectionTouchForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.sectionTouchForm div {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin: 0px 20px 0px 20px;
+}
+
+.formButtonTop {
+  display: none;
+}
+
+.formInput {
+  width: 260px;
+  height: 36px;
+  border: 1px solid #373867;
+  border-radius: 4px;
+}
+
+.formInput::placeholder {
+  padding-left: 10px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #c6c6c6;
+}
+
+.sectionTouchForm select {
+  width: 270px;
+  height: 36px;
+  padding-left: 10px;
+  border: 1px solid #373867;
+  border-radius: 4px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #c6c6c6;
+}
+
+.sectionTouchForm textarea {
+  width: 265px;
+  height: 210px;
+  border: 1px solid #373867;
+  border-radius: 4px;
+}
+
+.sectionTouchForm textarea::placeholder {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #c6c6c6;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.sectionTouchForm label {
+  display: block;
+  margin-top: 30px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+  color: #373867;
+}
+
+.formButton {
+  align-self: flex-end;
+  width: 76px;
+  height: 33px;
+  margin-top: 30px;
+  border-width: 0px;
+  border-radius: 5px;
+  background: #AACE9B;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 19px;
+  color: #373867;
+}
+
+.sectionActivities {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.sectionActivitiesList {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  padding-inline-start: 0px;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+  text-transform: capitalize;
+  font-stretch: 100;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 28px;
+  color: #373867;
+}
+
+.sectionActivitiesList div {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.activitiesListTop {
+  align-items: end;
+}
+
+.activitiesListBot {
+  align-items: start;
+  text-align: center;
+}
+
+.sectionActivitiesList div li {
+  width: 70px;
+  text-align: center;
+}
+
+.sectionActivities img {
+  width: 90%;
+  margin: 0px 10px 0px 10px;
+}
+
+.sectionMembership {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 100%;
+  color: #373867;
+}
+
+.sectionMembershipTable {
+  width: 90%;
+  margin: 0px 10px 0px 10px;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.tableTh1 {
+  width: 40%;
+}
+
+.tableTh2 {
+  width: 25%;
+}
+
+.tableTh3 {
+  width: 17%;
+}
+
+.sectionMembershipTable tr:nth-child(odd) {
+  background-color: #D9D9D9;
+}
+
+.sectionMembershipTable tr {
+  height: 60px;
+}
+
+@media only screen and (min-width: 601px) {
+
+  .sectionHead {
+      flex-direction: row;
+      margin-top: 30px;
+  }
+
+  .containerSectionHead {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+  }
+
+  #sectionHeadWelcome {
+      display: flex;
+      font-size: 20px;
+      line-height: 23px;
+      color: #49A37B
+  }
+
+  .spanSectionHead {
+      width: 50%;
+  }
+
+  .spanSectionHead img {
+      min-height: 190px;
+  }
+
+  .sectionFeatures {
+      display: flex;
+      flex-direction: column;
+      margin-right: 20px;
+  }
+
+  .sectionFeaturesTitles {
+      font-size: 20px;
+  }
+
+  .sectionFeaturesTitles img {
+      margin-left: 20px;
+  }
+
+  .sectionFeaturesContainer {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+  }
+
+  .sectionFeaturesArticles {
+      width: 50%;
+  }
+
+  .sectionFeaturesArticles p {
+      font-size: 18px;
+  }
+
+  .sectionAbout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .formButtonTop {
+      display: flex;
+      justify-content: center;
+      width: 123px;
+      height: 47px;
+      font-size: 16px;
+      margin-top: 30px;
+      border-width: 0px;
+      border-radius: 5px;
+      background: #AACE9B;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 19px;
+      color: #373867;
+  }
+
+  .sectionTouchForm div {
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+      margin: 0px 10px 0px 0px;
+  }
+
+  .formButton {
+      display: none;
+  }
+
+  .sectionAboutFlexContainer {
+      display: flex;
+      flex-direction: column;
+      width: 90%;
+      margin: 0px 20px 0px 20px
+  }
+
+  .sectionAboutContainer {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+  }
+
+  .sectionAboutContainer p {
+      width: 45%;
+      font-size: 14px;
+  }
+
+  .sectionAboutTextDesktop {
+      display: flex;
+  }
+
+  .sectionAboutTextMobile {
+      display: none;
+  }
+
+  .sectionAboutImg {
+      display: flex;
+      order: 1;
+  }
+
+  .sectionAboutContainer img {
+      width: 45%;
+  }
+
+  .sectionAboutContainer button {
+      display: none;
+  }
+
+  .sectionActivities {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+  }
+
+  .sectionActivitiesList {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 45%;
+      font-size: 20px;
+      margin: 0px 0px 0px 0px;
+      list-style: disc;
+  }
+
+  .activitiesListTop,  .activitiesListBot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .sectionActivities li {
+      margin-bottom: 10px;
+  }
+
+  .sectionActivities img {
+      width: 55%;
+      margin-right: 50px;
+  }
+}
+
+@media only screen and (min-width: 1025px) {
+
+  .sectionHead {
+      justify-content: space-evenly;
+      margin-bottom: 50px;
+  }
+
+  .containerSectionHead {
+      width: 40%;
+  }
+
+  #sectionHeadWelcome {
+      margin-top: 0px;
+      font-size: 20px;
+      font-weight: 100;
+  }
+
+  .spanSectionHead {
+      width: 40%;
+  }
+
+  .spanSectionHead img {
+      max-width: 515px;
+      max-height: 315px;
+  }
+
+  .sectionFeaturesTitles {
+      display: flex;
+      flex-direction: row;
+      font-size: 24px;
+  }
+
+  .sectionFeaturesTitles img {
+      margin-left: 10px;
+      margin-right: 10px;
+      max-width: 43px;
+      max-height: 38px;
+  }
+
+  .sectionFeaturesContainer {
+      justify-content: space-evenly;
+  }
+
+  .sectionFeaturesArticles {
+      width: 35%;
+  }
+
+  .sectionFeaturesArticles p {
+      font-size: 20px;
+      margin-left: 63px;
+  }
+
+  .sectionAboutContainer p {
+      font-size: 18px;
+  }
+
+  #sectionAboutContainerTop p {
+      text-align: right;
+  }
+
+  .sectionTouchForm select {
+      width: 400px;
+      height: 36px;
+  }
+
+  .sectionTouchForm textarea {
+      width: 400px;
+      height: 210px;
+  }
+
 }
 

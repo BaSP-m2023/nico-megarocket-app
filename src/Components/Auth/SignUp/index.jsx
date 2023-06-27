@@ -150,6 +150,7 @@ const SignForm = () => {
                 register={register}
                 type="text"
                 error={errors.firstName?.message}
+                testId="signup-name-input"
               />
             </div>
             <div className={styles.inputContainer}>
@@ -159,6 +160,7 @@ const SignForm = () => {
                 register={register}
                 type="text"
                 error={errors.lastName?.message}
+                testId="signup-lastname-input"
               />
             </div>
             <div className={styles.inputContainer}>
@@ -168,6 +170,7 @@ const SignForm = () => {
                 register={register}
                 type="text"
                 error={errors.dni?.message}
+                testId="signup-dni-input"
               />
             </div>
             <div className={styles.inputContainer}>
@@ -177,6 +180,7 @@ const SignForm = () => {
                 register={register}
                 type="date"
                 error={errors.birthday?.message}
+                testId="signup-birthday-input"
               />
             </div>
             <div className={styles.inputContainer}>
@@ -186,6 +190,7 @@ const SignForm = () => {
                 register={register}
                 type="number"
                 error={errors.phone?.message}
+                testId="signup-phone-input"
               />
             </div>
           </div>
@@ -197,6 +202,7 @@ const SignForm = () => {
                 register={register}
                 type="text"
                 error={errors.city?.message}
+                testId="signup-city-input"
               />
             </div>
             <div className={styles.inputContainer}>
@@ -206,6 +212,7 @@ const SignForm = () => {
                 register={register}
                 type="number"
                 error={errors.postalCode?.message}
+                testId="signup-postalcode-input"
               />
             </div>
             <div className={styles.inputContainer}>
@@ -215,7 +222,7 @@ const SignForm = () => {
                 dataLabel="Membership"
                 register={register}
                 error={errors.membership?.message}
-                testId="member-memberships-input"
+                testId="signup-membership-input"
               />
             </div>
             <div className={styles.inputContainer}>
@@ -225,6 +232,7 @@ const SignForm = () => {
                 register={register}
                 type="email"
                 error={errors.email?.message}
+                testId="signup-email-input"
               />
             </div>
             <div className={styles.inputContainer}>
@@ -234,9 +242,10 @@ const SignForm = () => {
                 register={register}
                 type="password"
                 error={errors.password?.message}
+                testId="signup-password-input"
               />
             </div>
-            <div className={styles.radioContainer}>
+            <div className={styles.radioContainer} data-testid="active-selector">
               <div>
                 <label>
                   Active
@@ -267,8 +276,8 @@ const SignForm = () => {
           </div>
         </div>
         <div className={styles.buttonsGroup}>
-          <Button clickAction={() => {}} text="Sign In" />
-          <Button text="Cancel" clickAction={() => history.goBack()} />
+          <Button clickAction={() => {}} text="Sign In" testId="signup-btn" />
+          <Button text="Cancel" clickAction={() => history.goBack()} testId="signup-cancel-btn" />
         </div>
       </form>
     </div>
