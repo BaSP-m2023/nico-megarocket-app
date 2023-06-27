@@ -25,7 +25,7 @@ const Navbar = (props) => {
           </li>
         ))}
       </ul>
-      {!!token && <LogOut />}
+      <div className={styles.logOutButton}>{!!token && <LogOut />}</div>
     </nav>
   );
 };

@@ -1,16 +1,21 @@
 .navbar {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
   background-color: #aace9b;
   height: 100vh;
 }
 .rutes {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   list-style-type: none;
   padding: 0;
   gap: 30px;
   margin-top: 5rem;
+}
+.logOutButton{
+  margin-top: 50px;
 }
 .rutes > li > a {
   font-size: 1rem;

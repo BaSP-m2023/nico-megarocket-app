@@ -39,12 +39,12 @@ const AdminRoutes = () => {
       <Switch>
         <Route exact path={`${url}/`} component={Classes} />
         <Route exact path={`${url}/classes`} component={Classes} />
-        <Route path={`${url}/classes/form/:id?`} component={FormClasses} />
+        <Route exact path={`${url}/classes/ClassForm/:id?`} component={FormClasses} />
         <Route exact path={`${url}/trainers`} component={Trainers} />
         <Route path={`${url}/trainers/form/:id?`} component={FormTrainer} />
         <Route exact path={`${url}/members`} component={Members} />
         <Route path={`${url}/members/form/:id?`} component={MembersForm} />
-        <Route exact path={`${url}/admin/profile`} component={AdminProfile} />
+        <Route exact path={`${url}/profile`} component={AdminProfile} />
         <Redirect path={`${url}/login`} />
       </Switch>
     </Layout>
