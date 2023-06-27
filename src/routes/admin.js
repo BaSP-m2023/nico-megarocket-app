@@ -8,6 +8,10 @@ import FormTrainer from 'Components/Trainers/FormTrainers';
 import Classes from 'Components/Classes';
 import FormClasses from 'Components/Classes/Form';
 import AdminProfile from 'Components/Users/Admin/profile';
+import AdminSubscriptions from 'Components/Users/Admin/subscriptions';
+import FormSubscription from 'Components/Subscriptions/FormSubscription/Index';
+import Activities from 'Components/Activities/';
+import ModalAddActivity from 'Components/Activities/FormActivities';
 
 const routes = [
   {
@@ -26,9 +30,19 @@ const routes = [
     icon: 'trainer.png'
   },
   {
+    name: 'Activities',
+    path: '/admin/activities',
+    icon: 'runner.png'
+  },
+  {
+    name: 'Subscription',
+    path: '/admin/subscription',
+    icon: 'suscription.png'
+  },
+  {
     name: 'Profile',
     path: '/admin/profile',
-    icon: 'member.png'
+    icon: 'admin.png'
   }
 ];
 
@@ -45,6 +59,10 @@ const AdminRoutes = () => {
         <Route exact path={`${url}/members`} component={Members} />
         <Route path={`${url}/members/form/:id?`} component={MembersForm} />
         <Route exact path={`${url}/profile`} component={AdminProfile} />
+        <Route exact path={`${url}/subscription`} component={AdminSubscriptions} />
+        <Route path={`${url}/subscription/form/:id?`} component={FormSubscription} />
+        <Route exact path={`${url}/activities`} component={Activities} />
+        <Route path={`${url}/activities/form/:id?`} component={ModalAddActivity} />
         <Redirect path={`${url}/login`} />
       </Switch>
     </Layout>
