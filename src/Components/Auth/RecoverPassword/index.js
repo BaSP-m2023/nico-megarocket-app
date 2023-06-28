@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import ModalSuccess from 'Components/Shared/Modals/ModalSuccess';
 import { recoverPassword } from 'redux/auth/thunks';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const schema = Joi.object({
   email: Joi.string()
@@ -23,6 +24,7 @@ const schema = Joi.object({
 const RecoverPassword = () => {
   const [modalSucces, setModalSucces] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
   const {
     register,
     handleSubmit,
@@ -37,6 +39,7 @@ const RecoverPassword = () => {
     setModalSucces(true);
     setTimeout(() => {
       setModalSucces(false);
+      history.push('/auth/login');
     }, 2000);
   };
 
