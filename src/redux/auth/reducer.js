@@ -13,7 +13,8 @@ import {
   GET_AUTHENTICATION_ERROR,
   RECOVER_PASSWORD_PENDING,
   /*   RECOVER_PASSWORD_SUCCESS, */
-  RECOVER_PASSWORD_ERROR
+  RECOVER_PASSWORD_ERROR,
+  RECOVER_PASSWORD_SUCCESS
 } from './constants';
 
 const initialState = {
@@ -75,6 +76,15 @@ const authReducer = (state = initialState, action) => {
         isLoading: false,
         authenticate: true,
         role: action.payload.role
+      };
+    }
+
+    case RECOVER_PASSWORD_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+        authenticate: false,
+        role: null
       };
     }
     default:

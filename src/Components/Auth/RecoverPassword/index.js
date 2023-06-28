@@ -5,6 +5,8 @@ import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import ModalSuccess from 'Components/Shared/Modals/ModalSuccess';
+import { recoverPassword } from 'redux/auth/thunks';
+import { useDispatch } from 'react-redux';
 
 const schema = Joi.object({
   email: Joi.string()
@@ -20,7 +22,7 @@ const schema = Joi.object({
 
 const RecoverPassword = () => {
   const [modalSucces, setModalSucces] = useState(false);
-
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -30,18 +32,22 @@ const RecoverPassword = () => {
     resolver: joiResolver(schema)
   });
 
-  const onSubmit = () => {
+  const onSubmit = async (data) => {
+    await dispatch(recoverPassword(data));
     setModalSucces(true);
     setTimeout(() => {
       setModalSucces(false);
-    }, 1000);
+    }, 2000);
   };
 
   return (
-    <form className={styles.formSuperAdmin} onSubmit={handleSubmit(onSubmit)}>
-      <div className={styles.wholeContainer}>
-        <h1 className={styles.titleLogin}>Recover Password</h1>
-        <div className={styles.containerForm}>
+    <form className={styles.formRecoverPassword} onSubmit={handleSubmit(onSubmit)}>
+      <div className={styles.wholeRecoverContainer}>
+        <h1 className={styles.titleRecover}>Recover Password</h1>
+        <div className={styles.boxInfo}>
+          <p className={styles.textInfo}>We will send you a recovery code to your inbox</p>
+        </div>
+        <div className={styles.containerRecoverForm}>
           <Inputs
             type="email"
             nameInput={'email'}

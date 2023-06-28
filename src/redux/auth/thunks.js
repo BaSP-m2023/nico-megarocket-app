@@ -10,7 +10,9 @@ const {
   getAuthenticationError,
   signUpPending,
   signUpError,
-  signUpSuccess
+  signUpSuccess,
+  recoverPasswordPending,
+  recoverPasswordError
 } = require('./actions');
 
 import { firebaseApp } from 'helper/firebase';
@@ -81,6 +83,17 @@ export const getAuth = (token) => {
       return res.data;
     } catch (error) {
       return dispatch(getAuthenticationError(error.toString()));
+    }
+  };
+};
+
+export const recoverPassword = (data) => {
+  return async (dispatch) => {
+    dispatch(recoverPasswordPending());
+    try {
+      await firebaseApp.auth().sendPasswordResetEmail(data.email);
+    } catch (error) {
+      return dispatch(recoverPasswordError(error.toString()));
     }
   };
 };
