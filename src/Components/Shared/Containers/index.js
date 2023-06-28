@@ -17,8 +17,6 @@ function DivContainer({ item, testId }) {
   const members = useSelector((state) => state.members.list);
   const member = members.find((oneMember) => oneMember.email === userCurrent);
 
-  console.log(subscriptions);
-
   const currentUser = async () => {
     try {
       const emailCurrentUser = await getFirebaseUidFromToken();
