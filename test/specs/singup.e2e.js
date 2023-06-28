@@ -5,7 +5,7 @@ const HomePage = require('../pageobjects/home.page.js');
 const singUp = require('../pageobjects/sing.up.js');
 const SingUp = require('../pageobjects/sing.up.js');
 
-describe('go to login user', () => {
+describe('sing up member', () => {
   beforeAll(() => {
     browser.setWindowSize(1360, 768);
     browser.url('https://nico-megarocket-app.vercel.app/auth');

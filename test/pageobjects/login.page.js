@@ -26,6 +26,10 @@ class Login {
     return $('[data-testid="login-input-password"] p');
   }
 
+  get errorLoginDenied() {
+    return $('[data-testid="login-error-pop"] p');
+  }
+
   get loginBtn() {
     return $('[data-testid="enter-login-btn"] button');
   }
@@ -35,7 +39,7 @@ class Login {
     await this.passwordInput.setValue(password);
   }
   async loginBtnClick() {
-    await this.loginBtnBtn.click();
+    await this.loginBtn.click();
   }
 }
 
