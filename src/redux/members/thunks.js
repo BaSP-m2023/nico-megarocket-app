@@ -40,7 +40,8 @@ export const addMember = (member) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token: token
         },
         body: JSON.stringify({
           firstName: member.firstName,
@@ -68,18 +69,11 @@ export const addMember = (member) => {
   };
 };
 
-export const editMember = (id, member) => {
+export const editMember = (id, body) => {
   return async (dispatch) => {
     try {
       dispatch(editMemberPending(true));
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json',
-          token: token
-        },
-        body: JSON.stringify(member)
-      });
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, body);
       dispatch(editMemberPending(false));
       const data = await response.json();
       if (response.ok) {
