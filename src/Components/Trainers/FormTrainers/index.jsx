@@ -30,8 +30,7 @@ const FormTrainer = () => {
       .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
       .message('The password must have at least one Uppercase,a number and 8 characters.'),
     city: Joi.string().min(5).max(25),
-    salary: Joi.number(),
-    isActive: Joi.boolean().required()
+    salary: Joi.number()
   });
 
   const updateTrainerData = {
@@ -42,8 +41,7 @@ const FormTrainer = () => {
     email: updateData.email,
     password: updateData.password,
     city: updateData.city,
-    salary: updateData.salary,
-    isActive: updateData.isActive
+    salary: updateData.salary
   };
 
   const {
@@ -212,7 +210,10 @@ const FormTrainer = () => {
         />
       )}
       {modalSuccess && (
-        <ModalSuccess setModalSuccessOpen={setModalSuccess} message="Trainer added successfully" />
+        <ModalSuccess
+          setModalSuccessOpen={setModalSuccess}
+          message={id ? 'Trainer edit successfully!' : 'Trainer added successfully!'}
+        />
       )}
       {toastErrorOpen && (
         <ToastError setToastErroOpen={setToastErrorOpen} message={isError.message} />

@@ -141,6 +141,7 @@ const SignForm = () => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
+        <h1 className={styles.title}>Sign Up</h1>
         <div className={styles.form}>
           <div className={styles.groupContainer}>
             <div className={styles.inputContainer}>
@@ -216,16 +217,6 @@ const SignForm = () => {
               />
             </div>
             <div className={styles.inputContainer}>
-              <OptionInput
-                data={memberships}
-                name="membership"
-                dataLabel="Membership"
-                register={register}
-                error={errors.membership?.message}
-                testId="signup-membership-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
               <Inputs
                 nameTitle="Email"
                 nameInput="email"
@@ -245,32 +236,46 @@ const SignForm = () => {
                 testId="signup-password-input"
               />
             </div>
-            <div className={styles.radioContainer} data-testid="active-selector">
-              <div>
-                <label>
-                  Active
-                  <input
-                    {...register('isActive', {
-                      required: { value: true, message: 'This field is required' }
-                    })}
-                    type="radio"
-                    name="isActive"
-                    value={true}
-                  />
-                </label>
-              </div>
-              <div>
-                <label>
-                  Inactive
-                  <input
-                    {...register('isActive', {
-                      required: { value: true, message: 'This field is required' }
-                    })}
-                    type="radio"
-                    name="isActive"
-                    value={false}
-                  />
-                </label>
+            <div className={styles.inputContainer}>
+              <OptionInput
+                data={memberships}
+                name="membership"
+                dataLabel="Membership"
+                register={register}
+                error={errors.membership?.message}
+                testId="signup-membership-input"
+              />
+            </div>
+
+            <div className={styles.radioMainContainer} data-testid="active-selector">
+              <label className={styles.nameLabel}>Status</label>
+              <div className={styles.radioContainer}>
+                <div>
+                  <label>
+                    Active
+                    <input
+                      {...register('isActive', {
+                        required: { value: true, message: 'This field is required' }
+                      })}
+                      type="radio"
+                      name="isActive"
+                      value={true}
+                    />
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    Inactive
+                    <input
+                      {...register('isActive', {
+                        required: { value: true, message: 'This field is required' }
+                      })}
+                      type="radio"
+                      name="isActive"
+                      value={false}
+                    />
+                  </label>
+                </div>
               </div>
             </div>
           </div>
