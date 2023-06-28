@@ -1,8 +1,9 @@
 import ButtonForm from '../ButtonForm';
 import styles from './table.module.css';
 import { useState } from 'react';
-import { ModalConfirm, ModalSuccess } from '../index';
+import { ModalConfirm, ModalSuccess, ButtonActive } from '../index';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 const TableComponent = ({
   columnTitleArray,
@@ -16,11 +17,10 @@ const TableComponent = ({
 }) => {
   const fieldValue = valueField;
   const [successModal, setModalSuccess] = useState(false);
-
   const [modalConfirm, setModalConfirm] = useState(false);
   const [idDelete, setIdDelete] = useState('');
-
   const dispatch = useDispatch();
+  const located = useLocation().pathname;
 
   const onConfirmOpen = (id) => {
     setModalConfirm(true);
@@ -98,6 +98,7 @@ const TableComponent = ({
               {columnTitleArray.map((column, index) => (
                 <th key={column[index]}>{column}</th>
               ))}
+              {(located === '/admin/trainers' || located === '/admin/members') && <th>Active</th>}
               <th>Edit</th>
               <th>Delete</th>
             </tr>
@@ -116,6 +117,11 @@ const TableComponent = ({
                       {ifNotExist(row[column])}
                     </td>
                   ))}
+                  {(located === '/admin/trainers' || located === '/admin/members') && (
+                    <td>
+                      <ButtonActive data={row} />
+                    </td>
+                  )}
                   <td>
                     <ButtonForm
                       nameImg="pencil-edit.svg"

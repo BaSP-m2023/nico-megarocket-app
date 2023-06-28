@@ -44,7 +44,6 @@
 }
 
 .table tr td:hover {
-  transform: scale(1.1);
   max-width: 280px;
   background-color: #353090b2;
   color: #fff;

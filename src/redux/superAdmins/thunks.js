@@ -20,7 +20,10 @@ export const getSuperAdmins = async (dispatch) => {
     dispatch(getSuperAdminPending());
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin`, {
       method: 'PUT',
-      headers: { token: token }
+      headers: {
+        'Content-Type': 'application/json',
+        token: token
+      }
     });
     const data = await response.json();
     dispatch(getSuperAdminSuccess(data.data));
@@ -36,7 +39,8 @@ export const addSuperAdmin = (supAdminData) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token: token
         },
         body: JSON.stringify(supAdminData)
       });

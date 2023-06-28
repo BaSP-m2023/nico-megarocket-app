@@ -55,7 +55,8 @@ export const createAdmin = async (dispatch, adminData) => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        token: token
       },
       body: JSON.stringify(adminData)
     });

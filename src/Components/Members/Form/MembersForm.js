@@ -18,6 +18,7 @@ import Joi from 'joi';
 const MembersForm = () => {
   const dispatch = useDispatch();
   const isError = useSelector((state) => state.members.errorForm);
+  const token = sessionStorage.getItem('token');
   const [toastError, setToastErroOpen] = useState(false);
   const [modalAddConfirmOpen, setModalAddConfirmOpen] = useState(false);
   const [modalSuccess, setModalSuccessOpen] = useState(false);
@@ -144,6 +145,15 @@ const MembersForm = () => {
     defaultValues: { ...memberUpdate }
   });
 
+  const memberBody = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      token: token
+    },
+    body: JSON.stringify(member)
+  };
+
   const onConfirmFunction = async () => {
     if (!id) {
       const addMemberResponse = await dispatch(addMember(member));
@@ -156,7 +166,7 @@ const MembersForm = () => {
       }
       return setToastErroOpen(true);
     } else {
-      const editMemberResponse = await dispatch(editMember(id, member));
+      const editMemberResponse = await dispatch(editMember(id, memberBody));
       if (editMemberResponse.type === 'EDIT_MEMBER_SUCCESS') {
         setToastErroOpen(false);
         setModalSuccessOpen(true);
