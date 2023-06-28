@@ -10,7 +10,10 @@ import {
   LOGOUT_ERROR,
   GET_AUTHENTICATION_PENDING,
   GET_AUTHENTICATION_SUCCESS,
-  GET_AUTHENTICATION_ERROR
+  GET_AUTHENTICATION_ERROR,
+  RECOVER_PASSWORD_PENDING,
+  RECOVER_PASSWORD_SUCCESS,
+  RECOVER_PASSWORD_ERROR
 } from './constants';
 
 export const loginPending = () => {
@@ -88,6 +91,26 @@ export const getAuthenticationSuccess = (data) => {
 export const getAuthenticationError = (error) => {
   return {
     type: GET_AUTHENTICATION_ERROR,
+    payload: error
+  };
+};
+
+export const recoverPasswordPending = () => {
+  return {
+    type: RECOVER_PASSWORD_PENDING
+  };
+};
+
+export const recoverPasswordSuccess = (data) => {
+  return {
+    type: RECOVER_PASSWORD_SUCCESS,
+    payload: data
+  };
+};
+
+export const recoverPasswordError = (error) => {
+  return {
+    type: RECOVER_PASSWORD_ERROR,
     payload: error
   };
 };
