@@ -2,6 +2,50 @@
 /* eslint-disable no-unused-vars */
 
 class SingUp {
+  get nameLabel() {
+    return $('[data-testid="signup-name-input"] label');
+  }
+
+  get lastNameLabel() {
+    return $('[data-testid="signup-lastname-input"] label');
+  }
+
+  get dniLabel() {
+    return $('[data-testid="signup-dni-input"] label');
+  }
+
+  get birthdayLabel() {
+    return $('[data-testid="signup-birthday-input"] label');
+  }
+
+  get phoneLabel() {
+    return $('[data-testid="signup-phone-input"] label');
+  }
+
+  get cityLabel() {
+    return $('[data-testid="signup-city-input"] label');
+  }
+
+  get postalcodeLabel() {
+    return $('[data-testid="signup-postalcode-input"] label');
+  }
+
+  get membershipLabel() {
+    return $('[data-testid="signup-membership-input"] label');
+  }
+
+  get emailLabel() {
+    return $('[data-testid="signup-email-input"] label');
+  }
+
+  get passwordLabel() {
+    return $('[data-testid="signup-password-input"] label');
+  }
+
+  get statusLabel() {
+    return $('[data-testid="active-selector"] label');
+  }
+
   get nameInput() {
     return $('[data-testid="signup-name-input"] input');
   }
@@ -31,11 +75,11 @@ class SingUp {
   }
 
   get membershipSelect() {
-    return $('[data-testid="signup-membership-input"] input');
+    return $('[data-testid="signup-membership-input"] select');
   }
 
   get membershipSelectoption() {
-    return $('[data-testid="signup-membership-input"]'.$$('option'));
+    return $('[data-testid="signup-membership-input"]').$$('option');
   }
 
   get emailInput() {
@@ -98,18 +142,7 @@ class SingUp {
     return $('[data-testid="signup-cancel-btn"] button');
   }
 
-  async singUpForm(
-    name,
-    lastname,
-    dni,
-    birthday,
-    phone,
-    city,
-    postalcode,
-    membership,
-    email,
-    password
-  ) {
+  async singUpForm(name, lastname, dni, birthday, phone, city, postalcode, email, password) {
     await this.nameInput.setValue(name);
     await this.lastNameInput.setValue(lastname);
     await this.dniInput.setValue(dni);
@@ -117,7 +150,6 @@ class SingUp {
     await this.phoneInput.setValue(phone);
     await this.cityInput.setValue(city);
     await this.postalcodeInput.setValue(postalcode);
-
     await this.emailInput.setValue(email);
     await this.passwordInput.setValue(password);
   }
