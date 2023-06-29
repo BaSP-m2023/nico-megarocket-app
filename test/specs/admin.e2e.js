@@ -1,8 +1,9 @@
 /* eslint-disable no-undef */
 const HomePage = require('../pageobjects/home.page.js');
 const LoginPage = require('../pageobjects/login.page.js');
+const AdminClassesPage = require('../pageobjects/admin.page.js');
 
-describe('My Login application', () => {
+describe('My Incorrect Login application', () => {
   beforeAll('Visit Main Page', () => {
     browser.url('https://nico-megarocket-app.vercel.app/auth');
   });
@@ -43,5 +44,22 @@ describe('My Login application', () => {
     await LoginPage.enterBtn.click();
     await expect(LoginPage.loginError).toBeDisplayed();
     expect(LoginPage.loginErrorMsg).toHaveTextContaining('The username or password is incorrect');
+  });
+});
+
+describe('My Correct Login application', () => {
+  beforeAll('Visit Main Page', () => {
+    browser.url('https://nico-megarocket-app.vercel.app/auth');
+  });
+
+  it('should login as an admin', async () => {
+    await expect(HomePage.navBtn[1]).toBeDisplayed();
+    await HomePage.navBtn[1].click();
+    await LoginPage.emailInput.setValue('carlaperee@gmail.com');
+    await LoginPage.pswInput.setValue('Password1');
+    await LoginPage.enterBtn.click();
+    await AdminClassesPage.addBtnClass.waitForDisplayed();
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/admin');
   });
 });

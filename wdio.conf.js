@@ -24,7 +24,7 @@ exports.config = {
   // then the current working directory is where your `package.json` resides, so `wdio`
   // will be called from there.
   //
-  specs: ['./test/specs/**/*.js'],
+  specs: ['./test/specs/admin.e2e.js'],
   // Patterns to exclude.
   exclude: [
     // 'path/to/excluded/files'
@@ -258,7 +258,7 @@ exports.config = {
     });
   },
   afterTest: async function (test, context, { error, result, duration, passed, retries }) {
-    if (!error) {
+    if (error) {
       await browser.takeScreenshot();
     }
   }

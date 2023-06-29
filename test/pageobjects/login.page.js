@@ -27,6 +27,10 @@ class LoginPage {
   get loginErrorMsg() {
     return $('[data-testid="login-error-pop"]>p');
   }
+
+  get loader() {
+    return $('[data-testid="classes-table-loader"]');
+  }
 }
 
 module.exports = new LoginPage();
