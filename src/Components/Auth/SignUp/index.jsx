@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './signUp.module.css';
-import { Inputs, OptionInput, Button } from 'Components/Shared';
+import { Inputs, OptionInput, Button, ToastError } from 'Components/Shared';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -8,14 +8,14 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import { signUpMember } from 'redux/auth/thunks';
 import ModalSuccess from 'Components/Shared/Modals/ModalSuccess/index';
-// import { signUpError } from 'redux/auth/actions';
-// import { signUpError } from 'redux/auth/actions';
 
 const SignForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [openModalSuccess, setOpenModalSuccess] = useState(null);
   const [error, setError] = useState(null);
+  const [toastError, setToastError] = useState(null);
+
   const schema = Joi.object({
     firstName: Joi.string()
       .min(3)
@@ -129,7 +129,6 @@ const SignForm = () => {
     if (Object.values(errors).length === 0) {
       try {
         const responseSignUp = await dispatch(signUpMember(data));
-        console.log(responseSignUp);
         if (responseSignUp.type === 'SIGN_UP_SUCCESS') {
           setOpenModalSuccess(true);
           setTimeout(() => {
@@ -137,8 +136,11 @@ const SignForm = () => {
             history.push('/auth/login');
           }, 2000);
         }
+        if (responseSignUp.type === 'SIGN_UP_ERROR') {
+          setToastError(true);
+        }
       } catch (error) {
-        console.log(error);
+        setToastError(true);
       }
     }
   };
@@ -152,6 +154,14 @@ const SignForm = () => {
           setModalSuccessOpen={setOpenModalSuccess}
           message={'Sign In Successfully!'}
           testId="member-modal-success"
+        />
+      )}
+
+      {toastError && (
+        <ToastError
+          setToastErroOpen={setToastError}
+          message={'Email is already in use'}
+          testId="member-form-toast-error"
         />
       )}
 
