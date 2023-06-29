@@ -45,6 +45,7 @@ export const signUpMember = (data) => {
         },
         body: JSON.stringify(data)
       });
+      console.log(response);
       if (response.error) {
         throw new Error(response.message);
       }

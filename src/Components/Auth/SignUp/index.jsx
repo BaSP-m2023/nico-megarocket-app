@@ -9,6 +9,7 @@ import Joi from 'joi';
 import { signUpMember } from 'redux/auth/thunks';
 import ModalSuccess from 'Components/Shared/Modals/ModalSuccess/index';
 // import { signUpError } from 'redux/auth/actions';
+// import { signUpError } from 'redux/auth/actions';
 
 const SignForm = () => {
   const dispatch = useDispatch();
@@ -126,13 +127,18 @@ const SignForm = () => {
 
   const onSubmit = async (data) => {
     if (Object.values(errors).length === 0) {
-      const responseSignUp = await dispatch(signUpMember(data));
-      if (responseSignUp.type === 'SIGN_UP_SUCCESS') {
-        setOpenModalSuccess(true);
-        setTimeout(() => {
-          setOpenModalSuccess(false);
-          history.push('/auth/login');
-        }, 2000);
+      try {
+        const responseSignUp = await dispatch(signUpMember(data));
+        console.log(responseSignUp);
+        if (responseSignUp.type === 'SIGN_UP_SUCCESS') {
+          setOpenModalSuccess(true);
+          setTimeout(() => {
+            setOpenModalSuccess(false);
+            history.push('/auth/login');
+          }, 2000);
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
   };
