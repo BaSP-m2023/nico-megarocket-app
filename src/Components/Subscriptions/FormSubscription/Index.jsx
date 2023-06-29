@@ -27,9 +27,14 @@ const FormSubscription = () => {
       'date.base': 'Date must be a valid date',
       'any.required': 'Date is required'
     }),
-    members: Joi.string().required().invalid('Pick members').messages({
-      'any.only': 'Please select a member'
-    }),
+    members: Joi.alternatives()
+      .try(
+        Joi.array().items(Joi.string().hex().length(24).required()),
+        Joi.string().hex().length(24).required()
+      )
+      .message({
+        'any.only': 'Please select a member'
+      }),
     classId: Joi.string().required().invalid('Pick classId').messages({
       'any.only': 'Please select a class'
     })

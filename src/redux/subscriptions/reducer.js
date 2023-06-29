@@ -41,9 +41,12 @@ const subscriptionReducer = (state = initialState, action) => {
     }
 
     case PUT_SUBSCRIPTION_SUCCESS: {
+      const editSub = state.data.map((subs) => {
+        return subs._id === action.payload._id ? { ...subs, ...action.payload } : subs;
+      });
       return {
         ...state,
-        data: [...state.data, action.payload]
+        data: [...editSub]
       };
     }
 
