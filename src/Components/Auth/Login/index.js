@@ -110,8 +110,8 @@ function LoginForm() {
         <div data-testid="password-forgot-btn">
           <button
             className={styles.forgotPass}
-            onClick={(e) => {
-              e.preventDefault();
+            onClick={() => {
+              history.push('/auth/recover-password');
             }}
           >
             Forgot your password?
