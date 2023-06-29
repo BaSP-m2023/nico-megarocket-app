@@ -27,11 +27,11 @@
   color: #373867;
 }
 
-.radioMainContainer{
-  display:flex;
-  flex-direction:column;
-  border:solid 1px #373867;
-  padding:10px;
+.radioMainContainer {
+  display: flex;
+  flex-direction: column;
+  border: solid 1px #373867;
+  padding: 10px;
   border-radius: 10px;
   box-shadow: 0px 5px 8px -5px #373867;
 }
@@ -45,4 +45,75 @@
 .radioContainer div {
   margin: 0 10px;
   font-size: 15px;
+}
+
+.boxError {
+  display: flex;
+  flex-direction: column;
+  width: 255px;
+  height: 70px;
+  border-radius: 5px;
+  border: 1px solid #f13312;
+}
+.lineError {
+  display: flex;
+  flex-direction: row;
+  height: 16px;
+  font-size: 14px;
+  align-items: center;
+  margin-top: 10px;
+  font-weight: bolder;
+  text-transform: uppercase;
+  color: #f13312;
+}
+.errorLogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  margin-left: 5px;
+  width: 25px;
+  height: 25px;
+  background-color: red;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 25px;
+}
+.MsgError {
+  font-size: 12px;
+  text-align: center;
+  color: #f13312;
+  font-weight: 500;
+}
+.emptyBox {
+  display: flex;
+  flex-direction: column;
+  width: 255px;
+  height: 70px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+}
+.close_icon {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  margin-left: 90px;
+  position: relative;
+}
+.close_icon:before,
+.close_icon:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 15px;
+  height: 2px;
+  background-color: red;
+  transform-origin: center;
+}
+.close_icon:before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.close_icon:after {
+  transform: translate(-50%, -50%) rotate(-45deg);
 }

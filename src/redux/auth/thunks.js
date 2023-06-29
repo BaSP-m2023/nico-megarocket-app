@@ -47,12 +47,15 @@ export const signUpMember = (data) => {
         },
         body: JSON.stringify(data)
       });
-      if (response.error) {
-        throw new Error(response.message);
+
+      const newData = await response.json();
+      if (response.ok) {
+        dispatch(signUpError({ error: false, message: 'No error' }));
+        return dispatch(signUpSuccess(newData));
       }
-      return dispatch(signUpSuccess(data));
-    } catch (error) {
-      return dispatch(signUpError(error.toString()));
+      return dispatch(signUpError({ error: true, message: newData.message.code }));
+    } catch (err) {
+      return dispatch(signUpError({ error: true, message: err }));
     }
   };
 };
