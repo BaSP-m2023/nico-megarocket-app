@@ -33,7 +33,7 @@ function DivContainer({ item, testId }) {
     const classInSubscription = subscriptions.find((sub) => sub.classId._id === classId);
     if (classInSubscription) {
       classInSubscription.members.map((memberInSub) => {
-        if (memberInSub._id === memberID || memberInSub === memberID) {
+        if (memberInSub._id === memberID) {
           setToggle(false);
         }
       });

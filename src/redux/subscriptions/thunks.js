@@ -73,7 +73,6 @@ export const addSubscriptions = async (dispatch, newSub) => {
 };
 
 export const updateSubscriptions = (id, editSub) => {
-  console.log(editSub);
   return async (dispatch) => {
     try {
       dispatch(editSubscriptionPending(true));
