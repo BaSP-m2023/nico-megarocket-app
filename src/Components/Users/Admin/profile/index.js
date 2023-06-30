@@ -24,8 +24,9 @@ const schema = Joi.object({
 
 const AdminProfile = ({ testId }) => {
   const dispatch = useDispatch();
-  const [admin, setAdmin] = useState({});
+  const [currentAdm, setCurrentAdm] = useState('');
   const admins = useSelector((state) => state.admins.list);
+  const admin = admins.find((oneAdmin) => oneAdmin.email === currentAdm);
 
   const {
     register
@@ -40,25 +41,22 @@ const AdminProfile = ({ testId }) => {
     }
   });
 
-  useEffect(() => {
-    getAllAdmins(dispatch);
-  }, []);
-
-  useEffect(() => {
-    currentAdmin();
-  }, [admins]);
-
   const currentAdmin = async () => {
     try {
       const adminCurrent = await getFirebaseUidFromToken();
       console.log(adminCurrent, 'current admin ');
-      const thisAdmin = admins.find((admin) => adminCurrent === admin.email);
-      console.log(this);
-      setAdmin(thisAdmin);
+      setCurrentAdm(adminCurrent);
     } catch (error) {
       return error;
     }
   };
+
+  useEffect(() => {
+    getAllAdmins(dispatch);
+  }, []);
+  useEffect(() => {
+    currentAdmin();
+  }, [admins]);
 
   // console.log(admin);
 
