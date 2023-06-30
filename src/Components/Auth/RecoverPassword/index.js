@@ -61,6 +61,7 @@ const RecoverPassword = () => {
         </div>
         <div className={styles.sub_buttons}>
           <Button className={styles.buttonLogin} clickAction={() => {}} text="Confirm" />
+          <Button text="Cancel" clickAction={() => history.goBack()} />
         </div>
       </div>
 
