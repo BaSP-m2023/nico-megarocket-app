@@ -7,7 +7,7 @@ class MemberPage {
   }
 
   get logoutBtn() {
-    return $('nav').$$('[data-testid="log-out-btn"]');
+    return $('[data-testid="log-out-btn"]');
   }
 
   get classesContainer() {

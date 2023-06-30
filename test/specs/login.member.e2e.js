@@ -15,6 +15,13 @@ describe('login member', () => {
     await expect(HomePage.navBtn[1]).toBeDisplayed();
     await expect(HomePage.navBtn[1]).toBeClickable();
     await HomePage.navBtn[1].click();
+    await browser.waitUntil(
+      async () => {
+        const currentUrl = await browser.getUrl();
+        return currentUrl === 'https://nico-megarocket-app.vercel.app/auth/login';
+      },
+      { timeout: 3000, timeoutMsg: 'Thr URL do not change when I click.' }
+    );
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/auth/login');
   });
@@ -47,6 +54,13 @@ describe('login member', () => {
     await Login.loginForm('vigiyak708@edulena.com', '1234Gino');
     await expect(Login.loginBtn).toBeDisplayed();
     await Login.loginBtnClick();
+    await browser.waitUntil(
+      async () => {
+        const currentUrl = await browser.getUrl();
+        return currentUrl === 'https://nico-megarocket-app.vercel.app/auth/member';
+      },
+      { timeout: 3000, timeoutMsg: 'Thr URL do not change when I click.' }
+    );
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/member');
   });
@@ -55,6 +69,13 @@ describe('login member', () => {
     await expect(MemberPage.navBtn[0]).toBeDisplayed();
     await expect(MemberPage.navBtn[0]).toBeClickable();
     await MemberPage.navBtn[0].click();
+    await browser.waitUntil(
+      async () => {
+        const currentUrl = await browser.getUrl();
+        return currentUrl === 'https://nico-megarocket-app.vercel.app/auth/member/classes';
+      },
+      { timeout: 3000, timeoutMsg: 'Thr URL do not change when I click.' }
+    );
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/member/classes');
     await expect(MemberPage.classesContainer).toBeDisplayed();
@@ -64,6 +85,13 @@ describe('login member', () => {
     await expect(MemberPage.navBtn[1]).toBeDisplayed();
     await expect(MemberPage.navBtn[1]).toBeClickable();
     await MemberPage.navBtn[1].click();
+    await browser.waitUntil(
+      async () => {
+        const currentUrl = await browser.getUrl();
+        return currentUrl === 'https://nico-megarocket-app.vercel.app/member/activities';
+      },
+      { timeout: 3000, timeoutMsg: 'Thr URL do not change when I click.' }
+    );
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/member/activities');
     await expect(MemberPage.fulboCard).toBeDisplayed();
@@ -83,18 +111,35 @@ describe('login member', () => {
     await expect(MemberPage.javascriptCardBtn).toBeClickable();
     await MemberPage.fulboCardBtnClick();
     await expect(MemberPage.activityModal).toBeDisplayed();
-    await expect(MemberPage.activityModalBtn).click();
+    await MemberPage.activityModalBtn.click();
   });
 
   it('See profile', async () => {
     await expect(MemberPage.navBtn[2]).toBeDisplayed();
     await expect(MemberPage.navBtn[2]).toBeClickable();
     await MemberPage.navBtn[2].click();
+    await browser.waitUntil(
+      async () => {
+        const currentUrl = await browser.getUrl();
+        return currentUrl === 'https://nico-megarocket-app.vercel.app/member/profile';
+      },
+      { timeout: 3000, timeoutMsg: 'Thr URL do not change when I click.' }
+    );
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/member/profile');
     await expect(MemberPage.photo).toBeDisplayed();
     await expect(MemberPage.infoProfile).toBeDisplayed();
+    await expect(MemberPage.logoutBtn).toBeDisplayed();
     await expect(MemberPage.logoutBtn).toBeClickable();
     await MemberPage.logoutBtnClick();
+    await browser.waitUntil(
+      async () => {
+        const currentUrl = await browser.getUrl();
+        return currentUrl === 'https://nico-megarocket-app.vercel.app/auth/login';
+      },
+      { timeout: 3000, timeoutMsg: 'Thr URL do not change when I click.' }
+    );
+    const currentLogoutUrl = await browser.getUrl();
+    expect(currentLogoutUrl).toEqual('https://nico-megarocket-app.vercel.app/auth/login');
   });
 });
