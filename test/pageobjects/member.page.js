@@ -89,6 +89,10 @@ class MemberPage {
   async javascriptCardBtnClick() {
     return this.javascriptCardBtn.click();
   }
+
+  async logoutBtnClick() {
+    return this.logoutBtn.click();
+  }
 }
 
 module.exports = new MemberPage();

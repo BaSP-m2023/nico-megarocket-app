@@ -37,7 +37,6 @@ describe('sing up member', () => {
     await expect(SingUp.membershipLabel).toBeDisplayed();
     await expect(SingUp.emailLabel).toBeDisplayed();
     await expect(SingUp.passwordLabel).toBeDisplayed();
-    await expect(SingUp.statusLabel).toBeDisplayed();
   });
 
   it('Sing up with all empty', async () => {
@@ -80,7 +79,6 @@ describe('sing up member', () => {
     await SingUp.postalcodeInput.setValue('20');
     await SingUp.emailInput.setValue('barbi');
     await SingUp.passwordInput.setValue('hola');
-    await SingUp.selectorActiveBtn[0].click();
 
     await expect(SingUp.singUpBtn).toBeDisplayed();
     await SingUp.singUpBtnClick();
@@ -127,7 +125,6 @@ describe('sing up member', () => {
     await SingUp.membershipSelect.click();
     await SingUp.membershipSelectoption[2].click();
     await SingUp.passwordInput.setValue('Hola12345');
-    await SingUp.selectorActiveBtn[0].click();
 
     await expect(SingUp.singUpBtn).toBeDisplayed();
     await SingUp.singUpBtnClick();

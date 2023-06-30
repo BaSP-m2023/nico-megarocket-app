@@ -42,10 +42,6 @@ class SingUp {
     return $('[data-testid="signup-password-input"] label');
   }
 
-  get statusLabel() {
-    return $('[data-testid="active-selector"] label');
-  }
-
   get nameInput() {
     return $('[data-testid="signup-name-input"] input');
   }
@@ -88,10 +84,6 @@ class SingUp {
 
   get passwordInput() {
     return $('[data-testid="signup-password-input"] input');
-  }
-
-  get selectorActiveBtn() {
-    return $('[data-testid="active-selector"]').$$('input');
   }
 
   get errorNameInput() {

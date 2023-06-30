@@ -3,7 +3,6 @@
 
 const HomePage = require('../pageobjects/home.page.js');
 const Login = require('../pageobjects/login.page.js');
-const memberPage = require('../pageobjects/member.page.js');
 const MemberPage = require('../pageobjects/member.page.js');
 
 describe('login member', () => {
@@ -77,12 +76,25 @@ describe('login member', () => {
     await expect(MemberPage.piscinaCardBtn).toBeDisplayed();
     await expect(MemberPage.baseballCardBtn).toBeDisplayed();
     await expect(MemberPage.javascriptCardBtn).toBeDisplayed();
-    await expect(memberPage.fulboCardBtn).toBeClickable();
-    await expect(memberPage.boxingCardBtn).toBeClickable();
-    await expect(memberPage.piscinaCardBtn).toBeClickable();
-    await expect(memberPage.baseballCardBtn).toBeClickable();
-    await expect(memberPage.javascriptCardBtn).toBeClickable();
+    await expect(MemberPage.fulboCardBtn).toBeClickable();
+    await expect(MemberPage.boxingCardBtn).toBeClickable();
+    await expect(MemberPage.piscinaCardBtn).toBeClickable();
+    await expect(MemberPage.baseballCardBtn).toBeClickable();
+    await expect(MemberPage.javascriptCardBtn).toBeClickable();
     await MemberPage.fulboCardBtnClick();
     await expect(MemberPage.activityModal).toBeDisplayed();
+    await expect(MemberPage.activityModalBtn).click();
+  });
+
+  it('See profile', async () => {
+    await expect(MemberPage.navBtn[2]).toBeDisplayed();
+    await expect(MemberPage.navBtn[2]).toBeClickable();
+    await MemberPage.navBtn[2].click();
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/member/profile');
+    await expect(MemberPage.photo).toBeDisplayed();
+    await expect(MemberPage.infoProfile).toBeDisplayed();
+    await expect(MemberPage.logoutBtn).toBeClickable();
+    await MemberPage.logoutBtnClick();
   });
 });
