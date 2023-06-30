@@ -32,8 +32,10 @@ const FormSubscription = () => {
         Joi.array().items(Joi.string().hex().length(24).required()),
         Joi.string().hex().length(24).required()
       )
-      .message({
-        'any.only': 'Please select a member'
+      .required()
+      .messages({
+        'any.only': 'Please select a member',
+        'any.required': 'Please select a member'
       }),
     classId: Joi.string().required().invalid('Pick classId').messages({
       'any.only': 'Please select a class'
