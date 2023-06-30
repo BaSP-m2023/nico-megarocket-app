@@ -1,126 +1,99 @@
 import React, { useEffect, useState } from 'react';
 import styles from './profile.module.css';
-import { InputAdmin, ButtonForm } from 'Components/Shared';
+import { ButtonForm } from 'Components/Shared';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllAdmins } from 'redux/admins/thunks';
-import { getFirebaseUidFromToken } from 'helper/firebase';
-import { useForm } from 'react-hook-form';
-import Joi from 'joi';
-import { joiResolver } from '@hookform/resolvers/joi';
+import { getAuth } from 'firebase/auth';
+import 'firebase/compat/auth';
 
 const profilePic = `${process.env.PUBLIC_URL}/assets/images/profile-img.png`;
 const editProfilePicBtn = `${process.env.PUBLIC_URL}/assets/images/image.png`;
 
-const schema = Joi.object({
-  firstName: Joi.string().min(3).max(15).required(),
-  lastName: Joi.string().min(3).max(15).required(),
-  dni: Joi.number().min(10000000).max(99999999).required(),
-  phone: Joi.string().min(9).max(12).required(),
-  email: Joi.string()
-    .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
-    .required(),
-  city: Joi.string().min(2).max(10).required()
-});
-
 const AdminProfile = ({ testId }) => {
   const dispatch = useDispatch();
-  const [currentAdm, setCurrentAdm] = useState('');
+  const [admin, setAdmin] = useState('');
   const admins = useSelector((state) => state.admins.list);
-  const admin = admins.find((oneAdmin) => oneAdmin.email === currentAdm);
+  const auth = getAuth();
+  const [decode, setDecode] = useState({});
 
-  const {
-    register
-    // handleSubmit,
-    // reset,
-    // formState: { errors }
-  } = useForm({
-    mode: 'onBlur',
-    resolver: joiResolver(schema),
-    defaultValues: {
-      ...admin
-    }
-  });
+  setTimeout(() => {
+    const idCurrentUser = decode?.claims.email;
+    const adminElegido = admins?.find((oneAdmin) => oneAdmin.email === idCurrentUser);
+    setAdmin(adminElegido);
+  }, 2000);
 
-  const currentAdmin = async () => {
-    try {
-      const adminCurrent = await getFirebaseUidFromToken();
-      console.log(adminCurrent, 'current admin ');
-      setCurrentAdm(adminCurrent);
-    } catch (error) {
-      return error;
-    }
+  // console.log(idCurrentUser, 'email elegido');
+
+  // const currentAdmin = async (idCurrentUser) => {
+  //   try {
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   currentAdmin();
+  // }, [admins]);
+
+  const fn = async () => {
+    const decodedToken = await auth.currentUser.getIdTokenResult();
+    setDecode(decodedToken);
+    console.log(decodedToken);
   };
 
   useEffect(() => {
     getAllAdmins(dispatch);
   }, []);
-  useEffect(() => {
-    currentAdmin();
-  }, [admins]);
 
-  // console.log(admin);
+  useEffect(() => {
+    fn();
+  }, [decode]);
 
   return (
     <div>
-      {admins?.length !== 0 ? (
-        <section className={styles.container} data-testid={testId}>
-          <div className={styles.profilePhotoContainer} data-testid="photo-container">
-            <img src={profilePic} alt="profile image" />
-            <img className={styles.editPhotoButton} src={editProfilePicBtn} alt="camera" />
-            <h1 className={styles.adminName}>
+      <section className={styles.container} data-testid={testId}>
+        <div className={styles.profilePhotoContainer} data-testid="photo-container">
+          <img src={profilePic} alt="profile image" />
+          <img className={styles.editPhotoButton} src={editProfilePicBtn} alt="camera" />
+          <h1 className={styles.adminName}>
+            {admin.firstName} {admin.lastName}
+          </h1>
+        </div>
+        <h2 className={styles.adminInfoTitle}>Personal Information</h2>
+        <div className={styles.profileInfoContainer} data-testid="info-container">
+          <p className={styles.adminInfoContainer}>
+            <span className={styles.adminInfoPlaceholder}>Name</span>
+            <span className={styles.adminInfo}>
               {admin.firstName} {admin.lastName}
-            </h1>
+            </span>
+          </p>
+          <p className={styles.adminInfoContainer}>
+            <span className={styles.adminInfoPlaceholder}>Dni</span>
+            <span className={styles.adminInfo}> {admin.dni}</span>
+          </p>
+          <p className={styles.adminInfoContainer}>
+            <span className={styles.adminInfoPlaceholder}>City</span>
+            <span className={styles.adminInfo}> {admin.city}</span>
+          </p>
+          <p className={styles.adminInfoContainer}>
+            <span className={styles.adminInfoPlaceholder}>Phone</span>
+            <span className={styles.adminInfo}> {admin.phone}</span>
+          </p>
+          <p className={styles.adminInfoContainer}>
+            <span className={styles.adminInfoPlaceholder}>Email</span>
+            <span className={styles.adminInfo}> {admin.email}</span>
+          </p>
+
+          <div className={styles.adminInfoContainer}>
+            <p className={styles.adminInfoPlaceholder}>Edit profile</p>
+            <ButtonForm
+              className={styles.editInfoBtn}
+              nameImg="edit-profile-icon.png"
+              testId="profile-edit-btn"
+            />
           </div>
-          <h2 className={styles.adminInfoTitle}>Personal Information</h2>
-          <form className={styles.profileInfoContainer} data-testid="info-container">
-            <InputAdmin
-              name={'name'}
-              labelTitle={'Name'}
-              type={'text'}
-              value={`${admin.firstName} ${admin.lastName}`}
-              register={register}
-            />
-            <InputAdmin
-              name={'dni'}
-              labelTitle={'Document'}
-              type={'text'}
-              value={admin.dni}
-              register={register}
-            />
-            <InputAdmin
-              name={'city'}
-              labelTitle={'City'}
-              type={'text'}
-              value={admin.city}
-              register={register}
-            />
-            <InputAdmin
-              name={'phone'}
-              labelTitle={'Phone'}
-              type={'text'}
-              value={admin.phone}
-              register={register}
-            />
-            <InputAdmin
-              name={'email'}
-              labelTitle={'Email'}
-              type={'email'}
-              value={admin.email}
-              register={register}
-            />
-            <div className={styles.adminInfoContainer}>
-              <p className={styles.adminInfoPlaceholder}>Edit profile</p>
-              <ButtonForm
-                className={styles.editInfoBtn}
-                nameImg="edit-profile-icon.png"
-                testId="profile-edit-btn"
-              />
-            </div>
-          </form>
-        </section>
-      ) : (
-        <h1> HOLAAAAASDASFDASD</h1>
-      )}
+        </div>
+      </section>
     </div>
   );
 };

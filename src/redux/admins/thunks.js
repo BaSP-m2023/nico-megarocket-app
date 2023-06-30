@@ -51,8 +51,8 @@ export const adminDelete = (adminID) => {
 };
 
 export const createAdmin = async (dispatch, adminData) => {
-  const token = sessionStorage.getItem('token');
   try {
+    const token = sessionStorage.getItem('token');
     dispatch(addAdminPending(true));
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
       method: 'POST',
@@ -67,7 +67,7 @@ export const createAdmin = async (dispatch, adminData) => {
       dispatch(addAdminPending(false));
       throw new Error(data.message);
     }
-    dispatch(addAdminSuccess(data.result));
+    dispatch(addAdminSuccess(data.data));
   } catch (error) {
     dispatch(addAdminPending(false));
     dispatch(addAdminError(error.message));
