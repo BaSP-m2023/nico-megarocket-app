@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './profile.module.css';
-import { ButtonForm } from '../../../Shared';
+import { InputAdmin, ButtonForm } from 'Components/Shared';
 
 const profilePic = `${process.env.PUBLIC_URL}/assets/images/profile-img.png`;
 const editProfilePicBtn = `${process.env.PUBLIC_URL}/assets/images/image.png`;
-
-const AdminProfile = ({ fullName, height, weight, sex, city, document, email, testId }) => {
+// admin tiene NAME, email (readonly), city , dni, phone y el edit
+const AdminProfile = ({ fullName, testId }) => {
   return (
     <section className={styles.container} data-testid={testId}>
       <div className={styles.profilePhotoContainer} data-testid="photo-container">
@@ -13,47 +13,23 @@ const AdminProfile = ({ fullName, height, weight, sex, city, document, email, te
         <img className={styles.editPhotoButton} src={editProfilePicBtn} alt="camera" />
         <h1 className={styles.adminName}>{fullName} Carlos Villagran</h1>
       </div>
-      <div className={styles.profileInfoContainer} data-testid="info-container">
-        <h2 className={styles.adminInfoTitle}>Personal Information</h2>
-        <p className={styles.adminInfoContainer}>
-          <span className={styles.adminInfoPlaceholder}>Name</span>
-          <span className={styles.adminInfo}>{fullName} Carlos Villagran</span>
-        </p>
-        <p className={styles.adminInfoContainer}>
-          <span className={styles.adminInfoPlaceholder}>Height | Weight</span>
-          <span className={styles.adminInfo}>
-            {height}1.7m | {weight}77kg
-          </span>
-        </p>
-        <p className={styles.adminInfoContainer}>
-          <span className={styles.adminInfoPlaceholder}>Sex</span>
-          <span className={styles.adminInfo}>{sex} Male</span>
-        </p>
-        <p className={styles.adminInfoContainer}>
-          <span className={styles.adminInfoPlaceholder}>City</span>
-          <span className={styles.adminInfo}>{city} Guadalajara</span>
-        </p>
-        <p className={styles.adminInfoContainer}>
-          <span className={styles.adminInfoPlaceholder}>Document</span>
-          <span className={styles.adminInfo}>{document} 12345678</span>
-        </p>
-        <p className={styles.adminInfoContainer}>
-          <span className={styles.adminInfoPlaceholder}>Phone</span>
-          <span className={styles.adminInfo}>{document} 1234512344</span>
-        </p>
-        <p className={styles.adminInfoContainer}>
-          <span className={styles.adminInfoPlaceholder}>Email</span>
-          <span className={styles.adminInfo}>{email} carlosvillagran@gmail.com</span>
-        </p>
-        <p className={styles.adminInfoContainer}>
-          <span className={styles.adminInfoPlaceholder}>Edit profile</span>
+      <h2 className={styles.adminInfoTitle}>Personal Information</h2>
+      <form className={styles.profileInfoContainer} data-testid="info-container">
+        <InputAdmin name={'name'} labelTitle={'Name'} type={'text'} value={'Carlos Villagran'} />
+        <InputAdmin name={'dni'} labelTitle={'Document'} type={'text'} value={'42588745'} />
+        <InputAdmin name={'city'} labelTitle={'City'} type={'text'} value={'Rosario'} />
+        <InputAdmin name={'phone'} labelTitle={'Phone'} type={'text'} value={'3413415487'} />
+        <InputAdmin name={'email'} labelTitle={'Email'} type={'email'} value={'email@email.com'} />
+
+        <div className={styles.adminInfoContainer}>
+          <p className={styles.adminInfoPlaceholder}>Edit profile</p>
           <ButtonForm
             className={styles.editInfoBtn}
             nameImg="edit-profile-icon.png"
             testId="profile-edit-btn"
-          />{' '}
-        </p>
-      </div>
+          />
+        </div>
+      </form>
     </section>
   );
 };
