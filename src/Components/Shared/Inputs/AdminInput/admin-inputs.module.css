@@ -18,13 +18,13 @@
   width: 60%;
   text-align: end;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   color: rgba(55, 56, 103, 1);
   padding: 5px;
   border: 1px solid transparent;
 }
 .inputBox:focus{
-  /* border: 1px solid #373867;
-  border-radius: 5px; */
+  border: 1px solid #373867;
+  border-radius: 5px;
   outline: none;
 }

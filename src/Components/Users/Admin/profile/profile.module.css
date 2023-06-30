@@ -41,6 +41,7 @@
   color: rgba(55, 56, 103, 1);
   text-align: start;
   width: 100%;
+  margin-left: 20px;
 }
 .adminInfoContainer {
   display: flex;
