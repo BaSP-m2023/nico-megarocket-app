@@ -129,9 +129,9 @@ const FormSubscription = () => {
           error={errors.date?.message}
         />
         <div className={style.containerAdd}>
-          <Button clickAction={goBack} text="Cancel" />
-          <Button clickAction={() => reset()} text="Reset" />
           <Button clickAction={() => {}} text="Save" />
+          <Button clickAction={() => reset()} text="Reset" />
+          <Button clickAction={goBack} text="Cancel" />
         </div>
       </form>
       {modalConfirmOpen && (

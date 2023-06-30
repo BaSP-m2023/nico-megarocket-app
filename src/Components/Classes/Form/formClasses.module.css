@@ -6,7 +6,7 @@
   margin-top: 50px;
   width: 400px;
 }
-.form{
+.form {
   padding-bottom: 30px;
 }
 .formTitle {
@@ -24,7 +24,7 @@
 .inputs input {
   padding-left: 5px;
 }
-.buttons {
+/* .buttons {
   display: flex;
   justify-content: space-between;
   width: 250px;
@@ -36,4 +36,8 @@
 .cancelButton button:hover {
   color: #fff;
   background-color: #ea3354;
+} */
+.buttonContainer {
+  display: flex;
+  gap: 20px;
 }

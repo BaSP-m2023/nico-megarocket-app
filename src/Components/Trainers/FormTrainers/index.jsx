@@ -190,10 +190,10 @@ const FormTrainer = () => {
             )}
           </div>
         </div>
-        <div className={styles.buttonsGroup}>
-          <Button text="Save" clickAction={() => {}} />
-          <Button text="Reset" clickAction={() => reset()} />
-          <Button clickAction={() => history.goBack()} text="Cancel" />
+        <div className={styles.buttonContainer}>
+          <Button clickAction={() => {}} text={id ? 'Update' : 'Add'} testId="trainer-save-btn" />
+          <Button clickAction={() => reset()} text="Reset" testId="trainer-reset-btn" />
+          <Button text="Cancel" clickAction={() => history.goBack()} testId="trainer-cancel-btn" />
         </div>
       </form>
 

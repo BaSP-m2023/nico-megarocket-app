@@ -105,7 +105,6 @@ const ModalAddActivity = () => {
   const onSubmit = async (data) => {
     setInputForm(data);
     setModalUpdateConfirmOpen(true);
-    console.log(data);
   };
 
   return (
@@ -128,35 +127,37 @@ const ModalAddActivity = () => {
           error={errors.description?.message}
           testId="input-activity-description"
         />
-        <div className={style.containerModal}>
-          <label>Status:</label>
-          <label>
-            True
-            <input
-              {...register('isActive', {
-                required: { value: true, message: 'This field is required' }
-              })}
-              type="radio"
-              name="isActive"
-              value={true}
-            />
-          </label>
-          <label>
-            False
-            <input
-              {...register('isActive', {
-                required: { value: true, message: 'This field is required' }
-              })}
-              type="radio"
-              name="isActive"
-              value={false}
-            />
-          </label>
+        <div className={style.radioMainContainer}>
+          <label className={style.nameLabel}>Status</label>
+          <div className={style.radioContainer}>
+            <label>
+              Active
+              <input
+                {...register('isActive', {
+                  required: { value: true, message: 'This field is required' }
+                })}
+                type="radio"
+                name="isActive"
+                value={true}
+              />
+            </label>
+            <label>
+              Inactive
+              <input
+                {...register('isActive', {
+                  required: { value: true, message: 'This field is required' }
+                })}
+                type="radio"
+                name="isActive"
+                value={false}
+              />
+            </label>
+          </div>
         </div>
         <div className={style.containerAddButton}>
-          <Button clickAction={() => history.goBack()} text="Cancel" testId="activity-cancel-btn" />
-          <Button clickAction={() => reset()} text="Reset" testId="activity-reset-btn" />
           <Button clickAction={() => {}} text="Save" testId="activity-save-btn" />
+          <Button clickAction={() => reset()} text="Reset" testId="activity-reset-btn" />
+          <Button clickAction={() => history.goBack()} text="Cancel" testId="activity-cancel-btn" />
         </div>
       </form>
       {modalUpdateConfirmOpen && (
