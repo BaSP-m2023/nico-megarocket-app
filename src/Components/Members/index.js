@@ -1,4 +1,4 @@
-import { TableComponent, AddButton, ToastError } from 'Components/Shared';
+import { TableComponent, ToastError } from 'Components/Shared';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,10 +14,6 @@ function Members() {
 
   const handleClick = (item) => {
     history.push(`/admin/members/form/${item._id}`, { params: { mode: 'edit', ...item } });
-  };
-
-  const createMode = () => {
-    history.push(`/admin/members/form/`, { params: { mode: 'create' } });
   };
 
   useEffect(() => {
@@ -40,10 +36,6 @@ function Members() {
 
   return (
     <section>
-      <div>
-        <AddButton entity="Member" createMode={createMode} testId="add-member-btn" />
-      </div>
-
       <TableComponent
         columns={columns}
         columnTitleArray={columnTitleArray}
