@@ -13,22 +13,20 @@ import {
   editClassError
 } from './actions';
 
-export const getClasses = () => {
-  return async (dispatch) => {
-    try {
-      dispatch(getClassPending(true));
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class`);
-      const data = await response.json();
-      dispatch(getClassPending(false));
-      if (response.status === 200) {
-        dispatch(getClassSuccess(data.data));
-      } else {
-        dispatch(getClassError(data.message));
-      }
-    } catch (error) {
-      dispatch(getClassPending(false));
+export const getClasses = async (dispatch) => {
+  try {
+    dispatch(getClassPending(true));
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class`);
+    const data = await response.json();
+    dispatch(getClassPending(false));
+    if (response.status === 200) {
+      dispatch(getClassSuccess(data.data));
+    } else {
+      dispatch(getClassError(data.message));
     }
-  };
+  } catch (error) {
+    dispatch(getClassPending(false));
+  }
 };
 
 export const deleteClass = (id) => {
