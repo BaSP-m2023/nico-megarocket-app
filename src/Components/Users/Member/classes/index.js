@@ -12,7 +12,6 @@ const MemberClasses = () => {
   if (selectedClass) {
     classes = classesArray.filter((item) => item.activity.name === selectedClass);
   }
-  console.log(selectedClass);
 
   useEffect(() => {
     getClasses(dispatch);
@@ -40,8 +39,6 @@ const MemberClasses = () => {
   const handleChange = (event) => {
     setSelectedClass(event.target.value);
   };
-
-  console.log(classes);
 
   return (
     <div>
