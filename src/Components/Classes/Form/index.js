@@ -209,7 +209,7 @@ const FormClasses = () => {
               <Button
                 text="Cancel"
                 clickAction={() => history.push('/admin/classes')}
-                testId="member-cancel-btn"
+                testId="classes-cancel-btn"
               />
             </div>
           </div>
