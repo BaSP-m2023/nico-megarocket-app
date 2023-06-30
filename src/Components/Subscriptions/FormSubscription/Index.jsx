@@ -75,7 +75,6 @@ const FormSubscription = () => {
         }, 1000);
       }
     } else {
-      console.log(subscription);
       const editSubscriptionResponse = await dispatch(updateSubscriptions(id, subscription));
       if (editSubscriptionResponse.type === 'PUT_SUBSCRIPTION_SUCCESS') {
         setModalSuccessOpen(true);
