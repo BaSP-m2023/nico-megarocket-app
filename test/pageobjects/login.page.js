@@ -5,19 +5,19 @@ class Login {
   }
 
   get emailLogin() {
-    return $('[data-testid="login-input-email"]');
+    return $('[data-testid="login-input-email"] input');
   }
 
   get passwordLogin() {
-    return $('[data-testid="login-input-password"]');
+    return $('[data-testid="login-input-password"] input');
   }
 
   get enterLoginBtn() {
-    return $('[data-testid="enter-login-btn]');
+    return $('[data-testid="enter-login-btn"]');
   }
 
   get logOutBtn() {
-    return $('[data-testid="log-out-btn"]');
+    return $('[data-testid="log-out-btn"] ');
   }
 
   async loginSuperAdmin(email, password) {

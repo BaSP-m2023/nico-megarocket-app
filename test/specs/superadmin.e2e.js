@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-const Login = require('../pageobjects/login.page');
-const SuperAdmin = require('../pageobjects/superadmin');
+const Login = require('../pageobjects/login.page.js');
+const SuperAdmin = require('../pageobjects/superadmin.js');
 
 describe('crud of superadmin', () => {
   beforeAll(async () => {
@@ -18,9 +18,12 @@ describe('crud of superadmin', () => {
     await expect(Login.emailLogin).toBeDisplayed();
     await Login.loginSuperAdmin('superadmin@email.com', 'Password1');
     await Login.enterLoginBtnClick();
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/superAdmin/admin');
   });
 
   it('adding a new admin', async () => {
+    await SuperAdmin.addAdminBtn.waitForDisplayed();
     await SuperAdmin.addAdminBtn.click();
     await SuperAdmin.inputAdminName.setValue('Miley');
     await SuperAdmin.inputAdminEmail.setValue('Miley@gmail.com');

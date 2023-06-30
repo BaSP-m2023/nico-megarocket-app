@@ -1,59 +1,59 @@
 /* eslint-disable no-undef */
 class SuperAdmin {
   get addAdminBtn() {
-    return $('[class="addButton_add_button__pawF1"]');
+    return $('[class="addButton_add_button__pawF1"] button');
   }
 
   get inputAdminName() {
-    return $('[data-testid="input-admin-name]');
+    return $('[data-testid="input-admin-name] input');
   }
 
   get inputAdminEmail() {
-    return $('[data-testid="input-admin-email"]');
+    return $('[data-testid="input-admin-email"] input');
   }
 
   get inputAdminLastName() {
-    return $('[data-testid="input-admin-lastname"]');
+    return $('[data-testid="input-admin-lastname"] input');
   }
 
   get inputAdminCity() {
-    return $('[data-testid="input-admin-city"]');
+    return $('[data-testid="input-admin-city"] input');
   }
 
   get inputAdminDni() {
-    return $('[data-testid="input-admin-dni"]');
+    return $('[data-testid="input-admin-dni"] input');
   }
 
   get inputAdminPassword() {
-    return $('[data-testid="input-admin-password"]');
+    return $('[data-testid="input-admin-password"] input');
   }
 
   get inputAdminPhone() {
-    return $('[data-testid="input-admin-phone"]');
+    return $('[data-testid="input-admin-phone"] input');
   }
 
   get inputAdminRepeatPassword() {
-    return $('[data-testid="input-admin-repeat-password"]');
+    return $('[data-testid="input-admin-repeat-password"] input');
   }
 
   get adminResetBtn() {
-    return $('[data-testid="admin-reset-btn"]');
+    return $('[data-testid="admin-reset-btn"] button');
   }
 
   get adminSaveBtn() {
-    return $('[data-testid="admin-save-btn"]');
+    return $('[data-testid="admin-save-btn"] button');
   }
 
   get adminCancelBtn() {
-    return $('[data-testid="admin-cancel-btn"]');
+    return $('[data-testid="admin-cancel-btn"] button');
   }
 
   get adminEditBtn() {
-    return $('[data-testid="edit-btn"]');
+    return $('[data-testid="edit-btn"] button');
   }
 
   get adminDeleteBtn() {
-    return $('[data-testid="delete-btn"]');
+    return $('[data-testid="delete-btn"] button');
   }
 
   get adminConfirmDeleteBtn() {
