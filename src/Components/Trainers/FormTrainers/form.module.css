@@ -2,8 +2,13 @@
   display: flex;
 }
 
-.form{
-  display:flex;
-  gap:20px;
-  margin-top:30px;
+.buttonContainer {
+  display: flex;
+  gap: 20px;
+}
+
+.form {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
 }

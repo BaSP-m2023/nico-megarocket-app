@@ -198,19 +198,18 @@ const FormClasses = () => {
                 testId="classes-slots-input"
               />
             </div>
-            <div className={formStyles.buttons}>
-              <span className={formStyles.cancelButton}>
-                <Button
-                  clickAction={() => history.push('/admin/classes')}
-                  text="Cancel"
-                  testId="classes-cancel-btn"
-                />
-              </span>
+
+            <div className={formStyles.buttonContainer}>
+              <Button
+                clickAction={() => history.push('/admin/classes')}
+                text={id ? 'Update' : 'Add'}
+                testId="classes-save-btn"
+              />
               <Button clickAction={() => reset()} text="Reset" testId="classes-reset-btn" />
               <Button
-                clickAction={() => {}}
-                text={updateData.mode === 'edit' ? 'Update' : 'Create'}
-                testId="classes-save-btn"
+                text="Cancel"
+                clickAction={() => history.push('/admin/classes')}
+                testId="member-cancel-btn"
               />
             </div>
           </div>
