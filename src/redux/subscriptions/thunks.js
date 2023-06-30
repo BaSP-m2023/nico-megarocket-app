@@ -63,7 +63,7 @@ export const addSubscriptions = async (dispatch, newSub) => {
     const data = await res.json();
     dispatch(addSubscriptionPending(false));
     if (res.ok) {
-      return dispatch(addSubscriptionSuccess(data.result));
+      return dispatch(addSubscriptionSuccess(data.data));
     }
     return dispatch(addSubscriptionError(data.message));
   } catch (error) {
