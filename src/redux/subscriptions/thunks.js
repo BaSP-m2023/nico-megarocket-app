@@ -72,24 +72,27 @@ export const addSubscriptions = async (dispatch, newSub) => {
   }
 };
 
-export const updateSubscriptions = async (dispatch, id, editSub) => {
-  try {
-    dispatch(editSubscriptionPending(true));
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscription/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(editSub)
-    });
-    const data = await res.json();
-    dispatch(editSubscriptionPending(false));
-    if (res.ok) {
-      return dispatch(editSubscriptionSuccess(id, data.result));
+export const updateSubscriptions = (id, editSub) => {
+  return async (dispatch) => {
+    try {
+      dispatch(editSubscriptionPending(true));
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscription/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(editSub)
+      });
+      const data = await res.json();
+      const newData = data.data;
+      dispatch(editSubscriptionPending(false));
+      if (res.ok) {
+        return dispatch(editSubscriptionSuccess(newData));
+      }
+      return dispatch(editSubscriptionError(data.message));
+    } catch (error) {
+      dispatch(editSubscriptionPending(false));
+      return dispatch(editSubscriptionError(error));
     }
-    return dispatch(editSubscriptionError(data.message));
-  } catch (error) {
-    dispatch(editSubscriptionPending(false));
-    return dispatch(editSubscriptionError(error));
-  }
+  };
 };

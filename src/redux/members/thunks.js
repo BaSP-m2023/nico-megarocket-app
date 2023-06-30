@@ -33,38 +33,20 @@ export const getAllMembers = async (dispatch) => {
   }
 };
 
-export const addMember = (member) => {
+export const addMember = (body) => {
   return async (dispatch) => {
     try {
+      dispatch(addMemberError(false));
       dispatch(addMemberPending(true));
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          token: token
-        },
-        body: JSON.stringify({
-          firstName: member.firstName,
-          lastName: member.lastName,
-          dni: member.dni,
-          birthday: member.birthday,
-          phone: member.phone,
-          email: member.email,
-          city: member.city,
-          postalCode: member.postalCode,
-          isActive: member.isActive,
-          membership: member.membership
-        })
-      });
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/`, body);
       dispatch(addMemberPending(false));
       const data = await response.json();
       if (response.ok) {
-        dispatch(addMemberError({ error: false, message: 'No error' }));
         return dispatch(addMemberSuccess(data));
       }
-      return dispatch(addMemberError({ error: true, message: data.message }));
+      return dispatch(addMemberError({ error: true, message: data.message.code }));
     } catch (err) {
-      return dispatch(addMemberError({ error: true, message: err }));
+      return dispatch(addMemberError({ error: true, message: err.message.code }));
     }
   };
 };
@@ -72,12 +54,12 @@ export const addMember = (member) => {
 export const editMember = (id, body) => {
   return async (dispatch) => {
     try {
+      dispatch(addMemberError(false));
       dispatch(editMemberPending(true));
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, body);
       dispatch(editMemberPending(false));
       const data = await response.json();
       if (response.ok) {
-        dispatch(editMemberError({ error: false, message: 'No error' }));
         return dispatch(editMemberSuccess(data));
       }
       return dispatch(editMemberError({ error: true, message: data.message }));
@@ -90,6 +72,7 @@ export const editMember = (id, body) => {
 export const memberDelete = (memberID) => {
   return async (dispatch) => {
     try {
+      dispatch(deleteMemberError(false));
       dispatch(deleteMemberPending(true));
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${memberID}`, {
         method: 'DELETE',
