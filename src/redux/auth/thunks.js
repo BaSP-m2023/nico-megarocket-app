@@ -10,7 +10,9 @@ const {
   getAuthenticationError,
   signUpPending,
   signUpError,
-  signUpSuccess
+  signUpSuccess,
+  recoverPasswordPending,
+  recoverPasswordError
 } = require('./actions');
 
 import { firebaseApp } from 'helper/firebase';
@@ -45,12 +47,15 @@ export const signUpMember = (data) => {
         },
         body: JSON.stringify(data)
       });
-      if (response.error) {
-        throw new Error(response.message);
+
+      const newData = await response.json();
+      if (response.ok) {
+        dispatch(signUpError({ error: false, message: 'No error' }));
+        return dispatch(signUpSuccess(newData));
       }
-      return dispatch(signUpSuccess(data));
-    } catch (error) {
-      return dispatch(signUpError(error.toString()));
+      return dispatch(signUpError({ error: true, message: newData.message.code }));
+    } catch (err) {
+      return dispatch(signUpError({ error: true, message: err }));
     }
   };
 };
@@ -81,6 +86,17 @@ export const getAuth = (token) => {
       return res.data;
     } catch (error) {
       return dispatch(getAuthenticationError(error.toString()));
+    }
+  };
+};
+
+export const recoverPassword = (data) => {
+  return async (dispatch) => {
+    dispatch(recoverPasswordPending());
+    try {
+      await firebaseApp.auth().sendPasswordResetEmail(data.email);
+    } catch (error) {
+      return dispatch(recoverPasswordError(error.toString()));
     }
   };
 };

@@ -41,7 +41,6 @@ function Trainers() {
         columns={columnsValue}
         trainers={trainers}
       />
-
       {toastErroOpen && (
         <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
       )}

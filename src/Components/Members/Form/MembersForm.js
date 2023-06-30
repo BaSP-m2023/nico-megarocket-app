@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import {
   ModalConfirm,
@@ -113,12 +113,10 @@ const MembersForm = () => {
       'any.only': 'The membership must be one of Black, Classic, or Only Classes'
     }),
 
-    isActive: Joi.boolean()
-      .messages({
-        'boolean.base': 'The isActive field must be a boolean',
-        'boolean.empty': 'The isActive field is a required field'
-      })
-      .required()
+    isActive: Joi.boolean().messages({
+      'boolean.base': 'The isActive field must be a boolean',
+      'boolean.empty': 'The isActive field is a required field'
+    })
   });
 
   const memberUpdate = {
@@ -146,7 +144,7 @@ const MembersForm = () => {
   });
 
   const memberBody = {
-    method: 'PUT',
+    method: id ? 'PUT' : 'POST',
     headers: {
       'Content-Type': 'application/json',
       token: token
@@ -156,7 +154,7 @@ const MembersForm = () => {
 
   const onConfirmFunction = async () => {
     if (!id) {
-      const addMemberResponse = await dispatch(addMember(member));
+      const addMemberResponse = await dispatch(addMember(memberBody));
       if (addMemberResponse.type === 'ADD_MEMBER_SUCCESS') {
         setToastErroOpen(false);
         setModalSuccessOpen(true);
@@ -182,6 +180,16 @@ const MembersForm = () => {
     setMember(data);
     setModalAddConfirmOpen(true);
   };
+
+  useEffect(() => {
+    if (!location.pathname === '/api/auth/') {
+      if (isError.error) {
+        setToastErroOpen(true);
+      } else {
+        setToastErroOpen(false);
+      }
+    }
+  }, [isError]);
 
   const memberships = ['Classic', 'Black', 'Only Classes'];
 
@@ -312,37 +320,6 @@ const MembersForm = () => {
                 required
                 testId="input-member-membership"
               />
-            </div>
-            <div className={styles.inputContainer}>
-              <label className={styles.nameLabel}>Status</label>
-              <div className={styles.radioContainer}>
-                <div>
-                  <label>
-                    Active
-                    <input
-                      {...register('isActive', {
-                        required: { value: true, message: 'This field is required' }
-                      })}
-                      type="radio"
-                      name="isActive"
-                      value={true}
-                    />
-                  </label>
-                </div>
-                <div>
-                  <label>
-                    Inactive
-                    <input
-                      {...register('isActive', {
-                        required: { value: true, message: 'This field is required' }
-                      })}
-                      type="radio"
-                      name="isActive"
-                      value={false}
-                    />
-                  </label>
-                </div>
-              </div>
             </div>
           </div>
         </section>

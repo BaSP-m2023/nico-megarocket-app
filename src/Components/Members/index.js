@@ -26,7 +26,11 @@ function Members() {
 
   useEffect(() => {
     if (!location.pathname === '/api/auth/') {
-      setToastErroOpen(!!isError);
+      if (isError.error) {
+        setToastErroOpen(true);
+      } else {
+        setToastErroOpen(false);
+      }
     }
   }, [isError]);
 
