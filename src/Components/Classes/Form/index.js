@@ -113,14 +113,14 @@ const FormClasses = () => {
   const formSubmit = async () => {
     if (updateData.mode === 'edit') {
       setModalConfirmOpen(false);
-      await updateClass(id, classBody, dispatch);
+      await dispatch(updateClass(id, classBody));
       await setModalSuccessOpen(true);
       setTimeout(() => {
         history.push('/admin/classes');
         setModalSuccessOpen(false);
       }, 2000);
     } else {
-      await createClass(classBody, dispatch);
+      await dispatch(createClass(classBody));
       await setModalSuccessOpen(true);
       setTimeout(() => {
         history.goBack();
