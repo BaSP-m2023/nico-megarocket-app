@@ -31,6 +31,22 @@ class LoginPage {
   get loader() {
     return $('[data-testid="classes-table-loader"]');
   }
+
+  async login(username, password) {
+    await this.emailInput.setValue(username);
+    await this.pswInput.setValue(password);
+    await this.enterBtn.click();
+  }
+
+  async emailErrorMsg(textContaining) {
+    await expect(this.emailError).toBeDisplayed();
+    expect(this.emailError).toHaveTextContaining(textContaining);
+  }
+
+  async pswErrorMsg(textContaining) {
+    await expect(this.pswError).toBeDisplayed();
+    expect(this.pswError).toHaveTextContaining(textContaining);
+  }
 }
 
 module.exports = new LoginPage();
