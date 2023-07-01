@@ -33,20 +33,11 @@ export const createTrainer = (body) => {
   };
 };
 
-const token = sessionStorage.getItem('token');
-
 export const updateTrainer = (id, body) => {
   return async (dispatch) => {
     try {
       dispatch(updateTrainerPending(true));
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/trainer/${id}`,
-        {
-          method: 'PUT',
-          headers: { token: token }
-        },
-        body
-      );
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, body);
       const data = await response.json();
       dispatch(updateTrainerPending(false));
       return dispatch(updateTrainerSuccess(data));
@@ -59,6 +50,7 @@ export const updateTrainer = (id, body) => {
 
 export const getTrainers = async (dispatch) => {
   try {
+    const token = sessionStorage.getItem('token');
     const reponse = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`, {
       method: 'GET',
       headers: { token: token }
@@ -80,6 +72,7 @@ export const getTrainers = async (dispatch) => {
 export const deleteTrainer = (id) => {
   return async (dispatch) => {
     try {
+      const token = sessionStorage.getItem('token');
       dispatch(deleteTrainerPending(true));
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
         method: 'DELETE',

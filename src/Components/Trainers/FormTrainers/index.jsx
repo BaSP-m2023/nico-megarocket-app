@@ -18,7 +18,7 @@ const FormTrainer = () => {
   const updateData = location.state.params;
   const dispatch = useDispatch();
   const isError = useSelector((store) => store.trainers.formError);
-
+  const token = sessionStorage.getItem('token');
   const schema = Joi.object({
     firstName: Joi.string().min(3).max(30).required(),
     lastName: Joi.string().min(3).max(30).required(),
@@ -30,8 +30,7 @@ const FormTrainer = () => {
       .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
       .message('The password must have at least one Uppercase,a number and 8 characters.'),
     city: Joi.string().min(5).max(25),
-    salary: Joi.number(),
-    isActive: Joi.boolean().required()
+    salary: Joi.number()
   });
 
   const updateTrainerData = {
@@ -42,8 +41,7 @@ const FormTrainer = () => {
     email: updateData.email,
     password: updateData.password,
     city: updateData.city,
-    salary: updateData.salary,
-    isActive: updateData.isActive
+    salary: updateData.salary
   };
 
   const {
@@ -64,7 +62,8 @@ const FormTrainer = () => {
   const trainerBody = {
     method: updateData.mode === 'edit' ? 'PUT' : 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      token: token
     },
     body: JSON.stringify(inputForm)
   };
@@ -101,7 +100,9 @@ const FormTrainer = () => {
   };
 
   useEffect(() => {
-    setToastErrorOpen(!!isError);
+    if (!location.pathname === '/api/auth/') {
+      setToastErrorOpen(!!isError);
+    }
   }, [isError]);
 
   return (
@@ -176,48 +177,23 @@ const FormTrainer = () => {
               />
             </div>
 
-            <div>
-              <Inputs
-                nameTitle="Password"
-                register={register}
-                nameInput="password"
-                type="password"
-                error={errors.password?.message}
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <label>Status</label>
-              <label>
-                Active
-                <input
-                  {...register('isActive', {
-                    required: { value: true, message: 'This field is required' }
-                  })}
-                  type="radio"
-                  name="isActive"
-                  value={true}
-                />
-              </label>
+            {!id && (
               <div>
-                <label>
-                  Inactive
-                  <input
-                    {...register('isActive', {
-                      required: { value: true, message: 'This field is required' }
-                    })}
-                    type="radio"
-                    name="isActive"
-                    value={false}
-                  />
-                </label>
+                <Inputs
+                  nameTitle="Password"
+                  register={register}
+                  nameInput="password"
+                  type="password"
+                  error={errors.password?.message}
+                />
               </div>
-            </div>
+            )}
           </div>
         </div>
-        <div className={styles.buttonsGroup}>
-          <Button text="Save" clickAction={() => {}} />
-          <Button text="Reset" clickAction={() => reset()} />
-          <Button clickAction={() => history.goBack()} text="Cancel" />
+        <div className={styles.buttonContainer}>
+          <Button clickAction={() => {}} text={id ? 'Update' : 'Add'} testId="trainer-save-btn" />
+          <Button clickAction={() => reset()} text="Reset" testId="trainer-reset-btn" />
+          <Button text="Cancel" clickAction={() => history.goBack()} testId="trainer-cancel-btn" />
         </div>
       </form>
 
@@ -234,7 +210,10 @@ const FormTrainer = () => {
         />
       )}
       {modalSuccess && (
-        <ModalSuccess setModalSuccessOpen={setModalSuccess} message="Trainer added successfully" />
+        <ModalSuccess
+          setModalSuccessOpen={setModalSuccess}
+          message={id ? 'Trainer edit successfully!' : 'Trainer added successfully!'}
+        />
       )}
       {toastErrorOpen && (
         <ToastError setToastErroOpen={setToastErrorOpen} message={isError.message} />

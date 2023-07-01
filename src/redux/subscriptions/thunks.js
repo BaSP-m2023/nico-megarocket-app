@@ -20,13 +20,13 @@ export const getSuscription = async (dispatch) => {
     const data = await response.json();
     if (response.ok) {
       dispatch(getSubscriptionPending(false));
-      dispatch(getSubscriptionSuccess(data.data));
+      return dispatch(getSubscriptionSuccess(data.data));
     } else {
-      dispatch(getSubscriptionSuccess(data.message));
+      return dispatch(getSubscriptionSuccess(data.message));
     }
   } catch (error) {
     dispatch(getSubscriptionPending(false));
-    dispatch(getSubscriptionError(true));
+    return dispatch(getSubscriptionError(true));
   }
 };
 
@@ -63,7 +63,7 @@ export const addSubscriptions = async (dispatch, newSub) => {
     const data = await res.json();
     dispatch(addSubscriptionPending(false));
     if (res.ok) {
-      return dispatch(addSubscriptionSuccess(data.result));
+      return dispatch(addSubscriptionSuccess(data.data));
     }
     return dispatch(addSubscriptionError(data.message));
   } catch (error) {
@@ -72,24 +72,27 @@ export const addSubscriptions = async (dispatch, newSub) => {
   }
 };
 
-export const updateSubscriptions = async (dispatch, id, editSub) => {
-  try {
-    dispatch(editSubscriptionPending(true));
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscription/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(editSub)
-    });
-    const data = await res.json();
-    dispatch(editSubscriptionPending(false));
-    if (res.ok) {
-      return dispatch(editSubscriptionSuccess(id, data.result));
+export const updateSubscriptions = (id, editSub) => {
+  return async (dispatch) => {
+    try {
+      dispatch(editSubscriptionPending(true));
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscription/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(editSub)
+      });
+      const data = await res.json();
+      const newData = data.data;
+      dispatch(editSubscriptionPending(false));
+      if (res.ok) {
+        return dispatch(editSubscriptionSuccess(newData));
+      }
+      return dispatch(editSubscriptionError(data.message));
+    } catch (error) {
+      dispatch(editSubscriptionPending(false));
+      return dispatch(editSubscriptionError(error));
     }
-    return dispatch(editSubscriptionError(data.message));
-  } catch (error) {
-    dispatch(editSubscriptionPending(false));
-    return dispatch(editSubscriptionError(error));
-  }
+  };
 };

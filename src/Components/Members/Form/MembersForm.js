@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import {
   ModalConfirm,
@@ -18,6 +18,7 @@ import Joi from 'joi';
 const MembersForm = () => {
   const dispatch = useDispatch();
   const isError = useSelector((state) => state.members.errorForm);
+  const token = sessionStorage.getItem('token');
   const [toastError, setToastErroOpen] = useState(false);
   const [modalAddConfirmOpen, setModalAddConfirmOpen] = useState(false);
   const [modalSuccess, setModalSuccessOpen] = useState(false);
@@ -108,16 +109,14 @@ const MembersForm = () => {
       })
       .required(),
 
-    membership: Joi.string().valid('Black', 'Classic', 'Only_classes').messages({
-      'any.only': 'The membership must be one of Black, Classic, or Only_classes'
+    membership: Joi.string().valid('Black', 'Classic', 'Only Classes').messages({
+      'any.only': 'The membership must be one of Black, Classic, or Only Classes'
     }),
 
-    isActive: Joi.boolean()
-      .messages({
-        'boolean.base': 'The isActive field must be a boolean',
-        'boolean.empty': 'The isActive field is a required field'
-      })
-      .required()
+    isActive: Joi.boolean().messages({
+      'boolean.base': 'The isActive field must be a boolean',
+      'boolean.empty': 'The isActive field is a required field'
+    })
   });
 
   const memberUpdate = {
@@ -144,9 +143,18 @@ const MembersForm = () => {
     defaultValues: { ...memberUpdate }
   });
 
+  const memberBody = {
+    method: id ? 'PUT' : 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      token: token
+    },
+    body: JSON.stringify(member)
+  };
+
   const onConfirmFunction = async () => {
     if (!id) {
-      const addMemberResponse = await dispatch(addMember(member));
+      const addMemberResponse = await dispatch(addMember(memberBody));
       if (addMemberResponse.type === 'ADD_MEMBER_SUCCESS') {
         setToastErroOpen(false);
         setModalSuccessOpen(true);
@@ -156,7 +164,7 @@ const MembersForm = () => {
       }
       return setToastErroOpen(true);
     } else {
-      const editMemberResponse = await dispatch(editMember(id, member));
+      const editMemberResponse = await dispatch(editMember(id, memberBody));
       if (editMemberResponse.type === 'EDIT_MEMBER_SUCCESS') {
         setToastErroOpen(false);
         setModalSuccessOpen(true);
@@ -173,7 +181,17 @@ const MembersForm = () => {
     setModalAddConfirmOpen(true);
   };
 
-  const memberships = ['Classic', 'Black', 'Only classes'];
+  useEffect(() => {
+    if (!location.pathname === '/api/auth/') {
+      if (isError.error) {
+        setToastErroOpen(true);
+      } else {
+        setToastErroOpen(false);
+      }
+    }
+  }, [isError]);
+
+  const memberships = ['Classic', 'Black', 'Only Classes'];
 
   return (
     <div className={styles.container}>
@@ -302,37 +320,6 @@ const MembersForm = () => {
                 required
                 testId="input-member-membership"
               />
-            </div>
-            <div className={styles.inputContainer}>
-              <label className={styles.nameLabel}>Status</label>
-              <div className={styles.radioContainer}>
-                <div>
-                  <label>
-                    Active
-                    <input
-                      {...register('isActive', {
-                        required: { value: true, message: 'This field is required' }
-                      })}
-                      type="radio"
-                      name="isActive"
-                      value={true}
-                    />
-                  </label>
-                </div>
-                <div>
-                  <label>
-                    Inactive
-                    <input
-                      {...register('isActive', {
-                        required: { value: true, message: 'This field is required' }
-                      })}
-                      type="radio"
-                      name="isActive"
-                      value={false}
-                    />
-                  </label>
-                </div>
-              </div>
             </div>
           </div>
         </section>

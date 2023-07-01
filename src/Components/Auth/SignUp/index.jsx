@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './signUp.module.css';
-import { Inputs, OptionInput, Button } from 'Components/Shared';
+import { Inputs, OptionInput, Button, ToastError } from 'Components/Shared';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import { signUpMember } from 'redux/auth/thunks';
+import ModalSuccess from 'Components/Shared/Modals/ModalSuccess/index';
 
 const SignForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const [openModalSuccess, setOpenModalSuccess] = useState(null);
+  const [error, setError] = useState(null);
+  const [toastError, setToastError] = useState(null);
 
   const schema = Joi.object({
     firstName: Joi.string()
@@ -54,6 +58,7 @@ const SignForm = () => {
 
     phone: Joi.string()
       .min(10)
+      .max(10)
       .messages({
         'string.base': 'The phone number must be a text string',
         'string.empty': 'The phone number is a required field',
@@ -108,13 +113,6 @@ const SignForm = () => {
       .messages({
         'alternatives.types': 'Membership most be required'
       })
-      .required(),
-
-    isActive: Joi.boolean()
-      .messages({
-        'boolean.base': 'The isActive field must be a boolean',
-        'boolean.empty': 'The isActive field is a required field'
-      })
       .required()
   });
 
@@ -129,9 +127,20 @@ const SignForm = () => {
 
   const onSubmit = async (data) => {
     if (Object.values(errors).length === 0) {
-      const responseSignUp = await dispatch(signUpMember(data));
-      if (responseSignUp.type === 'SIGN_UP_SUCCESS') {
-        history.push('/auth/login');
+      try {
+        const responseSignUp = await dispatch(signUpMember(data));
+        if (responseSignUp.type === 'SIGN_UP_SUCCESS') {
+          setOpenModalSuccess(true);
+          setTimeout(() => {
+            setOpenModalSuccess(false);
+            history.push('/auth/login');
+          }, 2000);
+        }
+        if (responseSignUp.type === 'SIGN_UP_ERROR') {
+          setToastError(true);
+        }
+      } catch (error) {
+        setToastError(true);
       }
     }
   };
@@ -140,7 +149,40 @@ const SignForm = () => {
 
   return (
     <div>
+      {openModalSuccess && (
+        <ModalSuccess
+          setModalSuccessOpen={setOpenModalSuccess}
+          message={'Sign In Successfully!'}
+          testId="member-modal-success"
+        />
+      )}
+
+      {toastError && (
+        <ToastError
+          setToastErroOpen={setToastError}
+          message={'Email is already in use'}
+          testId="member-form-toast-error"
+        />
+      )}
+
+      {error && (
+        <div className={styles.boxError} data-testid="signUp-error-pop">
+          <div className={styles.lineError}>
+            <div className={styles.errorLogo}>!</div>
+            Sign In error
+            <div
+              onClick={() => {
+                setError(false);
+              }}
+              className={styles.close_icon}
+            ></div>
+          </div>
+          <p className={styles.MsgError}>Email is already user</p>
+        </div>
+      )}
+
       <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
+        <h1 className={styles.title}>Sign Up</h1>
         <div className={styles.form}>
           <div className={styles.groupContainer}>
             <div className={styles.inputContainer}>
@@ -216,16 +258,6 @@ const SignForm = () => {
               />
             </div>
             <div className={styles.inputContainer}>
-              <OptionInput
-                data={memberships}
-                name="membership"
-                dataLabel="Membership"
-                register={register}
-                error={errors.membership?.message}
-                testId="signup-membership-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
               <Inputs
                 nameTitle="Email"
                 nameInput="email"
@@ -245,33 +277,15 @@ const SignForm = () => {
                 testId="signup-password-input"
               />
             </div>
-            <div className={styles.radioContainer} data-testid="active-selector">
-              <div>
-                <label>
-                  Active
-                  <input
-                    {...register('isActive', {
-                      required: { value: true, message: 'This field is required' }
-                    })}
-                    type="radio"
-                    name="isActive"
-                    value={true}
-                  />
-                </label>
-              </div>
-              <div>
-                <label>
-                  Inactive
-                  <input
-                    {...register('isActive', {
-                      required: { value: true, message: 'This field is required' }
-                    })}
-                    type="radio"
-                    name="isActive"
-                    value={false}
-                  />
-                </label>
-              </div>
+            <div className={styles.inputContainer}>
+              <OptionInput
+                data={memberships}
+                name="membership"
+                dataLabel="Membership"
+                register={register}
+                error={errors.membership?.message}
+                testId="signup-membership-input"
+              />
             </div>
           </div>
         </div>

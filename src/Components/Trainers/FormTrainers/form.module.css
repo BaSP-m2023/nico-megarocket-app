@@ -2,7 +2,13 @@
   display: flex;
 }
 
-.inputContainer {
-  display: grid;
-  margin-left: 20px;
+.buttonContainer {
+  display: flex;
+  gap: 20px;
+}
+
+.form {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
 }

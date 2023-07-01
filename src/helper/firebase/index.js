@@ -1,4 +1,5 @@
 import firebase from 'firebase/compat/app';
+import { getAuth } from 'firebase/auth';
 import 'firebase/compat/auth';
 
 const firebaseConfig = {
@@ -23,4 +24,15 @@ export const tokenListener = () => {
       sessionStorage.setItem('token', token);
     }
   });
+};
+
+export const getFirebaseUidFromToken = async () => {
+  try {
+    const auth = getAuth();
+    const decodedToken = await auth.currentUser.getIdTokenResult();
+    const idCurrentUser = decodedToken.claims.email;
+    return idCurrentUser;
+  } catch (error) {
+    return error;
+  }
 };

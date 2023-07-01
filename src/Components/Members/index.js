@@ -1,4 +1,4 @@
-import { TableComponent, AddButton, ToastError, Loader } from 'Components/Shared';
+import { TableComponent, ToastError } from 'Components/Shared';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -7,7 +7,6 @@ import { getAllMembers, memberDelete } from 'redux/members/thunks';
 function Members() {
   const dispatch = useDispatch();
   const members = useSelector((state) => state.members.list);
-  const isPending = useSelector((state) => state.members.pending);
   const isError = useSelector((state) => state.members.error);
   const [toastError, setToastErroOpen] = useState(isError);
 
@@ -17,16 +16,18 @@ function Members() {
     history.push(`/admin/members/form/${item._id}`, { params: { mode: 'edit', ...item } });
   };
 
-  const createMode = () => {
-    history.push(`/admin/members/form/`, { params: { mode: 'create' } });
-  };
-
   useEffect(() => {
     getAllMembers(dispatch);
   }, []);
 
   useEffect(() => {
-    setToastErroOpen(!!isError);
+    if (!location.pathname === '/api/auth/') {
+      if (isError.error) {
+        setToastErroOpen(true);
+      } else {
+        setToastErroOpen(false);
+      }
+    }
   }, [isError]);
 
   const columns = ['firstName', 'email', 'phone', 'city', 'postalCode', 'membership'];
@@ -35,20 +36,15 @@ function Members() {
 
   return (
     <section>
-      <div>
-        <AddButton entity="Member" createMode={createMode} testId="add-member-btn" />
-      </div>
-      {isPending && <Loader testId="member-table-loader" />}
-      {!isPending && (
-        <TableComponent
-          columns={columns}
-          columnTitleArray={columnTitleArray}
-          data={members}
-          deleteButton={memberDelete}
-          handleClick={handleClick}
-          testId="members-table"
-        />
-      )}
+      <TableComponent
+        columns={columns}
+        columnTitleArray={columnTitleArray}
+        data={members}
+        deleteButton={memberDelete}
+        handleClick={handleClick}
+        testId="members-table"
+      />
+
       {toastError && (
         <ToastError
           setToastErroOpen={setToastErroOpen}

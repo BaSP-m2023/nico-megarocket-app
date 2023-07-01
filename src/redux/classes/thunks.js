@@ -52,40 +52,44 @@ export const deleteClass = (id) => {
   };
 };
 
-export const createClass = async (body, dispatch) => {
-  try {
-    dispatch(addClassPending(true));
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class`, body);
-    const data = await response.json();
-    dispatch(addClassPending(false));
-    if (response.status !== 200) {
-      dispatch(addClassError(data.error));
-    } else {
-      dispatch(addClassSuccess(body));
+export const createClass = (body) => {
+  return async (dispatch) => {
+    try {
+      dispatch(addClassPending(true));
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class`, body);
+      const data = await response.json();
+      dispatch(addClassPending(false));
+      if (response.status !== 200) {
+        dispatch(addClassError(data.error));
+      } else {
+        dispatch(addClassSuccess(body));
+      }
+    } catch (error) {
+      dispatch(addClassPending(false));
     }
-  } catch (error) {
-    dispatch(addClassPending(false));
-  }
+  };
 };
 
-export const updateClass = async (id, body, dispatch) => {
-  try {
-    dispatch(editClassPending(true));
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    });
-    const data = await response.json();
-    dispatch(editClassPending(false));
-    if (response.status !== 200) {
-      return dispatch(editClassError(data.message));
-    } else {
-      return dispatch(editClassSuccess(body));
+export const updateClass = (id, body) => {
+  return async (dispatch) => {
+    try {
+      dispatch(editClassPending(true));
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+      const data = await response.json();
+      dispatch(editClassPending(false));
+      if (response.status !== 200) {
+        return dispatch(editClassError(data.message));
+      } else {
+        return dispatch(editClassSuccess(body));
+      }
+    } catch (error) {
+      return dispatch(editClassPending(false));
     }
-  } catch (error) {
-    return dispatch(editClassPending(false));
-  }
+  };
 };

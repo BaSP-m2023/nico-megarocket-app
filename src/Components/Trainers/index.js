@@ -1,17 +1,15 @@
 import { useEffect, useState } from 'react';
-import { AddButton, Loader, TableComponent, ToastError } from 'Components/Shared';
+import { AddButton, TableComponent, ToastError } from 'Components/Shared';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTrainers, deleteTrainer } from 'redux/trainers/thunks';
 
 function Trainers() {
   const [toastErroOpen, setToastErroOpen] = useState(false);
-  const isLoading = useSelector((state) => state.trainers.pending);
   const isError = useSelector((state) => state.trainers.error);
   const trainers = useSelector((state) => state.trainers.list);
   const history = useHistory();
   const dispatch = useDispatch();
-
   const createMode = () => {
     history.push('/admin/trainers/form/', { params: { mode: 'created' } });
   };
@@ -34,17 +32,15 @@ function Trainers() {
   return (
     <section>
       <AddButton entity="Trainer" createMode={createMode} />
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <TableComponent
-          columnTitleArray={columnsTable}
-          data={trainers}
-          handleClick={handleClick}
-          deleteButton={deleteTrainer}
-          columns={columnsValue}
-        />
-      )}
+
+      <TableComponent
+        columnTitleArray={columnsTable}
+        data={trainers}
+        handleClick={handleClick}
+        deleteButton={deleteTrainer}
+        columns={columnsValue}
+        trainers={trainers}
+      />
       {toastErroOpen && (
         <ToastError setToastErroOpen={setToastErroOpen} message="Error in Database" />
       )}

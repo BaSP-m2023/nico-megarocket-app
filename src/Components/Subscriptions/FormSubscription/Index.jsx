@@ -27,9 +27,16 @@ const FormSubscription = () => {
       'date.base': 'Date must be a valid date',
       'any.required': 'Date is required'
     }),
-    members: Joi.string().required().invalid('Pick members').messages({
-      'any.only': 'Please select a member'
-    }),
+    members: Joi.alternatives()
+      .try(
+        Joi.array().items(Joi.string().hex().length(24).required()),
+        Joi.string().hex().length(24).required()
+      )
+      .required()
+      .messages({
+        'any.only': 'Please select a member',
+        'any.required': 'Please select a member'
+      }),
     classId: Joi.string().required().invalid('Pick classId').messages({
       'any.only': 'Please select a class'
     })
@@ -68,7 +75,7 @@ const FormSubscription = () => {
         }, 1000);
       }
     } else {
-      const editSubscriptionResponse = await updateSubscriptions(dispatch, id, subscription);
+      const editSubscriptionResponse = await dispatch(updateSubscriptions(id, subscription));
       if (editSubscriptionResponse.type === 'PUT_SUBSCRIPTION_SUCCESS') {
         setModalSuccessOpen(true);
         return setTimeout(() => {
@@ -122,9 +129,9 @@ const FormSubscription = () => {
           error={errors.date?.message}
         />
         <div className={style.containerAdd}>
-          <Button clickAction={goBack} text="Cancel" />
-          <Button clickAction={() => reset()} text="Reset" />
           <Button clickAction={() => {}} text="Save" />
+          <Button clickAction={() => reset()} text="Reset" />
+          <Button clickAction={goBack} text="Cancel" />
         </div>
       </form>
       {modalConfirmOpen && (

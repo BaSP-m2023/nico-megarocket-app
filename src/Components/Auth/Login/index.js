@@ -107,23 +107,37 @@ function LoginForm() {
           <div className={styles.emptyBox} data-testid="login-error-pop"></div>
         )}
 
-        <div data-testid="password-forgot-btn">
+        <div className={styles.newContainer}>
+          <div className={styles.sub_buttons}>
+            <Button
+              className={styles.buttonLogin}
+              clickAction={() => {}}
+              text="Enter"
+              testId="enter-login-btn"
+            />
+          </div>
+          <div data-testid="password-forgot-btn">
+            <button
+              className={styles.forgotPass}
+              onClick={() => {
+                history.push('/auth/recover-password');
+              }}
+            >
+              Forgot Password?
+            </button>
+          </div>
+        </div>
+
+        <div className={styles.notAccountContainer}>
+          <p> Dont have an account?</p>
           <button
             className={styles.forgotPass}
-            onClick={(e) => {
-              e.preventDefault();
+            onClick={() => {
+              history.push('/auth/sign-up');
             }}
           >
-            Forgot your password?
+            Sign Up
           </button>
-        </div>
-        <div className={styles.sub_buttons}>
-          <Button
-            className={styles.buttonLogin}
-            clickAction={() => {}}
-            text="Enter"
-            testId="enter-login-btn"
-          />
         </div>
       </div>
     </form>
