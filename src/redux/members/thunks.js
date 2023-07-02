@@ -6,6 +6,9 @@ import {
   addMemberSuccess,
   addMemberError,
   editMemberPending,
+  editMemberIsActivePending,
+  editMemberIsActiveSuccess,
+  editMemberIsActiveError,
   editMemberSuccess,
   editMemberError,
   deleteMemberPending,
@@ -57,14 +60,32 @@ export const editMember = (id, body) => {
       dispatch(addMemberError(false));
       dispatch(editMemberPending(true));
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, body);
-      dispatch(editMemberPending(false));
       const data = await response.json();
       if (response.ok) {
+        dispatch(editMemberPending(false));
+        dispatch(editMemberIsActivePending(false));
         return dispatch(editMemberSuccess(data));
       }
       return dispatch(editMemberError({ error: true, message: data.message }));
     } catch (err) {
       return dispatch(editMemberError({ error: true, message: err }));
+    }
+  };
+};
+
+export const editIsActiveMember = (id, body) => {
+  return async (dispatch) => {
+    try {
+      dispatch(editMemberIsActivePending(true));
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/member/${id}`, body);
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(editMemberIsActivePending(false));
+        return dispatch(editMemberIsActiveSuccess(data));
+      }
+      return dispatch(editMemberIsActiveError({ error: true, message: data.message }));
+    } catch (err) {
+      return dispatch(editMemberIsActiveError({ error: true, message: err }));
     }
   };
 };
