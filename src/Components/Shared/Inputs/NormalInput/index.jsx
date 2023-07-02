@@ -6,11 +6,11 @@ const Inputs = ({ register, error, type, isDisabled, nameInput, nameTitle, testI
     <div className={styles.nameLabel} data-testid={testId}>
       <label>{nameTitle}</label>
       <input
-        {...register(nameInput, { required: { value: true, message: 'This field is required' } })}
-        className={error ? `${styles.errorInput} ${styles.normalInput}` : styles.normalInput}
         type={type}
-        disabled={isDisabled}
         name={nameInput}
+        className={error ? `${styles.errorInput} ${styles.normalInput}` : styles.normalInput}
+        disabled={isDisabled}
+        {...register(nameInput, { required: { value: true, message: 'This field is required' } })}
       />
       {error ? <p className={styles.error}>{error}</p> : <p className={styles.spaceErrorMsg}></p>}
     </div>

@@ -2,43 +2,31 @@ import React, { useEffect, useState } from 'react';
 import styles from './profile.module.css';
 import { ButtonForm } from 'Components/Shared';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { getAllAdmins } from 'redux/admins/thunks';
-import { getAuth } from 'firebase/auth';
+import { getFirebaseUidFromToken } from 'helper/firebase';
 import 'firebase/compat/auth';
-
 const profilePic = `${process.env.PUBLIC_URL}/assets/images/profile-img.png`;
 const editProfilePicBtn = `${process.env.PUBLIC_URL}/assets/images/image.png`;
 
 const AdminProfile = ({ testId }) => {
   const dispatch = useDispatch();
-  const [admin, setAdmin] = useState('');
+  const history = useHistory();
+  const [userCurrent, setUserCurrent] = useState('');
   const admins = useSelector((state) => state.admins.list);
-  const auth = getAuth();
-  const [decode, setDecode] = useState({});
+  const admin = admins.find((oneAdmin) => oneAdmin.email === userCurrent);
 
-  setTimeout(() => {
-    const idCurrentUser = decode?.claims.email;
-    const adminElegido = admins?.find((oneAdmin) => oneAdmin.email === idCurrentUser);
-    setAdmin(adminElegido);
-  }, 2000);
+  const currentUser = async () => {
+    try {
+      const emailCurrentUser = await getFirebaseUidFromToken();
+      setUserCurrent(emailCurrentUser);
+    } catch (error) {
+      return error;
+    }
+  };
 
-  // console.log(idCurrentUser, 'email elegido');
-
-  // const currentAdmin = async (idCurrentUser) => {
-  //   try {
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   currentAdmin();
-  // }, [admins]);
-
-  const fn = async () => {
-    const decodedToken = await auth.currentUser.getIdTokenResult();
-    setDecode(decodedToken);
-    console.log(decodedToken);
+  const handleEditClick = () => {
+    history.push(`/admin/profile/form/${admin._id}`, { params: { ...admin } });
   };
 
   useEffect(() => {
@@ -46,11 +34,15 @@ const AdminProfile = ({ testId }) => {
   }, []);
 
   useEffect(() => {
-    fn();
-  }, [decode]);
+    currentUser();
+  }, [admin]);
+
+  if (!admin) {
+    return null;
+  }
 
   return (
-    <div>
+    <div className={styles.wholeContainer}>
       <section className={styles.container} data-testid={testId}>
         <div className={styles.profilePhotoContainer} data-testid="photo-container">
           <img src={profilePic} alt="profile image" />
@@ -83,11 +75,11 @@ const AdminProfile = ({ testId }) => {
             <span className={styles.adminInfoPlaceholder}>Email</span>
             <span className={styles.adminInfo}> {admin.email}</span>
           </p>
-
           <div className={styles.adminInfoContainer}>
             <p className={styles.adminInfoPlaceholder}>Edit profile</p>
             <ButtonForm
               className={styles.editInfoBtn}
+              onAction={handleEditClick}
               nameImg="edit-profile-icon.png"
               testId="profile-edit-btn"
             />
@@ -97,5 +89,4 @@ const AdminProfile = ({ testId }) => {
     </div>
   );
 };
-
 export default AdminProfile;
