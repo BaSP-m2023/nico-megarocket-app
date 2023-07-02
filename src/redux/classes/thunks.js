@@ -74,13 +74,7 @@ export const updateClass = (id, body) => {
   return async (dispatch) => {
     try {
       dispatch(editClassPending(true));
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-      });
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/class/${id}`, body);
       const data = await response.json();
       dispatch(editClassPending(false));
       if (response.status !== 200) {
