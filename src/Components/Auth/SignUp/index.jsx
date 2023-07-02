@@ -145,7 +145,7 @@ const SignForm = () => {
     }
   };
 
-  const memberships = ['Classic', 'Black', 'Only classes'];
+  const memberships = ['Classic', 'Black', 'Only Classes'];
 
   return (
     <div>
