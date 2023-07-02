@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './profile-form.module.css';
 import { Inputs, Button, ModalConfirm, ModalSuccess, ToastError } from 'Components/Shared';
-import { updateAdmin } from 'redux/admins/thunks';
+import { updateTrainer } from 'redux/trainers/thunks';
 import { useParams, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -25,21 +25,21 @@ const TrainerProfileForm = () => {
   const [toastErroOpen, setToastErroOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('Error in database');
 
-  const [adminToEdit, setAdminToEdit] = useState({});
+  const [trainerToEdit, setTrainerToEdit] = useState({});
 
   const history = useHistory();
   const location = useLocation();
   const dispatch = useDispatch();
   const { id } = useParams();
-  const adminData = location.state.params;
+  const trainerData = location.state.params;
 
-  const editAdm = {
-    firstName: adminData.firstName,
-    lastName: adminData.lastName,
-    dni: adminData.dni,
-    email: adminData.email,
-    phone: adminData.phone,
-    city: adminData.city
+  const editTrainer = {
+    firstName: trainerData.firstName,
+    lastName: trainerData.lastName,
+    dni: trainerData.dni,
+    email: trainerData.email,
+    phone: trainerData.phone,
+    city: trainerData.city
   };
 
   const {
@@ -51,7 +51,7 @@ const TrainerProfileForm = () => {
     mode: 'onBlur',
     resolver: joiResolver(schema),
     defaultValues: {
-      ...editAdm
+      ...editTrainer
     }
   });
 
@@ -59,37 +59,47 @@ const TrainerProfileForm = () => {
     setModalConfirmOpen(true);
   };
 
-  const onSubmit = async (dataAdmin) => {
-    const adminEdit = {
-      firstName: dataAdmin.firstName,
-      lastName: dataAdmin.lastName,
-      dni: dataAdmin.dni,
-      phone: dataAdmin.phone,
-      email: dataAdmin.email,
-      city: dataAdmin.city,
-      password: dataAdmin.password
+  const onSubmit = async (dataTrainer) => {
+    const trainerEdit = {
+      firstName: dataTrainer.firstName,
+      lastName: dataTrainer.lastName,
+      dni: dataTrainer.dni,
+      phone: dataTrainer.phone,
+      email: dataTrainer.email,
+      city: dataTrainer.city,
+      password: dataTrainer.password
     };
-    setAdminToEdit(adminEdit);
+    setTrainerToEdit(trainerEdit);
     openModal();
   };
 
-  const submitAdmin = () => {
+  const submitTrainer = () => {
     setModalConfirmOpen(false);
     if (Object.keys(errors).length === 0) {
-      editAdmins();
+      editTrainers();
     } else {
       setToastMessage('Form validation error');
       setToastErroOpen(true);
     }
   };
+  const token = sessionStorage.getItem('token');
 
-  const editAdmins = async () => {
+  const trainerBody = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      token: token
+    },
+    body: JSON.stringify(trainerToEdit)
+  };
+
+  const editTrainers = async () => {
     try {
-      updateAdmin(dispatch, id, adminToEdit);
-      if (!adminData.error) {
+      dispatch(updateTrainer(id, trainerBody));
+      if (!trainerData.error) {
         confirmation();
       } else {
-        throw new Error(adminData.message);
+        throw new Error(trainerData.message);
       }
     } catch (error) {
       setToastMessage(error.message);
@@ -100,7 +110,7 @@ const TrainerProfileForm = () => {
   const confirmation = () => {
     setModalSuccessOpen(true);
     setTimeout(() => {
-      history.push('/admin/profile');
+      history.push('/trainer/profile');
     }, 2000);
   };
 
@@ -177,33 +187,24 @@ const TrainerProfileForm = () => {
               history.goBack();
             }}
             text="Cancel"
-            testId="admin-cancel-btn"
           />
         </div>
       </form>
       {modalConfirmOpen && (
         <ModalConfirm
           method={'Edit'}
-          message={'Are you sure you want to edit the admin?'}
-          onConfirm={submitAdmin}
+          message={'Are you sure you want to edit the trainer?'}
+          onConfirm={submitTrainer}
           setModalConfirmOpen={setModalConfirmOpen}
-          testId="admin-modal-confirm"
         />
       )}
       {modalSuccessOpen && (
         <ModalSuccess
-          message={'Admin edited successfully'}
+          message={'Trainer edited successfully'}
           setModalSuccessOpen={setModalSuccessOpen}
-          testId="admin-modal-success"
         />
       )}
-      {toastErroOpen && (
-        <ToastError
-          setToastErroOpen={setToastErroOpen}
-          message={toastMessage}
-          testId="admin-form-toast-error"
-        />
-      )}
+      {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
     </div>
   );
 };
