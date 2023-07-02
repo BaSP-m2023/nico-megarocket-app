@@ -10,44 +10,6 @@ import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 
-const schema = Joi.object({
-  hour: Joi.string()
-    .pattern(/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/)
-    .required()
-    .messages({
-      'string.pattern.base': 'Hour format is HH:mm'
-    }),
-  day: Joi.string()
-    .valid('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
-    .messages({
-      'any.only':
-        'The days can only be Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday'
-    })
-    .required(),
-  trainer: Joi.alternatives()
-    .try(
-      Joi.array().items(Joi.string().hex().length(24).required()),
-      Joi.string().hex().length(24).required()
-    )
-    .messages({
-      'alternatives.types': 'Trainer must be an array or a hexadecimal ID',
-      'string.hex': 'Trainer must be a hexadecimal ID',
-      'string.length': 'Trainer must have exactly 24 characters'
-    }),
-  activity: Joi.string().hex().length(24).required().messages({
-    'string.hex': 'Activity has to be a hexadecimal ID',
-    'string.length': 'Activity must have exactly 24 characters',
-    'string.base': 'Activity must be chosen',
-    'any.required': 'Activity is required'
-  }),
-  slots: Joi.number().min(0).max(20).required().messages({
-    'number.base': 'Slots must be a number',
-    'number.min': 'Slots must be at least 1',
-    'number.max': 'Slots cannot exceed 20',
-    'any.required': 'Slots is required'
-  })
-});
-
 const FormClasses = () => {
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
@@ -65,6 +27,44 @@ const FormClasses = () => {
   const isLoading = useSelector((state) => state.classes.pending);
 
   const daysArray = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  const schema = Joi.object({
+    hour: Joi.string()
+      .pattern(/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/)
+      .required()
+      .messages({
+        'string.pattern.base': 'Hour format is HH:mm'
+      }),
+    day: Joi.string()
+      .valid('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
+      .messages({
+        'any.only':
+          'The days can only be Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday'
+      })
+      .required(),
+    trainer: Joi.alternatives()
+      .try(
+        Joi.array().items(Joi.string().hex().length(24).required()),
+        Joi.string().hex().length(24).required()
+      )
+      .messages({
+        'alternatives.types': 'Trainer must be an array or a hexadecimal ID',
+        'string.hex': 'Trainer must be a hexadecimal ID',
+        'string.length': 'Trainer must have exactly 24 characters'
+      }),
+    activity: Joi.string().hex().length(24).required().messages({
+      'string.hex': 'Activity has to be a hexadecimal ID',
+      'string.length': 'Activity must have exactly 24 characters',
+      'string.base': 'Activity must be chosen',
+      'any.required': 'Activity is required'
+    }),
+    slots: Joi.number().min(0).max(20).required().messages({
+      'number.base': 'Slots must be a number',
+      'number.min': 'Slots must be at least 1',
+      'number.max': 'Slots cannot exceed 20',
+      'any.required': 'Slots is required'
+    })
+  });
 
   const classesData = {
     activity: updateItem?.activity ? updateItem.activity._id : '',
@@ -201,14 +201,14 @@ const FormClasses = () => {
 
             <div className={formStyles.buttonContainer}>
               <Button
-                clickAction={() => history.push('/admin/classes')}
+                clickAction={() => {}}
                 text={id ? 'Update' : 'Add'}
                 testId="classes-save-btn"
               />
               <Button clickAction={() => reset()} text="Reset" testId="classes-reset-btn" />
               <Button
                 text="Cancel"
-                clickAction={() => history.push('/admin/classes')}
+                clickAction={() => history.goBack()}
                 testId="classes-cancel-btn"
               />
             </div>
@@ -218,13 +218,11 @@ const FormClasses = () => {
 
       {modalConfirmOpen && (
         <ModalConfirm
-          method={updateData.mode === 'edit' ? 'Edit' : 'Create'}
+          method={id ? 'Edit' : 'Create'}
           onConfirm={formSubmit}
           setModalConfirmOpen={setModalConfirmOpen}
           message={
-            updateData.mode === 'edit'
-              ? 'Are you sure you want to update this?'
-              : 'Are you sure you want to create this?'
+            id ? 'Are you sure you want to update this?' : 'Are you sure you want to create this?'
           }
           testId="classes-modal-confirm"
         />
@@ -234,7 +232,7 @@ const FormClasses = () => {
           <ModalSuccess
             setModalSuccessOpen={setModalSuccessOpen}
             message={
-              updateData.mode === 'edit'
+              id
                 ? 'The class has been updated successfully'
                 : 'The class has been created successfully'
             }
