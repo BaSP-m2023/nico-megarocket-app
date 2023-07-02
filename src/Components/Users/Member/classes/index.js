@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from 'Components/Users/Member/classes/classes.module.css';
 import { getClasses } from 'redux/classes/thunks';
@@ -6,7 +6,12 @@ import DivContainer from 'Components/Shared/Containers';
 
 const MemberClasses = () => {
   const dispatch = useDispatch();
-  const classes = useSelector((state) => state.classes.list);
+  const classesArray = useSelector((state) => state.classes.list);
+  const [selectedClass, setSelectedClass] = useState('');
+  let classes = useSelector((state) => state.classes.list);
+  if (selectedClass) {
+    classes = classesArray.filter((item) => item.activity.name === selectedClass);
+  }
 
   useEffect(() => {
     getClasses(dispatch);
@@ -31,39 +36,55 @@ const MemberClasses = () => {
     }
   };
 
+  const handleChange = (event) => {
+    setSelectedClass(event.target.value);
+  };
+
   return (
-    <table className={styles.tableContainer}>
-      <thead>
-        <tr>
-          <th className={styles.daysContainer}>Times</th>
-          {daysArray.map((item, index) => {
-            return (
-              <th className={styles.daysContainer} key={index}>
-                {item}
-              </th>
-            );
-          })}
-        </tr>
-      </thead>
-      <tbody>
-        {hoursArray.map((row, index) => {
+    <div>
+      <select onChange={handleChange}>
+        <option value="">Pick Class</option>
+        {classesArray.map((item, index) => {
           return (
-            <tr className={styles.trContainer2} key={index}>
-              <td className={styles.trContainer}>{row}</td>
-              {daysArray.map((day) => {
-                return (
-                  <td className={styles.tdContainer} key={day}>
-                    {classes.map((item) => {
-                      return tableItem(item, day, row);
-                    })}
-                  </td>
-                );
-              })}
-            </tr>
+            <option key={index} value={item._id ? item.activity.name : item}>
+              {item.activity.name}
+            </option>
           );
         })}
-      </tbody>
-    </table>
+      </select>
+      <table className={styles.tableContainer}>
+        <thead>
+          <tr>
+            <th className={styles.daysContainer}>Times</th>
+            {daysArray.map((item, index) => {
+              return (
+                <th className={styles.daysContainer} key={index}>
+                  {item}
+                </th>
+              );
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {hoursArray.map((row, index) => {
+            return (
+              <tr className={styles.trContainer2} key={index}>
+                <td className={styles.trContainer}>{row}</td>
+                {daysArray.map((day) => {
+                  return (
+                    <td className={styles.tdContainer} key={day}>
+                      {classes.map((item) => {
+                        return tableItem(item, day, row);
+                      })}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
