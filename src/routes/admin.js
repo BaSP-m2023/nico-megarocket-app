@@ -12,6 +12,7 @@ import AdminSubscriptions from 'Components/Users/Admin/subscriptions';
 import FormSubscription from 'Components/Subscriptions/FormSubscription/Index';
 import Activities from 'Components/Activities/';
 import ModalAddActivity from 'Components/Activities/FormActivities';
+import ProfileForm from 'Components/Users/Admin/profile/Form';
 
 const routes = [
   {
@@ -59,6 +60,7 @@ const AdminRoutes = () => {
         <Route exact path={`${url}/members`} component={Members} />
         <Route path={`${url}/members/form/:id?`} component={MembersForm} />
         <Route exact path={`${url}/profile`} component={AdminProfile} />
+        <Route path={`${url}/profile/form/:id?`} component={ProfileForm} />
         <Route exact path={`${url}/subscription`} component={AdminSubscriptions} />
         <Route path={`${url}/subscriptions/form/:id?`} component={FormSubscription} />
         <Route exact path={`${url}/activities`} component={Activities} />
