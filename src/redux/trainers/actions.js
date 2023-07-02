@@ -5,6 +5,9 @@ import {
   UPDATE_TRAINER_PENDING,
   UPDATE_TRAINER,
   UPDATE_TRAINER_ERROR,
+  UPDATE_TRAINER_IS_ACTIVE_PENDING,
+  UPDATE_TRAINER_IS_ACTIVE,
+  UPDATE_TRAINER_IS_ACTIVE_ERROR,
   GET_TRAINERS_PENDING,
   GET_TRAINERS_SUCCESS,
   GET_TRAINERS_FAILURE,
@@ -51,6 +54,27 @@ export const updateTrainerSuccess = (data) => {
 export const updateTrainerError = (error) => {
   return {
     type: UPDATE_TRAINER_ERROR,
+    payload: error
+  };
+};
+
+export const updateTrainerIsActivePending = (pending) => {
+  return {
+    type: UPDATE_TRAINER_IS_ACTIVE_PENDING,
+    payload: pending
+  };
+};
+
+export const updateTrainerIsActiveSuccess = (data) => {
+  return {
+    type: UPDATE_TRAINER_IS_ACTIVE,
+    payload: data
+  };
+};
+
+export const updateTrainerIsActiveError = (error) => {
+  return {
+    type: UPDATE_TRAINER_IS_ACTIVE_ERROR,
     payload: error
   };
 };

@@ -5,6 +5,9 @@ import {
   UPDATE_TRAINER,
   UPDATE_TRAINER_ERROR,
   UPDATE_TRAINER_PENDING,
+  UPDATE_TRAINER_IS_ACTIVE_PENDING,
+  UPDATE_TRAINER_IS_ACTIVE,
+  UPDATE_TRAINER_IS_ACTIVE_ERROR,
   GET_TRAINERS_PENDING,
   GET_TRAINERS_SUCCESS,
   GET_TRAINERS_FAILURE,
@@ -69,6 +72,37 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         error: action.payload
+      };
+    }
+
+    case UPDATE_TRAINER_IS_ACTIVE_PENDING: {
+      return {
+        ...state,
+        isActivePending: action.payload
+      };
+    }
+
+    case UPDATE_TRAINER_IS_ACTIVE: {
+      const trainerUpdated = action.payload;
+      const updatedTrainers = state.list.map((trainer) => {
+        if (trainer._id === trainerUpdated._id) {
+          return {
+            ...trainer,
+            ...trainerUpdated
+          };
+        }
+        return trainer;
+      });
+      return {
+        ...state,
+        isActiveList: updatedTrainers
+      };
+    }
+
+    case UPDATE_TRAINER_IS_ACTIVE_ERROR: {
+      return {
+        ...state,
+        isActiveError: action.payload
       };
     }
 
