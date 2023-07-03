@@ -4,6 +4,7 @@ import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import MemberActivities from 'Components/Users/Member/activities';
 import MemberClasses from 'Components/Users/Member/classes';
 import MemberProfile from 'Components/Users/Member/profile';
+import MemberProfileForm from 'Components/Users/Member/profile/Form';
 
 const routes = [
   {
@@ -32,6 +33,7 @@ const MemberRoutes = () => {
         <Route exact path={`${url}/classes`} component={MemberClasses} />
         <Route exact path={`${url}/activities`} component={MemberActivities} />
         <Route exact path={`${url}/profile`} component={MemberProfile} />
+        <Route path={`${url}/profile/form/:id?`} component={MemberProfileForm} />
         <Redirect path={`${url}/login`} />
       </Switch>
     </Layout>
