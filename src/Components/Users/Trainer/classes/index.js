@@ -1,16 +1,45 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import styles from 'Components/Users/Member/classes/classes.module.css';
+import styles from './classes.module.css';
 import { getClasses } from 'redux/classes/thunks';
-import DivContainer from 'Components/Shared/Containers';
+import DivContainerTrainer from 'Components/Users/Trainer/classes/Container/';
+import { getFirebaseUidFromToken } from 'helper/firebase';
+import 'firebase/compat/auth';
 
 const TrainersClasses = () => {
   const dispatch = useDispatch();
+  const [userCurrent, setUserCurrent] = useState('');
+
   const classes = useSelector((state) => state.classes.list);
+  const trainers = useSelector((state) => state.trainers.list);
+  const trainer = trainers.find((oneTrainer) => oneTrainer.email === userCurrent);
+
+  const trainerClasses = classes.filter((oneClass) => {
+    if (oneClass.trainer[0].email === userCurrent) {
+      return oneClass;
+    }
+  });
+
+  const currentUser = async () => {
+    try {
+      const emailCurrentUser = await getFirebaseUidFromToken();
+      setUserCurrent(emailCurrentUser);
+    } catch (error) {
+      return error;
+    }
+  };
 
   useEffect(() => {
     getClasses(dispatch);
   }, []);
+
+  useEffect(() => {
+    currentUser();
+  }, [trainer]);
+
+  if (!trainer) {
+    return null;
+  }
 
   const daysArray = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const hoursArray = [
@@ -27,13 +56,13 @@ const TrainersClasses = () => {
   ];
   const tableItem = (item, day, time) => {
     if (item.hour === time && item.day === day) {
-      return <DivContainer item={item} key={item._id} />;
+      return <DivContainerTrainer item={item} key={item._id} />;
     }
   };
 
   return (
     <table className={styles.tableContainer}>
-      <thead>
+      <thead className={styles.thead}>
         <tr>
           <th className={styles.daysContainer}>Times</th>
           {daysArray.map((item, index) => {
@@ -53,7 +82,7 @@ const TrainersClasses = () => {
               {daysArray.map((day) => {
                 return (
                   <td className={styles.tdContainer} key={day}>
-                    {classes.map((item) => {
+                    {trainerClasses.map((item) => {
                       return tableItem(item, day, row);
                     })}
                   </td>
