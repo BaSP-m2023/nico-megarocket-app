@@ -91,12 +91,14 @@ const MemberProfile = (testId) => {
 
           <div className={styles.adminInfoContainer}>
             <p className={styles.adminInfoPlaceholder}>Edit profile</p>
-            <ButtonForm
-              className={styles.editInfoBtn}
-              onAction={handleEditClick}
-              nameImg="edit-profile-icon.png"
-              testId="profile-edit-btn"
-            />
+            <div className={styles.iconEdit}>
+              <ButtonForm
+                className={styles.editInfoBtn}
+                onAction={handleEditClick}
+                nameImg="edit-profile-icon.png"
+                testId="profile-edit-btn"
+              />
+            </div>
           </div>
         </div>
       </section>
