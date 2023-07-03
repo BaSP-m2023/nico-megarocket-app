@@ -149,14 +149,21 @@ const FormSubscription = () => {
           register={register}
           error={errors.members?.message}
         />
-        <ul>
+        <ul className={style.list}>
           {membersSelected.map((member) => {
             {
               return members.map((oneMember) => {
                 if (oneMember._id === member) {
                   return (
-                    <li key={member} onClick={() => deleteItemList(member)}>
-                      {oneMember.firstName} {oneMember.lastName}
+                    <li key={member}>
+                      <div className={style.listMembers}>
+                        {oneMember.firstName} {oneMember.lastName}
+                        <img
+                          src="/assets/images/icon-cross.png"
+                          alt="Cross icon"
+                          onClick={() => deleteItemList(member)}
+                        ></img>
+                      </div>
                     </li>
                   );
                 }

@@ -39,3 +39,12 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+.list {
+  list-style: none;
+}
+
+.listMembers img {
+  margin: 0 10px;
+  cursor: pointer;
+}
