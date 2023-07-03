@@ -6,7 +6,6 @@
   align-items: center;
   cursor: pointer;
 }
-
 .iconBox{
   display: flex;
   flex-direction: row;
@@ -17,9 +16,4 @@
   border-radius: 25px;
   transition: all .5s;
   cursor: pointer;
-}
-.iconBox:hover{
-  background-color: rgba(168, 172, 171, 0.274);
-  filter: brightness(1) invert();
-
 }
