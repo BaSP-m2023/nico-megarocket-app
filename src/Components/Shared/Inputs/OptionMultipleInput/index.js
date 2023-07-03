@@ -30,7 +30,6 @@ const SelectMultipleInput = ({ data, dataLabel, name, register, error, onAction,
         name={name}
         {...register(name, { required: { value: true, message: 'This field is required' } })}
       >
-        <option value="">Pick {name}</option>
         {data.map((item, index) => {
           return (
             <option key={index} value={item._id ? item._id : item}>

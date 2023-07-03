@@ -6,7 +6,8 @@ import {
   ModalConfirm,
   ModalSuccess,
   OptionInput,
-  OptionMultipleInput
+  OptionMultipleInput,
+  ToastError
 } from 'Components/Shared';
 import style from '../FormSubscription/modalAdd.module.css';
 import { addSubscriptions, updateSubscriptions, getSuscription } from 'redux/subscriptions/thunks';
@@ -21,6 +22,7 @@ const FormSubscription = () => {
   const dispatch = useDispatch();
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
+  const [toastError, setModalError] = useState(false);
   const [membersSelected, setMembersSelected] = useState([]);
   const [subscription, setSubscription] = useState({});
   const history = useHistory();
@@ -37,13 +39,14 @@ const FormSubscription = () => {
     }),
     members: Joi.alternatives()
       .try(
-        Joi.array().items(Joi.string().hex().length(24).required()),
+        Joi.array().items(Joi.string().hex().length(24).required()).min(1),
         Joi.string().hex().length(24).required()
       )
       .required()
       .messages({
         'any.only': 'Please select a member',
-        'any.required': 'Please select a member'
+        'any.required': 'Please select a member',
+        'array.min': 'Please select at least one member'
       }),
     classId: Joi.string().required().invalid('Pick classId').messages({
       'any.only': 'Please select a class'
@@ -92,14 +95,17 @@ const FormSubscription = () => {
   };
 
   const onSubmit = (newData) => {
-    const newSub = {
-      classId: newData.classId,
-      members: membersSelected,
-      date: newData.date
-    };
-    console.log(newSub);
-    setModalConfirmOpen(true);
-    setSubscription(newSub);
+    if (!membersSelected.length) {
+      setModalError(true);
+    } else {
+      const newSub = {
+        classId: newData.classId,
+        members: membersSelected,
+        date: newData.date
+      };
+      setModalConfirmOpen(true);
+      setSubscription(newSub);
+    }
   };
 
   const handleMiembroClick = (event) => {
@@ -140,6 +146,7 @@ const FormSubscription = () => {
           error={errors.classId?.message}
         />
         <OptionMultipleInput
+          membersSelected={membersSelected.length === 0 ? '' : membersSelected}
           onAction={handleMiembroClick}
           data={members}
           dataLabel="Member"
@@ -195,6 +202,9 @@ const FormSubscription = () => {
       )}
       {modalSuccessOpen && (
         <ModalSuccess message="Success!" setModalSuccessOpen={setModalSuccessOpen} />
+      )}
+      {toastError && (
+        <ToastError setToastErroOpen={setModalError} message="Pick at least one member" />
       )}
     </section>
   );
