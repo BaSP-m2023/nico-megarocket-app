@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { ModalConfirm, ModalSuccess, ButtonActive } from '../index';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const TableComponent = ({
   columnTitleArray,
@@ -21,6 +22,7 @@ const TableComponent = ({
   const [idDelete, setIdDelete] = useState('');
   const dispatch = useDispatch();
   const located = useLocation().pathname;
+  const [filtered, setFiltered] = useState(data);
 
   const onConfirmOpen = (id) => {
     setModalConfirm(true);
@@ -85,62 +87,102 @@ const TableComponent = ({
     }
   };
 
+  const handlerChange = (e) => {
+    const searchValue = e.target.value.toLowerCase();
+    const filters = data.filter((item) => {
+      if (item.name && item.name.toLowerCase().includes(searchValue)) {
+        return true;
+      }
+      if (item.activity && item.activity.name.toLowerCase().includes(searchValue)) {
+        return true;
+      }
+      if (item.firstName && item.firstName.toLowerCase().includes(searchValue)) {
+        return true;
+      }
+      if (item.classId) {
+        const findActivity = classes.find((act) => act._id === item.classId._id);
+        if (findActivity && findActivity.activity.name.toLowerCase().includes(searchValue)) {
+          return true;
+        }
+      }
+      return false;
+    });
+    setFiltered(filters);
+  };
+
+  useEffect(() => {
+    if (filtered.length === 0) {
+      setFiltered(data);
+    }
+  }, [data]);
+
   return (
     <section className={styles.container} data-testid={testId}>
-      {data?.length === 0 ? (
+      <div onChange={handlerChange} className={styles.containerSearch}>
+        <input type="text" placeholder="What are you looking for?" className={styles.searchField} />
+        <button className={styles.buttonSearch}>
+          <img
+            src={`${process.env.PUBLIC_URL}/assets/images/lupa.png`}
+            className={styles.magGlass}
+          />
+        </button>
+      </div>
+      {filtered?.length === 0 ? (
         <div className={styles.noneTrainer}>
           <h3>The list is empty</h3>
         </div>
       ) : (
-        <table className={styles.table}>
-          <thead>
-            <tr className={styles.tableContent}>
-              {columnTitleArray.map((column, index) => (
-                <th key={column[index]}>{column}</th>
-              ))}
-              {(located === '/admin/trainers' || located === '/admin/members') && <th>Active</th>}
-              <th>Edit</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((row, index) => {
-              const rowClass = index % 2 === 0 ? styles.rowBackground1 : styles.rowBackground2;
+        <>
+          <table className={styles.table}>
+            <thead>
+              <tr className={styles.tableContent}>
+                {columnTitleArray.map((column, index) => (
+                  <th key={column[index]}>{column}</th>
+                ))}
+                {(located === '/admin/trainers' || located === '/admin/members') && <th>Active</th>}
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.map((row, index) => {
+                const rowClass = index % 2 === 0 ? styles.rowBackground1 : styles.rowBackground2;
 
-              return (
-                <tr className={rowClass} key={index}>
-                  {columns.map((column, columnIndex) => (
-                    <td key={columnIndex}>
-                      {ifArray(row[column])}
-                      {ifObject(row[column])}
-                      {ifNotArrayNotObject(row, column)}
-                      {ifNotExist(row[column])}
-                    </td>
-                  ))}
-                  {(located === '/admin/trainers' || located === '/admin/members') && (
+                return (
+                  <tr className={rowClass} key={index}>
+                    {columns.map((column, columnIndex) => (
+                      <td key={columnIndex}>
+                        {ifArray(row[column])}
+                        {ifObject(row[column])}
+                        {ifNotArrayNotObject(row, column)}
+                        {ifNotExist(row[column])}
+                      </td>
+                    ))}
+                    {(located === '/admin/trainers' || located === '/admin/members') && (
+                      <td>
+                        <ButtonActive data={row} />
+                      </td>
+                    )}
                     <td>
-                      <ButtonActive data={row} />
+                      <ButtonForm
+                        nameImg="pencil-edit.svg"
+                        onAction={() => handleClick(row)}
+                        testId="edit-btn"
+                      />
                     </td>
-                  )}
-                  <td>
-                    <ButtonForm
-                      nameImg="pencil-edit.svg"
-                      onAction={() => handleClick(row)}
-                      testId="edit-btn"
-                    />
-                  </td>
-                  <td>
-                    <ButtonForm
-                      nameImg="trash-delete.svg"
-                      onAction={() => onConfirmOpen(row._id)}
-                      testId="delete-btn"
-                    />
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                    <td>
+                      <ButtonForm
+                        nameImg="trash-delete.svg"
+                        onAction={() => onConfirmOpen(row._id)}
+                        testId="delete-btn"
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </>
       )}
       {modalConfirm && (
         <ModalConfirm
