@@ -111,6 +111,7 @@ const TableComponent = ({
   };
 
   useEffect(() => {
+    setFiltered(data);
     if (filtered.length === 0) {
       setFiltered(data);
     }
