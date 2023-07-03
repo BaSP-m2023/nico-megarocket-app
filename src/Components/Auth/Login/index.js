@@ -90,7 +90,10 @@ function LoginForm() {
           />
         </div>
         {errorPop ? (
-          <div className={styles.boxError} data-testid="login-error-pop">
+          <div
+            className={`${styles.boxError} ${styles.shakeAnimation}`}
+            data-testid="login-error-pop"
+          >
             <div className={styles.lineError}>
               <div className={styles.errorLogo}>!</div>
               LogIn Denied
