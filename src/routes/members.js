@@ -29,12 +29,11 @@ const MemberRoutes = () => {
   return (
     <Layout routes={routes}>
       <Switch>
-        <Route exact path={`${url}/`} component={MemberClasses} />
         <Route exact path={`${url}/classes`} component={MemberClasses} />
         <Route exact path={`${url}/activities`} component={MemberActivities} />
         <Route exact path={`${url}/profile`} component={MemberProfile} />
         <Route path={`${url}/profile/form/:id?`} component={MemberProfileForm} />
-        <Redirect path={`${url}/login`} />
+        <Redirect to={`${url}/classes`} />
       </Switch>
     </Layout>
   );

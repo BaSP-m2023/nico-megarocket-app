@@ -24,11 +24,11 @@ const TrainerRoutes = () => {
   return (
     <Layout routes={routes}>
       <Switch>
-        <Route exact path={`${url}/`} component={TrainersClasses} />
+        <Route exact path={`${url}/classes`} component={TrainersClasses} />
         <Route exact path={`${url}/classes`} component={TrainersClasses} />
         <Route exact path={`${url}/profile`} component={TrainerProfile} />
         <Route path={`${url}/profile/form/:id?`} component={TrainerProfileForm} />
-        <Redirect path={`${url}/classes`} />
+        <Redirect to={`${url}/classes`} />
       </Switch>
     </Layout>
   );
