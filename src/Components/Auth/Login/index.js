@@ -90,7 +90,10 @@ function LoginForm() {
           />
         </div>
         {errorPop ? (
-          <div className={styles.boxError} data-testid="login-error-pop">
+          <div
+            className={`${styles.boxError} ${styles.shakeAnimation}`}
+            data-testid="login-error-pop"
+          >
             <div className={styles.lineError}>
               <div className={styles.errorLogo}>!</div>
               LogIn Denied
@@ -126,18 +129,17 @@ function LoginForm() {
               Forgot Password?
             </button>
           </div>
-        </div>
-
-        <div className={styles.notAccountContainer}>
-          <p> Dont have an account?</p>
-          <button
-            className={styles.forgotPass}
-            onClick={() => {
-              history.push('/auth/sign-up');
-            }}
-          >
-            Sign Up
-          </button>
+          <div className={styles.notAccountContainer}>
+            <p> Dont have an account?</p>
+            <button
+              className={styles.forgotPass}
+              onClick={() => {
+                history.push('/auth/sign-up');
+              }}
+            >
+              Sign Up
+            </button>
+          </div>
         </div>
       </div>
     </form>

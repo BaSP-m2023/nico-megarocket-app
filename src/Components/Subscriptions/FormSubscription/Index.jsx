@@ -45,7 +45,7 @@ const FormSubscription = () => {
   const subscriptionUpdated = {
     classId: data.classId?._id,
     members: data.members?.map((member) => member._id),
-    date: data.date
+    date: data.date && new Date(data.date).toISOString().substr(0, 10)
   };
 
   const {

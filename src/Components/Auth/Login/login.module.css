@@ -36,6 +36,7 @@
 }
 .sub_buttons {
   margin-top: 15px;
+  margin-bottom: 5px;
 }
 .boxError {
   display: flex;
@@ -107,20 +108,50 @@
 .close_icon:after {
   transform: translate(-50%, -50%) rotate(-45deg);
 }
-
 .notAccountContainer {
   display: flex;
   align-items: center;
   margin-top:10px;
 }
-
 .notAccountContainer p{
   font-size:12px;
 }
-
 .newContainer {
   display: flex;
+  flex-direction: column;
   width:54%;
   align-items: center;
   justify-content: space-between;
+}
+@keyframes shakeAnimation {
+  0% {
+    transform: translateX(0);
+  }
+  10% {
+    transform: translateX(-5px);
+  }
+  20% {
+    transform: translateX(5px);
+  }
+  30% {
+    transform: translateX(-5px);
+  }
+  40% {
+    transform: translateX(0);
+  }
+  60% {
+    transform: translateX(-5px);
+  }
+  70% {
+    transform: translateX(5px);
+  }
+  80% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+.shakeAnimation {
+  animation: shakeAnimation 0.3s ease-in-out;
 }

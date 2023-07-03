@@ -52,7 +52,6 @@ const AdminRoutes = () => {
   return (
     <Layout routes={routes}>
       <Switch>
-        <Route exact path={`${url}/`} component={Classes} />
         <Route exact path={`${url}/classes`} component={Classes} />
         <Route exact path={`${url}/classes/ClassForm/:id?`} component={FormClasses} />
         <Route exact path={`${url}/trainers`} component={Trainers} />
@@ -65,7 +64,7 @@ const AdminRoutes = () => {
         <Route path={`${url}/subscriptions/form/:id?`} component={FormSubscription} />
         <Route exact path={`${url}/activities`} component={Activities} />
         <Route path={`${url}/activities/form/:id?`} component={ModalAddActivity} />
-        <Redirect path={`${url}/login`} />
+        <Redirect to={`${url}/classes`} />
       </Switch>
     </Layout>
   );
