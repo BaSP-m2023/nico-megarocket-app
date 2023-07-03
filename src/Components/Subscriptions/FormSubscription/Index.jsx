@@ -1,6 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useHistory, useParams, useLocation } from 'react-router-dom';
-import { Inputs, Button, ModalConfirm, ModalSuccess, OptionInput } from 'Components/Shared';
+import {
+  Inputs,
+  Button,
+  ModalConfirm,
+  ModalSuccess,
+  OptionInput,
+  OptionMultipleInput
+} from 'Components/Shared';
 import style from '../FormSubscription/modalAdd.module.css';
 import { addSubscriptions, updateSubscriptions, getSuscription } from 'redux/subscriptions/thunks';
 import { getClasses } from 'redux/classes/thunks';
@@ -14,6 +21,7 @@ const FormSubscription = () => {
   const dispatch = useDispatch();
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
+  const [membersSelected, setMembersSelected] = useState([]);
   const [subscription, setSubscription] = useState({});
   const history = useHistory();
   const { id } = useParams();
@@ -45,7 +53,7 @@ const FormSubscription = () => {
   const subscriptionUpdated = {
     classId: data.classId?._id,
     members: data.members?.map((member) => member._id),
-    date: data.date && new Date(data.date).toISOString().substr(0, 10)
+    date: data.date
   };
 
   const {
@@ -58,12 +66,6 @@ const FormSubscription = () => {
     resolver: joiResolver(schema),
     defaultValues: { ...subscriptionUpdated }
   });
-
-  useEffect(() => {
-    getSuscription(dispatch);
-    getClasses(dispatch);
-    getAllMembers(dispatch);
-  }, []);
 
   const onConfirm = async () => {
     if (!id) {
@@ -92,12 +94,37 @@ const FormSubscription = () => {
   const onSubmit = (newData) => {
     const newSub = {
       classId: newData.classId,
-      members: [newData.members],
+      members: membersSelected,
       date: newData.date
     };
+    console.log(newSub);
     setModalConfirmOpen(true);
     setSubscription(newSub);
   };
+
+  const handleMiembroClick = (event) => {
+    const value = event.target.value;
+
+    if (membersSelected.includes(value)) {
+      setMembersSelected(membersSelected.filter((member) => member !== value));
+    } else {
+      setMembersSelected([...membersSelected, value]);
+    }
+  };
+
+  const deleteItemList = (member) => {
+    setMembersSelected(membersSelected.filter((oneMember) => oneMember !== member));
+  };
+
+  useEffect(() => {
+    getSuscription(dispatch);
+    getClasses(dispatch);
+    getAllMembers(dispatch);
+    if (data.members) {
+      const membersInSubs = data.members.map((member) => member._id);
+      setMembersSelected(membersInSubs);
+    }
+  }, []);
 
   return (
     <section className={style.containerModal}>
@@ -112,7 +139,8 @@ const FormSubscription = () => {
           register={register}
           error={errors.classId?.message}
         />
-        <OptionInput
+        <OptionMultipleInput
+          onAction={handleMiembroClick}
           data={members}
           dataLabel="Member"
           setValue={{}}
@@ -121,6 +149,22 @@ const FormSubscription = () => {
           register={register}
           error={errors.members?.message}
         />
+        <ul>
+          {membersSelected.map((member) => {
+            {
+              return members.map((oneMember) => {
+                if (oneMember._id === member) {
+                  return (
+                    <li key={member} onClick={() => deleteItemList(member)}>
+                      {oneMember.firstName} {oneMember.lastName}
+                    </li>
+                  );
+                }
+                return null;
+              });
+            }
+          })}
+        </ul>
         <Inputs
           nameTitle="Date:"
           nameInput="date"
