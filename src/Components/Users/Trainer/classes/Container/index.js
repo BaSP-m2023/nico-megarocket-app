@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './container.module.css';
+// eslint-disable-next-line no-unused-vars
 import ModalConfirm from 'Components/Shared/Modals/ModalConfirm/';
 import { updateClass } from 'redux/classes/thunks';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +10,7 @@ import { getFirebaseUidFromToken } from 'helper/firebase';
 
 function DivContainerTrainer({ item, testId }) {
   const [toggle, setToggle] = useState(true);
+  // eslint-disable-next-line no-unused-vars
   const [modalConfirm, setModalConfirm] = useState(false);
   const [userCurrent, setUserCurrent] = useState('');
   const [memberID, setMemberId] = useState('');
@@ -16,6 +18,7 @@ function DivContainerTrainer({ item, testId }) {
   const subscriptions = useSelector((state) => state.subscription.data);
   const members = useSelector((state) => state.members.list);
   const member = members.find((oneMember) => oneMember.email === userCurrent);
+  console.log(subscriptions);
 
   const currentUser = async () => {
     try {
@@ -40,17 +43,15 @@ function DivContainerTrainer({ item, testId }) {
     }
   };
 
+  // eslint-disable-next-line no-unused-vars
   const handleToggle = async () => {
     setToggle(!toggle);
-    const audioLabel = document.createElement('audio');
     const idToUpdate = item._id;
     const susbscription = await subscriptions.filter((subs) => {
       return subs.classId._id === idToUpdate;
     });
     const subscriptionID = susbscription[0]._id;
     if (toggle) {
-      audioLabel.setAttribute('src', `${process.env.PUBLIC_URL}/assets/sounds/yeahBuddy.mp3`);
-
       const slotLess = { slots: item.slots - 1 };
       await dispatch(updateClass(idToUpdate, slotLess));
 
@@ -64,8 +65,6 @@ function DivContainerTrainer({ item, testId }) {
         })
       );
     } else {
-      audioLabel.setAttribute('src', `${process.env.PUBLIC_URL}/assets/sounds/lightWeight.mp3`);
-
       const slotAdd = { slots: item.slots };
       await dispatch(updateClass(idToUpdate, slotAdd));
 
@@ -81,7 +80,6 @@ function DivContainerTrainer({ item, testId }) {
         })
       );
     }
-    audioLabel.play();
   };
 
   const clickActionModal = () => {
@@ -122,7 +120,7 @@ function DivContainerTrainer({ item, testId }) {
           </p>
         </div>
       )}
-      {modalConfirm && (
+      {/* {modalConfirm && (
         <ModalConfirm
           method={toggle ? 'Join' : 'Leave'}
           message={
@@ -133,7 +131,7 @@ function DivContainerTrainer({ item, testId }) {
           onConfirm={handleToggle}
           setModalConfirmOpen={setModalConfirm}
         />
-      )}
+      )} */}
     </>
   );
 }
