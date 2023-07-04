@@ -110,7 +110,7 @@ const ModalAddActivity = () => {
   return (
     <section className={style.containerModal}>
       <form className={style.containerForm} onSubmit={handleSubmit(onSubmit)}>
-        <h3>{id ? 'Edit Activity' : 'Add Activity'}</h3>
+        <h3 className={style.title}>{id ? 'Edit Activity' : 'Add Activity'}</h3>
         <Inputs
           nameTitle="Name:"
           register={register}

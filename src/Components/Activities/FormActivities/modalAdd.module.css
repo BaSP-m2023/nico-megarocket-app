@@ -29,7 +29,7 @@
   border: 3px solid #373867;
 }
 
-.containerForm h3 {
+.title {
   text-align: center;
   font-size: 36px;
   font-family: sans-serif;
@@ -37,7 +37,7 @@
   margin: 0 0 30px 0;
 }
 
-.containerForm .containerAddButton {
+.containerAddButton {
   display: flex;
   justify-content: space-evenly;
   gap: 20px;
