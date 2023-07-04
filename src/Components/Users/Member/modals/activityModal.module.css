@@ -3,51 +3,121 @@
   justify-content: center;
   align-items: center;
   position: fixed;
-  background-color: #00000078;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
   z-index: 1;
   overflow: hidden;
+  background-color: #00000078;
 }
 
 .activityCard {
-  width: 35%;
-  height: 15rem;
-  background-color: #fff;
   display: flex;
+  width: 30%;
+  height: 30%;
+  min-width: 350px;
+  background-color: transparent;
+  border-bottom: #373867;
 }
 
-.activityCardImage {
-  width: 60%;
+.activityCardText {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #FFFFFF;
+  border-radius: 0 5px 5px 0;
 }
 
-.subtitle {
-  margin: 20px;
-  font-size: 20px;
-  font-weight: bold;
-  color: #373867;
+.cardImage {
+  border-radius: 5px 0 0 5px;
 }
 
-.description {
-  margin: 20px;
-  margin-top: 10px;
+.cardSubtitle {
+  margin: 10px;
   font-size: 15px;
+  font-weight: bold;
   color: #373867;
 }
 
-.activityButton {
-  width: 81px;
+.cardDescription {
+  margin: 10px;
+  font-size: 12px;
+  color: #373867;
+}
+
+.activityCardButton {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.cardButton {
+  width: 83px;
   height: 35px;
-  position: relative;
-  background-color: #AACE9B;
-  color:#373867;
-  font-weight: bold;
   border: none;
-  top: 40px;
-  right: 20px;
   border-radius: 5px;
+  font-weight: bold;
+  color:#373867;
   cursor: pointer;
-  float: right;
+  background-color: #AACE9B;
+}
+
+.cardButton:hover {
+  transform: translateY(-2px);
+  color: #FFFFFF;
+  background-color: #373867;
+}
+
+@media only screen and (min-width: 601px) {
+  .activityCard {
+    width: 40%;
+    height: 40%;
+    min-width: 350px;
+  }
+
+  .cardImage {
+    height: 80%;
+  }
+
+  .activityCardText {
+    width: 80%;
+    height: 80%;
+  }
+
+  .cardSubtitle {
+    margin: 16px;
+    font-size: 16px;
+  }
+
+  .cardDescription {
+    margin: 16px;
+    font-size: 12px;
+  }
+
+}
+
+@media only screen and (min-width: 1025px) {
+  .activityCard {
+    width: 30%;
+    height: 40%;
+    min-width: 410px;
+  }
+
+  .cardImage {
+    height: 80%;
+  }
+
+  .cardSubtitle {
+    margin: 20px;
+    font-size: 20px;
+  }
+
+  .cardDescription {
+    margin: 20px;
+    font-size: 15px;
+  }
+
 }
