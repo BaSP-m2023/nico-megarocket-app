@@ -37,11 +37,24 @@ const TableComponent = ({
   const ifArray = (item) => {
     if (item) {
       if (Array.isArray(item)) {
-        return item?.map((content, contentIndex) => (
+        /* return item?.map((content, contentIndex) => (
           <span key={contentIndex}>
+            {console.log(content[fieldValue?.arrayFirstValue])}
             {content[fieldValue?.arrayFirstValue]} {content[fieldValue?.arraySecondValue]}
           </span>
-        ));
+        )); */
+        console.log(item);
+        if (item.length === 1) {
+          return item[0][fieldValue?.arrayFirstValue] + ' ' + item[0][fieldValue?.arraySecondValue];
+        } else {
+          return (
+            item[0][fieldValue?.arrayFirstValue] +
+            ' ' +
+            item[0][fieldValue?.arraySecondValue] +
+            ' + ' +
+            (item.length - 1)
+          );
+        }
       }
     }
   };
