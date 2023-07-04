@@ -51,16 +51,15 @@ const ProfileMenu = () => {
     }
   };
 
-  const defaultPic =
-    !profilePic && !sessionStorage.getItem('img') ? (
-      <div className={styles.defaultImg}>
-        <p className={styles.profileInitials}>
-          {userData()?.firstName.charAt()} {userData()?.lastName.charAt()}
-        </p>
-      </div>
-    ) : (
-      sessionStorage.getItem('img')
-    );
+  const defaultPic = !sessionStorage.getItem('img') ? (
+    <div className={styles.defaultImg}>
+      <p className={styles.profileInitials}>
+        {userData()?.firstName.charAt()} {userData()?.lastName.charAt()}
+      </p>
+    </div>
+  ) : (
+    sessionStorage.getItem('img')
+  );
 
   useEffect(() => {
     setProfilePic(sessionStorage.getItem('img'));
@@ -75,8 +74,6 @@ const ProfileMenu = () => {
     currentUser();
     setProfilePic(defaultPic);
   }, [admin || trainer || member]);
-
-  console.log(profilePic, 'laPicDelHeader');
 
   return (
     <>

@@ -57,7 +57,6 @@ const AdminProfile = ({ testId }) => {
     setCounter(counter + 1);
     setPhotoEdit(!photoEdit);
   };
-  console.log(profilePic, 'lalalalla');
   return (
     <div className={styles.wholeContainer}>
       <section className={styles.container} data-testid={testId}>
