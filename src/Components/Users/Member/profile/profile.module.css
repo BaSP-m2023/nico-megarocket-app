@@ -19,6 +19,28 @@
   align-items: center;
   justify-content: center;
 }
+.profileImg{
+  width: 160px;
+  border: 1px solid black;
+  border-radius: 100%;
+  box-shadow: 1px 0px 25px -8px rgba(0,0,0,0.75);
+}
+.defaultImg{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+  background-color: #373867;
+  border: 3px solid black;
+  border-radius: 100%;
+  box-shadow: 1px 0px 25px -8px rgba(0,0,0,0.75);
+}
+.profileInitials{
+  font-size: 3.7rem;
+  font-weight: 600;
+  color: white;
+}
 .profileInfoContainer{
   display: flex;
   flex-direction: column;
@@ -35,6 +57,7 @@
   left: 52px;
   bottom: 37px;
   z-index: 10;
+  cursor: pointer;
 }
 .adminName {
   margin-top: -20px;

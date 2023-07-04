@@ -1,0 +1,105 @@
+.container{
+  position:absolute;
+  top:25vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 600px;
+  height: 500px;
+  box-shadow: 10px 8px 5px -8px rgba(0,0,0,0.75);
+  z-index: 10;
+  animation-name: show ;
+  animation-duration: 1s;
+  animation-direction: alternate;
+  animation-fill-mode:both;
+}
+
+.hidden{
+  display: none;
+}
+
+.hide {
+  position:absolute;
+  top:25vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 600px;
+  height: 500px;
+  box-shadow: 10px 8px 5px -8px rgba(0,0,0,0.75);
+  z-index: 10;
+  animation-name: hide;
+  animation-duration: 1s;
+  animation-direction: alternate;
+  animation-fill-mode: forwards;
+}
+.title{
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  margin: 0;
+  padding-top: 15px;
+  text-align: center;
+  background-color: #373867;
+  color: #aace9b;
+  z-index: 1;
+}
+
+.picContainer{
+  display: flex;
+  position:relative;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  padding-top: 25px;
+  background-color: #373867e0;
+  overflow-y: scroll;
+}
+.picStyle{
+  width: 150px;
+  height: 150px;
+  margin: 20px;
+  box-shadow: 1px 0px 25px -8px rgba(0,0,0,0.75);
+  cursor: pointer;
+}
+.picStyle:hover{
+  transform: scale(1.01);
+}
+.closeButton{
+  position: absolute;
+  top:3px;
+  right: 8px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  z-index: 2;
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes hide {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+    display: none;
+  }
+}

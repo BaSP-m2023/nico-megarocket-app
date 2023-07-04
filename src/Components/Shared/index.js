@@ -11,3 +11,4 @@ export { default as OptionInput } from './Inputs/OptionInput';
 export { default as InputError } from './Inputs/InputError';
 export { default as InputPlaceholder } from './Inputs/InputPlaceholder';
 export { default as ButtonActive } from './ButtonActive';
+export { default as ProfilePicList } from './ChangeImg';
