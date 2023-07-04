@@ -70,7 +70,7 @@ function LoginForm() {
   return (
     <form className={styles.formSuperAdmin} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.wholeContainer}>
-        <h1 className={styles.titleLogin}>Log In</h1>
+        <h1 className={styles.titleLogin}>Login</h1>
         <div className={styles.containerForm}>
           <Inputs
             type="email"
@@ -79,6 +79,7 @@ function LoginForm() {
             register={register}
             error={errors.email?.message}
             testId="login-input-email"
+            className={styles.inputs}
           />
           <Inputs
             type="password"
@@ -87,6 +88,7 @@ function LoginForm() {
             register={register}
             error={errors.password?.message}
             testId="login-input-password"
+            className={styles.inputs}
           />
         </div>
         {errorPop ? (

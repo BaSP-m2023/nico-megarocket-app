@@ -3,7 +3,10 @@ import styles from './disable-input.module.css';
 
 const Inputs = ({ register, error, type, isDisabled, nameInput, nameTitle, testId }) => {
   return (
-    <div className={styles.nameLabel} data-testid={testId}>
+    <div
+      className={error ? `${styles.nameLabel} ${styles.labelError}` : styles.nameLabel}
+      data-testid={testId}
+    >
       <label>{nameTitle}</label>
       <input
         type={type}
