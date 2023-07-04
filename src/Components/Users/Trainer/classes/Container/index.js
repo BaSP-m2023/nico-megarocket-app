@@ -1,137 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import styles from './container.module.css';
-// eslint-disable-next-line no-unused-vars
-import ModalConfirm from 'Components/Shared/Modals/ModalConfirm/';
-import { updateClass } from 'redux/classes/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSuscription, updateSubscriptions } from 'redux/subscriptions/thunks';
-import { getAllMembers } from 'redux/members/thunks';
-import { getFirebaseUidFromToken } from 'helper/firebase';
+import { getSuscription } from 'redux/subscriptions/thunks';
+import { useHistory } from 'react-router-dom';
 
 function DivContainerTrainer({ item, testId }) {
-  const [toggle, setToggle] = useState(true);
-  // eslint-disable-next-line no-unused-vars
-  const [modalConfirm, setModalConfirm] = useState(false);
-  const [userCurrent, setUserCurrent] = useState('');
-  const [memberID, setMemberId] = useState('');
+  const [membersClass, setMemberClass] = useState([]);
   const dispatch = useDispatch();
   const subscriptions = useSelector((state) => state.subscription.data);
-  const members = useSelector((state) => state.members.list);
-  const member = members.find((oneMember) => oneMember.email === userCurrent);
-  console.log(subscriptions);
+  const history = useHistory();
 
-  const currentUser = async () => {
-    try {
-      const emailCurrentUser = await getFirebaseUidFromToken();
-      setUserCurrent(emailCurrentUser);
-      setMemberId(member._id);
-      existMemberInClass(memberID);
-    } catch (error) {
-      return error;
-    }
-  };
-
-  const existMemberInClass = (memberID) => {
-    const { _id: classId } = item;
-    const classInSubscription = subscriptions.find((sub) => sub.classId._id === classId);
-    if (classInSubscription) {
-      classInSubscription.members.map((memberInSub) => {
-        if (memberInSub._id === memberID) {
-          setToggle(false);
-        }
-      });
-    }
-  };
-
-  // eslint-disable-next-line no-unused-vars
-  const handleToggle = async () => {
-    setToggle(!toggle);
-    const idToUpdate = item._id;
-    const susbscription = await subscriptions.filter((subs) => {
-      return subs.classId._id === idToUpdate;
+  const handleToggle = async (item) => {
+    let members = [];
+    const subscriptionClass = await subscriptions.filter((subs) => subs.classId._id === item._id);
+    await subscriptionClass.forEach((element) => {
+      members = members.concat(element.members);
     });
-    const subscriptionID = susbscription[0]._id;
-    if (toggle) {
-      const slotLess = { slots: item.slots - 1 };
-      await dispatch(updateClass(idToUpdate, slotLess));
-
-      const memberIds = susbscription[0].members.map((member) => {
-        return member._id;
-      });
-      memberIds.push(memberID);
-      await dispatch(
-        updateSubscriptions(subscriptionID, {
-          members: memberIds
-        })
-      );
-    } else {
-      const slotAdd = { slots: item.slots };
-      await dispatch(updateClass(idToUpdate, slotAdd));
-
-      const memberWithoutCurrent = susbscription[0].members.filter(
-        (memberInArray) => memberInArray._id !== memberID
-      );
-      const memberIds = memberWithoutCurrent.map((member) => {
-        return member._id;
-      });
-      await dispatch(
-        updateSubscriptions(subscriptionID, {
-          members: memberIds
-        })
-      );
+    const uniqueMembers = [];
+    for (let i = 0; i < members.length; i++) {
+      let isDuplicate = false;
+      for (let j = 0; j < uniqueMembers.length; j++) {
+        if (members[i]._id === uniqueMembers[j]._id) {
+          isDuplicate = true;
+          break;
+        }
+      }
+      if (!isDuplicate) {
+        uniqueMembers.push(members[i]);
+      }
     }
-  };
-
-  const clickActionModal = () => {
-    setModalConfirm(true);
+    setMemberClass(uniqueMembers);
   };
 
   useEffect(() => {
     getSuscription(dispatch);
-    getAllMembers(dispatch);
   }, []);
 
   useEffect(() => {
-    currentUser();
-  }, [member]);
+    handleToggle(item);
+  }, [subscriptions]);
+
+  const handleClick = () => {
+    history.push(`/trainer/classes/members`, { membersClass });
+  };
+  console.log(membersClass);
 
   return (
     <>
-      {item.slots !== 0 ? (
-        <div
-          className={toggle ? styles.classesContainer : styles.selectedContainer}
-          onClick={() => clickActionModal()}
-          data-testid={testId}
-        >
-          <p className={toggle ? styles.textClasses : styles.textSelectedClasses}>
-            {item.activity.name}
-          </p>
-          <p className={toggle ? styles.slotsClasses : styles.slotsSelectedClasses}>
-            {item.slots} Slots
-          </p>
+      {item?.slots !== 0 ? (
+        <div className={styles.classesContainer} onClick={handleClick} data-testid={testId}>
+          <p className={styles.textClasses}>{item?.activity.name}</p>
+          <p className={styles.slotsClasses}>{item?.slots} Slots</p>
         </div>
       ) : (
-        <div className={item.slots === 0 && styles.classesFullContainer} data-testid={testId}>
-          <p className={item.slots === 0 ? styles.nameFullClasses : styles.nameClasses}>
-            {item.activity.name}
-          </p>
-          <p className={item.slots === 0 ? styles.slotsFullClasses : styles.slotsClasses}>
-            {item.slots} Slots
-          </p>
+        <div className={styles.classesFullContainer} onClick={handleClick} data-testid={testId}>
+          <p className={styles.nameFullClasses}>{item?.activity.name}</p>
+          <p className={styles.slotsFullClasses}>{item?.slots} Slots</p>
         </div>
       )}
-      {/* {modalConfirm && (
-        <ModalConfirm
-          method={toggle ? 'Join' : 'Leave'}
-          message={
-            toggle
-              ? '"Are you sure you want to join this class?"'
-              : '"Are you sure you want to leave this class?"'
-          }
-          onConfirm={handleToggle}
-          setModalConfirmOpen={setModalConfirm}
-        />
-      )} */}
     </>
   );
 }
