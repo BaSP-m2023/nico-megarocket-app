@@ -17,12 +17,14 @@ const MemberProfile = (testId) => {
   const [profilePic, setProfilePic] = useState('');
   const [photoEdit, setPhotoEdit] = useState(false);
   const [counter, setCounter] = useState(0);
-  const defaultProfile = (
+  const defaultProfile = !profilePic ? (
     <div className={styles.defaultImg}>
       <p className={styles.profileInitials}>
         {member?.firstName.charAt()} {member?.lastName.charAt()}
       </p>
     </div>
+  ) : (
+    sessionStorage.getItem('img')
   );
 
   const currentUser = async () => {

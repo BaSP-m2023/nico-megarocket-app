@@ -13,7 +13,8 @@ const ProfilePicList = ({ profilePic, photoEdit, show, counter }) => {
 
   const handleClick = (img) => {
     counter = counter + 1;
-    profilePic(img);
+    sessionStorage.setItem('img', img);
+    profilePic(sessionStorage.getItem('img'));
     photoEdit(false);
   };
 

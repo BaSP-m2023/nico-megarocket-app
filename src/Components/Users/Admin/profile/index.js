@@ -17,12 +17,15 @@ const AdminProfile = ({ testId }) => {
   const [profilePic, setProfilePic] = useState('');
   const [photoEdit, setPhotoEdit] = useState(false);
   const [counter, setCounter] = useState(0);
-  const defaultProfile = (
+
+  const defaultProfile = !profilePic ? (
     <div className={styles.defaultImg}>
       <p className={styles.profileInitials}>
         {admin?.firstName.charAt()} {admin?.lastName.charAt()}
       </p>
     </div>
+  ) : (
+    sessionStorage.getItem('img')
   );
 
   const currentUser = async () => {
@@ -54,7 +57,7 @@ const AdminProfile = ({ testId }) => {
     setCounter(counter + 1);
     setPhotoEdit(!photoEdit);
   };
-
+  console.log(profilePic, 'lalalalla');
   return (
     <div className={styles.wholeContainer}>
       <section className={styles.container} data-testid={testId}>

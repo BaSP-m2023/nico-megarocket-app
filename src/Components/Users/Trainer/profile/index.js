@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { getTrainers } from 'redux/trainers/thunks';
 import { getFirebaseUidFromToken } from 'helper/firebase';
 import 'firebase/compat/auth';
+const defaultProfilePic = `${process.env.PUBLIC_URL}/assets/images/default-profile-pic.jpg`;
 const editProfilePicBtn = `${process.env.PUBLIC_URL}/assets/images/image.png`;
 
 const TrainerProfile = () => {
@@ -14,16 +15,9 @@ const TrainerProfile = () => {
   const [userCurrent, setUserCurrent] = useState('');
   const trainers = useSelector((state) => state.trainers.list);
   const trainer = trainers.find((oneTrainer) => oneTrainer.email === userCurrent);
-  const [profilePic, setProfilePic] = useState('');
+  const [profilePic, setProfilePic] = useState(sessionStorage.getItem('img'));
   const [photoEdit, setPhotoEdit] = useState(false);
   const [counter, setCounter] = useState(0);
-  const defaultProfile = (
-    <div className={styles.defaultImg}>
-      <p className={styles.profileInitials}>
-        {trainer?.firstName.charAt()} {trainer?.lastName.charAt()}
-      </p>
-    </div>
-  );
 
   const currentUser = async () => {
     try {
@@ -43,8 +37,12 @@ const TrainerProfile = () => {
   }, []);
 
   useEffect(() => {
+    const profilePicOnRender = !profilePic ? defaultProfilePic : sessionStorage.getItem('img');
+    setProfilePic(profilePicOnRender);
+  }, [sessionStorage.getItem('img')]);
+
+  useEffect(() => {
     currentUser();
-    setProfilePic(defaultProfile);
   }, [trainer]);
 
   if (!trainer) {
@@ -55,15 +53,13 @@ const TrainerProfile = () => {
     setPhotoEdit(!photoEdit);
   };
 
+  console.log(profilePic, 'MMMMMMMMMMMMMMMMMMM');
+
   return (
     <div className={styles.wholeContainer}>
       <section className={styles.container}>
         <div className={styles.profilePhotoContainer}>
-          {typeof profilePic === 'string' ? (
-            <img className={styles.profileImg} src={profilePic} alt="profile image" />
-          ) : (
-            profilePic
-          )}
+          <img className={styles.profileImg} src={profilePic} alt="profile image" />
           <img
             className={styles.editPhotoButton}
             src={editProfilePicBtn}
