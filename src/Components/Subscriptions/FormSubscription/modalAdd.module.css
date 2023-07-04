@@ -6,24 +6,24 @@
   color: #373867;
 }
 
+
 .containerForm {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  background-color: white;
-  width: 30rem;
-  border-radius: 1rem;
-  margin: 0 0 30px 0;
+  margin: 30px 0;
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0px 20px 30px -5px rgba(0, 0, 0, 0.75);
-  border: 5px solid #373867;
+  border: 3px solid #373867;
+  display: flex;
+  flex-direction: column;
+  justify-content:space-around;
+  align-items: center;
 }
 
 .containerForm h3 {
   text-align: center;
-  font-size: 2rem;
+  font-size: 36px;
+  font-family: sans-serif;
+  color: #373867;
   margin: 0 0 30px 0;
 }
 
@@ -33,17 +33,6 @@
   flex-direction: row;
 }
 
-.containerForm .containerAdd Button {
-  margin-bottom: 2rem;
-  margin-left: 1rem;
-  width: 5.3rem;
-  height: 2.2rem;
-  border-radius: 0.3rem;
-  color: #373867;
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-}
 
 .list {
   list-style: none;
@@ -52,4 +41,8 @@
 .listMembers img {
   margin: 0 10px;
   cursor: pointer;
+}
+
+.inputMemberContainer{
+  margin-top:30px;
 }

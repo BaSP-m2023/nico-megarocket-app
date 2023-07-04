@@ -22,7 +22,12 @@ const SelectMultipleInput = ({ data, dataLabel, name, register, error, onAction,
 
   return (
     <div className={styles.containerInput} data-testid={testId}>
-      <label htmlFor="selectInput">{dataLabel}:</label>
+      <label
+        htmlFor="selectInput"
+        className={error ? `${styles.nameLabel} ${styles.labelError}` : styles.nameLabel}
+      >
+        {dataLabel}:
+      </label>
       <select
         onClick={onAction}
         multiple

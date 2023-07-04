@@ -21,6 +21,7 @@
   margin-right: 20px;
   margin-bottom: 10px;
   transition: 0.2s ease;
+  color: #373867;
 }
 
 .labelError label {

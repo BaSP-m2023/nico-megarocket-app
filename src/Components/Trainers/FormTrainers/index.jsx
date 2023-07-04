@@ -106,7 +106,8 @@ const FormTrainer = () => {
   }, [isError]);
 
   return (
-    <div>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Add Trainer</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.form}>
           <div className={styles.groupContainer}>

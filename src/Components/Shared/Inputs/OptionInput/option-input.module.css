@@ -1,19 +1,16 @@
 .optionInput {
-width: 255px;
-border: 1px solid;
-height: 25px;
-border-radius: 4px;
-font-size: 15px;
+  width: 255px;
+  border: 1px solid;
+  height: 25px;
+  border-radius: 4px;
+  font-size: 15px;
 }
 
 .containerInput {
   display: flex;
   flex-direction: column;
-  font-size: 20px;
+  font-size: 18px;
   margin-bottom: 30px;
-}
-.containerInput label{
-  margin-bottom: 10px;
 }
 
 .error {
@@ -25,11 +22,26 @@ font-size: 15px;
   height: 30px;
   text-align: left;
 }
-.spaceErrorMsg{
+.spaceErrorMsg {
   margin-top: 0;
   height: 30px;
 }
 .errorInput {
   border: 2px solid red;
   margin-top: 0;
+}
+
+.nameLabel {
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  transition: 0.2s ease;
+  color: #373867;
+}
+
+.labelError {
+  color: red;
+  font-size: 19px;
 }
