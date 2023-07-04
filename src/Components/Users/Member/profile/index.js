@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styles from './profile.module.css';
-import { ButtonForm } from 'Components/Shared';
+import { ButtonForm, ProfilePicList } from 'Components/Shared';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { getAllMembers } from 'redux/members/thunks';
 import { getFirebaseUidFromToken } from 'helper/firebase';
 import 'firebase/compat/auth';
-
-const profilePic = `${process.env.PUBLIC_URL}/assets/images/profile-img.png`;
 const editProfilePicBtn = `${process.env.PUBLIC_URL}/assets/images/image.png`;
 
 const MemberProfile = (testId) => {
@@ -16,6 +14,18 @@ const MemberProfile = (testId) => {
   const [userCurrent, setUserCurrent] = useState('');
   const members = useSelector((state) => state.members.list);
   const member = members.find((oneTrainer) => oneTrainer.email === userCurrent);
+  const [profilePic, setProfilePic] = useState('');
+  const [photoEdit, setPhotoEdit] = useState(false);
+  const [counter, setCounter] = useState(0);
+  const defaultProfile = !profilePic ? (
+    <div className={styles.defaultImg}>
+      <p className={styles.profileInitials}>
+        {member?.firstName.charAt()} {member?.lastName.charAt()}
+      </p>
+    </div>
+  ) : (
+    sessionStorage.getItem('img')
+  );
 
   const currentUser = async () => {
     try {
@@ -36,18 +46,39 @@ const MemberProfile = (testId) => {
 
   useEffect(() => {
     currentUser();
+    setProfilePic(defaultProfile);
   }, [member]);
 
   if (!member) {
     return null;
   }
 
+  const togglePhotoEdit = () => {
+    setCounter(counter + 1);
+    setPhotoEdit(!photoEdit);
+  };
+
   return (
     <div className={styles.wholeContainer}>
       <section className={styles.container} data-testid={testId}>
         <div className={styles.profilePhotoContainer} data-testid="photo-container">
-          <img src={profilePic} alt="profile image" />
-          <img className={styles.editPhotoButton} src={editProfilePicBtn} alt="camera" />
+          {typeof profilePic === 'string' ? (
+            <img className={styles.profileImg} src={profilePic} alt="profile image" />
+          ) : (
+            profilePic
+          )}
+          <img
+            className={styles.editPhotoButton}
+            src={editProfilePicBtn}
+            onClick={togglePhotoEdit}
+            alt="camera"
+          />
+          <ProfilePicList
+            profilePic={setProfilePic}
+            photoEdit={setPhotoEdit}
+            show={photoEdit}
+            counter={counter}
+          />
           <h1 className={styles.adminName}>
             {member.firstName} {member.lastName}
           </h1>

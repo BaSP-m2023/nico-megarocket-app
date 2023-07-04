@@ -68,6 +68,7 @@ export const logout = () => {
       dispatch(logOutSuccess());
       sessionStorage.removeItem('token', '');
       sessionStorage.removeItem('role', '');
+      sessionStorage.removeItem('img', '');
       return { error: false, message: 'Logout successfully' };
     } catch (error) {
       dispatch(logOutError(error));
