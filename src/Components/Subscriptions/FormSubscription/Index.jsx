@@ -1,6 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useHistory, useParams, useLocation } from 'react-router-dom';
-import { Inputs, Button, ModalConfirm, ModalSuccess, OptionInput } from 'Components/Shared';
+import {
+  Inputs,
+  Button,
+  ModalConfirm,
+  ModalSuccess,
+  OptionInput,
+  OptionMultipleInput,
+  ToastError
+} from 'Components/Shared';
 import style from '../FormSubscription/modalAdd.module.css';
 import { addSubscriptions, updateSubscriptions, getSuscription } from 'redux/subscriptions/thunks';
 import { getClasses } from 'redux/classes/thunks';
@@ -14,6 +22,8 @@ const FormSubscription = () => {
   const dispatch = useDispatch();
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
+  const [toastError, setModalError] = useState(false);
+  const [membersSelected, setMembersSelected] = useState([]);
   const [subscription, setSubscription] = useState({});
   const history = useHistory();
   const { id } = useParams();
@@ -29,13 +39,14 @@ const FormSubscription = () => {
     }),
     members: Joi.alternatives()
       .try(
-        Joi.array().items(Joi.string().hex().length(24).required()),
+        Joi.array().items(Joi.string().hex().length(24).required()).min(1),
         Joi.string().hex().length(24).required()
       )
       .required()
       .messages({
         'any.only': 'Please select a member',
-        'any.required': 'Please select a member'
+        'any.required': 'Please select a member',
+        'array.min': 'Please select at least one member'
       }),
     classId: Joi.string().required().invalid('Pick classId').messages({
       'any.only': 'Please select a class'
@@ -58,12 +69,6 @@ const FormSubscription = () => {
     resolver: joiResolver(schema),
     defaultValues: { ...subscriptionUpdated }
   });
-
-  useEffect(() => {
-    getSuscription(dispatch);
-    getClasses(dispatch);
-    getAllMembers(dispatch);
-  }, []);
 
   const onConfirm = async () => {
     if (!id) {
@@ -90,14 +95,42 @@ const FormSubscription = () => {
   };
 
   const onSubmit = (newData) => {
-    const newSub = {
-      classId: newData.classId,
-      members: [newData.members],
-      date: newData.date
-    };
-    setModalConfirmOpen(true);
-    setSubscription(newSub);
+    if (!membersSelected.length) {
+      setModalError(true);
+    } else {
+      const newSub = {
+        classId: newData.classId,
+        members: membersSelected,
+        date: newData.date
+      };
+      setModalConfirmOpen(true);
+      setSubscription(newSub);
+    }
   };
+
+  const handleMiembroClick = (event) => {
+    const value = event.target.value;
+
+    if (membersSelected.includes(value)) {
+      setMembersSelected(membersSelected.filter((member) => member !== value));
+    } else {
+      setMembersSelected([...membersSelected, value]);
+    }
+  };
+
+  const deleteItemList = (member) => {
+    setMembersSelected(membersSelected.filter((oneMember) => oneMember !== member));
+  };
+
+  useEffect(() => {
+    getSuscription(dispatch);
+    getClasses(dispatch);
+    getAllMembers(dispatch);
+    if (data.members) {
+      const membersInSubs = data.members.map((member) => member._id);
+      setMembersSelected(membersInSubs);
+    }
+  }, []);
 
   return (
     <section className={style.containerModal}>
@@ -112,7 +145,9 @@ const FormSubscription = () => {
           register={register}
           error={errors.classId?.message}
         />
-        <OptionInput
+        <OptionMultipleInput
+          membersSelected={membersSelected.length === 0 ? '' : membersSelected}
+          onAction={handleMiembroClick}
           data={members}
           dataLabel="Member"
           setValue={{}}
@@ -121,6 +156,29 @@ const FormSubscription = () => {
           register={register}
           error={errors.members?.message}
         />
+        <ul className={style.list}>
+          {membersSelected.map((member) => {
+            {
+              return members.map((oneMember) => {
+                if (oneMember._id === member) {
+                  return (
+                    <li key={member}>
+                      <div className={style.listMembers}>
+                        {oneMember.firstName} {oneMember.lastName}
+                        <img
+                          src="/assets/images/icon-cross.png"
+                          alt="Cross icon"
+                          onClick={() => deleteItemList(member)}
+                        ></img>
+                      </div>
+                    </li>
+                  );
+                }
+                return null;
+              });
+            }
+          })}
+        </ul>
         <Inputs
           nameTitle="Date:"
           nameInput="date"
@@ -144,6 +202,9 @@ const FormSubscription = () => {
       )}
       {modalSuccessOpen && (
         <ModalSuccess message="Success!" setModalSuccessOpen={setModalSuccessOpen} />
+      )}
+      {toastError && (
+        <ToastError setToastErroOpen={setModalError} message="Pick at least one member" />
       )}
     </section>
   );
