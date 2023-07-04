@@ -15,6 +15,13 @@ function Subscriptions() {
   const [toastError, setToastErroOpen] = useState(error);
 
   useEffect(() => {
+    for (const subs of subscription) {
+      if (subs.classId === null) {
+        dispatch(deleteSubscription(subs._id));
+      }
+    }
+  }, [subscription, dispatch]);
+  useEffect(() => {
     getSuscription(dispatch);
     getClasses(dispatch);
   }, []);
