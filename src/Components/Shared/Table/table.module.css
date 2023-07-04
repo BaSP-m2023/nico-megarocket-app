@@ -1,3 +1,10 @@
+.containerTable {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 26rem;
+}
+
 .noneTrainer {
   display: flex;
   align-items: center;
@@ -109,3 +116,38 @@
 .containerSearch {
   height: 2rem;
 }
+
+.containerPaginate {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.containerPaginate .buttonPaginate {
+  background-color: #00000000;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all .1s ease-in-out;
+}
+
+.containerPaginate .buttonPaginate:hover {
+  transform: scale(1.15);
+}
+
+.containerPaginate .eachNumber {
+  background-color: #00000000;
+  border: none;
+  transition: all .5s ease-in-out;
+  cursor: pointer;
+}
+
+.activePage {
+  background-color: #aace9b90;
+  border: none;
+  border-radius: .5rem;
+  cursor: pointer;
+  transition: all .5s ease-in-out;
+}
+
