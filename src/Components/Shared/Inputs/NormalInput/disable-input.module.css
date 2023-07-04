@@ -11,8 +11,8 @@
   outline: 0;
   border-bottom-color: #373867;
 }
-.nameLabel{
-  margin-top:10px;
+.nameLabel {
+  margin-top: 10px;
 }
 .nameLabel label {
   display: flex;
@@ -26,13 +26,12 @@
 
 .labelError label {
   color: red;
-  font-size:19px;
+  font-size: 19px;
 }
 .error {
   color: rgb(240, 8, 8);
   font-size: 12px;
   width: 255px;
-  height: 30px;
 }
 .errorInput {
   border-bottom: solid red;
@@ -41,4 +40,22 @@
 .spaceErrorMsg {
   margin-top: 0;
   height: 30px;
+}
+
+.errorLogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  background-color: red;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 25px;
+}
+
+.errorContainer{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }

@@ -16,10 +16,11 @@
   border: 3px solid #373867;
 }
 .titleLogin {
-  margin-top: 40px;
   text-align: center;
   font-size: 36px;
   font-family: sans-serif;
+  color: #373867;
+  margin: 30px 0;
 }
 .containerForm {
   display: flex;
@@ -33,12 +34,16 @@
   font-family: sans-serif;
   font-weight: bold;
   color: #373867;
+  transition: 0.2s ease;
+}
+
+.forgotPass:hover {
+  font-size: 12px;
 }
 .sub_buttons {
   margin-top: 15px;
   margin-bottom: 5px;
 }
-
 
 .boxError {
   display: flex;
@@ -113,15 +118,15 @@
 .notAccountContainer {
   display: flex;
   align-items: center;
-  margin-top:10px;
+  margin-top: 10px;
 }
-.notAccountContainer p{
-  font-size:12px;
+.notAccountContainer p {
+  font-size: 12px;
 }
 .newContainer {
   display: flex;
   flex-direction: column;
-  width:54%;
+  width: 54%;
   align-items: center;
   justify-content: space-between;
 }

@@ -17,9 +17,13 @@
 }
 .inputs {
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  gap:20px;
+}
+
+.group{
+  display:flex;
+  flex-direction:column;
 }
 .inputs input {
   padding-left: 5px;
@@ -28,4 +32,5 @@
 .buttonContainer {
   display: flex;
   gap: 20px;
+  justify-content:center;
 }

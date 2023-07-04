@@ -26,7 +26,7 @@ const SelectInput = ({ data, dataLabel, name, register, error, testId }) => {
         htmlFor="selectInput"
         className={error ? `${styles.nameLabel} ${styles.labelError}` : styles.nameLabel}
       >
-        {dataLabel}:
+        {dataLabel}
       </label>
       <select
         className={error ? `${styles.errorInput} ${styles.optionInput}` : styles.optionInput}
@@ -43,7 +43,14 @@ const SelectInput = ({ data, dataLabel, name, register, error, testId }) => {
           );
         })}
       </select>
-      {error ? <p className={styles.error}>{error}</p> : <p className={styles.spaceErrorMsg}></p>}
+      {error ? (
+        <div className={styles.errorContainer}>
+          <div className={styles.errorLogo}>!</div>
+          <p className={styles.error}>{error}</p>
+        </div>
+      ) : (
+        <p className={styles.spaceErrorMsg}></p>
+      )}
     </div>
   );
 };

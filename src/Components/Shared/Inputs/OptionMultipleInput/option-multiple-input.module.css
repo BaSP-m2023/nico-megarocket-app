@@ -47,3 +47,21 @@
   color: red;
   font-size: 19px;
 }
+
+.errorLogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  background-color: red;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 25px;
+}
+
+.errorContainer{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}

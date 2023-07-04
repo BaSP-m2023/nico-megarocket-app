@@ -26,7 +26,7 @@ const SelectMultipleInput = ({ data, dataLabel, name, register, error, onAction,
         htmlFor="selectInput"
         className={error ? `${styles.nameLabel} ${styles.labelError}` : styles.nameLabel}
       >
-        {dataLabel}:
+        {dataLabel}
       </label>
       <select
         onClick={onAction}
@@ -44,7 +44,14 @@ const SelectMultipleInput = ({ data, dataLabel, name, register, error, onAction,
           );
         })}
       </select>
-      {error ? <p className={styles.error}>{error}</p> : <p className={styles.spaceErrorMsg}></p>}
+      {error ? (
+        <div className={styles.errorContainer}>
+          <div className={styles.errorLogo}>!</div>
+          <p className={styles.error}>{error}</p>
+        </div>
+      ) : (
+        <p className={styles.spaceErrorMsg}></p>
+      )}
     </div>
   );
 };

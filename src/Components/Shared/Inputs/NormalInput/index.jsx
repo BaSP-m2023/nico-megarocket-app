@@ -15,7 +15,14 @@ const Inputs = ({ register, error, type, isDisabled, nameInput, nameTitle, testI
         disabled={isDisabled}
         {...register(nameInput, { required: { value: true, message: 'This field is required' } })}
       />
-      {error ? <p className={styles.error}>{error}</p> : <p className={styles.spaceErrorMsg}></p>}
+      {error ? (
+        <div className={styles.errorContainer}>
+          <div className={styles.errorLogo}>!</div>
+          <p className={styles.error}>{error}</p>
+        </div>
+      ) : (
+        <p className={styles.spaceErrorMsg}></p>
+      )}
     </div>
   );
 };
