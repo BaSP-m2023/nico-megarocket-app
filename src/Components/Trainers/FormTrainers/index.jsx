@@ -29,6 +29,7 @@ const FormTrainer = () => {
       .min(8)
       .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
       .message('The password must have at least one Uppercase,a number and 8 characters.'),
+    repeatPassword: Joi.string().valid(Joi.ref('password')),
     city: Joi.string().min(5).max(25),
     salary: Joi.number()
   });
@@ -40,6 +41,7 @@ const FormTrainer = () => {
     phone: updateData.phone,
     email: updateData.email,
     password: updateData.password,
+    repeatPassword: updateData.password,
     city: updateData.city,
     salary: updateData.salary
   };
@@ -186,6 +188,17 @@ const FormTrainer = () => {
                   nameInput="password"
                   type="password"
                   error={errors.password?.message}
+                />
+              </div>
+            )}
+            {!id && (
+              <div>
+                <Inputs
+                  nameTitle="Repeat Password"
+                  register={register}
+                  nameInput="repeatPassword"
+                  type="password"
+                  error={errors.repeatPassword?.message}
                 />
               </div>
             )}
