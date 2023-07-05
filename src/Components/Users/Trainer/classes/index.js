@@ -5,6 +5,7 @@ import { getClasses } from 'redux/classes/thunks';
 import DivContainerTrainer from 'Components/Users/Trainer/classes/Container/';
 import { getFirebaseUidFromToken } from 'helper/firebase';
 import 'firebase/compat/auth';
+import { getTrainers } from 'redux/trainers/thunks';
 
 const TrainersClasses = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,6 @@ const TrainersClasses = () => {
   const classes = useSelector((state) => state.classes.list);
   const trainers = useSelector((state) => state.trainers.list);
   const trainer = trainers.find((oneTrainer) => oneTrainer.email === userCurrent);
-
   const trainerClasses = classes.filter((oneClass) => {
     if (oneClass.trainer[0].email === userCurrent) {
       return oneClass;
@@ -31,6 +31,7 @@ const TrainersClasses = () => {
 
   useEffect(() => {
     getClasses(dispatch);
+    getTrainers(dispatch);
   }, []);
 
   useEffect(() => {

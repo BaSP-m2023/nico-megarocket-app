@@ -43,19 +43,18 @@ function DivContainerTrainer({ item, testId }) {
   const handleClick = () => {
     history.push(`/trainer/classes/members`, { membersClass });
   };
-  console.log(membersClass);
 
   return (
     <>
-      {item?.slots !== 0 ? (
+      {item.slots !== 0 ? (
         <div className={styles.classesContainer} onClick={handleClick} data-testid={testId}>
-          <p className={styles.textClasses}>{item?.activity.name}</p>
-          <p className={styles.slotsClasses}>{item?.slots} Slots</p>
+          <p className={styles.textClasses}>{item.activity.name}</p>
+          <p className={styles.slotsClasses}>{item.slots} Slots</p>
         </div>
       ) : (
         <div className={styles.classesFullContainer} onClick={handleClick} data-testid={testId}>
-          <p className={styles.nameFullClasses}>{item?.activity.name}</p>
-          <p className={styles.slotsFullClasses}>{item?.slots} Slots</p>
+          <p className={styles.nameFullClasses}>{item.activity.name}</p>
+          <p className={styles.slotsFullClasses}>{item.slots} Slots</p>
         </div>
       )}
     </>
