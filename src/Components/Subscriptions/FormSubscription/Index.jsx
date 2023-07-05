@@ -63,12 +63,15 @@ const FormSubscription = () => {
     register,
     reset,
     handleSubmit,
+    watch,
     formState: { errors }
   } = useForm({
     mode: 'onBlur',
     resolver: joiResolver(schema),
     defaultValues: { ...subscriptionUpdated }
   });
+
+  const selectedClass = classes.find((oneClass) => oneClass._id === watch('classId'));
 
   const onConfirm = async () => {
     if (!id) {
@@ -146,6 +149,15 @@ const FormSubscription = () => {
             register={register}
             error={errors.classId?.message}
           />
+          {selectedClass && (
+            <>
+              {selectedClass.slots > 0 ? (
+                <p>Slots: {selectedClass.slots - membersSelected.length}</p>
+              ) : (
+                <p>No slots available</p>
+              )}
+            </>
+          )}
         </div>
         <div className={style.inputContainer}>
           <OptionMultipleInput
