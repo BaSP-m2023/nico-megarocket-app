@@ -41,6 +41,27 @@
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 .inputMemberContainer {
   margin-top: 30px;
 }
+=======
+.inputMemberContainer{
+  margin-top:30px;
+}
+
+.hidden {
+  display: none;
+}
+
+.formEdited {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  width: 12px;
+  margin: 0 10px;
+  cursor: pointer;
+}
+>>>>>>> master

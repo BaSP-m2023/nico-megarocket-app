@@ -11,7 +11,7 @@ import {
 } from 'Components/Shared';
 import style from '../FormSubscription/modalAdd.module.css';
 import { addSubscriptions, updateSubscriptions, getSuscription } from 'redux/subscriptions/thunks';
-import { getClasses } from 'redux/classes/thunks';
+import { getClasses, updateClass } from 'redux/classes/thunks';
 import { getAllMembers } from 'redux/members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -29,8 +29,13 @@ const FormSubscription = () => {
   const { id } = useParams();
   const location = useLocation();
   const classes = useSelector((state) => state.classes.list);
+  const subscriptions = useSelector((state) => state.subscription.data);
   const members = useSelector((state) => state.members.list);
   const data = location.state.params;
+
+  const membersActive = members.filter((member) => {
+    return member.isActive === true;
+  });
 
   const schema = Joi.object({
     date: Joi.date().required().messages({
@@ -63,6 +68,7 @@ const FormSubscription = () => {
     register,
     reset,
     handleSubmit,
+    watch,
     formState: { errors }
   } = useForm({
     mode: 'onBlur',
@@ -70,8 +76,35 @@ const FormSubscription = () => {
     defaultValues: { ...subscriptionUpdated }
   });
 
+  const subscriptionClassIds = subscriptions.map((subs) => subs.classId);
+
+  const unSubscribedClasses = classes.filter((classItem) => {
+    return !subscriptionClassIds.find((classId) => classId._id === classItem._id);
+  });
+
+  const selectedClass = classes.find((oneClass) => oneClass._id === watch('classId'));
+  const isSlotsAvailable = selectedClass && selectedClass.slots - membersSelected.length > 0;
+
+  const handleClick = () => {
+    history.push(`/admin/classes/ClassForm/${selectedClass._id}`, {
+      params: { ...selectedClass, mode: 'edit' }
+    });
+  };
+
   const onConfirm = async () => {
     if (!id) {
+      const updatedClass = {
+        slots: selectedClass.slots - membersSelected.length
+      };
+      const body = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedClass)
+      };
+
+      await dispatch(updateClass(selectedClass._id, body));
       const addSubscriptionResponse = await addSubscriptions(dispatch, subscription);
       if (addSubscriptionResponse.type === 'POST_SUBSCRIPTION_SUCCESS') {
         setModalSuccessOpen(true);
@@ -80,6 +113,18 @@ const FormSubscription = () => {
         }, 1000);
       }
     } else {
+      const updatedClass = {
+        slots: selectedClass.slots - membersSelected.length
+      };
+      const body = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedClass)
+      };
+
+      await dispatch(updateClass(selectedClass._id, body));
       const editSubscriptionResponse = await dispatch(updateSubscriptions(id, subscription));
       if (editSubscriptionResponse.type === 'PUT_SUBSCRIPTION_SUCCESS') {
         setModalSuccessOpen(true);
@@ -137,27 +182,61 @@ const FormSubscription = () => {
       <form className={style.containerForm} onSubmit={handleSubmit(onSubmit)}>
         <h3>{id ? 'Edit subscription' : 'Add subscription'}</h3>
         <div className={style.inputMemberContainer}>
-          <OptionInput
-            data={classes}
-            dataLabel="Class"
-            setValue={{}}
-            aValue={{}}
-            name="classId"
-            register={register}
-            error={errors.classId?.message}
-          />
+          {id ? (
+            <>
+              <div className={id ? style.hidden : ''}>
+                <OptionInput
+                  data={unSubscribedClasses}
+                  dataLabel="Class"
+                  setValue={{}}
+                  aValue={{}}
+                  name="classId"
+                  register={register}
+                  error={errors.classId?.message}
+                />
+              </div>
+              <p className={id ? style.formEdited : style.hidden}>
+                {selectedClass.activity?.name} - {selectedClass?.hour}
+                <img
+                  className={style.icon}
+                  onClick={() => handleClick()}
+                  src={`${process.env.PUBLIC_URL}/assets/images/pencil-edit.svg`}
+                />
+              </p>
+            </>
+          ) : (
+            <OptionInput
+              data={unSubscribedClasses}
+              dataLabel="Class"
+              setValue={{}}
+              aValue={{}}
+              name="classId"
+              register={register}
+              error={errors.classId?.message}
+            />
+          )}
+          {selectedClass && (
+            <>
+              {selectedClass.slots > 0 ? (
+                <p>Slots: {selectedClass.slots - membersSelected.length}</p>
+              ) : (
+                <p>No slots available</p>
+              )}
+            </>
+          )}
         </div>
         <div className={style.inputContainer}>
           <OptionMultipleInput
             membersSelected={membersSelected.length === 0 ? '' : membersSelected}
             onAction={handleMiembroClick}
-            data={members}
+            data={membersActive}
             dataLabel="Member"
             setValue={{}}
             aValue={{}}
             name="members"
             register={register}
             error={errors.members?.message}
+            disabled={!isSlotsAvailable}
           />
         </div>
 

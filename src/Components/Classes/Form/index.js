@@ -116,7 +116,7 @@ const FormClasses = () => {
       await dispatch(updateClass(id, classBody));
       await setModalSuccessOpen(true);
       setTimeout(() => {
-        history.push('/admin/classes');
+        history.goBack();
         setModalSuccessOpen(false);
       }, 2000);
     } else {
