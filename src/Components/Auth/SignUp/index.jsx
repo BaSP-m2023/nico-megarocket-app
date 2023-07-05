@@ -128,9 +128,21 @@ const SignForm = () => {
   });
 
   const onSubmit = async (data) => {
+    const memberEdit = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      dni: data.dni,
+      phone: data.phone,
+      email: data.email,
+      city: data.city,
+      password: data.password,
+      postalCode: data.postalCode,
+      membership: data.membership,
+      birthday: data.birthday
+    };
     if (Object.values(errors).length === 0) {
       try {
-        const responseSignUp = await dispatch(signUpMember(data));
+        const responseSignUp = await dispatch(signUpMember(memberEdit));
         if (responseSignUp.type === 'SIGN_UP_SUCCESS') {
           setOpenModalSuccess(true);
           setTimeout(() => {
@@ -285,7 +297,7 @@ const SignForm = () => {
                 nameInput="repeatPassword"
                 register={register}
                 type="password"
-                error={errors.password?.message}
+                error={errors.repeatPassword?.message}
                 testId="signup-repeatpassword-input"
               />
             </div>

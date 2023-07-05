@@ -41,7 +41,6 @@ const FormTrainer = () => {
     phone: updateData.phone,
     email: updateData.email,
     password: updateData.password,
-    repeatPassword: updateData.password,
     city: updateData.city,
     salary: updateData.salary
   };
@@ -97,7 +96,16 @@ const FormTrainer = () => {
   };
 
   const onSubmit = async (data) => {
-    setInputForm(data);
+    setInputForm({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      dni: data.dni,
+      phone: data.phone,
+      email: data.email,
+      password: data.password,
+      city: data.city,
+      salary: data.salary
+    });
     setModalUpdateConfirmOpen(true);
   };
 
