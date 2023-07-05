@@ -2,7 +2,7 @@
   margin: 5px;
   width: 80px;
   height: 40px;
-  background-color: #aace9b;
+  background-color: var(--secondary);
   border: none;
   cursor: pointer;
   border-radius: 5px;
@@ -37,7 +37,7 @@
 
 .btnCancel:hover,
 .btnAccept:hover {
-  background-color: #373867;
+  background-color: var(--primary);
   color: white;
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
   transform: translateY(-2px);

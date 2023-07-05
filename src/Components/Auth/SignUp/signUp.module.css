@@ -3,14 +3,14 @@
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0px 20px 30px -5px rgba(0, 0, 0, 0.75);
-  border: 3px solid var(--Blue);
+  border: 3px solid var(--primary);
 }
 
 .form {
   margin: 30px 0;
   display: flex;
   gap: 20px;
-  color: var(--Blue);
+  color: var(--primary);
   padding-left:10px;
 }
 
@@ -28,17 +28,17 @@
   text-align: center;
   font-size: 36px;
   font-family: sans-serif;
-  color: var(--Blue);
+  color: var(--primary);
   margin: 0 0 30px 0;
 }
 
 .radioMainContainer {
   display: flex;
   flex-direction: column;
-  border: solid 1px var(--Blue);
+  border: solid 1px var(--primary);
   padding: 10px;
   border-radius: 10px;
-  box-shadow: 0px 5px 8px -5px var(--Blue);
+  box-shadow: 0px 5px 8px -5px var(--primary);
 }
 
 .radioContainer {
@@ -58,7 +58,7 @@
   width: 255px;
   height: 70px;
   border-radius: 5px;
-  border: 1px solid var(--Red);
+  border: 1px solid var(--red);
 }
 .lineError {
   display: flex;
@@ -69,7 +69,7 @@
   margin-top: 10px;
   font-weight: bolder;
   text-transform: uppercase;
-  color: var(--Red);
+  color: var(--red);
 }
 .errorLogo {
   display: flex;
@@ -79,15 +79,15 @@
   margin-left: 5px;
   width: 25px;
   height: 25px;
-  background-color: var(--Red);
-  color: var(--White);
+  background-color: var(--red);
+  color: var(--white);
   font-weight: bold;
   border-radius: 25px;
 }
 .MsgError {
   font-size: 12px;
   text-align: center;
-  color: var(--Red);
+  color: var(--red);
   font-weight: 500;
 }
 .emptyBox {
@@ -113,7 +113,7 @@
   left: 50%;
   width: 15px;
   height: 2px;
-  background-color: var(--Red);
+  background-color: var(--red);
   transform-origin: center;
 }
 .close_icon:before {

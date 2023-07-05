@@ -3,17 +3,17 @@
   height: 20px;
   border-radius: 4px;
   padding: 10px 12px 10px 12px;
-  border-color: #373867;
+  border-color: var(--primary);
 }
 
 .input-container input:error {
-  border-color: red;
-  color: red;
+  border-color: var(--red);
+  color: var(--red);
 }
 
 .error-text {
   position: absolute;
-  color: red;
+  color: var(--red);
   font-size: 12px;
   top: 100%;
   left: 0;

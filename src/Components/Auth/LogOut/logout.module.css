@@ -14,7 +14,7 @@
   font-size: 1rem;
   font-weight: 600;
   text-transform: capitalize;
-  color: var(--Blue);
+  color: var(--primary);
 }
 
 .logButton:hover {
@@ -23,5 +23,5 @@
 }
 
 .logButton:hover .logText {
-  color: var(--White);
+  color: var(--white);
 }

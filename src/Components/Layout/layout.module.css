@@ -9,7 +9,7 @@ aside {
   position: sticky;
   top: 0;
   left: 0;
-  background-color: var(--Green);
+  background-color: var(--primary);
   height: 100vh;
 }
 

@@ -30,7 +30,7 @@
   width: 90%;
   height: 90%;
   border-radius: .5rem;
-  background-color: #249a19;
+  background-color: var(--secondary-dark);
   transition: all .5s ease-in;
   box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.24) inset;
 }
@@ -50,7 +50,7 @@
   height: .95rem;
   color: rgb(0, 0, 0, 0);
   border: .1px solid rgba(0, 0, 0, 0.473);
-  background-color: #f7f7f7;
+  background-color: var(--white);
   transition: all .3s ease-in;
   box-shadow: 0px 0px 5px -4px rgba(0,0,0,0.44);
   font-size: 0.000001px;
@@ -65,7 +65,7 @@
   width: .95rem;
   height: .95rem;
   color: rgb(0, 0, 0, 0);
-  background-color: #f7f7f7;
+  background-color: var(--white);
   border: .1px solid rgba(0, 0, 0, 0.473);
   transition: all .3s ease-in;
   transform: translateX(.93rem);

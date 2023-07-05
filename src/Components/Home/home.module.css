@@ -17,13 +17,13 @@
   font-weight: 700;
   font-size: 30px;
   line-height: 47px;
-  color: var(--Blue);
+  color: var(--primary);
 }
 
 .Text {
   font-size: 20px;
   line-height: 23px;
-  color: var(--Blue);
+  color: var(--primary);
 }
 
 .sectionTitle {
@@ -32,10 +32,10 @@
   text-decoration: underline;
   text-decoration-thickness: 3px;
   text-underline-offset: 8px;
-  text-decoration-color: var(--DarkGreen);
+  text-decoration-color: var(--secondary-dark);
   font-size: 30px;
   line-height: 35px;
-  color: var(--Blue);
+  color: var(--primary);
 }
 
 .sectionHead {
@@ -84,7 +84,7 @@
   font-weight: 876;
   font-size: 16px;
   line-height: 28px;
-  color: var(--Blue);
+  color: var(--primary);
 }
 
 .sectionFeaturesArticles img {
@@ -123,16 +123,16 @@
 .sectionAboutContainer button {
   width: 82px;
   height: 32px;
-  border: 1px solid var(--Blue);
+  border: 1px solid var(--primary);
   border-radius: 5px;
-  background: var(--White);
+  background: var(--white);
   font-family: 'Roboto';
   font-style: normal;
   font-weight: bold;
   font-size: 12px;
   line-height: 14px;
   text-align: center;
-  color: var(--Blue);
+  color: var(--primary);
   margin-bottom: 20px;
 }
 
@@ -159,7 +159,7 @@
 .formInput {
   width: 260px;
   height: 36px;
-  border: 1px solid var(--Blue);
+  border: 1px solid var(--primary);
   border-radius: 4px;
 }
 
@@ -174,7 +174,7 @@
   width: 270px;
   height: 36px;
   padding-left: 10px;
-  border: 1px solid var(--Blue);
+  border: 1px solid var(--primary);
   border-radius: 4px;
   font-weight: 400;
   font-size: 14px;
@@ -184,7 +184,7 @@
 .sectionTouchForm textarea {
   width: 265px;
   height: 210px;
-  border: 1px solid var(--Blue);
+  border: 1px solid var(--primary);
   border-radius: 4px;
 }
 
@@ -203,7 +203,7 @@
   font-weight: bold;
   font-size: 14px;
   line-height: 16px;
-  color: var(--Blue);
+  color: var(--primary);
 }
 
 .formButton {
@@ -213,11 +213,11 @@
   margin-top: 30px;
   border-width: 0px;
   border-radius: 5px;
-  background: var(--Green);
+  background: var(--secondary);
   font-weight: bold;
   font-size: 12px;
   line-height: 19px;
-  color: var(--Blue);
+  color: var(--primary);
 }
 
 .sectionActivities {
@@ -240,7 +240,7 @@
   font-weight: bold;
   font-size: 14px;
   line-height: 28px;
-  color: var(--Blue);
+  color: var(--primary);
 }
 
 .sectionActivitiesList div {
@@ -275,7 +275,7 @@
   font-weight: 600;
   font-size: 14px;
   line-height: 100%;
-  color: var(--Blue);
+  color: var(--primary);
 }
 
 .sectionMembershipTable {
@@ -298,7 +298,7 @@
 }
 
 .sectionMembershipTable tr:nth-child(odd) {
-  background-color: var(--LightGrey);
+  background-color: var(--ligth-grey);
 }
 
 .sectionMembershipTable tr {
@@ -321,7 +321,7 @@
     display: flex;
     font-size: 20px;
     line-height: 23px;
-    color: var(--DarkGreen);
+    color: var(--secondary-dark);
   }
 
   .spanSectionHead {
@@ -375,11 +375,11 @@
     margin-top: 30px;
     border-width: 0px;
     border-radius: 5px;
-    background: var(--Green);
+    background: var(--secondary);
     font-weight: bold;
     font-size: 16px;
     line-height: 19px;
-    color: var(--Blue);
+    color: var(--primary);
   }
 
   .sectionTouchForm div {

@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   flex: 1;
-  color: var(--Blue);
+  color: var(--primary);
 }
 .wholeContainer {
   display: flex;
@@ -13,13 +13,13 @@
   width: 486px;
   border-radius: 10px;
   box-shadow: 0px 20px 30px -5px #373867;
-  border: 3px solid var(--Blue);
+  border: 3px solid var(--primary);
 }
 .titleLogin {
   text-align: center;
   font-size: 36px;
   font-family: sans-serif;
-  color: var(--Blue);
+  color: var(--primary);
   margin: 30px 0;
 }
 .containerForm {
@@ -34,7 +34,7 @@
   cursor: pointer;
   font-family: sans-serif;
   font-weight: bold;
-  color: var(--Blue);
+  color: var(--primary);
   transition: 0.2s ease;
 }
 
@@ -52,7 +52,7 @@
   width: 255px;
   height: 70px;
   border-radius: 5px;
-  border: 1px solid var(--Red);
+  border: 1px solid var(--red);
 }
 .lineError {
   display: flex;
@@ -63,7 +63,7 @@
   margin-top: 10px;
   font-weight: bolder;
   text-transform: uppercase;
-  color: var(--Red);
+  color: var(--red);
 }
 .errorLogo {
   display: flex;
@@ -73,15 +73,15 @@
   margin-left: 5px;
   width: 25px;
   height: 25px;
-  background-color: var(--Red);
-  color: var(--White);
+  background-color: var(--red);
+  color: var(--white);
   font-weight: bold;
   border-radius: 25px;
 }
 .MsgError {
   font-size: 12px;
   text-align: center;
-  color: var(--White);
+  color: var(--white);
   font-weight: 500;
 }
 .emptyBox {
