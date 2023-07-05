@@ -29,8 +29,13 @@ const FormSubscription = () => {
   const { id } = useParams();
   const location = useLocation();
   const classes = useSelector((state) => state.classes.list);
+  const subscriptions = useSelector((state) => state.subscription.data);
   const members = useSelector((state) => state.members.list);
   const data = location.state.params;
+
+  const membersActive = members.filter((member) => {
+    return member.isActive === true;
+  });
 
   const schema = Joi.object({
     date: Joi.date().required().messages({
@@ -71,8 +76,21 @@ const FormSubscription = () => {
     defaultValues: { ...subscriptionUpdated }
   });
 
+  const subscriptionClassIds = subscriptions.map((subs) => subs.classId);
+
+  const unSubscribedClasses = classes.filter((classItem) => {
+    return !subscriptionClassIds.find((classId) => classId._id === classItem._id);
+  });
+
   const selectedClass = classes.find((oneClass) => oneClass._id === watch('classId'));
   const isSlotsAvailable = selectedClass && selectedClass.slots - membersSelected.length > 0;
+
+  const handleClick = () => {
+    console.log(selectedClass);
+    history.push(`/admin/classes/ClassForm/${selectedClass._id}`, {
+      params: { ...selectedClass, mode: 'edit' }
+    });
+  };
 
   const onConfirm = async () => {
     if (!id) {
@@ -165,15 +183,39 @@ const FormSubscription = () => {
       <form className={style.containerForm} onSubmit={handleSubmit(onSubmit)}>
         <h3>{id ? 'Edit subscription' : 'Add subscription'}</h3>
         <div className={style.inputMemberContainer}>
-          <OptionInput
-            data={classes}
-            dataLabel="Class"
-            setValue={{}}
-            aValue={{}}
-            name="classId"
-            register={register}
-            error={errors.classId?.message}
-          />
+          {id ? (
+            <>
+              <div className={id ? style.hidden : ''}>
+                <OptionInput
+                  data={unSubscribedClasses}
+                  dataLabel="Class"
+                  setValue={{}}
+                  aValue={{}}
+                  name="classId"
+                  register={register}
+                  error={errors.classId?.message}
+                />
+              </div>
+              <p className={id ? style.formEdited : style.hidden}>
+                {selectedClass.activity?.name} - {selectedClass?.hour}
+                <img
+                  className={style.icon}
+                  onClick={() => handleClick()}
+                  src={`${process.env.PUBLIC_URL}/assets/images/pencil-edit.svg`}
+                />
+              </p>
+            </>
+          ) : (
+            <OptionInput
+              data={unSubscribedClasses}
+              dataLabel="Class"
+              setValue={{}}
+              aValue={{}}
+              name="classId"
+              register={register}
+              error={errors.classId?.message}
+            />
+          )}
           {selectedClass && (
             <>
               {selectedClass.slots > 0 ? (
@@ -188,7 +230,7 @@ const FormSubscription = () => {
           <OptionMultipleInput
             membersSelected={membersSelected.length === 0 ? '' : membersSelected}
             onAction={handleMiembroClick}
-            data={members}
+            data={membersActive}
             dataLabel="Member"
             setValue={{}}
             aValue={{}}
