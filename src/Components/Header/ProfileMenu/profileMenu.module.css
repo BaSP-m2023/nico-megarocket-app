@@ -9,7 +9,6 @@ align-items: center;
   border: 1px solid black;
   border-radius: 100%;
   box-shadow: 1px 0px 25px -8px rgba(0,0,0,0.75);
-  z-index: 10;
 }
 .defaultImg{
   display: flex;
