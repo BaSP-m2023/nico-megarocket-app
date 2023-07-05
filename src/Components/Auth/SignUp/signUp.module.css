@@ -11,6 +11,7 @@
   display: flex;
   gap: 20px;
   color: #373867;
+  padding-left:10px;
 }
 
 .buttonsGroup {
