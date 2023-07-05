@@ -86,7 +86,6 @@ const FormSubscription = () => {
   const isSlotsAvailable = selectedClass && selectedClass.slots - membersSelected.length > 0;
 
   const handleClick = () => {
-    console.log(selectedClass);
     history.push(`/admin/classes/ClassForm/${selectedClass._id}`, {
       params: { ...selectedClass, mode: 'edit' }
     });
