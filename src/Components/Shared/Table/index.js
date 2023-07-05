@@ -23,6 +23,11 @@ const TableComponent = ({
   const dispatch = useDispatch();
   const located = useLocation().pathname;
   const [filtered, setFiltered] = useState(data);
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(filtered.length / 6);
+  const sliceStart = (currentPage - 1) * 6;
+  const sliceEnd = sliceStart + 6;
+  const newData = filtered.slice(sliceStart, sliceEnd);
 
   const onConfirmOpen = (id) => {
     setModalConfirm(true);
@@ -114,6 +119,7 @@ const TableComponent = ({
       return false;
     });
     setFiltered(filters);
+    setCurrentPage(1);
   };
 
   useEffect(() => {
@@ -122,6 +128,26 @@ const TableComponent = ({
       setFiltered(data);
     }
   }, [data]);
+
+  const handlePageClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(
+        <button
+          key={i}
+          onClick={() => handlePageClick(i)}
+          className={currentPage === i ? styles.activePage : styles.eachNumber}
+        >
+          {i}
+        </button>
+      );
+    }
+    return pageNumbers;
+  };
 
   return (
     <section className={styles.container} data-testid={testId}>
@@ -134,12 +160,12 @@ const TableComponent = ({
           />
         </button>
       </div>
-      {filtered?.length === 0 ? (
+      {newData?.length === 0 ? (
         <div className={styles.noneTrainer}>
           <h3>The list is empty</h3>
         </div>
       ) : (
-        <>
+        <div className={styles.containerTable}>
           <table className={styles.table}>
             <thead>
               <tr className={styles.tableContent}>
@@ -152,7 +178,7 @@ const TableComponent = ({
               </tr>
             </thead>
             <tbody>
-              {filtered.map((row, index) => {
+              {newData.map((row, index) => {
                 const rowClass = index % 2 === 0 ? styles.rowBackground1 : styles.rowBackground2;
 
                 return (
@@ -189,7 +215,20 @@ const TableComponent = ({
               })}
             </tbody>
           </table>
-        </>
+          <div className={styles.containerPaginate}>
+            <button
+              onClick={() => handlePageClick(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={styles.buttonPaginate}
+            >{`←`}</button>
+            {renderPageNumbers()}
+            <button
+              onClick={() => handlePageClick(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className={styles.buttonPaginate}
+            >{`→`}</button>
+          </div>
+        </div>
       )}
       {modalConfirm && (
         <ModalConfirm
