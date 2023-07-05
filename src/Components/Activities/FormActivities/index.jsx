@@ -110,7 +110,7 @@ const ModalAddActivity = () => {
   return (
     <section className={style.containerModal}>
       <form className={style.containerForm} onSubmit={handleSubmit(onSubmit)}>
-        <h3>Activity</h3>
+        <h3 className={style.title}>{id ? 'Edit Activity' : 'Add Activity'}</h3>
         <Inputs
           nameTitle="Name:"
           register={register}
@@ -155,7 +155,7 @@ const ModalAddActivity = () => {
           </div>
         </div>
         <div className={style.containerAddButton}>
-          <Button clickAction={() => {}} text="Save" testId="activity-save-btn" />
+          <Button clickAction={() => {}} text={id ? 'Save' : 'Add'} testId="activity-save-btn" />
           <Button clickAction={() => reset()} text="Reset" testId="activity-reset-btn" />
           <Button clickAction={() => history.goBack()} text="Cancel" testId="activity-cancel-btn" />
         </div>

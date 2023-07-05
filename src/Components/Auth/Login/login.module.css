@@ -11,20 +11,22 @@
   flex-direction: column;
   align-items: center;
   width: 486px;
-  height: 579px;
   border-radius: 10px;
-  box-shadow: 0px 20px 30px -5px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 20px 30px -5px #373867;
+  border: 3px solid #373867;
 }
 .titleLogin {
-  margin-top: 40px;
   text-align: center;
   font-size: 36px;
   font-family: sans-serif;
+  color: #373867;
+  margin: 30px 0;
 }
 .containerForm {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-left:10px;
 }
 .forgotPass {
   background: none;
@@ -33,11 +35,17 @@
   font-family: sans-serif;
   font-weight: bold;
   color: #373867;
+  transition: 0.2s ease;
+}
+
+.forgotPass:hover {
+  font-size: 12px;
 }
 .sub_buttons {
   margin-top: 15px;
   margin-bottom: 5px;
 }
+
 .boxError {
   display: flex;
   flex-direction: column;
@@ -111,15 +119,15 @@
 .notAccountContainer {
   display: flex;
   align-items: center;
-  margin-top:10px;
+  margin-top: 10px;
 }
-.notAccountContainer p{
-  font-size:12px;
+.notAccountContainer p {
+  font-size: 12px;
 }
 .newContainer {
   display: flex;
   flex-direction: column;
-  width:54%;
+  width: 54%;
   align-items: center;
   justify-content: space-between;
 }

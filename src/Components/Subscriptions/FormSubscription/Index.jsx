@@ -136,26 +136,31 @@ const FormSubscription = () => {
     <section className={style.containerModal}>
       <form className={style.containerForm} onSubmit={handleSubmit(onSubmit)}>
         <h3>{id ? 'Edit subscription' : 'Add subscription'}</h3>
-        <OptionInput
-          data={classes}
-          dataLabel="Class"
-          setValue={{}}
-          aValue={{}}
-          name="classId"
-          register={register}
-          error={errors.classId?.message}
-        />
-        <OptionMultipleInput
-          membersSelected={membersSelected.length === 0 ? '' : membersSelected}
-          onAction={handleMiembroClick}
-          data={members}
-          dataLabel="Member"
-          setValue={{}}
-          aValue={{}}
-          name="members"
-          register={register}
-          error={errors.members?.message}
-        />
+        <div className={style.inputMemberContainer}>
+          <OptionInput
+            data={classes}
+            dataLabel="Class"
+            setValue={{}}
+            aValue={{}}
+            name="classId"
+            register={register}
+            error={errors.classId?.message}
+          />
+        </div>
+        <div className={style.inputContainer}>
+          <OptionMultipleInput
+            membersSelected={membersSelected.length === 0 ? '' : membersSelected}
+            onAction={handleMiembroClick}
+            data={members}
+            dataLabel="Member"
+            setValue={{}}
+            aValue={{}}
+            name="members"
+            register={register}
+            error={errors.members?.message}
+          />
+        </div>
+
         <ul className={style.list}>
           {membersSelected.map((member) => {
             {
@@ -187,7 +192,7 @@ const FormSubscription = () => {
           error={errors.date?.message}
         />
         <div className={style.containerAdd}>
-          <Button clickAction={() => {}} text="Save" />
+          <Button clickAction={() => {}} text={id ? 'Save' : 'Add'} />
           <Button clickAction={() => reset()} text="Reset" />
           <Button clickAction={goBack} text="Cancel" />
         </div>

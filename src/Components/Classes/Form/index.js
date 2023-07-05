@@ -148,55 +148,58 @@ const FormClasses = () => {
       ) : (
         <form className={formStyles.form} onSubmit={handleSubmit(openModal)}>
           <div className={formStyles.container}>
-            <h2 className={formStyles.formTitle}>
-              {updateData.mode === 'edit' ? 'Update' : 'Create'} Class
-            </h2>
+            <h3 className={formStyles.formTitle}>
+              {updateData.mode === 'edit' ? 'Update' : 'Add'} Class
+            </h3>
             <div className={formStyles.inputs}>
-              <OptionInput
-                data={Hours}
-                dataLabel="Hour"
-                name="hour"
-                register={register}
-                error={errors.hour?.message}
-                testId="classes-hour-input"
-              />
+              <div className={formStyles.group}>
+                <OptionInput
+                  data={Hours}
+                  dataLabel="Hour"
+                  name="hour"
+                  register={register}
+                  error={errors.hour?.message}
+                  testId="classes-hour-input"
+                />
 
-              <OptionInput
-                data={daysArray}
-                dataLabel="Day"
-                name="day"
-                register={register}
-                error={errors.day?.message}
-                testId="classes-day-input"
-              />
+                <OptionInput
+                  data={daysArray}
+                  dataLabel="Day"
+                  name="day"
+                  register={register}
+                  error={errors.day?.message}
+                  testId="classes-day-input"
+                />
 
-              <OptionInput
-                data={trainers}
-                dataLabel="Trainers"
-                name="trainer"
-                register={register}
-                error={errors.trainer?.message}
-                testId="classes-trainer-input"
-              />
+                <OptionInput
+                  data={trainers}
+                  dataLabel="Trainers"
+                  name="trainer"
+                  register={register}
+                  error={errors.trainer?.message}
+                  testId="classes-trainer-input"
+                />
+              </div>
+              <div className={formStyles.group}>
+                <OptionInput
+                  data={activities}
+                  dataLabel="Activities"
+                  name="activity"
+                  register={register}
+                  error={errors.activity?.message}
+                  testId="classes-activity-input"
+                />
 
-              <OptionInput
-                data={activities}
-                dataLabel="Activities"
-                name="activity"
-                register={register}
-                error={errors.activity?.message}
-                testId="classes-activity-input"
-              />
-
-              <Inputs
-                type={'text'}
-                isDisabled={false}
-                nameInput={'slots'}
-                nameTitle="Slots"
-                register={register}
-                error={errors.slots?.message}
-                testId="classes-slots-input"
-              />
+                <Inputs
+                  type={'text'}
+                  isDisabled={false}
+                  nameInput={'slots'}
+                  nameTitle="Slots"
+                  register={register}
+                  error={errors.slots?.message}
+                  testId="classes-slots-input"
+                />
+              </div>
             </div>
 
             <div className={formStyles.buttonContainer}>
