@@ -3,23 +3,23 @@
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0px 20px 30px -5px rgba(0, 0, 0, 0.75);
-  border: 3px solid #373867;
-  width:645.33px;
+  border: 3px solid var(--Blue);
+  width: 645.33px;
 }
 
 .title {
   text-align: center;
   font-size: 36px;
   font-family: sans-serif;
-  color: #373867;
+  color: var(--Blue);
   margin: 0 0 30px 0;
 }
 
 .form {
   display: grid;
   margin-bottom: 20px;
-  align-items:center;
-  justify-content:center;
+  align-items: center;
+  justify-content: center;
 }
 
 .inputGroups {
@@ -28,9 +28,8 @@
 }
 
 .inputGroup {
-  display:flex;
-  flex-direction:column;
-
+  display: flex;
+  flex-direction: column;
 }
 
 .submitButton {
@@ -58,8 +57,8 @@
 .buttonContainer {
   display: flex;
   gap: 20px;
-  justify-content:center;
-  margin-top:30px;
+  justify-content: center;
+  margin-top: 30px;
 }
 
 .nameLabel {

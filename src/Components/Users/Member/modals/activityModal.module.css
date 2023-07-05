@@ -9,7 +9,7 @@
   left: 0;
   z-index: 1;
   overflow: hidden;
-  background-color: #00000078;
+  background-color: var(--Black);
 }
 
 .activityCard {
@@ -18,14 +18,14 @@
   height: 30%;
   min-width: 350px;
   background-color: transparent;
-  border-bottom: #373867;
+  border-bottom: var(--Blue);
 }
 
 .activityCardText {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #FFFFFF;
+  background-color: var(--White);
   border-radius: 0 5px 5px 0;
 }
 
@@ -37,13 +37,13 @@
   margin: 10px;
   font-size: 15px;
   font-weight: bold;
-  color: #373867;
+  color: var(--Blue);
 }
 
 .cardDescription {
   margin: 10px;
   font-size: 12px;
-  color: #373867;
+  color: var(--Blue);
 }
 
 .activityCardButton {
@@ -60,15 +60,15 @@
   border: none;
   border-radius: 5px;
   font-weight: bold;
-  color:#373867;
+  color: var(--Blue);
   cursor: pointer;
-  background-color: #AACE9B;
+  background-color: var(--White);
 }
 
 .cardButton:hover {
   transform: translateY(-2px);
-  color: #FFFFFF;
-  background-color: #373867;
+  color: var(--White);
+  background-color: var(--Blue);
 }
 
 @media only screen and (min-width: 601px) {
@@ -96,7 +96,6 @@
     margin: 16px;
     font-size: 12px;
   }
-
 }
 
 @media only screen and (min-width: 1025px) {
@@ -119,5 +118,4 @@
     margin: 20px;
     font-size: 15px;
   }
-
 }
