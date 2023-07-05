@@ -72,6 +72,7 @@ const FormSubscription = () => {
   });
 
   const selectedClass = classes.find((oneClass) => oneClass._id === watch('classId'));
+  const isSlotsAvailable = selectedClass && selectedClass.slots - membersSelected.length > 0;
 
   const onConfirm = async () => {
     if (!id) {
@@ -170,6 +171,7 @@ const FormSubscription = () => {
             name="members"
             register={register}
             error={errors.members?.message}
+            disabled={!isSlotsAvailable}
           />
         </div>
 
