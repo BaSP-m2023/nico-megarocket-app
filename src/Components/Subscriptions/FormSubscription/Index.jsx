@@ -11,7 +11,7 @@ import {
 } from 'Components/Shared';
 import style from '../FormSubscription/modalAdd.module.css';
 import { addSubscriptions, updateSubscriptions, getSuscription } from 'redux/subscriptions/thunks';
-import { getClasses } from 'redux/classes/thunks';
+import { getClasses, updateClass } from 'redux/classes/thunks';
 import { getAllMembers } from 'redux/members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -63,6 +63,7 @@ const FormSubscription = () => {
     register,
     reset,
     handleSubmit,
+    watch,
     formState: { errors }
   } = useForm({
     mode: 'onBlur',
@@ -70,8 +71,23 @@ const FormSubscription = () => {
     defaultValues: { ...subscriptionUpdated }
   });
 
+  const selectedClass = classes.find((oneClass) => oneClass._id === watch('classId'));
+  const isSlotsAvailable = selectedClass && selectedClass.slots - membersSelected.length > 0;
+
   const onConfirm = async () => {
     if (!id) {
+      const updatedClass = {
+        slots: selectedClass.slots - membersSelected.length
+      };
+      const body = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedClass)
+      };
+
+      await dispatch(updateClass(selectedClass._id, body));
       const addSubscriptionResponse = await addSubscriptions(dispatch, subscription);
       if (addSubscriptionResponse.type === 'POST_SUBSCRIPTION_SUCCESS') {
         setModalSuccessOpen(true);
@@ -80,6 +96,18 @@ const FormSubscription = () => {
         }, 1000);
       }
     } else {
+      const updatedClass = {
+        slots: selectedClass.slots - membersSelected.length
+      };
+      const body = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedClass)
+      };
+
+      await dispatch(updateClass(selectedClass._id, body));
       const editSubscriptionResponse = await dispatch(updateSubscriptions(id, subscription));
       if (editSubscriptionResponse.type === 'PUT_SUBSCRIPTION_SUCCESS') {
         setModalSuccessOpen(true);
@@ -146,6 +174,15 @@ const FormSubscription = () => {
             register={register}
             error={errors.classId?.message}
           />
+          {selectedClass && (
+            <>
+              {selectedClass.slots > 0 ? (
+                <p>Slots: {selectedClass.slots - membersSelected.length}</p>
+              ) : (
+                <p>No slots available</p>
+              )}
+            </>
+          )}
         </div>
         <div className={style.inputContainer}>
           <OptionMultipleInput
@@ -158,6 +195,7 @@ const FormSubscription = () => {
             name="members"
             register={register}
             error={errors.members?.message}
+            disabled={!isSlotsAvailable}
           />
         </div>
 

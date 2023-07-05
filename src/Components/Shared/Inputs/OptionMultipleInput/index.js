@@ -1,7 +1,16 @@
 import React from 'react';
 import styles from './option-multiple-input.module.css';
 
-const SelectMultipleInput = ({ data, dataLabel, name, register, error, onAction, testId }) => {
+const SelectMultipleInput = ({
+  data,
+  dataLabel,
+  name,
+  register,
+  error,
+  disabled,
+  onAction,
+  testId
+}) => {
   const ifFirstName = (item) => {
     if (item.firstName && item.lastName) {
       return `${item.firstName} ${item.lastName}`;
@@ -34,6 +43,7 @@ const SelectMultipleInput = ({ data, dataLabel, name, register, error, onAction,
         className={error ? `${styles.errorInput} ${styles.optionInput}` : styles.optionInput}
         name={name}
         {...register(name, { required: { value: true, message: 'This field is required' } })}
+        disabled={disabled}
       >
         {data.map((item, index) => {
           return (
