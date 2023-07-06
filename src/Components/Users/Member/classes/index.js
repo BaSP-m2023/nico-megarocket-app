@@ -6,11 +6,13 @@ import DivContainer from 'Components/Shared/Containers';
 
 const MemberClasses = () => {
   const dispatch = useDispatch();
-  const classesArray = useSelector((state) => state.classes.list);
-  const [selectedClass, setSelectedClass] = useState('');
   let classes = useSelector((state) => state.classes.list);
+  const classesArray = useSelector((state) => state.classes.list);
+  const [selectedClass, setSelectedClass] = useState(false);
   if (selectedClass) {
     classes = classesArray.filter((item) => item.activity.name === selectedClass);
+  } else {
+    setSelectedClass(classes[0].activity?.name);
   }
 
   useEffect(() => {
@@ -43,7 +45,6 @@ const MemberClasses = () => {
   return (
     <div>
       <select onChange={handleChange}>
-        <option value="">Pick Class</option>
         {classesArray.map((item, index) => {
           return (
             <option key={index} value={item._id ? item.activity.name : item}>
