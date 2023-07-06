@@ -170,6 +170,7 @@ const ProfileForm = () => {
               register={register}
               error={errors.email?.message}
               testId="input-admin-email"
+              isDisabled={id ? 'true' : 'false'}
             />
           </div>
         </div>
