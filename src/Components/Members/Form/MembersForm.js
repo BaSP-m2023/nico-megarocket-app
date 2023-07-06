@@ -20,7 +20,7 @@ const MembersForm = () => {
   const isError = useSelector((state) => state.members.errorForm);
   const token = sessionStorage.getItem('token');
   const [toastError, setToastErroOpen] = useState(false);
-  const [modalAddConfirmOpen, setModalAddConfirmOpen] = useState(true);
+  const [modalAddConfirmOpen, setModalAddConfirmOpen] = useState(false);
   const [modalSuccess, setModalSuccessOpen] = useState(false);
   const [member, setMember] = useState({});
   const location = useLocation();
