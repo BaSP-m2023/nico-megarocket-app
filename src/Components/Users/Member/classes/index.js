@@ -11,9 +11,13 @@ const MemberClasses = () => {
   const [selectedClass, setSelectedClass] = useState(false);
   if (selectedClass) {
     classes = classesArray.filter((item) => item.activity.name === selectedClass);
-  } else {
-    setSelectedClass(classes[0].activity?.name);
   }
+
+  useEffect(() => {
+    if (classes.length > 0 && !selectedClass) {
+      setSelectedClass(classes[0].activity?.name);
+    }
+  }, [classes, selectedClass]);
 
   useEffect(() => {
     getClasses(dispatch);
