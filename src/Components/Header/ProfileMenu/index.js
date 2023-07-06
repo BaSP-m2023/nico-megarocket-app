@@ -81,7 +81,7 @@ const ProfileMenu = () => {
 
   return (
     <>
-      <Link to={userData()?.link}>
+      <Link to={userData()?.link} className={styles.links}>
         <div className={styles.container}>
           {sessionStorage.getItem('img') ? (
             <img className={styles.profileImg} src={profilePic} />
