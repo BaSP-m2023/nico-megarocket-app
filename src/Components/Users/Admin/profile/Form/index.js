@@ -175,8 +175,8 @@ const ProfileForm = () => {
           </div>
         </div>
         <div className={styles.buttonsBox}>
-          <Button text="Reset" clickAction={() => reset()} testId="admin-reset-btn" />
           <Button clickAction={() => {}} text="Save" testId="admin-save-btn" />
+          <Button text="Reset" clickAction={() => reset()} testId="admin-reset-btn" />
           <Button
             clickAction={(e) => {
               e.preventDefault();
