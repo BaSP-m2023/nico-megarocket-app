@@ -6,12 +6,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSuscription, updateSubscriptions } from 'redux/subscriptions/thunks';
 import { getAllMembers } from 'redux/members/thunks';
 import { getFirebaseUidFromToken } from 'helper/firebase';
+import ToastError from '../Modals/ToastError';
 
 function DivContainer({ item, testId }) {
   const [toggle, setToggle] = useState(true);
   const [modalConfirm, setModalConfirm] = useState(false);
+  const [toastErroOpen, setToastErroOpen] = useState(false);
   const [userCurrent, setUserCurrent] = useState('');
   const [memberID, setMemberId] = useState('');
+  const [memberState, setMemberState] = useState(false);
   const dispatch = useDispatch();
   const subscriptions = useSelector((state) => state.subscription.data);
   const members = useSelector((state) => state.members.list);
@@ -22,6 +25,7 @@ function DivContainer({ item, testId }) {
       const emailCurrentUser = await getFirebaseUidFromToken();
       setUserCurrent(emailCurrentUser);
       setMemberId(member._id);
+      setMemberState(member.isActive);
       existMemberInClass(memberID);
     } catch (error) {
       return error;
@@ -85,7 +89,7 @@ function DivContainer({ item, testId }) {
   };
 
   const clickActionModal = () => {
-    setModalConfirm(true);
+    memberState ? setModalConfirm(true) : setToastErroOpen(true);
   };
 
   useEffect(() => {
@@ -132,6 +136,13 @@ function DivContainer({ item, testId }) {
           }
           onConfirm={handleToggle}
           setModalConfirmOpen={setModalConfirm}
+        />
+      )}
+      {toastErroOpen && (
+        <ToastError
+          setToastErroOpen={setToastErroOpen}
+          message={'You are not an active member, please consult with an administrator.'}
+          testId="class-join-toast-error"
         />
       )}
     </>
