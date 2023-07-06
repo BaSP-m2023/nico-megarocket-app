@@ -6,7 +6,7 @@ align-items: center;
 .profileImg{
   width: 35px;
   height: 35px;
-  border: 1px solid black;
+  border: 1px solid var(--black);
   border-radius: 100%;
   box-shadow: 1px 0px 25px -8px rgba(0,0,0,0.75);
 }
@@ -16,8 +16,8 @@ align-items: center;
   align-items: center;
   width: 35px;
   height: 35px;
-  background-color: #3e3e50;
-  border: 1px solid black;
+  background-color: var(--dark-grey);
+  border: 1px solid var(--black);
   border-radius: 100%;
 }
 .profileInitials{

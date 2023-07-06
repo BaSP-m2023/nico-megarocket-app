@@ -10,7 +10,7 @@
   height: 100%;
   overflow: auto;
 }
-.close_icon{
+.close_icon {
   align-self: flex-end;
   width: 40px;
   height: 40px;
@@ -23,7 +23,7 @@
   flex-direction: column;
   width: 720px;
   height: 308px;
-  background-color: white;
+  background-color: var(--white);
   box-shadow: 0px 10px 23px rgba(0, 0, 0, 0.12);
   border-radius: 5px;
 }
@@ -40,9 +40,9 @@
   font-style: normal;
   font-weight: 600;
   font-size: 28px;
-  color:#373867 ;
+  color: var(--primary);
 }
-.buttons{
+.buttons {
   display: flex;
   justify-content: flex-end;
   margin-right: 37px;
@@ -59,15 +59,15 @@
   padding: 5px;
 }
 .btnAccept {
-  background-color: #AACE9B;
-  color: #373867;
+  background-color: var(--secondary);
+  color: var(--primary);
   border: none;
 }
-.btnAcceptDelete{
-  background:#F13312 ;
-  color: #ffffff;
+.btnAcceptDelete {
+  background: #f13312;
+  color: var(--white);
   border: none;
 }
 .btnCancel {
-  background: #ffffff;
+  background: var(--white);
 }

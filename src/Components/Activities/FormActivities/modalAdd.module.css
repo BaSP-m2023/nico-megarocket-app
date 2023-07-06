@@ -1,7 +1,7 @@
 .radioMainContainer {
   display: flex;
   flex-direction: column;
-  border: solid 1px #373867;
+  border: solid 1px var(--primary);
   padding: 10px;
   border-radius: 10px;
   box-shadow: 0px 5px 8px -5px #373867;
@@ -26,14 +26,14 @@
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0px 20px 30px -5px rgba(0, 0, 0, 0.75);
-  border: 3px solid #373867;
+  border: 3px solid var(--primary);
 }
 
 .title {
   text-align: center;
   font-size: 36px;
   font-family: sans-serif;
-  color: #373867;
+  color: var(--primary);
   margin: 0 0 30px 0;
 }
 

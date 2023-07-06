@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #373867;
+  background-color: var(--primary);
   position:relative;
 }
 
@@ -16,7 +16,7 @@
 .appName {
   font-size: 2rem;
   font-weight: bold;
-  color: #FFF;
+  color: var(--white);
 }
 
 .rutes {
@@ -32,7 +32,7 @@
   font-weight: 600;
   text-decoration: none;
   text-transform: capitalize;
-  color: #FFF;
+  color: var(--white);
 }
 
 .license {
@@ -42,7 +42,7 @@
   height: 50px;
   width: 90%;
   padding: 0 20px;
-  background-color: #AACE9B;
+  background-color: var(--secondary);
 }
 
 .copyright {

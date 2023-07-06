@@ -1,4 +1,4 @@
-.wholeContainer{
+.wholeContainer {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -19,29 +19,29 @@
   align-items: center;
   justify-content: center;
 }
-.profileImg{
+.profileImg {
   width: 160px;
   border: 1px solid black;
   border-radius: 100%;
-  box-shadow: 1px 0px 25px -8px rgba(0,0,0,0.75);
+  box-shadow: 1px 0px 25px -8px rgba(0, 0, 0, 0.75);
 }
-.defaultImg{
+.defaultImg {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 150px;
   height: 150px;
-  background-color: #373867;
+  background-color: var(--Blue);
   border: 3px solid black;
   border-radius: 100%;
-  box-shadow: 1px 0px 25px -8px rgba(0,0,0,0.75);
+  box-shadow: 1px 0px 25px -8px rgba(0, 0, 0, 0.75);
 }
-.profileInitials{
+.profileInitials {
   font-size: 3.7rem;
   font-weight: 600;
   color: white;
 }
-.profileInfoContainer{
+.profileInfoContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -96,7 +96,7 @@
 .editInfoBtn:hover {
   cursor: pointer;
 }
-.iconEdit{
+.iconEdit {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -104,10 +104,10 @@
   width: 30px;
   height: 30px;
   border-radius: 25px;
-  transition: all .5s;
+  transition: all 0.5s;
   cursor: pointer;
 }
-.iconEdit:hover{
+.iconEdit:hover {
   background-color: rgba(168, 172, 171, 0.274);
   filter: brightness(1) invert();
 }

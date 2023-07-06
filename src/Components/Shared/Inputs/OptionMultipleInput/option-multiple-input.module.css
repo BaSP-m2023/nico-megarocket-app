@@ -30,7 +30,7 @@
   height: 30px;
 }
 .errorInput {
-  border: 2px solid red;
+  border: 2px solid var(--red);
   margin-top: 0;
 }
 
@@ -44,7 +44,7 @@
 }
 
 .labelError {
-  color: red;
+  color: var(--red);
   font-size: 19px;
 }
 
@@ -54,7 +54,7 @@
   justify-content: center;
   width: 15px;
   height: 15px;
-  background-color: red;
+  background-color: var(--red);
   color: #ffffff;
   font-weight: bold;
   border-radius: 25px;

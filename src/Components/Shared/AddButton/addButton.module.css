@@ -24,7 +24,7 @@
 .btn_text{
   font-size: 1rem;
   font-weight: bold;
-  color: #373867;
+  color: var(--primary);
   font-family: 'Roboto', sans-serif;
 }
 .add_btn_img{

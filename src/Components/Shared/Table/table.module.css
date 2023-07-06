@@ -12,7 +12,7 @@
   width: 40vw;
   height: 10rem;
   border-radius: 5px;
-  background-color: #d9d9d9ea;
+  background-color: var(--light-grey);
   font-size: 30px;
   margin: 4rem auto;
 }
@@ -26,7 +26,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  background: #d9d9d9ea;
+  background: var(--light-grey);
   color: #373867;
   border-radius: 3px;
   overflow: hidden;
@@ -46,23 +46,23 @@
 }
 
 .table tr td:nth-last-child(-n + 2):hover {
-  background-color: #37386700;
+  background-color: var(--primary);
   transform: scale(1.2);
 }
 
 .table tr td:hover {
   max-width: 280px;
-  background-color: #353090b2;
+  background-color: var(--primary);
   color: #fff;
   cursor: pointer;
 }
 
 .rowBackground1 {
-  background-color: #aace9b90;
+  background-color: var(--secondary);
 }
 
 .rowBackground2 {
-  background-color: #ffffff;
+  background-color: var(--white);
 }
 
 .trash_edit {
@@ -76,19 +76,19 @@
 
 .searchField {
   border: solid rgb(164, 164, 164);
-  border-radius: .6rem;
+  border-radius: 0.6rem;
   height: 1.4rem;
   width: 2rem;
   min-height: 1rem;
   outline: none;
   opacity: 0;
-  transition: all .3s ease-in;
+  transition: all 0.3s ease-in;
   cursor: pointer;
 }
 
 .searchField:focus {
-  border-width: .3rem;
-  border-color: #aace9b90;
+  border-width: 0.3rem;
+  border-color: var(--secondary);
   width: 14rem;
   opacity: 1;
 }
@@ -96,15 +96,15 @@
 .buttonSearch {
   position: relative;
   right: 2rem;
-  top: .1rem;
-  background-color: #c2e5b2;
-  border: solid #353090b2;
+  top: 0.1rem;
+  background-color: var(--secondary);
+  border: solid var(--primary);
   border-width: thin;
-  border-radius: .6rem;
+  border-radius: 0.6rem;
   font-weight: 600;
   height: 1.8rem;
   width: 2rem;
-  transition: all .1s ease-in;
+  transition: all 0.1s ease-in;
   z-index: -1;
 }
 
@@ -125,11 +125,11 @@
 }
 
 .containerPaginate .buttonPaginate {
-  background-color: #00000000;
+  background-color: var(--black);
   border: none;
   font-size: 1.1rem;
   cursor: pointer;
-  transition: all .1s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
 
 .containerPaginate .buttonPaginate:hover {
@@ -137,17 +137,16 @@
 }
 
 .containerPaginate .eachNumber {
-  background-color: #00000000;
+  background-color: var(--black);
   border: none;
-  transition: all .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
   cursor: pointer;
 }
 
 .activePage {
-  background-color: #aace9b90;
+  background-color: var(--secondary);
   border: none;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   cursor: pointer;
-  transition: all .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
-

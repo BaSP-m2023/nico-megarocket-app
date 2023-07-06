@@ -21,7 +21,7 @@
 }
 .profileImg{
   width: 160px;
-  border: 1px solid black;
+  border: 1px solid var(--black);
   border-radius: 100%;
   box-shadow: 1px 0px 25px -8px rgba(0,0,0,0.75);
 }
@@ -31,8 +31,8 @@
   align-items: center;
   width: 150px;
   height: 150px;
-  background-color: #373867;
-  border: 3px solid black;
+  background-color: var(--primary);
+  border: 3px solid var(--black);
   border-radius: 100%;
   box-shadow: 1px 0px 25px -8px rgba(0,0,0,0.75);
 }

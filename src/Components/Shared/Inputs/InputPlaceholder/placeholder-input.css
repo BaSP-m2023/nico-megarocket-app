@@ -3,7 +3,7 @@
   height: 20px;
   border-radius: 4px;
   padding: 10px 12px 10px 12px;
-  border-color: #373867;
+  border-color: var(--primary);
 }
 
 .inputPlaceholder-container {
