@@ -99,20 +99,20 @@ const TableComponent = ({
   };
 
   const handlerChange = (e) => {
-    const searchValue = e.target.value.toLowerCase();
+    const searchValue = e.target.value.toLowerCase().trim();
     const filters = data.filter((item) => {
-      if (item.name && item.name.toLowerCase().includes(searchValue)) {
+      if (item.name && item.name.toLowerCase().trim().includes(searchValue)) {
         return true;
       }
-      if (item.activity && item.activity.name.toLowerCase().includes(searchValue)) {
+      if (item.activity && item.activity.name.toLowerCase().trim().includes(searchValue)) {
         return true;
       }
-      if (item.firstName && item.firstName.toLowerCase().includes(searchValue)) {
+      if (item.firstName && item.firstName.toLowerCase().trim().includes(searchValue)) {
         return true;
       }
       if (item.classId) {
         const findActivity = classes.find((act) => act._id === item.classId._id);
-        if (findActivity && findActivity.activity.name.toLowerCase().includes(searchValue)) {
+        if (findActivity && findActivity.activity.name.toLowerCase().trim().includes(searchValue)) {
           return true;
         }
       }
