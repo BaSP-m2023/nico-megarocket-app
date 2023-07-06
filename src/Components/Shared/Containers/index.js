@@ -7,10 +7,14 @@ import { getSuscription, updateSubscriptions } from 'redux/subscriptions/thunks'
 import { getAllMembers } from 'redux/members/thunks';
 import { getFirebaseUidFromToken } from 'helper/firebase';
 import ToastError from '../Modals/ToastError';
+import ModalSuccess from '../Modals/ModalSuccess';
 
 function DivContainer({ item, testId }) {
   const [toggle, setToggle] = useState(true);
   const [modalConfirm, setModalConfirm] = useState(false);
+  const [modalSuccess, setModalSuccess] = useState(false);
+  const [messageSuccess, setMessageSuccess] = useState('');
+  const [messageConfirm, setMessageConfirm] = useState('');
   const [toastErroOpen, setToastErroOpen] = useState(false);
   const [userCurrent, setUserCurrent] = useState('');
   const [memberID, setMemberId] = useState('');
@@ -67,6 +71,9 @@ function DivContainer({ item, testId }) {
           members: memberIds
         })
       );
+      setMessageSuccess('Added');
+      setModalSuccess(true);
+      setTimeout(() => setModalSuccess(false), 1000);
     } else {
       audioLabel.setAttribute('src', `${process.env.PUBLIC_URL}/assets/sounds/lightWeight.mp3`);
 
@@ -84,12 +91,24 @@ function DivContainer({ item, testId }) {
           members: memberIds
         })
       );
+      setMessageSuccess('Removed');
+      setModalSuccess(true);
+      setTimeout(() => setModalSuccess(false), 1000);
     }
     audioLabel.play();
   };
 
   const clickActionModal = () => {
-    memberState ? setModalConfirm(true) : setToastErroOpen(true);
+    if (memberState) {
+      setModalConfirm(true);
+      if (toggle) {
+        setMessageConfirm('Are you sure you want to join this class?');
+      } else {
+        setMessageConfirm('Are you sure you want to leave this class?');
+      }
+    } else {
+      setToastErroOpen(true);
+    }
   };
 
   useEffect(() => {
@@ -129,14 +148,13 @@ function DivContainer({ item, testId }) {
       {modalConfirm && (
         <ModalConfirm
           method={toggle ? 'Join' : 'Leave'}
-          message={
-            toggle
-              ? '"Are you sure you want to join this class?"'
-              : '"Are you sure you want to leave this class?"'
-          }
+          message={messageConfirm}
           onConfirm={handleToggle}
           setModalConfirmOpen={setModalConfirm}
         />
+      )}
+      {modalSuccess && (
+        <ModalSuccess setModalSuccessOpen={setModalSuccess} message={messageSuccess} />
       )}
       {toastErroOpen && (
         <ToastError
