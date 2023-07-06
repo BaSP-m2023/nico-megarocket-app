@@ -62,30 +62,21 @@ function DivContainer({ item, testId }) {
         members: [memberID],
         date: new Date()
       };
-      console.log(newSub);
-      await addSubscriptions(dispatch, newSub);
-      susbscription = await subscriptions.filter((subs) => {
-        console.log(subs);
-        return subs.classId._id === idToUpdate;
-      });
-      audioLabel.setAttribute('src', `${process.env.PUBLIC_URL}/assets/sounds/yeahBuddy.mp3`);
+      const createSubscription = await addSubscriptions(dispatch, newSub);
+      if (createSubscription.type === 'POST_SUBSCRIPTION_SUCCESS') {
+        susbscription = await subscriptions.filter((subs) => {
+          return subs.classId._id === idToUpdate;
+        });
+        audioLabel.setAttribute('src', `${process.env.PUBLIC_URL}/assets/sounds/yeahBuddy.mp3`);
+        const slotLess = { slots: item.slots - 1 };
+        await dispatch(updateClass(idToUpdate, slotLess));
 
-      const slotLess = { slots: item.slots - 1 };
-      await dispatch(updateClass(idToUpdate, slotLess));
-
-      const memberIds = susbscription[0].members.map((member) => {
-        return member._id;
-      });
-      memberIds.push(memberID);
-      await dispatch(
-        updateSubscriptions(subscriptionID, {
-          members: memberIds
-        })
-      );
-      setMessageSuccess('Added');
-      setModalSuccess(true);
-      setTimeout(() => setModalSuccess(false), 1000);
-      return;
+        setMessageSuccess('Added');
+        setModalSuccess(true);
+        setTimeout(() => setModalSuccess(false), 1000);
+        audioLabel.play();
+        return;
+      }
     }
     const subscriptionID = susbscription[0]._id;
     if (toggle) {
