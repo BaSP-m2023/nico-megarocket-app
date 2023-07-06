@@ -3,7 +3,7 @@ import styles from './container.module.css';
 import ModalConfirm from '../Modals/ModalConfirm';
 import { updateClass } from 'redux/classes/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSuscription, updateSubscriptions } from 'redux/subscriptions/thunks';
+import { getSuscription, addSubscriptions, updateSubscriptions } from 'redux/subscriptions/thunks';
 import { getAllMembers } from 'redux/members/thunks';
 import { getFirebaseUidFromToken } from 'helper/firebase';
 import ToastError from '../Modals/ToastError';
@@ -15,6 +15,7 @@ function DivContainer({ item, testId }) {
   const [modalSuccess, setModalSuccess] = useState(false);
   const [messageSuccess, setMessageSuccess] = useState('');
   const [messageConfirm, setMessageConfirm] = useState('');
+  const [methodConfirm, setMethodConfirm] = useState('');
   const [toastErroOpen, setToastErroOpen] = useState(false);
   const [userCurrent, setUserCurrent] = useState('');
   const [memberID, setMemberId] = useState('');
@@ -52,9 +53,40 @@ function DivContainer({ item, testId }) {
     setToggle(!toggle);
     const audioLabel = document.createElement('audio');
     const idToUpdate = item._id;
-    const susbscription = await subscriptions.filter((subs) => {
+    let susbscription = await subscriptions.filter((subs) => {
       return subs.classId._id === idToUpdate;
     });
+    if (!susbscription.length) {
+      const newSub = {
+        classId: idToUpdate,
+        members: [memberID],
+        date: new Date()
+      };
+      console.log(newSub);
+      await addSubscriptions(dispatch, newSub);
+      susbscription = await subscriptions.filter((subs) => {
+        console.log(subs);
+        return subs.classId._id === idToUpdate;
+      });
+      audioLabel.setAttribute('src', `${process.env.PUBLIC_URL}/assets/sounds/yeahBuddy.mp3`);
+
+      const slotLess = { slots: item.slots - 1 };
+      await dispatch(updateClass(idToUpdate, slotLess));
+
+      const memberIds = susbscription[0].members.map((member) => {
+        return member._id;
+      });
+      memberIds.push(memberID);
+      await dispatch(
+        updateSubscriptions(subscriptionID, {
+          members: memberIds
+        })
+      );
+      setMessageSuccess('Added');
+      setModalSuccess(true);
+      setTimeout(() => setModalSuccess(false), 1000);
+      return;
+    }
     const subscriptionID = susbscription[0]._id;
     if (toggle) {
       audioLabel.setAttribute('src', `${process.env.PUBLIC_URL}/assets/sounds/yeahBuddy.mp3`);
@@ -103,8 +135,10 @@ function DivContainer({ item, testId }) {
       setModalConfirm(true);
       if (toggle) {
         setMessageConfirm('Are you sure you want to join this class?');
+        setMethodConfirm('Join');
       } else {
         setMessageConfirm('Are you sure you want to leave this class?');
+        setMethodConfirm('Leave');
       }
     } else {
       setToastErroOpen(true);
@@ -147,7 +181,7 @@ function DivContainer({ item, testId }) {
       )}
       {modalConfirm && (
         <ModalConfirm
-          method={toggle ? 'Join' : 'Leave'}
+          method={methodConfirm}
           message={messageConfirm}
           onConfirm={handleToggle}
           setModalConfirmOpen={setModalConfirm}
