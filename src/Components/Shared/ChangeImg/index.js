@@ -20,7 +20,7 @@ const ProfilePicList = ({ profilePic, photoEdit, show, counter }) => {
 
   return (
     <div className={style}>
-      <div className={styles.picContainer}>
+      <div className={`${styles.picContainer} ${styles.customScrollbar}`}>
         <span className={styles.closeButton} onClick={() => photoEdit(false)}>
           x
         </span>

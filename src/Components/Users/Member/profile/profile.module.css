@@ -37,6 +37,8 @@
   box-shadow: 1px 0px 25px -8px rgba(0,0,0,0.75);
 }
 .profileInitials{
+  display: flex;
+  gap: .1rem;
   font-size: 3.7rem;
   font-weight: 600;
   color: white;

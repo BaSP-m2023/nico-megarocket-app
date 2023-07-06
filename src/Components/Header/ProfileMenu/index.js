@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './profileMenu.module.css';
 import { getAllAdmins } from 'redux/admins/thunks';
 import { getAllMembers } from 'redux/members/thunks';
@@ -32,21 +33,24 @@ const ProfileMenu = () => {
       return {
         firstName: admin?.firstName,
         lastName: admin?.lastName,
-        email: admin?.email
+        email: admin?.email,
+        link: '/admin/profile'
       };
     }
     if (trainer) {
       return {
         firstName: trainer?.firstName,
         lastName: trainer?.lastName,
-        email: trainer?.email
+        email: trainer?.email,
+        link: '/trainer/profile'
       };
     }
     if (member) {
       return {
         firstName: member?.firstName,
         lastName: member?.lastName,
-        email: member?.email
+        email: member?.email,
+        link: '/member/profile'
       };
     }
   };
@@ -54,7 +58,7 @@ const ProfileMenu = () => {
   const defaultPic = !sessionStorage.getItem('img') ? (
     <div className={styles.defaultImg}>
       <p className={styles.profileInitials}>
-        {userData()?.firstName.charAt()} {userData()?.lastName.charAt()}
+        <span>{userData()?.firstName.charAt()}</span> <span>{userData()?.lastName.charAt()}</span>
       </p>
     </div>
   ) : (
@@ -77,20 +81,22 @@ const ProfileMenu = () => {
 
   return (
     <>
-      <div className={styles.container}>
-        {sessionStorage.getItem('img') ? (
-          <img className={styles.profileImg} src={profilePic} />
-        ) : (
-          profilePic
-        )}
-        <div className={styles.profileInfoContainer}>
-          <p className={styles.userName}>
-            {userData()?.firstName} {userData()?.lastName}{' '}
-            <span className={styles.userRole}>({role})</span>
-          </p>
-          <p className={styles.userEmail}>{userData()?.email}</p>
+      <Link to={userData()?.link}>
+        <div className={styles.container}>
+          {sessionStorage.getItem('img') ? (
+            <img className={styles.profileImg} src={profilePic} />
+          ) : (
+            profilePic
+          )}
+          <div className={styles.profileInfoContainer}>
+            <p className={styles.userName}>
+              {userData()?.firstName} {userData()?.lastName}{' '}
+              <span className={styles.userRole}>({role})</span>
+            </p>
+            <p className={styles.userEmail}>{userData()?.email}</p>
+          </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 };
