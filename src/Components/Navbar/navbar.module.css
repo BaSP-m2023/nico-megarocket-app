@@ -67,7 +67,7 @@
   height: 1rem;
 }
 .rutes .homeButtons:hover {
-  background-color: var(--primary) d3;
+  background-color: var(--primary);
 }
 .rutes .homeButtons .navbarLinkButtons:hover {
   color: var(--white);

@@ -13,20 +13,35 @@
 .modalStyles {
   display: flex;
   flex-direction: column;
-  width: 720px;
-  height: 308px;
+  width: 620px;
+  height: 220px;
   background-color: var(--white);
   box-shadow: 0px 10px 23px rgba(0, 0, 0, 0.12);
   border-radius: 5px;
 }
-.close_icon {
-  align-self: flex-end;
-  width: 40px;
-  height: 40px;
+
+.imgContainer {
+  position: absolute;
   margin-top: 20px;
-  margin-right: 20px;
+  margin-left: 564px;
+}
+
+.modalHeader {
+  background-color: var(--primary);
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-radius: 5px;
+}
+
+.close_icon {
+  width: 30px;
+  height: 30px;
   cursor: pointer;
 }
+
 .text_cont {
   display: flex;
   flex-direction: column;
@@ -34,32 +49,45 @@
   margin-left: 35px;
 }
 .titleModal {
-  margin-top: -10px;
   font-style: normal;
-  font-weight: bold;
-  font-size: 32px;
-  color: #49a37b;
+  font-size: 25px;
+  color: var(--secondary);
+  font-weight: 700;
 }
 .textModal {
-  margin-top: -15px;
-  font-size: 25px;
+  margin-top:-12px;
+  font-size: 20px;
+  margin-left:35px;
   font-weight: 500;
-  color: #373867;
+  color: var(--primary);
 }
 .buttons {
   display: flex;
   justify-content: flex-end;
-  margin-right: 37px;
-  margin-top: 30px;
+  margin-right: 35px;
 }
+
+.contentContainer{
+  margin-top:33px;
+  display: flex;
+  flex-direction: column;
+}
+
 .btnAccept {
-  width: 160px;
-  height: 82px;
+  width: 110px;
+  height: 55px;
   cursor: pointer;
-  font-size: 30px;
-  border-radius: 11.5px;
+  font-size: 20px;
+  border-radius: 5px;
   background: var(--secondary);
   border: none;
   color: var(--primary);
   font-weight: bold;
+  transition: 0.2s ease;
+}
+
+.btnAccept:hover {
+  background-color: var(--primary);
+  color: var(--white);
+  font-size: 15px;
 }

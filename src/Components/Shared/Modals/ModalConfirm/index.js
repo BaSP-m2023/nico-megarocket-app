@@ -9,38 +9,44 @@ const ModalConfirm = ({ message, method, onConfirm, setModalConfirmOpen, testId 
   return (
     <div className={styles.modalAlert} data-testid={testId}>
       <div className={styles.modalStyles}>
-        <img
-          className={styles.close_icon}
-          onClick={() => {
-            setModalConfirmOpen(false);
-          }}
-          src={`${process.env.PUBLIC_URL}/assets/images/Delete.svg`}
-          alt="cancel icon"
-        />
-        <p
-          className={styles.titleModal}
-          style={method.toLowerCase() === 'delete' ? { color: '#F13312' } : { color: '#94ca7d' }}
-        >
-          Attention
-        </p>
-        <p className={styles.textModal}>{message}</p>
-        <div className={styles.buttons}>
-          <button
-            className={styles.btnCancel}
+        <div className={styles.modalHeader}>
+          <p
+            className={styles.titleModal}
+            style={method.toLowerCase() === 'delete' ? { color: '#F13312' } : { color: '#94ca7d' }}
+          >
+            Attention
+          </p>
+        </div>
+        <div className={styles.imgContainer}>
+          <img
+            className={styles.close_icon}
             onClick={() => {
               setModalConfirmOpen(false);
             }}
-          >
-            Cancel
-          </button>
-          <button
-            className={
-              method.toLowerCase() === 'delete' ? styles.btnAcceptDelete : styles.btnAccept
-            }
-            onClick={onConfirmFunction}
-          >
-            {method}
-          </button>
+            src={`${process.env.PUBLIC_URL}/assets/images/x-circle.svg`}
+            alt="cancel icon"
+          />
+        </div>
+        <div>
+          <p className={styles.textModal}>{message}</p>
+          <div className={styles.buttons}>
+            <button
+              className={styles.btnCancel}
+              onClick={() => {
+                setModalConfirmOpen(false);
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              className={
+                method.toLowerCase() === 'delete' ? styles.btnAcceptDelete : styles.btnAccept
+              }
+              onClick={onConfirmFunction}
+            >
+              {method}
+            </button>
+          </div>
         </div>
       </div>
     </div>
