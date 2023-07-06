@@ -20,7 +20,7 @@ const TrainerProfile = () => {
   const defaultProfile = !profilePic ? (
     <div className={styles.defaultImg}>
       <p className={styles.profileInitials}>
-        {trainer?.firstName.charAt()} {trainer?.lastName.charAt()}
+        <span>{trainer?.firstName.charAt()}</span> <span>{trainer?.lastName.charAt()}</span>
       </p>
     </div>
   ) : (

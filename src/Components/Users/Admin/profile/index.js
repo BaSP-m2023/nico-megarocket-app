@@ -21,7 +21,7 @@ const AdminProfile = ({ testId }) => {
   const defaultProfile = !profilePic ? (
     <div className={styles.defaultImg}>
       <p className={styles.profileInitials}>
-        {admin?.firstName.charAt()} {admin?.lastName.charAt()}
+        <span>{admin?.firstName.charAt()}</span> <span>{admin?.lastName.charAt()}</span>
       </p>
     </div>
   ) : (

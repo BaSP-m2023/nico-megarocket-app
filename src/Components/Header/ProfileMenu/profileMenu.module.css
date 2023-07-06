@@ -21,6 +21,8 @@ align-items: center;
   border-radius: 100%;
 }
 .profileInitials{
+  display: flex;
+  gap: .05rem;
   font-size: 0.75rem;
   font-weight: 600;
   color: white;
@@ -51,4 +53,8 @@ margin: -10px 0 0 0;
 padding: 0;
 font-size: 0.6rem;
 color: white;
+}
+
+.links {
+  text-decoration: none;
 }
