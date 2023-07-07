@@ -69,7 +69,14 @@ function DivContainer({ item, testId }) {
         });
         audioLabel.setAttribute('src', `${process.env.PUBLIC_URL}/assets/sounds/yeahBuddy.mp3`);
         const slotLess = { slots: item.slots - 1 };
-        await dispatch(updateClass(idToUpdate, slotLess));
+        const classBody = {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(slotLess)
+        };
+        await dispatch(updateClass(idToUpdate, classBody));
 
         setMessageSuccess('Added');
         setModalSuccess(true);
@@ -83,7 +90,14 @@ function DivContainer({ item, testId }) {
       audioLabel.setAttribute('src', `${process.env.PUBLIC_URL}/assets/sounds/yeahBuddy.mp3`);
 
       const slotLess = { slots: item.slots - 1 };
-      await dispatch(updateClass(idToUpdate, slotLess));
+      const classBody = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(slotLess)
+      };
+      await dispatch(updateClass(idToUpdate, classBody));
 
       const memberIds = susbscription[0].members.map((member) => {
         return member._id;
@@ -100,8 +114,15 @@ function DivContainer({ item, testId }) {
     } else {
       audioLabel.setAttribute('src', `${process.env.PUBLIC_URL}/assets/sounds/lightWeight.mp3`);
 
-      const slotAdd = { slots: item.slots };
-      await dispatch(updateClass(idToUpdate, slotAdd));
+      const slotAdd = { slots: item.slots + 1 };
+      const classBody = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(slotAdd)
+      };
+      await dispatch(updateClass(idToUpdate, classBody));
 
       const memberWithoutCurrent = susbscription[0].members.filter(
         (memberInArray) => memberInArray._id !== memberID
