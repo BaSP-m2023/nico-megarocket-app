@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './buttonActive.module.css';
-import { updateTrainer } from 'redux/trainers/thunks';
-import { editMember } from 'redux/members/thunks';
+import { updateIsActiveTrainer } from 'redux/trainers/thunks';
+import { editIsActiveMember } from 'redux/members/thunks';
 import { useDispatch } from 'react-redux';
 
 const ButtonActive = ({ data }) => {
@@ -52,22 +52,16 @@ const ButtonActive = ({ data }) => {
     body: JSON.stringify(body)
   };
 
-  const handleToggle = () => {
-    setIsChecked(!isChecked);
-  };
-
-  useEffect(() => {
-    setTimeout(() => {
-      send();
-    }, 1000);
-  }, [isChecked]);
-
   const send = async () => {
     const id = data._id;
     !data.membership
-      ? await dispatch(updateTrainer(id, updateBody))
-      : await dispatch(editMember(id, updateBody));
+      ? await dispatch(updateIsActiveTrainer(id, updateBody))
+      : await dispatch(editIsActiveMember(id, updateBody));
   };
+
+  useEffect(() => {
+    send();
+  }, [isChecked]);
 
   return (
     <div className={styles.container}>
@@ -75,8 +69,8 @@ const ButtonActive = ({ data }) => {
         <input
           type="checkbox"
           className={styles.checkbox}
-          onClick={handleToggle}
           onChange={handlerChange}
+          onClick={() => setIsChecked(!isChecked)}
           checked={isChecked}
         />
         <label className={styles.label}>

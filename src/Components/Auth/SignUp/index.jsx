@@ -87,6 +87,10 @@ const SignForm = () => {
         'string.empty': 'The password field is required'
       }),
 
+    repeatPassword: Joi.string().valid(Joi.ref('password')).required().messages({
+      'any.only': "Passwords don't match"
+    }),
+
     city: Joi.string()
       .min(3)
       .max(15)
@@ -126,9 +130,21 @@ const SignForm = () => {
   });
 
   const onSubmit = async (data) => {
+    const memberEdit = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      dni: data.dni,
+      phone: data.phone,
+      email: data.email,
+      city: data.city,
+      password: data.password,
+      postalCode: data.postalCode,
+      membership: data.membership,
+      birthday: data.birthday
+    };
     if (Object.values(errors).length === 0) {
       try {
-        const responseSignUp = await dispatch(signUpMember(data));
+        const responseSignUp = await dispatch(signUpMember(memberEdit));
         if (responseSignUp.type === 'SIGN_UP_SUCCESS') {
           setOpenModalSuccess(true);
           setTimeout(() => {
@@ -145,7 +161,7 @@ const SignForm = () => {
     }
   };
 
-  const memberships = ['Classic', 'Black', 'Only classes'];
+  const memberships = ['Classic', 'Black', 'Only Classes'];
 
   return (
     <div>
@@ -197,7 +213,7 @@ const SignForm = () => {
             </div>
             <div className={styles.inputContainer}>
               <Inputs
-                nameTitle="Lastname"
+                nameTitle="Last Name"
                 nameInput="lastName"
                 register={register}
                 type="text"
@@ -275,6 +291,16 @@ const SignForm = () => {
                 type="password"
                 error={errors.password?.message}
                 testId="signup-password-input"
+              />
+            </div>
+            <div className={styles.inputContainer}>
+              <Inputs
+                nameTitle="Repeat Password"
+                nameInput="repeatPassword"
+                register={register}
+                type="password"
+                error={errors.repeatPassword?.message}
+                testId="signup-repeatpassword-input"
               />
             </div>
             <div className={styles.inputContainer}>

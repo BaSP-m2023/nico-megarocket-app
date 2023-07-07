@@ -1,0 +1,104 @@
+.wholeContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+.tableContainer {
+  width: 75vw;
+  max-width: 804px;
+  border-collapse: collapse;
+  background: #d9d9d9ea;
+  color: #373867;
+  border-radius: 3px;
+  border: 1px solid black;
+  overflow: hidden;
+  box-shadow: 0px 6px 30px -7px rgba(0, 0, 0, 0.75);
+  margin: 20px 0;
+}
+.tableContainer tr td {
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+  font-size: 14px;
+}
+.tableContainer tr td,
+.tableContainer tr th {
+  padding: 15px 10px 15px 20px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.1s;
+}
+.tableContainer tr td:nth-child(1),
+.tableContainer tr th:nth-child(1) {
+  text-align: left;
+  padding: 15px 25px 15px 20px;
+  width: 10%;
+}
+.tableContainer tr td:nth-child(2),
+.tableContainer tr th:nth-child(2) {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 15px 10px 15px 20px;
+
+}
+.tableContainer tr td:nth-child(3),
+.tableContainer tr th:nth-child(3) {
+  text-align: left;
+  padding: 15px 25px 15px 20px;
+  width: 10%;
+
+}
+.tableContainer thead tr {
+  background-color: rgba(55, 56, 103, 0.3);
+  font-size: 16px;
+  font-family: sans-serif;
+}
+.tableContainer tbody tr {
+  background-color: #ffffff;
+}
+.blackMemb{
+  font-weight: 700;
+}
+.classicMemb{
+  font-weight: 500;
+}
+.onlyClass{
+  font-weight: 300;
+}
+.tableTitle{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60vw;
+  height: 50px;
+  max-width: 400px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 30px;
+  color: #373867;
+  background-color: rgba(55, 56, 103, 0.3);
+  margin-top: 20px;
+}
+.backButton{
+  width: 75vw;
+  max-width: 804px;
+}
+.backButtonImg{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  transition: all .6s;
+}
+.backButtonImg:hover{
+  background-color: rgba(55, 56, 103, 0.3);
+  transition: all 1s;
+  border-radius: 30px;
+}

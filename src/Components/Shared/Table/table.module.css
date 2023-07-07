@@ -1,3 +1,10 @@
+.containerTable {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 26rem;
+}
+
 .noneTrainer {
   display: flex;
   align-items: center;
@@ -5,7 +12,7 @@
   width: 40vw;
   height: 10rem;
   border-radius: 5px;
-  background-color: #d9d9d9ea;
+  background-color: var(--light-grey);
   font-size: 30px;
   margin: 4rem auto;
 }
@@ -19,7 +26,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  background: #d9d9d9ea;
+  background: var(--light-grey);
   color: #373867;
   border-radius: 3px;
   overflow: hidden;
@@ -39,23 +46,23 @@
 }
 
 .table tr td:nth-last-child(-n + 2):hover {
-  background-color: #37386700;
+  background-color: transparent;
   transform: scale(1.2);
 }
 
 .table tr td:hover {
   max-width: 280px;
-  background-color: #353090b2;
+  background-color: var(--primary);
   color: #fff;
   cursor: pointer;
 }
 
 .rowBackground1 {
-  background-color: #aace9b90;
+  background-color: var(--secondary);
 }
 
 .rowBackground2 {
-  background-color: #ffffff;
+  background-color: var(--white);
 }
 
 .trash_edit {
@@ -65,4 +72,81 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+
+.searchField {
+  border: solid rgb(164, 164, 164);
+  border-radius: 0.6rem;
+  height: 1.4rem;
+  width: 2rem;
+  min-height: 1rem;
+  outline: none;
+  opacity: 0;
+  transition: all 0.3s ease-in;
+  cursor: pointer;
+}
+
+.searchField:focus {
+  border-width: 0.3rem;
+  border-color: var(--secondary);
+  width: 14rem;
+  opacity: 1;
+}
+
+.buttonSearch {
+  position: relative;
+  right: 2rem;
+  top: 0.1rem;
+  background-color: var(--secondary);
+  border: solid var(--primary);
+  border-width: thin;
+  border-radius: 0.6rem;
+  font-weight: 600;
+  height: 1.8rem;
+  width: 2rem;
+  transition: all 0.1s ease-in;
+  z-index: -1;
+}
+
+.buttonSearch .magGlass {
+  width: 1rem;
+  height: 1rem;
+}
+
+.containerSearch {
+  height: 2rem;
+}
+
+.containerPaginate {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.containerPaginate .buttonPaginate {
+  background-color: transparent;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+.containerPaginate .buttonPaginate:hover {
+  transform: scale(1.15);
+}
+
+.containerPaginate .eachNumber {
+  background-color: transparent;
+  border: none;
+  transition: all 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.activePage {
+  background-color: var(--secondary);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
 }

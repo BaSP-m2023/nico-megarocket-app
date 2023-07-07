@@ -12,9 +12,9 @@ import {
   editAdminSuccess,
   editAdminError
 } from './actions';
-const token = sessionStorage.getItem('token');
 
 export const getAllAdmins = async (dispatch) => {
+  const token = sessionStorage.getItem('token');
   try {
     dispatch(getAdminsPending(true));
     const reponse = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
@@ -24,7 +24,7 @@ export const getAllAdmins = async (dispatch) => {
     const data = await reponse.json();
     const adminsList = data.data;
     dispatch(getAdminsPending(false));
-    dispatch(getAdminsSuccess(adminsList));
+    return dispatch(getAdminsSuccess(adminsList));
   } catch (error) {
     dispatch(getAdminsPending(false));
     dispatch(getAdminsError(true));
@@ -32,6 +32,7 @@ export const getAllAdmins = async (dispatch) => {
 };
 
 export const adminDelete = (adminID) => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     try {
       dispatch(deleteAdminPending(true));
@@ -51,6 +52,7 @@ export const adminDelete = (adminID) => {
 
 export const createAdmin = async (dispatch, adminData) => {
   try {
+    const token = sessionStorage.getItem('token');
     dispatch(addAdminPending(true));
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
       method: 'POST',
@@ -65,7 +67,7 @@ export const createAdmin = async (dispatch, adminData) => {
       dispatch(addAdminPending(false));
       throw new Error(data.message);
     }
-    dispatch(addAdminSuccess(data.result));
+    dispatch(addAdminSuccess(data.data));
   } catch (error) {
     dispatch(addAdminPending(false));
     dispatch(addAdminError(error.message));
@@ -73,6 +75,7 @@ export const createAdmin = async (dispatch, adminData) => {
 };
 
 export const updateAdmin = async (dispatch, id, adminData) => {
+  const token = sessionStorage.getItem('token');
   try {
     dispatch(editAdminPending(true));
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {

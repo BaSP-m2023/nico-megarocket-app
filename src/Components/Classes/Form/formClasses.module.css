@@ -1,43 +1,35 @@
 .form .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 50px;
-  width: 400px;
+  margin: 30px 0;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 20px 30px -5px rgba(0, 0, 0, 0.75);
+  border: 3px solid var(--primary);
+  width:659.33px;
 }
-.form {
-  padding-bottom: 30px;
-}
+
 .formTitle {
-  margin-bottom: 70 px;
-  font-family: 'Roboto', sans-serif;
-  color: #373867;
-  font-size: 30px;
+  text-align: center;
+  font-size: 36px;
+  font-family: sans-serif;
+  color: var(--primary);
+  margin: 0 0 30px 0;
 }
 .inputs {
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  gap:20px;
+}
+
+.group{
+  display:flex;
+  flex-direction:column;
 }
 .inputs input {
   padding-left: 5px;
 }
-/* .buttons {
-  display: flex;
-  justify-content: space-between;
-  width: 250px;
-}
-.buttons button:hover {
-  opacity: 0.9;
-  cursor: pointer;
-}
-.cancelButton button:hover {
-  color: #fff;
-  background-color: #ea3354;
-} */
+
 .buttonContainer {
   display: flex;
   gap: 20px;
+  justify-content:center;
 }

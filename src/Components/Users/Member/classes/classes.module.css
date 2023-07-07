@@ -1,18 +1,18 @@
-.tableContainer{
+.tableContainer {
   width: 70%;
   height: 60%;
   margin-top: 30px;
   border-radius: 10px;
-  background-color: #e2e2e2;
+  background-color: var(--secondary-light);
 }
 
 .tdContainer {
   height: 52px;
   width: 15%;
-  border: 10px solid #e2e2e2;
+  border: 10px solid var(--secondary-light);
   border-radius: 10px;
   border-width: 4px;
-  background-color: #FFFFFF;
+  background-color: var(--white);
 }
 
 .trContainer {
@@ -38,4 +38,20 @@
   border-radius: 5px;
 }
 
+.titleSelect {
+  display: flex;
+  align-items: center;
+}
 
+.titleSelect select {
+  margin: 0 10px;
+  height: 20px;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}

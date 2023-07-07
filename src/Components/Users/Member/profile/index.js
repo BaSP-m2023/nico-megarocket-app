@@ -1,56 +1,138 @@
-import React, { useState, useEffect } from 'react';
-import Data from './mockData.json';
+import React, { useEffect, useState } from 'react';
 import styles from './profile.module.css';
+import { ButtonForm, ProfilePicList } from 'Components/Shared';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { getAllMembers } from 'redux/members/thunks';
+import { getFirebaseUidFromToken } from 'helper/firebase';
+import 'firebase/compat/auth';
+const editProfilePicBtn = `${process.env.PUBLIC_URL}/assets/images/image.png`;
 
 const MemberProfile = (testId) => {
-  const profilePicture = `${process.env.PUBLIC_URL}/assets/images/profilePicture.png`;
-  const [mockData, setMockData] = useState([]);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [userCurrent, setUserCurrent] = useState('');
+  const members = useSelector((state) => state.members.list);
+  const member = members.find((oneTrainer) => oneTrainer.email === userCurrent);
+  const [profilePic, setProfilePic] = useState('');
+  const [photoEdit, setPhotoEdit] = useState(false);
+  const [counter, setCounter] = useState(0);
+  const defaultProfile = !profilePic ? (
+    <div className={styles.defaultImg}>
+      <p className={styles.profileInitials}>
+        <span>{member?.firstName.charAt()}</span> <span>{member?.lastName.charAt()}</span>
+      </p>
+    </div>
+  ) : (
+    sessionStorage.getItem('img')
+  );
+
+  const currentUser = async () => {
+    try {
+      const emailCurrentUser = await getFirebaseUidFromToken();
+      setUserCurrent(emailCurrentUser);
+    } catch (error) {
+      return error;
+    }
+  };
+
+  const handleEditClick = () => {
+    history.push(`/member/profile/form/${member._id}`, { params: { ...member } });
+  };
 
   useEffect(() => {
-    setMockData(Data[0]);
+    getAllMembers(dispatch);
   }, []);
 
+  useEffect(() => {
+    currentUser();
+    setProfilePic(defaultProfile);
+  }, [member]);
+
+  if (!member) {
+    return null;
+  }
+
+  const togglePhotoEdit = () => {
+    setCounter(counter + 1);
+    setPhotoEdit(!photoEdit);
+  };
+
   return (
-    <div className={styles.container} data-testid={testId}>
-      <h1>PROFILE</h1>
-      <div className={styles.topContainer} data-testid="photo-container">
-        <img src={profilePicture} alt="Picture of Profile" />
-        <h3>{mockData.name}</h3>
-      </div>
-      <div className={styles.botContainer} data-testid="info-container">
-        <div className={styles.containerTitle}>
-          <h2>PERSONAL INFORMATION</h2>
+    <div className={styles.wholeContainer}>
+      <section className={styles.container} data-testid={testId}>
+        <div className={styles.profilePhotoContainer} data-testid="photo-container">
+          {typeof profilePic === 'string' ? (
+            <img className={styles.profileImg} src={profilePic} alt="profile image" />
+          ) : (
+            profilePic
+          )}
+          <img
+            className={styles.editPhotoButton}
+            src={editProfilePicBtn}
+            onClick={togglePhotoEdit}
+            alt="camera"
+          />
+          <ProfilePicList
+            profilePic={setProfilePic}
+            photoEdit={setPhotoEdit}
+            show={photoEdit}
+            counter={counter}
+          />
+          <h1 className={styles.adminName}>
+            {member.firstName} {member.lastName}
+          </h1>
         </div>
-        <div className={styles.personalContainer}>
-          <div className={styles.personalContainerTop}>
-            <div className={styles.personalContainerTitle}>
-              <p>Name:</p>
-              <p>Birthday:</p>
-            </div>
-            <div className={styles.personalContainerText}>
-              <p>{mockData.name}</p>
-              <p>{mockData.birthday}</p>
+        <h2 className={styles.adminInfoTitle}>Personal Information</h2>
+        <div className={styles.profileInfoContainer} data-testid="info-container">
+          <p className={styles.adminInfoContainer}>
+            <span className={styles.adminInfoPlaceholder}>Name</span>
+            <span className={styles.adminInfo}>
+              {member.firstName} {member.lastName}
+            </span>
+          </p>
+          <p className={styles.adminInfoContainer}>
+            <span className={styles.adminInfoPlaceholder}>Dni</span>
+            <span className={styles.adminInfo}>{member.dni}</span>
+          </p>
+          <p className={styles.adminInfoContainer}>
+            <span className={styles.adminInfoPlaceholder}>Date Of Birth</span>
+            <span className={styles.adminInfo}>{member.birthday.slice(0, 10)}</span>
+          </p>
+          <p className={styles.adminInfoContainer}>
+            <span className={styles.adminInfoPlaceholder}>City</span>
+            <span className={styles.adminInfo}>{member.city} </span>
+          </p>
+          <p className={styles.adminInfoContainer}>
+            <span className={styles.adminInfoPlaceholder}>Postal Code</span>
+            <span className={styles.adminInfo}>{member.postalCode}</span>
+          </p>
+          <p className={styles.adminInfoContainer}>
+            <span className={styles.adminInfoPlaceholder}>Phone</span>
+            <span className={styles.adminInfo}>{member.phone}</span>
+          </p>
+          <p className={styles.adminInfoContainer}>
+            <span className={styles.adminInfoPlaceholder}>Membership</span>
+            <span className={styles.adminInfo}>{member.membership}</span>
+          </p>
+          <p className={styles.adminInfoContainer}>
+            <span className={styles.adminInfoPlaceholder}>Email</span>
+            <span className={styles.adminInfo}>{member.email}</span>
+          </p>
+
+          <div className={styles.adminInfoContainer}>
+            <p className={styles.adminInfoPlaceholder}>Edit profile</p>
+            <div className={styles.iconEdit}>
+              <ButtonForm
+                className={styles.editInfoBtn}
+                onAction={handleEditClick}
+                nameImg="edit-profile-icon.png"
+                testId="profile-edit-btn"
+              />
             </div>
           </div>
-          <div className={styles.personalContainerBot}>
-            <div className={styles.personalContainerTitle}>
-              <p>Address:</p>
-              <p>Phone:</p>
-            </div>
-            <div className={styles.personalContainerText}>
-              <p>{mockData.address}</p>
-              <p>{mockData.phone}</p>
-            </div>
-          </div>
         </div>
-        <div className={styles.containerTitle}>
-          <h2>EMAIL</h2>
-        </div>
-        <div className={styles.containerEmail}>
-          <p className={styles.containerEmailTitle}>Email:</p>
-          <p className={styles.containerEmailText}>{mockData.email}</p>
-        </div>
-      </div>
+      </section>
     </div>
   );
 };

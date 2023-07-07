@@ -8,20 +8,25 @@ const ModalSuccess = ({ setModalSuccessOpen, message, testId }) => {
   return (
     <div className={styles.modalAlert} data-testid={testId}>
       <div className={styles.modalStyles}>
-        <img
-          className={styles.close_icon}
-          onClick={onClose}
-          src={`${process.env.PUBLIC_URL}/assets/images/Delete.svg`}
-          alt="cancel icon"
-        />
-        <div className={styles.text_cont}>
-          <h3 className={styles.titleModal}>SUCCESSFUL</h3>
-          <p className={styles.textModal}>{message}</p>
+        <div className={styles.modalHeader}>
+          <p className={styles.titleModal}>SUCCESSFUL</p>
         </div>
-        <div className={styles.buttons}>
-          <button className={styles.btnAccept} onClick={onClose}>
-            OK
-          </button>
+        <div className={styles.imgContainer}>
+          <img
+            className={styles.close_icon}
+            onClick={onClose}
+            src={`${process.env.PUBLIC_URL}/assets/images/x-circle.svg`}
+            alt="cancel icon"
+          />
+        </div>
+
+        <div className={styles.contentContainer}>
+          <p className={styles.textModal}>{message} succesfully!</p>
+          <div className={styles.buttons}>
+            <button className={styles.btnAccept} onClick={onClose}>
+              OK
+            </button>
+          </div>
         </div>
       </div>
     </div>

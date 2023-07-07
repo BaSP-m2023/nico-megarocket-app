@@ -1,56 +1,124 @@
-import React, { useState, useEffect } from 'react';
-import Data from './mockData.json';
+import React, { useEffect, useState } from 'react';
 import styles from './profile.module.css';
+import { ButtonForm, ProfilePicList } from 'Components/Shared';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { getTrainers } from 'redux/trainers/thunks';
+import { getFirebaseUidFromToken } from 'helper/firebase';
+import 'firebase/compat/auth';
+const editProfilePicBtn = `${process.env.PUBLIC_URL}/assets/images/image.png`;
 
 const TrainerProfile = () => {
-  const profilePicture = `${process.env.PUBLIC_URL}/assets/images/profilePicture.png`;
-  const [mockData, setMockData] = useState([]);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [userCurrent, setUserCurrent] = useState('');
+  const trainers = useSelector((state) => state.trainers.list);
+  const trainer = trainers.find((oneTrainer) => oneTrainer.email === userCurrent);
+  const [profilePic, setProfilePic] = useState('');
+  const [photoEdit, setPhotoEdit] = useState(false);
+  const [counter, setCounter] = useState(0);
+  const defaultProfile = !profilePic ? (
+    <div className={styles.defaultImg}>
+      <p className={styles.profileInitials}>
+        <span>{trainer?.firstName.charAt()}</span> <span>{trainer?.lastName.charAt()}</span>
+      </p>
+    </div>
+  ) : (
+    sessionStorage.getItem('img')
+  );
+
+  const currentUser = async () => {
+    try {
+      const emailCurrentUser = await getFirebaseUidFromToken();
+      setUserCurrent(emailCurrentUser);
+    } catch (error) {
+      return error;
+    }
+  };
+
+  const handleEditClick = () => {
+    history.push(`/trainer/profile/form/${trainer._id}`, { params: { ...trainer } });
+  };
 
   useEffect(() => {
-    setMockData(Data[0]);
+    getTrainers(dispatch);
   }, []);
 
+  useEffect(() => {
+    currentUser();
+    setProfilePic(defaultProfile);
+  }, [trainer]);
+
+  if (!trainer) {
+    return null;
+  }
+  const togglePhotoEdit = () => {
+    setCounter(counter + 1);
+    setPhotoEdit(!photoEdit);
+  };
+
   return (
-    <div className={styles.container}>
-      <h1>PROFILE</h1>
-      <div className={styles.topContainer}>
-        <img src={profilePicture} alt="Picture of Profile" />
-        <h3>{mockData.name}</h3>
-      </div>
-      <div className={styles.botContainer}>
-        <div className={styles.containerTitle}>
-          <h2>PERSONAL INFORMATION</h2>
+    <div className={styles.wholeContainer}>
+      <section className={styles.container}>
+        <div className={styles.profilePhotoContainer}>
+          {typeof profilePic === 'string' ? (
+            <img className={styles.profileImg} src={profilePic} alt="profile image" />
+          ) : (
+            profilePic
+          )}
+          <img
+            className={styles.editPhotoButton}
+            src={editProfilePicBtn}
+            onClick={togglePhotoEdit}
+            alt="camera"
+          />
+          <ProfilePicList
+            profilePic={setProfilePic}
+            photoEdit={setPhotoEdit}
+            show={photoEdit}
+            counter={counter}
+          />
+          <h1 className={styles.adminName}>
+            {trainer.firstName} {trainer.lastName}
+          </h1>
         </div>
-        <div className={styles.personalContainer}>
-          <div className={styles.personalContainerTop}>
-            <div className={styles.personalContainerTitle}>
-              <p>Name:</p>
-              <p>Birthday:</p>
-            </div>
-            <div className={styles.personalContainerText}>
-              <p>{mockData.name}</p>
-              <p>{mockData.birthday}</p>
+        <h2 className={styles.adminInfoTitle}>Personal Information</h2>
+        <div className={styles.profileInfoContainer} data-testid="info-container">
+          <p className={styles.adminInfoContainer}>
+            <span className={styles.adminInfoPlaceholder}>Name</span>
+            <span className={styles.adminInfo}>
+              {trainer.firstName} {trainer.lastName}
+            </span>
+          </p>
+          <p className={styles.adminInfoContainer}>
+            <span className={styles.adminInfoPlaceholder}>Dni</span>
+            <span className={styles.adminInfo}> {trainer.dni}</span>
+          </p>
+          <p className={styles.adminInfoContainer}>
+            <span className={styles.adminInfoPlaceholder}>City</span>
+            <span className={styles.adminInfo}> {trainer.city}</span>
+          </p>
+          <p className={styles.adminInfoContainer}>
+            <span className={styles.adminInfoPlaceholder}>Phone</span>
+            <span className={styles.adminInfo}> {trainer.phone}</span>
+          </p>
+          <p className={styles.adminInfoContainer}>
+            <span className={styles.adminInfoPlaceholder}>Email</span>
+            <span className={styles.adminInfo}> {trainer.email}</span>
+          </p>
+          <div className={styles.adminInfoContainer}>
+            <p className={styles.adminInfoPlaceholder}>Edit profile</p>
+            <div className={styles.iconEdit}>
+              <ButtonForm
+                className={styles.editInfoBtn}
+                onAction={handleEditClick}
+                nameImg="edit-profile-icon.png"
+                testId="profile-edit-btn"
+              />
             </div>
           </div>
-          <div className={styles.personalContainerBot}>
-            <div className={styles.personalContainerTitle}>
-              <p>Address:</p>
-              <p>Phone:</p>
-            </div>
-            <div className={styles.personalContainerText}>
-              <p>{mockData.address}</p>
-              <p>{mockData.phone}</p>
-            </div>
-          </div>
         </div>
-        <div className={styles.containerTitle}>
-          <h2>EMAIL</h2>
-        </div>
-        <div className={styles.containerEmail}>
-          <p className={styles.containerEmailTitle}>Email:</p>
-          <p className={styles.containerEmailText}>{mockData.email}</p>
-        </div>
-      </div>
+      </section>
     </div>
   );
 };

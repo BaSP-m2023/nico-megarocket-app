@@ -6,16 +6,20 @@ const activityModal = ({ title, description, imageName, onClose, testId }) => {
     <div className={styles.container} data-testid={testId}>
       <div className={styles.activityCard}>
         <img
-          className={styles.activityCardImage}
+          className={styles.cardImage}
           src={`${process.env.PUBLIC_URL}/assets/images/${imageName}`}
           alt={`image ${title}`}
         />
-        <div>
-          <h2 className={styles.subtitle}>{title}</h2>
-          <p className={styles.description}>{description}</p>
-          <button className={styles.activityButton} onClick={onClose}>
-            Close
-          </button>
+        <div className={styles.activityCardText}>
+          <div>
+            <h2 className={styles.cardSubtitle}>{title}</h2>
+            <p className={styles.cardDescription}>{description}</p>
+          </div>
+          <div className={styles.activityCardButton}>
+            <button className={styles.cardButton} onClick={onClose}>
+              Close
+            </button>
+          </div>
         </div>
       </div>
     </div>

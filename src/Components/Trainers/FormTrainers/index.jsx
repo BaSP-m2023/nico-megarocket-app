@@ -29,6 +29,9 @@ const FormTrainer = () => {
       .min(8)
       .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
       .message('The password must have at least one Uppercase,a number and 8 characters.'),
+    repeatPassword: Joi.string().valid(Joi.ref('password')).required().messages({
+      'any.only': "Passwords don't match"
+    }),
     city: Joi.string().min(5).max(25),
     salary: Joi.number()
   });
@@ -95,7 +98,16 @@ const FormTrainer = () => {
   };
 
   const onSubmit = async (data) => {
-    setInputForm(data);
+    setInputForm({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      dni: data.dni,
+      phone: data.phone,
+      email: data.email,
+      password: data.password,
+      city: data.city,
+      salary: data.salary
+    });
     setModalUpdateConfirmOpen(true);
   };
 
@@ -106,7 +118,8 @@ const FormTrainer = () => {
   }, [isError]);
 
   return (
-    <div>
+    <div className={styles.container}>
+      <h3 className={styles.title}>Add Trainer</h3>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.form}>
           <div className={styles.groupContainer}>
@@ -185,6 +198,17 @@ const FormTrainer = () => {
                   nameInput="password"
                   type="password"
                   error={errors.password?.message}
+                />
+              </div>
+            )}
+            {!id && (
+              <div>
+                <Inputs
+                  nameTitle="Repeat Password"
+                  register={register}
+                  nameInput="repeatPassword"
+                  type="password"
+                  error={errors.repeatPassword?.message}
                 />
               </div>
             )}

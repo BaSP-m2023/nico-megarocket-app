@@ -3,15 +3,23 @@ import styles from './container.module.css';
 import ModalConfirm from '../Modals/ModalConfirm';
 import { updateClass } from 'redux/classes/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSuscription, updateSubscriptions } from 'redux/subscriptions/thunks';
+import { getSuscription, addSubscriptions, updateSubscriptions } from 'redux/subscriptions/thunks';
 import { getAllMembers } from 'redux/members/thunks';
 import { getFirebaseUidFromToken } from 'helper/firebase';
+import ToastError from '../Modals/ToastError';
+import ModalSuccess from '../Modals/ModalSuccess';
 
 function DivContainer({ item, testId }) {
   const [toggle, setToggle] = useState(true);
   const [modalConfirm, setModalConfirm] = useState(false);
+  const [modalSuccess, setModalSuccess] = useState(false);
+  const [messageSuccess, setMessageSuccess] = useState('');
+  const [messageConfirm, setMessageConfirm] = useState('');
+  const [methodConfirm, setMethodConfirm] = useState('');
+  const [toastErroOpen, setToastErroOpen] = useState(false);
   const [userCurrent, setUserCurrent] = useState('');
   const [memberID, setMemberId] = useState('');
+  const [memberState, setMemberState] = useState(false);
   const dispatch = useDispatch();
   const subscriptions = useSelector((state) => state.subscription.data);
   const members = useSelector((state) => state.members.list);
@@ -22,6 +30,7 @@ function DivContainer({ item, testId }) {
       const emailCurrentUser = await getFirebaseUidFromToken();
       setUserCurrent(emailCurrentUser);
       setMemberId(member._id);
+      setMemberState(member.isActive);
       existMemberInClass(memberID);
     } catch (error) {
       return error;
@@ -44,15 +53,51 @@ function DivContainer({ item, testId }) {
     setToggle(!toggle);
     const audioLabel = document.createElement('audio');
     const idToUpdate = item._id;
-    const susbscription = await subscriptions.filter((subs) => {
+    let susbscription = await subscriptions.filter((subs) => {
       return subs.classId._id === idToUpdate;
     });
+    if (!susbscription.length) {
+      const newSub = {
+        classId: idToUpdate,
+        members: [memberID],
+        date: new Date()
+      };
+      const createSubscription = await addSubscriptions(dispatch, newSub);
+      if (createSubscription.type === 'POST_SUBSCRIPTION_SUCCESS') {
+        susbscription = await subscriptions.filter((subs) => {
+          return subs.classId._id === idToUpdate;
+        });
+        audioLabel.setAttribute('src', `${process.env.PUBLIC_URL}/assets/sounds/yeahBuddy.mp3`);
+        const slotLess = { slots: item.slots - 1 };
+        const classBody = {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(slotLess)
+        };
+        await dispatch(updateClass(idToUpdate, classBody));
+
+        setMessageSuccess('Added');
+        setModalSuccess(true);
+        setTimeout(() => setModalSuccess(false), 1000);
+        audioLabel.play();
+        return;
+      }
+    }
     const subscriptionID = susbscription[0]._id;
     if (toggle) {
       audioLabel.setAttribute('src', `${process.env.PUBLIC_URL}/assets/sounds/yeahBuddy.mp3`);
 
       const slotLess = { slots: item.slots - 1 };
-      await dispatch(updateClass(idToUpdate, slotLess));
+      const classBody = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(slotLess)
+      };
+      await dispatch(updateClass(idToUpdate, classBody));
 
       const memberIds = susbscription[0].members.map((member) => {
         return member._id;
@@ -63,11 +108,21 @@ function DivContainer({ item, testId }) {
           members: memberIds
         })
       );
+      setMessageSuccess('Added');
+      setModalSuccess(true);
+      setTimeout(() => setModalSuccess(false), 1000);
     } else {
       audioLabel.setAttribute('src', `${process.env.PUBLIC_URL}/assets/sounds/lightWeight.mp3`);
 
-      const slotAdd = { slots: item.slots };
-      await dispatch(updateClass(idToUpdate, slotAdd));
+      const slotAdd = { slots: item.slots + 1 };
+      const classBody = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(slotAdd)
+      };
+      await dispatch(updateClass(idToUpdate, classBody));
 
       const memberWithoutCurrent = susbscription[0].members.filter(
         (memberInArray) => memberInArray._id !== memberID
@@ -80,12 +135,26 @@ function DivContainer({ item, testId }) {
           members: memberIds
         })
       );
+      setMessageSuccess('Removed');
+      setModalSuccess(true);
+      setTimeout(() => setModalSuccess(false), 1000);
     }
     audioLabel.play();
   };
 
   const clickActionModal = () => {
-    setModalConfirm(true);
+    if (memberState) {
+      setModalConfirm(true);
+      if (toggle) {
+        setMessageConfirm('Are you sure you want to join this class?');
+        setMethodConfirm('Join');
+      } else {
+        setMessageConfirm('Are you sure you want to leave this class?');
+        setMethodConfirm('Leave');
+      }
+    } else {
+      setToastErroOpen(true);
+    }
   };
 
   useEffect(() => {
@@ -124,14 +193,20 @@ function DivContainer({ item, testId }) {
       )}
       {modalConfirm && (
         <ModalConfirm
-          method={toggle ? 'Join' : 'Leave'}
-          message={
-            toggle
-              ? '"Are you sure you want to join this class?"'
-              : '"Are you sure you want to leave this class?"'
-          }
+          method={methodConfirm}
+          message={messageConfirm}
           onConfirm={handleToggle}
           setModalConfirmOpen={setModalConfirm}
+        />
+      )}
+      {modalSuccess && (
+        <ModalSuccess setModalSuccessOpen={setModalSuccess} message={messageSuccess} />
+      )}
+      {toastErroOpen && (
+        <ToastError
+          setToastErroOpen={setToastErroOpen}
+          message={'You are not an active member, please consult with an administrator.'}
+          testId="class-join-toast-error"
         />
       )}
     </>

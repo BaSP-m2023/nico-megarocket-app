@@ -1,4 +1,4 @@
-.logButton{
+.logButton {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -6,22 +6,22 @@
   height: 35px;
   margin-left: -13px;
 }
-.logImg{
+.logImg {
   width: 25px;
   height: 25px;
 }
-.logText{
+.logText {
   font-size: 1rem;
   font-weight: 600;
   text-transform: capitalize;
-  color: #373867;
+  color: var(--primary);
 }
 
-.logButton:hover{
+.logButton:hover {
   transform: scale(1.05);
   transition: all 0.2s;
 }
 
 .logButton:hover .logText {
-  color: #ffffff;
+  color: var(--white);
 }

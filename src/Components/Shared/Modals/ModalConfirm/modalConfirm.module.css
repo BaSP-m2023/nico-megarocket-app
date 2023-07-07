@@ -10,39 +10,58 @@
   height: 100%;
   overflow: auto;
 }
-.close_icon{
-  align-self: flex-end;
-  width: 40px;
-  height: 40px;
+.modalHeader {
+  background-color: var(--primary);
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-radius: 5px;
+}
+
+.imgContainer {
+  position: absolute;
   margin-top: 20px;
-  margin-right: 20px;
+  margin-left: 564px;
+}
+
+.close_icon {
+  filter:invert();
+  width: 30px;
+  height: 30px;
   cursor: pointer;
 }
+
+.close_icon:hover{
+  filter: invert() opacity(50%);
+}
+
 .modalStyles {
   display: flex;
   flex-direction: column;
-  width: 720px;
-  height: 308px;
-  background-color: white;
+  width: 620px;
+  height: 220px;
+  background-color: var(--white);
   box-shadow: 0px 10px 23px rgba(0, 0, 0, 0.12);
   border-radius: 5px;
+  gap: 30px;
 }
+
 .titleModal {
-  margin-top: -10px;
-  margin-left: 37px;
   font-style: normal;
   font-weight: 700;
-  font-size: 28px;
+  font-size: 25px;
 }
 .textModal {
-  margin-top: -15px;
+  margin-top: -12px;
   margin-left: 37px;
   font-style: normal;
-  font-weight: 600;
-  font-size: 28px;
-  color:#373867 ;
+  font-weight: 500;
+  font-size: 20px;
+  color: var(--primary);
 }
-.buttons{
+.buttons {
   display: flex;
   justify-content: flex-end;
   margin-right: 37px;
@@ -50,24 +69,41 @@
   gap: 30px;
 }
 .buttons > * {
-  width: 160px;
-  height: 82px;
-  border-radius: 11.5px;
+  width: 110px;
+  height: 55px;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 500;
   padding: 5px;
 }
 .btnAccept {
-  background-color: #AACE9B;
-  color: #373867;
+  background-color: var(--secondary);
+  color: var(--primary);
   border: none;
+  transition: 0.2s ease;
 }
-.btnAcceptDelete{
-  background:#F13312 ;
-  color: #ffffff;
+
+.btnAccept:hover {
+  background-color: var(--primary);
+  color: var(--white);
+  font-size: 17px;
+}
+
+.btnAcceptDelete {
+  background: var(--red);
+  color: var(--white);
   border: none;
 }
 .btnCancel {
-  background: #ffffff;
+  background: var(--white);
+  color: var(--primary);
+  border: var(--primary) solid;
+  transition: 0.2s ease;
+}
+
+.btnCancel:hover {
+  background-color: var(--primary);
+  color: var(--white);
+  font-size: 17px;
 }

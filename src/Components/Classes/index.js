@@ -19,11 +19,11 @@ function Classes() {
     objectValue: 'name'
   };
 
-  const history = useHistory();
-
   useEffect(() => {
     getClasses(dispatch);
   }, []);
+
+  const history = useHistory();
 
   const createMode = () => {
     history.push('/admin/classes/ClassForm', { params: { mode: 'create' } });

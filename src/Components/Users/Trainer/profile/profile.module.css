@@ -1,120 +1,115 @@
+.wholeContainer{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
 .container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  width: 100%;
+  margin: 30px 0;
 }
-
-.topContainer h3 {
-  font-family: 'Roboto', sans-serif;
-  font-weight: normal;
-  font-size: 18px;
-  color: #373867;
-}
-
-.topContainer {
+.profilePhotoContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
+  justify-content: center;
 }
-
-.botContainer {
+.profileImg{
+  width: 160px;
+  border: 1px solid var(--black);
+  border-radius: 100%;
+  box-shadow: 1px 0px 25px -8px rgba(0,0,0,0.75);
+}
+.defaultImg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+  background-color: var(--primary);
+  border: 3px solid var(--black);
+  border-radius: 100%;
+  box-shadow: 1px 0px 25px -8px rgba(0,0,0,0.75);
+}
+.profileInitials {
+  display: flex;
+  gap: .1rem;
+  font-size: 3.7rem;
+  font-weight: 600;
+  color: white;
+}
+.profileInfoContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 80%;
-  margin-top: 20px;
-  border: 2px solid #373867;
-
-}
-
-.containerTitle {
-  width: 95%;
-  height: 38px;
-  margin-top: 30px;
+  width: 392px;
+  padding-top: 10px;
   border-radius: 10px;
-  background-color: #DFDFDF;
+  box-shadow: 0px 15px 25px -5px rgba(0, 0, 0, 0.75);
 }
-
-.containerTitle h2 {
-  margin-left: 10px;
-  font-size: 16px;
-  line-height: 10px;
-  color: #373867;
+.editPhotoButton {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  left: 52px;
+  bottom: 37px;
+  z-index: 10;
+  cursor: pointer;
 }
-
-.personalContainer {
+.adminName {
+  margin-top: -20px;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: rgba(55, 56, 103, 1);
+}
+.adminInfoTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(55, 56, 103, 1);
+  text-align: start;
+  width: 100%;
+  margin-left: 20px;
+}
+.adminInfoContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-self: self-start;
-  width: 70%;
-  margin-left: 45px;
+  align-items: center;
+  width: 340px;
+  border-bottom: 1px solid rgba(236, 236, 236, 1);
+  padding: 0 5px;
+  margin-bottom: 25px;
 }
-
-.personalContainerTop {
+.adminInfoPlaceholder {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(55, 56, 103, 0.4);
+}
+.adminInfo {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(55, 56, 103, 1);
+}
+.editInfoBtn:hover {
+  cursor: pointer;
+}
+.iconEdit{
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 25px;
+  transition: all .5s;
+  cursor: pointer;
 }
-
-.personalContainerBot {
-  display: flex;
-  flex-direction: row;
-  align-self: flex-start;
-
+.iconEdit:hover{
+  background-color: rgba(168, 172, 171, 0.274);
+  filter: brightness(1) invert();
 }
-
-.personalContainerText {
-  margin-top: 30px;
-  margin-left: 60px;
-  font-family: 'Roboto', sans-serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 14px;
-  color: #949494;
-}
-
-.personalContainerTitle {
-  margin-top: 30px;
-  font-family: 'Roboto', sans-serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 14px;
-  color: #373867;
-}
-
-.personalContainerTitle p {
-  margin-bottom: 50px;
-}
-
-.personalContainerText p {
-  margin-bottom: 50px;
-}
-
-.containerEmail {
-  display: flex;
-  flex-direction: row;
-  width: 93%;
-  margin-bottom: 40px;
-}
-
-.containerEmailTitle {
-  margin-top: 30px;
-  font-family: 'Roboto', sans-serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 14px;
-  color: #373867;
-}
-
-.containerEmailText {
-  margin-top: 30px;
-  margin-left: 78px;
-  font-family: 'Roboto', sans-serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 14px;
-  color: #949494;
-}
-

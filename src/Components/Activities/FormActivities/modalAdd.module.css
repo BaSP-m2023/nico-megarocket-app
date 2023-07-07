@@ -1,7 +1,7 @@
 .radioMainContainer {
   display: flex;
   flex-direction: column;
-  border: solid 1px #373867;
+  border: solid 1px var(--primary);
   padding: 10px;
   border-radius: 10px;
   box-shadow: 0px 5px 8px -5px #373867;
@@ -20,19 +20,27 @@
   align-items: center;
   gap: 1rem;
   background-color: white;
-  width: 30rem;
+  width: 486px;
   border-radius: 1rem;
+  margin: 30px 0;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 20px 30px -5px rgba(0, 0, 0, 0.75);
+  border: 3px solid var(--primary);
 }
 
-.containerForm h3 {
+.title {
   text-align: center;
-  font-size: 2rem;
+  font-size: 36px;
+  font-family: sans-serif;
+  color: var(--primary);
+  margin: 0 0 30px 0;
 }
 
-.containerForm .containerAddButton {
+.containerAddButton {
   display: flex;
   justify-content: space-evenly;
   gap: 20px;
   flex-direction: row;
-  margin-top: 1.5rem;
+  margin-top: 20px;
 }

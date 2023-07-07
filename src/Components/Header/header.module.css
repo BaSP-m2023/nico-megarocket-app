@@ -3,19 +3,26 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 5%;
-  height: 50px;
-  background-color: #373867;
+  height: 70px;
+  background-color: var(--primary);
 }
 
 .brand {
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 1.4rem;
   color:white;
 }
 
 .socialIcon {
   margin-left: 15px;
   filter: invert();
+}
+
+.profileMenu{
+  position: relative;
+  right: -230px;
+  display: flex;
+  align-items: center;
 }
 
 @media screen and (min-width: 750px) {

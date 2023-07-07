@@ -70,7 +70,7 @@ function LoginForm() {
   return (
     <form className={styles.formSuperAdmin} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.wholeContainer}>
-        <h1 className={styles.titleLogin}>Log In</h1>
+        <h1 className={styles.titleLogin}>Login</h1>
         <div className={styles.containerForm}>
           <Inputs
             type="email"
@@ -79,6 +79,7 @@ function LoginForm() {
             register={register}
             error={errors.email?.message}
             testId="login-input-email"
+            className={styles.inputs}
           />
           <Inputs
             type="password"
@@ -87,10 +88,14 @@ function LoginForm() {
             register={register}
             error={errors.password?.message}
             testId="login-input-password"
+            className={styles.inputs}
           />
         </div>
         {errorPop ? (
-          <div className={styles.boxError} data-testid="login-error-pop">
+          <div
+            className={`${styles.boxError} ${styles.shakeAnimation}`}
+            data-testid="login-error-pop"
+          >
             <div className={styles.lineError}>
               <div className={styles.errorLogo}>!</div>
               LogIn Denied
@@ -126,18 +131,17 @@ function LoginForm() {
               Forgot Password?
             </button>
           </div>
-        </div>
-
-        <div className={styles.notAccountContainer}>
-          <p> Dont have an account?</p>
-          <button
-            className={styles.forgotPass}
-            onClick={() => {
-              history.push('/auth/sign-up');
-            }}
-          >
-            Sign Up
-          </button>
+          <div className={styles.notAccountContainer}>
+            <p> Dont have an account?</p>
+            <button
+              className={styles.forgotPass}
+              onClick={() => {
+                history.push('/auth/sign-up');
+              }}
+            >
+              Sign Up
+            </button>
+          </div>
         </div>
       </div>
     </form>
