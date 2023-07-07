@@ -179,8 +179,8 @@ const TrainerProfileForm = () => {
           </div>
         </div>
         <div className={styles.buttonsBox}>
-          <Button text="Reset" clickAction={() => reset()} />
           <Button clickAction={() => {}} text="Save" />
+          <Button text="Reset" clickAction={() => reset()} />
           <Button
             clickAction={(e) => {
               e.preventDefault();
