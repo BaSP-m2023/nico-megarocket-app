@@ -107,7 +107,12 @@ const TableComponent = ({
       if (item.activity && item.activity.name.toLowerCase().trim().includes(searchValue)) {
         return true;
       }
-      if (item.firstName && item.firstName.toLowerCase().trim().includes(searchValue)) {
+      if (
+        item.firstName &&
+        `${item.firstName.toLowerCase().trim()} ${item.lastName.toLowerCase().trim()}`.includes(
+          searchValue
+        )
+      ) {
         return true;
       }
       if (item.classId) {
