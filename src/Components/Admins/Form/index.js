@@ -33,7 +33,9 @@ const FormAdmin = () => {
       .min(8)
       .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
       .message('The password must have at least one Uppercase,a number and 8 characters.'),
-    repeatPassword: Joi.string().valid(Joi.ref('password'))
+    repeatPassword: Joi.string().valid(Joi.ref('password')).required().messages({
+      'any.only': "Passwords don't match"
+    })
   });
 
   const adminUpdated = {
