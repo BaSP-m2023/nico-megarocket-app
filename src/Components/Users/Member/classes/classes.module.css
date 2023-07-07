@@ -37,3 +37,21 @@
   background-color: rgba(55, 56, 103, 0.3);
   border-radius: 5px;
 }
+
+.titleSelect {
+  display: flex;
+  align-items: center;
+}
+
+.titleSelect select {
+  margin: 0 10px;
+  height: 20px;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
