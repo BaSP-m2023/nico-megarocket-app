@@ -2,7 +2,7 @@
   min-width: 450px;
   max-width:500px;
   margin-left: -125px;
-  background-color: #E17162;
+  background-color: var(--red);
   color: var(--white);
   text-align: center;
   border-radius: 5px;
@@ -17,7 +17,7 @@
 }
 
 .modalAlert:hover{
-  background-color: #FF7162;
+  background-color: var(--ligth-red);
 }
 
 .infoContainer{
