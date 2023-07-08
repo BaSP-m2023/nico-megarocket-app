@@ -43,11 +43,10 @@ const TableComponent = ({
           return item[0][fieldValue?.arrayFirstValue] + ' ' + item[0][fieldValue?.arraySecondValue];
         } else {
           return (
-            item[0][fieldValue?.arrayFirstValue] +
-            ' ' +
-            item[0][fieldValue?.arraySecondValue] +
-            ' + ' +
-            (item.length - 1)
+            <span>
+              {item[0][fieldValue?.arrayFirstValue]} {item[0][fieldValue?.arraySecondValue]}{' '}
+              <span className={styles.memberLenght}>+{item.length - 1}</span>
+            </span>
           );
         }
       }
