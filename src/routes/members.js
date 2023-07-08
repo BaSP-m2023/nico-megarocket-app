@@ -5,6 +5,7 @@ import MemberActivities from 'Components/Users/Member/activities';
 import MemberClasses from 'Components/Users/Member/classes';
 import MemberProfile from 'Components/Users/Member/profile';
 import MemberProfileForm from 'Components/Users/Member/profile/Form';
+import NotAllowed from 'Components/Auth/NotAllowed';
 
 const routes = [
   {
@@ -32,6 +33,7 @@ const MemberRoutes = () => {
         <Route exact path={`${url}/classes`} component={MemberClasses} />
         <Route exact path={`${url}/activities`} component={MemberActivities} />
         <Route exact path={`${url}/profile`} component={MemberProfile} />
+        <Route exact path={`${url}/not-allowed`} component={NotAllowed} />
         <Route path={`${url}/profile/form/:id?`} component={MemberProfileForm} />
         <Redirect to={`${url}/classes`} />
       </Switch>

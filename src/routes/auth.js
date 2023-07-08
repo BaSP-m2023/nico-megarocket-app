@@ -2,7 +2,6 @@ import Layout from 'Components/Layout';
 import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import SignForm from '../Components/Auth/SignUp';
 import LoginForm from 'Components/Auth/Login';
-import NotAllowed from 'Components/Auth/NotAllowed';
 import RecoverPassword from 'Components/Auth/RecoverPassword';
 import Home from 'Components/Home';
 
@@ -32,7 +31,6 @@ const AuthRoute = () => {
         <Route exact path={`${url}/`} component={Home} />
         <Route exact path={`${url}/login`} component={LoginForm} />
         <Route exact path={`${url}/sign-up`} component={SignForm} />
-        <Route exact path={`${url}/not-allowed`} component={NotAllowed} />
         <Route exact path={`${url}/recover-password`} component={RecoverPassword} />
         <Redirect path={`${url}/login`} />
       </Switch>
