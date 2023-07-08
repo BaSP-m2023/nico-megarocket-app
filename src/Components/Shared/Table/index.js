@@ -25,9 +25,6 @@ const TableComponent = ({
   const [filtered, setFiltered] = useState(data);
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(filtered.length / 6);
-  const sliceStart = (currentPage - 1) * 6;
-  const sliceEnd = sliceStart + 6;
-  const newData = filtered.slice(sliceStart, sliceEnd);
 
   const onConfirmOpen = (id) => {
     setModalConfirm(true);
@@ -99,20 +96,25 @@ const TableComponent = ({
   };
 
   const handlerChange = (e) => {
-    const searchValue = e.target.value.toLowerCase();
+    const searchValue = e.target.value.toLowerCase().trim();
     const filters = data.filter((item) => {
-      if (item.name && item.name.toLowerCase().includes(searchValue)) {
+      if (item.name && item.name.toLowerCase().trim().includes(searchValue)) {
         return true;
       }
-      if (item.activity && item.activity.name.toLowerCase().includes(searchValue)) {
+      if (item.activity && item.activity.name.toLowerCase().trim().includes(searchValue)) {
         return true;
       }
-      if (item.firstName && item.firstName.toLowerCase().includes(searchValue)) {
+      if (
+        item.firstName &&
+        `${item.firstName.toLowerCase().trim()} ${item.lastName.toLowerCase().trim()}`.includes(
+          searchValue
+        )
+      ) {
         return true;
       }
       if (item.classId) {
         const findActivity = classes.find((act) => act._id === item.classId._id);
-        if (findActivity && findActivity.activity.name.toLowerCase().includes(searchValue)) {
+        if (findActivity && findActivity.activity.name.toLowerCase().trim().includes(searchValue)) {
           return true;
         }
       }
@@ -160,7 +162,7 @@ const TableComponent = ({
           />
         </button>
       </div>
-      {newData?.length === 0 ? (
+      {filtered?.length === 0 ? (
         <div className={styles.noneTrainer}>
           <h3>The list is empty</h3>
         </div>
@@ -178,41 +180,43 @@ const TableComponent = ({
               </tr>
             </thead>
             <tbody>
-              {newData.map((row, index) => {
-                const rowClass = index % 2 === 0 ? styles.rowBackground1 : styles.rowBackground2;
+              {filtered
+                .map((row, index) => {
+                  const rowClass = index % 2 === 0 ? styles.rowBackground1 : styles.rowBackground2;
 
-                return (
-                  <tr className={rowClass} key={index}>
-                    {columns.map((column, columnIndex) => (
-                      <td key={columnIndex}>
-                        {ifArray(row[column])}
-                        {ifObject(row[column])}
-                        {ifNotArrayNotObject(row, column)}
-                        {ifNotExist(row[column])}
-                      </td>
-                    ))}
-                    {(located === '/admin/trainers' || located === '/admin/members') && (
+                  return (
+                    <tr className={rowClass} key={index}>
+                      {columns.map((column, columnIndex) => (
+                        <td key={columnIndex}>
+                          {ifArray(row[column])}
+                          {ifObject(row[column])}
+                          {ifNotArrayNotObject(row, column)}
+                          {ifNotExist(row[column])}
+                        </td>
+                      ))}
+                      {(located === '/admin/trainers' || located === '/admin/members') && (
+                        <td>
+                          <ButtonActive data={row} />
+                        </td>
+                      )}
                       <td>
-                        <ButtonActive data={row} />
+                        <ButtonForm
+                          nameImg="pencil-edit.svg"
+                          onAction={() => handleClick(row)}
+                          testId="edit-btn"
+                        />
                       </td>
-                    )}
-                    <td>
-                      <ButtonForm
-                        nameImg="pencil-edit.svg"
-                        onAction={() => handleClick(row)}
-                        testId="edit-btn"
-                      />
-                    </td>
-                    <td>
-                      <ButtonForm
-                        nameImg="trash-delete.svg"
-                        onAction={() => onConfirmOpen(row._id)}
-                        testId="delete-btn"
-                      />
-                    </td>
-                  </tr>
-                );
-              })}
+                      <td>
+                        <ButtonForm
+                          nameImg="trash-delete.svg"
+                          onAction={() => onConfirmOpen(row._id)}
+                          testId="delete-btn"
+                        />
+                      </td>
+                    </tr>
+                  );
+                })
+                .slice((currentPage - 1) * 6, currentPage * 6)}
             </tbody>
           </table>
           <div className={styles.containerPaginate}>

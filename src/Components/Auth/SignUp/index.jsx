@@ -87,7 +87,9 @@ const SignForm = () => {
         'string.empty': 'The password field is required'
       }),
 
-    repeatPassword: Joi.string().valid(Joi.ref('password')),
+    repeatPassword: Joi.string().valid(Joi.ref('password')).required().messages({
+      'any.only': "Passwords don't match"
+    }),
 
     city: Joi.string()
       .min(3)

@@ -25,6 +25,7 @@ const FormSubscription = () => {
   const [toastError, setModalError] = useState(false);
   const [membersSelected, setMembersSelected] = useState([]);
   const [subscription, setSubscription] = useState({});
+  const [slots, setSlots] = useState(0);
   const history = useHistory();
   const { id } = useParams();
   const location = useLocation();
@@ -83,7 +84,7 @@ const FormSubscription = () => {
   });
 
   const selectedClass = classes.find((oneClass) => oneClass._id === watch('classId'));
-  const isSlotsAvailable = selectedClass && selectedClass.slots - membersSelected.length > 0;
+  const isSlotsAvailable = selectedClass && slots > 0;
 
   const handleClick = () => {
     history.push(`/admin/classes/ClassForm/${selectedClass._id}`, {
@@ -94,7 +95,7 @@ const FormSubscription = () => {
   const onConfirm = async () => {
     if (!id) {
       const updatedClass = {
-        slots: selectedClass.slots - membersSelected.length
+        slots: slots
       };
       const body = {
         method: 'PUT',
@@ -114,7 +115,7 @@ const FormSubscription = () => {
       }
     } else {
       const updatedClass = {
-        slots: selectedClass.slots - membersSelected.length
+        slots: slots
       };
       const body = {
         method: 'PUT',
@@ -158,12 +159,15 @@ const FormSubscription = () => {
 
     if (membersSelected.includes(value)) {
       setMembersSelected(membersSelected.filter((member) => member !== value));
+      setSlots(slots + 1);
     } else {
+      setSlots(slots - 1);
       setMembersSelected([...membersSelected, value]);
     }
   };
 
   const deleteItemList = (member) => {
+    setSlots(slots + 1);
     setMembersSelected(membersSelected.filter((oneMember) => oneMember !== member));
   };
 
@@ -176,6 +180,10 @@ const FormSubscription = () => {
       setMembersSelected(membersInSubs);
     }
   }, []);
+
+  useEffect(() => {
+    setSlots(selectedClass.slots);
+  }, [classes]);
 
   return (
     <section className={style.containerModal}>
@@ -215,15 +223,7 @@ const FormSubscription = () => {
               error={errors.classId?.message}
             />
           )}
-          {selectedClass && (
-            <>
-              {selectedClass.slots > 0 ? (
-                <p>Slots: {selectedClass.slots - membersSelected.length}</p>
-              ) : (
-                <p>No slots available</p>
-              )}
-            </>
-          )}
+          {selectedClass && <>{slots <= 0 ? <p>No slots available</p> : <p>Slots: {slots}</p>}</>}
         </div>
         <div className={style.inputContainer}>
           <OptionMultipleInput
