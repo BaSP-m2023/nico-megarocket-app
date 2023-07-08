@@ -125,22 +125,14 @@ const FormTrainer = () => {
           <div className={styles.groupContainer}>
             <div>
               <Inputs
-                nameTitle="First Name"
+                nameTitle="First name"
                 register={register}
                 nameInput="firstName"
                 type="text"
                 error={errors.firstName?.message}
               />
             </div>
-            <div>
-              <Inputs
-                nameTitle="Last Name"
-                register={register}
-                nameInput="lastName"
-                type="text"
-                error={errors.lastName?.message}
-              />
-            </div>
+
             <div>
               <Inputs
                 nameTitle="DNI"
@@ -159,8 +151,29 @@ const FormTrainer = () => {
                 error={errors.phone?.message}
               />
             </div>
+
+            {!id && (
+              <div>
+                <Inputs
+                  nameTitle="Password"
+                  register={register}
+                  nameInput="password"
+                  type="password"
+                  error={errors.password?.message}
+                />
+              </div>
+            )}
           </div>
           <div className={styles.groupContainer}>
+            <div>
+              <Inputs
+                nameTitle="Last name"
+                register={register}
+                nameInput="lastName"
+                type="text"
+                error={errors.lastName?.message}
+              />
+            </div>
             <div>
               <Inputs
                 nameTitle="City"
@@ -168,15 +181,6 @@ const FormTrainer = () => {
                 nameInput="city"
                 type="text"
                 error={errors.city?.message}
-              />
-            </div>
-            <div>
-              <Inputs
-                nameTitle="Salary"
-                register={register}
-                nameInput="salary"
-                type="number"
-                error={errors.salary?.message}
               />
             </div>
 
@@ -193,17 +197,6 @@ const FormTrainer = () => {
             {!id && (
               <div>
                 <Inputs
-                  nameTitle="Password"
-                  register={register}
-                  nameInput="password"
-                  type="password"
-                  error={errors.password?.message}
-                />
-              </div>
-            )}
-            {!id && (
-              <div>
-                <Inputs
                   nameTitle="Repeat Password"
                   register={register}
                   nameInput="repeatPassword"
@@ -212,6 +205,15 @@ const FormTrainer = () => {
                 />
               </div>
             )}
+            <div>
+              <Inputs
+                nameTitle="Salary"
+                register={register}
+                nameInput="salary"
+                type="number"
+                error={errors.salary?.message}
+              />
+            </div>
           </div>
         </div>
         <div className={styles.buttonContainer}>
