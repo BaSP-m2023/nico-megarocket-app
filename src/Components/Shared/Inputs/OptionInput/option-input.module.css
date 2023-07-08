@@ -35,7 +35,8 @@
   margin-right: 20px;
   margin: 10px 0;
   transition: 0.2s ease;
-  color: #373867;
+  color: var(--primary);
+  font-weight:500;
 }
 
 .labelError {
