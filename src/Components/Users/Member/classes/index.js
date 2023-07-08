@@ -47,16 +47,19 @@ const MemberClasses = () => {
   };
 
   return (
-    <div>
-      <select onChange={handleChange}>
-        {classesArray.map((item, index) => {
-          return (
-            <option key={index} value={item._id ? item.activity.name : item}>
-              {item.activity.name}
-            </option>
-          );
-        })}
-      </select>
+    <div className={styles.table}>
+      <div className={styles.titleSelect}>
+        <h3>Select the class you want to join:</h3>
+        <select onChange={handleChange}>
+          {classesArray.map((item, index) => {
+            return (
+              <option key={index} value={item._id ? item.activity.name : item}>
+                {item.activity.name}
+              </option>
+            );
+          })}
+        </select>
+      </div>
       <table className={styles.tableContainer}>
         <thead>
           <tr>

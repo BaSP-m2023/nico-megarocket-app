@@ -118,16 +118,25 @@ const FormClasses = () => {
 
   const openModal = async (data) => {
     const { hour, day, activity } = data;
-    if (isClassTimeTaken(hour, day, activity)) {
-      setToastError(true);
-      return;
+    if (id) {
+      let trainerArray = data.trainer;
+      if (typeof data.trainer !== 'object') {
+        trainerArray = [data.trainer];
+      }
+      setModalConfirmOpen(true);
+      setUpdClass({ ...data, trainer: trainerArray });
+    } else {
+      if (isClassTimeTaken(hour, day, activity)) {
+        setToastError(true);
+        return;
+      }
+      let trainerArray = data.trainer;
+      if (typeof data.trainer !== 'object') {
+        trainerArray = [data.trainer];
+      }
+      setModalConfirmOpen(true);
+      setUpdClass({ ...data, trainer: trainerArray });
     }
-    let trainerArray = data.trainer;
-    if (typeof data.trainer !== 'object') {
-      trainerArray = [data.trainer];
-    }
-    setModalConfirmOpen(true);
-    setUpdClass({ ...data, trainer: trainerArray });
   };
 
   const formSubmit = async () => {
