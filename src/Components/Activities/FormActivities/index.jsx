@@ -88,11 +88,9 @@ const ModalAddActivity = () => {
 
   const formSubmit = async () => {
     if (id) {
-      handleUpdateButtonClick();
       const putActivity = await updateActivity(dispatch, id, inputForm);
       if (putActivity.type === 'UPDATE_ACTIVITIES_SUCCESS') {
-        setToastError(false);
-        setModalSuccessOpen(false);
+        setModalSuccessOpen(true);
         setTimeout(() => {
           history.goBack();
         }, 1000);
@@ -110,7 +108,7 @@ const ModalAddActivity = () => {
 
   const onSubmit = async (data) => {
     setInputForm(data);
-    setModalUpdateConfirmOpen(true);
+    handleUpdateButtonClick();
   };
 
   return (
@@ -173,7 +171,7 @@ const ModalAddActivity = () => {
       {toastError && (
         <ToastError
           setToastErroOpen={setToastError}
-          message={isError.message}
+          message={isError}
           testId="activity-form-toast-error"
         />
       )}
