@@ -48,7 +48,7 @@ const ModalAddActivity = () => {
         'string.max': 'Description invalid lenght'
       })
       .required(),
-    isActive: Joi.boolean().required().default(false)
+    isActive: Joi.boolean().required().default(true)
   });
 
   const updateActivityData = {
@@ -138,7 +138,7 @@ const ModalAddActivity = () => {
               })}
               type="hidden"
               name="isActive"
-              value={false}
+              value={true}
             />
           )}
         </div>

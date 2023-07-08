@@ -123,7 +123,7 @@ const MembersForm = () => {
     firstName: data.firstName,
     lastName: data.lastName,
     dni: data.dni,
-    birthday: data.date && new Date(data.birthday).toISOString().substr(0, 10),
+    birthday: new Date(data.birthday).toISOString().substr(0, 10),
     phone: data.phone,
     city: data.city,
     isActive: data.isActive,
