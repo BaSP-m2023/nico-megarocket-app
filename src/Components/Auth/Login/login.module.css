@@ -81,7 +81,7 @@
 .MsgError {
   font-size: 12px;
   text-align: center;
-  color: var(--white);
+  color: var(--black);
   font-weight: 500;
 }
 .emptyBox {

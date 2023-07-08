@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AddButton, Loader, TableComponent, ToastError } from 'Components/Shared';
+import { Loader, TableComponent, ToastError } from 'Components/Shared';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getSuscription, deleteSubscription } from 'redux/subscriptions/thunks';
@@ -26,10 +26,6 @@ function Subscriptions() {
     getClasses(dispatch);
   }, []);
 
-  const createMode = () => {
-    history.push('/admin/subscriptions/form/', { params: { mode: 'created' } });
-  };
-
   const handleClick = (item) => {
     history.push(`/admin/subscriptions/form/${item._id}`, { params: { ...item, mode: 'edit' } });
   };
@@ -48,7 +44,6 @@ function Subscriptions() {
 
   return (
     <section>
-      <AddButton entity="Suscription" createMode={createMode} />
       {loading ? (
         <Loader />
       ) : (

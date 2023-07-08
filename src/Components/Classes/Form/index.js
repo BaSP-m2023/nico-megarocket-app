@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import formStyles from '../Form/formClasses.module.css';
-import { ModalConfirm, ModalSuccess, Button, Inputs, OptionInput, Loader } from 'Components/Shared';
+import {
+  ModalConfirm,
+  ModalSuccess,
+  Button,
+  Inputs,
+  OptionInput,
+  Loader,
+  ToastError
+} from 'Components/Shared';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getClasses, createClass, updateClass } from 'redux/classes/thunks';
@@ -13,6 +21,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 const FormClasses = () => {
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
+  const [toastError, setToastError] = useState(false);
   const [updClass, setUpdClass] = useState({});
 
   const { id } = useParams();
@@ -101,13 +110,33 @@ const FormClasses = () => {
     body: JSON.stringify(updClass)
   };
 
+  const isClassTimeTaken = (hour, day, activity) => {
+    return classes.some(
+      (item) => item.hour === hour && item.day === day && item.activity._id === activity
+    );
+  };
+
   const openModal = async (data) => {
-    let trainerArray = data.trainer;
-    if (typeof data.trainer !== 'object') {
-      trainerArray = [data.trainer];
+    const { hour, day, activity } = data;
+    if (id) {
+      let trainerArray = data.trainer;
+      if (typeof data.trainer !== 'object') {
+        trainerArray = [data.trainer];
+      }
+      setModalConfirmOpen(true);
+      setUpdClass({ ...data, trainer: trainerArray });
+    } else {
+      if (isClassTimeTaken(hour, day, activity)) {
+        setToastError(true);
+        return;
+      }
+      let trainerArray = data.trainer;
+      if (typeof data.trainer !== 'object') {
+        trainerArray = [data.trainer];
+      }
+      setModalConfirmOpen(true);
+      setUpdClass({ ...data, trainer: trainerArray });
     }
-    setModalConfirmOpen(true);
-    setUpdClass({ ...data, trainer: trainerArray });
   };
 
   const formSubmit = async () => {
@@ -243,6 +272,12 @@ const FormClasses = () => {
           />
         )}
       </div>
+      {toastError && (
+        <ToastError
+          setToastErroOpen={setToastError}
+          message="The class already exists at that time and day"
+        />
+      )}
     </div>
   );
 };
