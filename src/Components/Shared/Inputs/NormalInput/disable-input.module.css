@@ -13,6 +13,7 @@
 }
 .nameLabel {
   margin-top: 10px;
+  font-weight:500;
 }
 .nameLabel label {
   display: flex;
