@@ -76,22 +76,26 @@ const TrainersClasses = () => {
         </tr>
       </thead>
       <tbody>
-        {hoursArray.map((row, index) => {
-          return (
-            <tr className={styles.trContainer2} key={index}>
-              <td className={styles.trContainer}>{row}</td>
-              {daysArray.map((day) => {
-                return (
-                  <td className={styles.tdContainer} key={day}>
-                    {trainerClasses.map((item) => {
-                      return tableItem(item, day, row);
-                    })}
-                  </td>
-                );
-              })}
-            </tr>
-          );
-        })}
+        {trainerClasses.length === 0 ? (
+          <p>No hay classes</p>
+        ) : (
+          hoursArray.map((row, index) => {
+            return (
+              <tr className={styles.trContainer2} key={index}>
+                <td className={styles.trContainer}>{row}</td>
+                {daysArray.map((day) => {
+                  return (
+                    <td className={styles.tdContainer} key={day}>
+                      {trainerClasses.map((item) => {
+                        return tableItem(item, day, row);
+                      })}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })
+        )}
       </tbody>
     </table>
   );
