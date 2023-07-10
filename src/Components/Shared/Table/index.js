@@ -2,6 +2,7 @@ import ButtonForm from '../ButtonForm';
 import styles from './table.module.css';
 import { useState } from 'react';
 import { ModalConfirm, ModalSuccess, ButtonActive } from '../index';
+import { ModalInfo } from 'Components/Shared';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -19,6 +20,8 @@ const TableComponent = ({
   const fieldValue = valueField;
   const [successModal, setModalSuccess] = useState(false);
   const [modalConfirm, setModalConfirm] = useState(false);
+  const [modalInfo, setModalInfo] = useState(false);
+  const [info, setInfo] = useState({});
   const [idDelete, setIdDelete] = useState('');
   const dispatch = useDispatch();
   const located = useLocation().pathname;
@@ -186,7 +189,15 @@ const TableComponent = ({
                   return (
                     <tr className={rowClass} key={index}>
                       {columns.map((column, columnIndex) => (
-                        <td key={columnIndex}>
+                        <td
+                          key={columnIndex}
+                          onClick={() => {
+                            if (column === 'members') {
+                              setModalInfo(true);
+                              setInfo(row);
+                            }
+                          }}
+                        >
                           {ifArray(row[column])}
                           {ifObject(row[column])}
                           {ifNotArrayNotObject(row, column)}
@@ -249,6 +260,7 @@ const TableComponent = ({
           testId="delete-success-modal"
         />
       )}
+      {modalInfo && <ModalInfo data={info} setModalInfo={setModalInfo} />}
     </section>
   );
 };
