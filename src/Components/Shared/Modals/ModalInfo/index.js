@@ -5,6 +5,7 @@ import { getClasses } from 'redux/classes/thunks';
 import { getTrainers } from 'redux/trainers/thunks';
 import { ButtonForm } from 'Components/Shared';
 import { useHistory } from 'react-router-dom';
+import { getAllActivities } from 'redux/activities/thunks';
 
 const ModalInfo = ({ data, setModalInfo }) => {
   const activities = useSelector((state) => state.activities.list);
@@ -14,9 +15,14 @@ const ModalInfo = ({ data, setModalInfo }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   useEffect(() => {
+    getAllActivities(dispatch);
     getClasses(dispatch);
     getTrainers(dispatch);
   }, []);
+
+  if (activities.length === 0 || !trainers.length === 0) {
+    return null;
+  }
 
   return (
     <div className={styles.wholeContainer}>
