@@ -228,7 +228,7 @@ const FormAdmin = () => {
           message={
             id
               ? 'Are you sure you want to update this admin?'
-              : 'Are you sure you want to add the admin?'
+              : 'Are you sure you want to add this admin?'
           }
           onConfirm={submitAdmin}
           setModalConfirmOpen={setModalConfirmOpen}
