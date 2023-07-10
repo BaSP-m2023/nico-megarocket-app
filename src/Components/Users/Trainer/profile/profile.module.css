@@ -1,4 +1,4 @@
-.wholeContainer{
+.wholeContainer {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -19,13 +19,13 @@
   align-items: center;
   justify-content: center;
 }
-.profileImg{
+.profileImg {
   width: 160px;
   border: 1px solid var(--black);
   border-radius: 100%;
-  box-shadow: 1px 0px 25px -8px rgba(0,0,0,0.75);
+  box-shadow: 1px 0px 25px -8px rgba(0, 0, 0, 0.75);
 }
-.defaultImg{
+.defaultImg {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,21 +34,23 @@
   background-color: var(--primary);
   border: 3px solid var(--black);
   border-radius: 100%;
-  box-shadow: 1px 0px 25px -8px rgba(0,0,0,0.75);
+  box-shadow: 1px 0px 25px -8px var(--primary);
 }
-.profileInitials{
+.profileInitials {
+  display: flex;
+  gap: 0.1rem;
   font-size: 3.7rem;
   font-weight: 600;
   color: white;
 }
-.profileInfoContainer{
+.profileInfoContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 392px;
   padding-top: 10px;
   border-radius: 10px;
-  box-shadow: 0px 15px 25px -5px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 15px 25px -5px var(--primary);
 }
 .editPhotoButton {
   position: relative;
@@ -66,12 +68,11 @@
   color: rgba(55, 56, 103, 1);
 }
 .adminInfoTitle {
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 700;
   color: rgba(55, 56, 103, 1);
   text-align: start;
   width: 100%;
-  margin-left: 20px;
 }
 .adminInfoContainer {
   display: flex;
@@ -79,24 +80,28 @@
   justify-content: space-between;
   align-items: center;
   width: 340px;
-  border-bottom: 1px solid rgba(236, 236, 236, 1);
-  padding: 0 5px;
-  margin-bottom: 25px;
+  border-bottom: 1px solid var(--light-grey);
+  padding: 12px 5px;
+  margin-bottom: 15px;
 }
 .adminInfoPlaceholder {
   font-size: 14px;
   font-weight: 400;
-  color: rgba(55, 56, 103, 0.4);
+  color: var(--dark-grey);
 }
 .adminInfo {
   font-size: 14px;
-  font-weight: 400;
-  color: rgba(55, 56, 103, 1);
+  font-weight: 600;
+  color: var(--primary);
 }
 .editInfoBtn:hover {
   cursor: pointer;
 }
-.iconEdit{
+.editInfoBtn:hover {
+  cursor: pointer;
+}
+
+.iconEdit {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -104,10 +109,35 @@
   width: 30px;
   height: 30px;
   border-radius: 25px;
-  transition: all .5s;
+  transition: all 0.5s;
   cursor: pointer;
 }
-.iconEdit:hover{
-  background-color: rgba(168, 172, 171, 0.274);
-  filter: brightness(1) invert();
+
+.buttonEdit {
+  cursor: pointer;
+  border: solid var(--primary) 2px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  padding: 0 0 0 9px;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.buttonEdit:hover {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+.profileIcon {
+  width: 40px;
+  color: var(--primary);
+}
+
+.titleContainer {
+  display: flex;
+  margin-bottom: 10px;
+  align-self: flex-start;
+  gap:5px;
 }

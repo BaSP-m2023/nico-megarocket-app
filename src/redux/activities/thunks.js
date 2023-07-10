@@ -99,7 +99,7 @@ export const updateActivity = async (dispatch, id, activity) => {
     if (response.ok) {
       const data = await response.json();
       dispatch(updateActivitiesPending(false));
-      return dispatch(updateActivitiesSuccess(data.result));
+      return dispatch(updateActivitiesSuccess(data.data));
     } else {
       dispatch(addActivitiesPending(false));
       return dispatch(addActivitiesError(true));

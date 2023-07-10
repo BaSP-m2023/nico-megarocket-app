@@ -29,7 +29,9 @@ const FormTrainer = () => {
       .min(8)
       .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
       .message('The password must have at least one Uppercase,a number and 8 characters.'),
-    repeatPassword: Joi.string().valid(Joi.ref('password')),
+    repeatPassword: Joi.string().valid(Joi.ref('password')).required().messages({
+      'any.only': "Passwords don't match"
+    }),
     city: Joi.string().min(5).max(25),
     salary: Joi.number()
   });
@@ -123,22 +125,14 @@ const FormTrainer = () => {
           <div className={styles.groupContainer}>
             <div>
               <Inputs
-                nameTitle="First Name"
+                nameTitle="First name"
                 register={register}
                 nameInput="firstName"
                 type="text"
                 error={errors.firstName?.message}
               />
             </div>
-            <div>
-              <Inputs
-                nameTitle="Last Name"
-                register={register}
-                nameInput="lastName"
-                type="text"
-                error={errors.lastName?.message}
-              />
-            </div>
+
             <div>
               <Inputs
                 nameTitle="DNI"
@@ -157,8 +151,29 @@ const FormTrainer = () => {
                 error={errors.phone?.message}
               />
             </div>
+
+            {!id && (
+              <div>
+                <Inputs
+                  nameTitle="Password"
+                  register={register}
+                  nameInput="password"
+                  type="password"
+                  error={errors.password?.message}
+                />
+              </div>
+            )}
           </div>
           <div className={styles.groupContainer}>
+            <div>
+              <Inputs
+                nameTitle="Last name"
+                register={register}
+                nameInput="lastName"
+                type="text"
+                error={errors.lastName?.message}
+              />
+            </div>
             <div>
               <Inputs
                 nameTitle="City"
@@ -166,15 +181,6 @@ const FormTrainer = () => {
                 nameInput="city"
                 type="text"
                 error={errors.city?.message}
-              />
-            </div>
-            <div>
-              <Inputs
-                nameTitle="Salary"
-                register={register}
-                nameInput="salary"
-                type="number"
-                error={errors.salary?.message}
               />
             </div>
 
@@ -191,17 +197,6 @@ const FormTrainer = () => {
             {!id && (
               <div>
                 <Inputs
-                  nameTitle="Password"
-                  register={register}
-                  nameInput="password"
-                  type="password"
-                  error={errors.password?.message}
-                />
-              </div>
-            )}
-            {!id && (
-              <div>
-                <Inputs
                   nameTitle="Repeat Password"
                   register={register}
                   nameInput="repeatPassword"
@@ -210,6 +205,15 @@ const FormTrainer = () => {
                 />
               </div>
             )}
+            <div>
+              <Inputs
+                nameTitle="Salary"
+                register={register}
+                nameInput="salary"
+                type="number"
+                error={errors.salary?.message}
+              />
+            </div>
           </div>
         </div>
         <div className={styles.buttonContainer}>

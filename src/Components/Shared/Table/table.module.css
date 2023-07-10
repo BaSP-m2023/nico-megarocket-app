@@ -26,12 +26,13 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  background: var(--light-grey);
+  background: var(--secondary);
   color: #373867;
   border-radius: 3px;
   overflow: hidden;
   box-shadow: 0px 6px 30px -7px rgba(0, 0, 0, 0.75);
   margin: 20px 0;
+  min-width: 700px;
 }
 
 .table tr td,
@@ -58,7 +59,7 @@
 }
 
 .rowBackground1 {
-  background-color: var(--secondary);
+  background-color: var(--light-grey);
 }
 
 .rowBackground2 {
@@ -149,4 +150,7 @@
   border-radius: 0.5rem;
   cursor: pointer;
   transition: all 0.5s ease-in-out;
+}
+.memberLenght{
+  font-weight: bolder;
 }

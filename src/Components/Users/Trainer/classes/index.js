@@ -61,7 +61,14 @@ const TrainersClasses = () => {
     }
   };
 
-  return (
+  return trainerClasses.length === 0 ? (
+    <div className={styles.notClass}>
+      <h1 className={styles.notClassTitle}>
+        Welcome, {trainer.firstName} {trainer.lastName}
+      </h1>
+      <p className={styles.notClassText}>No classes assigned.</p>
+    </div>
+  ) : (
     <table className={styles.tableContainer}>
       <thead className={styles.thead}>
         <tr>
@@ -75,9 +82,9 @@ const TrainersClasses = () => {
           })}
         </tr>
       </thead>
-      <tbody>
-        {hoursArray.map((row, index) => {
-          return (
+      {hoursArray.map((row, index) => {
+        return (
+          <tbody key={index}>
             <tr className={styles.trContainer2} key={index}>
               <td className={styles.trContainer}>{row}</td>
               {daysArray.map((day) => {
@@ -90,9 +97,9 @@ const TrainersClasses = () => {
                 );
               })}
             </tr>
-          );
-        })}
-      </tbody>
+          </tbody>
+        );
+      })}
     </table>
   );
 };

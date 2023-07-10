@@ -20,7 +20,7 @@ const MemberProfile = (testId) => {
   const defaultProfile = !profilePic ? (
     <div className={styles.defaultImg}>
       <p className={styles.profileInitials}>
-        {member?.firstName.charAt()} {member?.lastName.charAt()}
+        <span>{member?.firstName.charAt()}</span> <span>{member?.lastName.charAt()}</span>
       </p>
     </div>
   ) : (
@@ -83,7 +83,23 @@ const MemberProfile = (testId) => {
             {member.firstName} {member.lastName}
           </h1>
         </div>
-        <h2 className={styles.adminInfoTitle}>Personal Information</h2>
+        <div className={styles.titleContainer}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className={styles.profileIcon}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+          </svg>
+          <h2 className={styles.adminInfoTitle}>Personal Information</h2>
+        </div>
         <div className={styles.profileInfoContainer} data-testid="info-container">
           <p className={styles.adminInfoContainer}>
             <span className={styles.adminInfoPlaceholder}>Name</span>
@@ -120,16 +136,14 @@ const MemberProfile = (testId) => {
             <span className={styles.adminInfo}>{member.email}</span>
           </p>
 
-          <div className={styles.adminInfoContainer}>
-            <p className={styles.adminInfoPlaceholder}>Edit profile</p>
-            <div className={styles.iconEdit}>
-              <ButtonForm
-                className={styles.editInfoBtn}
-                onAction={handleEditClick}
-                nameImg="edit-profile-icon.png"
-                testId="profile-edit-btn"
-              />
-            </div>
+          <div className={styles.buttonEdit} onClick={handleEditClick}>
+            <p>Edit Profile</p>
+            <ButtonForm
+              className={styles.iconEdit}
+              onAction={handleEditClick}
+              nameImg="edit.svg"
+              testId="profile-edit-btn"
+            />
           </div>
         </div>
       </section>

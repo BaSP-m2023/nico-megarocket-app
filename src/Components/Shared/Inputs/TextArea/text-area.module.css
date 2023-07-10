@@ -3,18 +3,44 @@
   border: none;
   background-color: transparent;
   border-bottom: 2px solid #eee;
-  padding: 0.25rem 0;
+  border-left: 2px solid #eee;
+  padding-left: 0.25rem ;
   transition: 0.2s ease;
 }
-
 .normalInput:focus {
   outline: 0;
   border-bottom-color: #373867;
+  border-left-color: #373867;
 }
 .nameLabel {
   margin-top: 10px;
-  font-weight:500;
 }
+textarea{
+  margin-top: 5px;
+  height: 85px;
+  resize: none;
+  font-family:sans-serif;
+}
+
+textarea::-webkit-scrollbar {
+  width:10px;
+  cursor: pointer;
+}
+  
+textarea::-webkit-scrollbar-button {
+  display: none;
+}
+  
+textarea::-webkit-scrollbar-thumb {  
+  background-color: #797979;
+  border-radius: 20px;
+  border: 2px solid #f1f2f3;
+}
+  
+textarea::-webkit-scrollbar-track {  
+  border-radius: 10px;
+}
+
 .nameLabel label {
   display: flex;
   flex-direction: column;
@@ -24,7 +50,6 @@
   transition: 0.2s ease;
   color: #373867;
 }
-
 .labelError label {
   color: red;
   font-size: 19px;
@@ -36,13 +61,13 @@
 }
 .errorInput {
   border-bottom: solid red;
+  border-left: solid red;
   margin-top: 0;
 }
 .spaceErrorMsg {
   margin-top: 0;
   height: 30px;
 }
-
 .errorLogo {
   display: flex;
   align-items: center;
@@ -54,7 +79,6 @@
   font-weight: bold;
   border-radius: 25px;
 }
-
 .errorContainer{
   display:flex;
   align-items:center;

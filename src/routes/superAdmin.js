@@ -3,6 +3,7 @@ import Layout from 'Components/Layout';
 import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import Admin from 'Components/Admins/';
 import FormAdmin from 'Components/Admins/Form';
+import NotAllowed from 'Components/Auth/NotAllowed';
 
 const routes = [
   {
@@ -19,6 +20,7 @@ const SuperAdminRoutes = () => {
       <Switch>
         <Route exact path={`${url}/admin`} component={Admin} />
         <Route path={`${url}/admin/form/:id?`} component={FormAdmin} />
+        <Route exact path={`${url}/not-allowed`} component={NotAllowed} />
         <Redirect path={`${url}/login`} />
       </Switch>
     </Layout>

@@ -1,18 +1,3 @@
-.radioMainContainer {
-  display: flex;
-  flex-direction: column;
-  border: solid 1px var(--primary);
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0px 5px 8px -5px #373867;
-}
-
-.radioContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .containerForm {
   display: flex;
   flex-direction: column;
@@ -27,6 +12,9 @@
   border-radius: 10px;
   box-shadow: 0px 20px 30px -5px rgba(0, 0, 0, 0.75);
   border: 3px solid var(--primary);
+}
+.inputContainer{
+  width: 255px;
 }
 
 .title {

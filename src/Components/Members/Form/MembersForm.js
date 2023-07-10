@@ -20,7 +20,7 @@ const MembersForm = () => {
   const isError = useSelector((state) => state.members.errorForm);
   const token = sessionStorage.getItem('token');
   const [toastError, setToastErroOpen] = useState(false);
-  const [modalAddConfirmOpen, setModalAddConfirmOpen] = useState(true);
+  const [modalAddConfirmOpen, setModalAddConfirmOpen] = useState(false);
   const [modalSuccess, setModalSuccessOpen] = useState(false);
   const [member, setMember] = useState({});
   const location = useLocation();
@@ -123,7 +123,7 @@ const MembersForm = () => {
     firstName: data.firstName,
     lastName: data.lastName,
     dni: data.dni,
-    birthday: data.date && new Date(data.birthday).toISOString().substr(0, 10),
+    birthday: new Date(data.birthday).toISOString().substr(0, 10),
     phone: data.phone,
     city: data.city,
     isActive: data.isActive,
@@ -227,22 +227,13 @@ const MembersForm = () => {
               <Inputs
                 error={errors.firstName?.message}
                 register={register}
-                nameTitle="Name"
+                nameTitle="First name"
                 type="text"
                 nameInput="firstName"
                 testId="input-member-name"
               />
             </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                error={errors.lastName?.message}
-                register={register}
-                nameTitle="Lastname"
-                type="text"
-                nameInput="lastName"
-                testId="input-member-lastname"
-              />
-            </div>
+
             <div className={styles.inputContainer}>
               <Inputs
                 error={errors.dni?.message}
@@ -251,6 +242,42 @@ const MembersForm = () => {
                 type="text"
                 nameInput="dni"
                 testId="input-member-dni"
+              />
+            </div>
+
+            <div className={styles.inputContainer}>
+              <Inputs
+                error={errors.phone?.message}
+                register={register}
+                nameTitle="Phone"
+                type="number"
+                nameInput="phone"
+                required
+                testId="input-member-phone"
+              />
+            </div>
+
+            <div className={styles.inputContainer}>
+              <Inputs
+                error={errors.city?.message}
+                register={register}
+                nameTitle="City"
+                type="text"
+                nameInput="city"
+                required
+                testId="input-member-city"
+              />
+            </div>
+          </div>
+          <div className={styles.inputGroup}>
+            <div className={styles.inputContainer}>
+              <Inputs
+                error={errors.lastName?.message}
+                register={register}
+                nameTitle="Lastname"
+                type="text"
+                nameInput="lastName"
+                testId="input-member-lastname"
               />
             </div>
             <div className={styles.inputContainer}>
@@ -264,19 +291,7 @@ const MembersForm = () => {
                 testId="input-member-birthday"
               />
             </div>
-          </div>
-          <div className={styles.inputGroup}>
-            <div className={styles.inputContainer}>
-              <Inputs
-                error={errors.phone?.message}
-                register={register}
-                nameTitle="Phone"
-                type="number"
-                nameInput="phone"
-                required
-                testId="input-member-phone"
-              />
-            </div>
+
             <div className={styles.inputContainer}>
               <Inputs
                 error={errors.email?.message}
@@ -288,17 +303,7 @@ const MembersForm = () => {
                 testId="input-member-email"
               />
             </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                error={errors.city?.message}
-                register={register}
-                nameTitle="City"
-                type="text"
-                nameInput="city"
-                required
-                testId="input-member-city"
-              />
-            </div>
+
             <div className={styles.inputContainer}>
               <Inputs
                 error={errors.postalCode?.message}

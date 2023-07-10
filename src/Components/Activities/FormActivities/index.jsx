@@ -1,7 +1,14 @@
 import { useForm } from 'react-hook-form';
 import React, { useState, useEffect } from 'react';
 import style from './modalAdd.module.css';
-import { ModalConfirm, ModalSuccess, Inputs, Button, ToastError } from 'Components/Shared';
+import {
+  ModalConfirm,
+  ModalSuccess,
+  Inputs,
+  Button,
+  ToastError,
+  TextArea
+} from 'Components/Shared';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { addActivity, updateActivity } from 'redux/activities/thunks';
@@ -81,18 +88,15 @@ const ModalAddActivity = () => {
 
   const formSubmit = async () => {
     if (id) {
-      handleUpdateButtonClick();
       const putActivity = await updateActivity(dispatch, id, inputForm);
       if (putActivity.type === 'UPDATE_ACTIVITIES_SUCCESS') {
-        setToastError(false);
-        setModalSuccessOpen(false);
+        setModalSuccessOpen(true);
         setTimeout(() => {
           history.goBack();
         }, 1000);
       }
     } else {
       const postActivity = await addActivity(dispatch, inputForm);
-      console.log(postActivity);
       if (postActivity.type === 'ADD_ACTIVITIES_SUCCESS') {
         setModalSuccessOpen(true);
         setTimeout(() => {
@@ -104,55 +108,39 @@ const ModalAddActivity = () => {
 
   const onSubmit = async (data) => {
     setInputForm(data);
-    setModalUpdateConfirmOpen(true);
+    handleUpdateButtonClick();
   };
 
   return (
     <section className={style.containerModal}>
       <form className={style.containerForm} onSubmit={handleSubmit(onSubmit)}>
         <h3 className={style.title}>{id ? 'Edit Activity' : 'Add Activity'}</h3>
-        <Inputs
-          nameTitle="Name:"
-          register={register}
-          nameInput="name"
-          type="text"
-          error={errors.name?.message}
-          testId="input-activity-name"
-        />
-        <Inputs
-          nameTitle="Description:"
-          type="text"
-          register={register}
-          nameInput="description"
-          error={errors.description?.message}
-          testId="input-activity-description"
-        />
-        <div className={style.radioMainContainer}>
-          <label className={style.nameLabel}>Status</label>
-          <div className={style.radioContainer}>
-            <label>
-              Active
-              <input
-                {...register('isActive', {
-                  required: { value: true, message: 'This field is required' }
-                })}
-                type="radio"
-                name="isActive"
-                value={true}
-              />
-            </label>
-            <label>
-              Inactive
-              <input
-                {...register('isActive', {
-                  required: { value: true, message: 'This field is required' }
-                })}
-                type="radio"
-                name="isActive"
-                value={false}
-              />
-            </label>
-          </div>
+        <div className={style.inputContainer}>
+          <Inputs
+            nameTitle="Name"
+            register={register}
+            nameInput="name"
+            type="text"
+            error={errors.name?.message}
+            testId="input-activity-name"
+          />
+          <TextArea
+            nameTitle={'Description'}
+            nameInput={'description'}
+            register={register}
+            error={errors.description?.message}
+            testId="input-activity-description"
+          />
+          {!id && (
+            <input
+              {...register('isActive', {
+                required: { value: true, message: 'This field is required' }
+              })}
+              type="hidden"
+              name="isActive"
+              value={true}
+            />
+          )}
         </div>
         <div className={style.containerAddButton}>
           <Button clickAction={() => {}} text={id ? 'Save' : 'Add'} testId="activity-save-btn" />
@@ -183,7 +171,7 @@ const ModalAddActivity = () => {
       {toastError && (
         <ToastError
           setToastErroOpen={setToastError}
-          message={isError.message}
+          message={isError}
           testId="activity-form-toast-error"
         />
       )}
