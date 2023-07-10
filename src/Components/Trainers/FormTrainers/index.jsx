@@ -228,8 +228,8 @@ const FormTrainer = () => {
           method={id ? 'Edit' : 'Create'}
           message={
             id
-              ? 'Are you sure you want to edit the Trainer?'
-              : 'Are you sure you want to add the Trainer?'
+              ? 'Are you sure you want to update this trainer?'
+              : 'Are you sure you want to add this trainer?'
           }
           onConfirm={formSubmit}
           setModalConfirmOpen={setModalUpdateConfirmOpen}
@@ -238,7 +238,9 @@ const FormTrainer = () => {
       {modalSuccess && (
         <ModalSuccess
           setModalSuccessOpen={setModalSuccess}
-          message={id ? 'Trainer edit successfully!' : 'Trainer added successfully!'}
+          message={
+            id ? 'Trainer has been updated succesfully' : 'Trainer has been added succesfully'
+          }
         />
       )}
       {toastErrorOpen && (
