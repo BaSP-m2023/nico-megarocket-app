@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import React, { useEffect } from 'react';
 import styles from './modalInfo.module.css';
 import { useDispatch, useSelector } from 'react-redux';
