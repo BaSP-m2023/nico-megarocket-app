@@ -15,7 +15,9 @@ const MemberClasses = () => {
     userJoined ? userJoined?.activity : classes[0]?.activity?.name
   );
   if (selectedClass) {
-    classes = classesArray.filter((item) => item.activity.name === selectedClass);
+    classes = selectedClass
+      ? classesArray.filter((item) => item.activity.name === selectedClass)
+      : [];
   }
 
   useEffect(() => {
@@ -54,8 +56,13 @@ const MemberClasses = () => {
   return (
     <div className={styles.table}>
       <div className={styles.titleSelect}>
-        <h3>Select the class you want to join:</h3>
-        <select value={selectedClass} onChange={handleChange}>
+        {!classes[0]?.activity?.name ? (
+          <h3>Class was no created yet, select another class you want to join:</h3>
+        ) : (
+          <h3>Select the class you want to join:</h3>
+        )}
+        <select value={selectedClass || 'Pick class'} onChange={handleChange}>
+          <option value="">Pick class</option>
           {classesArray.map((item, index) => (
             <option key={index} value={item.activity.name}>
               {item.activity.name}
