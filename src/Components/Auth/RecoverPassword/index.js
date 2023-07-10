@@ -59,7 +59,6 @@ const RecoverPassword = () => {
   };
 
   const emailExistsInDB = (data) => {
-    console.log(members);
     if (admins?.some((admin) => admin.email === data.email)) {
       return true;
     }
