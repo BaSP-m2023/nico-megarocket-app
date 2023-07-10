@@ -227,8 +227,8 @@ const FormAdmin = () => {
           method={id ? 'Edit' : 'Create'}
           message={
             id
-              ? 'Are you sure you want to edit the admin?'
-              : 'Are you sure you want to add the admin?'
+              ? 'Are you sure you want to update this admin?'
+              : 'Are you sure you want to add this admin?'
           }
           onConfirm={submitAdmin}
           setModalConfirmOpen={setModalConfirmOpen}
@@ -237,7 +237,9 @@ const FormAdmin = () => {
       )}
       {modalSuccessOpen && (
         <ModalSuccess
-          message={id ? 'Admin edited successfully' : 'Admin created successfully'}
+          message={
+            id ? 'Admin has been updated succesfully' : 'Admin has been created successfully'
+          }
           setModalSuccessOpen={setModalSuccessOpen}
           testId="admin-modal-success"
         />

@@ -10,7 +10,6 @@ const ModalSuccess = ({ message, testId }) => {
         </div>
         <div className={styles.contentContainer}>
           <p className={styles.textModal}>{message} succesfully!</p>
-          <div className={styles.buttons}></div>
         </div>
       </div>
     </div>
