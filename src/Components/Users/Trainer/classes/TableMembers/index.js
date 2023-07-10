@@ -43,6 +43,11 @@ function TableMember() {
           </tr>
         </thead>
         <tbody>
+          {data.length === 0 && (
+            <td colSpan="3" className={styles.notMembers}>
+              The list is empty
+            </td>
+          )}
           {data.map((member) => (
             <tr key={member._id}>
               <td>{`${member.firstName} ${member.lastName}`}</td>
