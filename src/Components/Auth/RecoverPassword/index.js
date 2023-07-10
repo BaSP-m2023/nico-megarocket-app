@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './recoverPassword.module.css';
 import { Inputs, Button, ModalSuccess, ModalError } from 'Components/Shared';
 import Joi from 'joi';
@@ -33,8 +33,9 @@ const RecoverPassword = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const admins = useSelector((state) => state.admins.list);
-  const trainers = useSelector((state) => state.admins.list);
-  const members = useSelector((state) => state.admins.list);
+  const trainers = useSelector((state) => state.trainers.list);
+  const members = useSelector((state) => state.members.list);
+  const token = sessionStorage.getItem('token');
   const data = {
     email: 'admin@admin.com',
     password: 'Eladmin1'
@@ -58,6 +59,7 @@ const RecoverPassword = () => {
   };
 
   const emailExistsInDB = (data) => {
+    console.log(members);
     if (admins?.some((admin) => admin.email === data.email)) {
       return true;
     }
@@ -87,16 +89,26 @@ const RecoverPassword = () => {
   };
 
   const onSubmit = (data) => {
+    dataManage(data);
+  };
+
+  useEffect(() => {
     logForData();
+  }, []);
+
+  useEffect(() => {
     setTimeout(() => {
       dispatch(getAllAdmins);
       dispatch(getAllMembers);
       dispatch(getTrainers);
-    }, 500);
-    setTimeout(() => {
-      dataManage(data);
     }, 1000);
-  };
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      logOut();
+    }, 1500);
+  }, [token]);
 
   return (
     <form className={styles.formRecoverPassword} onSubmit={handleSubmit(onSubmit)}>
@@ -120,12 +132,7 @@ const RecoverPassword = () => {
         </div>
       </div>
 
-      {modalSuccess && (
-        <ModalSuccess
-          setModalSuccessOpen={setModalSuccess}
-          message={'We send you a verification code to your email!'}
-        />
-      )}
+      {modalSuccess && <ModalSuccess message={'We send you a verification code to your email!'} />}
       {modalError && (
         <ModalError
           setModalErrorOpen={setModalError}
