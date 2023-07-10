@@ -25,6 +25,7 @@ const FormSubscription = () => {
   const [toastError, setModalError] = useState(false);
   const [membersSelected, setMembersSelected] = useState([]);
   const [subscription, setSubscription] = useState({});
+  const [searchMember, setSearchMember] = useState('');
   const [slots, setSlots] = useState(0);
   const history = useHistory();
   const { id } = useParams();
@@ -37,6 +38,14 @@ const FormSubscription = () => {
   const membersActive = members.filter((member) => {
     return member.isActive === true;
   });
+
+  const membersInput =
+    searchMember.length > 0
+      ? membersActive.filter((member) => {
+          console.log(member);
+          return member.firstName.toLowerCase().includes(searchMember.toLowerCase());
+        })
+      : membersActive;
 
   const schema = Joi.object({
     date: Joi.date().required().messages({
@@ -226,10 +235,17 @@ const FormSubscription = () => {
           {selectedClass && <>{slots <= 0 ? <p>No slots available</p> : <p>Slots: {slots}</p>}</>}
         </div>
         <div className={style.inputContainer}>
+          Members:
+          <input
+            className={style.searchInput}
+            type="text"
+            placeholder="Search Member..."
+            onChange={(e) => setSearchMember(e.target.value)}
+          />
           <OptionMultipleInput
             membersSelected={membersSelected.length === 0 ? '' : membersSelected}
             onAction={handleMiembroClick}
-            data={membersActive}
+            data={membersInput}
             dataLabel="Member"
             setValue={{}}
             aValue={{}}

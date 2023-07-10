@@ -34,9 +34,7 @@ const SelectMultipleInput = ({
       <label
         htmlFor="selectInput"
         className={error ? `${styles.nameLabel} ${styles.labelError}` : styles.nameLabel}
-      >
-        {dataLabel}
-      </label>
+      ></label>
       <select
         onClick={onAction}
         multiple
