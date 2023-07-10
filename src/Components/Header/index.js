@@ -11,7 +11,7 @@ function Header() {
           <div className={styles.imgLogo}>
             <img src={logo} alt="Rocket logo" />
           </div>
-          <div className={styles.brand}>Mega Rocket gym</div>
+          <div className={styles.brand}>Mega Rocket Gym</div>
         </div>
         <div className={styles.profileMenu}>{token && <ProfileMenu />}</div>
       </div>

@@ -66,7 +66,7 @@
 }
 
 .bannerVideo {
-  width: 167.1vh;
+  width: 100%;
   height: 100vh;
   z-index: -1;
   position: absolute;
@@ -573,7 +573,7 @@
   }
 
   .containerSectionHead {
-    width: 80%;
+    width: 100%;
     margin-top: -200px;
   }
 
