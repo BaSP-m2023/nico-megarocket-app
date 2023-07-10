@@ -296,12 +296,15 @@ const FormSubscription = () => {
         <ModalConfirm
           method="Confirm"
           onConfirm={onConfirm}
-          message="Are you sure?"
+          message="Are you sure you want to update this subscription?"
           setModalConfirmOpen={setModalConfirmOpen}
         />
       )}
       {modalSuccessOpen && (
-        <ModalSuccess message="Success!" setModalSuccessOpen={setModalSuccessOpen} />
+        <ModalSuccess
+          message="Subscription has been updated succesfully"
+          setModalSuccessOpen={setModalSuccessOpen}
+        />
       )}
       {toastError && (
         <ToastError setToastErroOpen={setModalError} message="Pick at least one member" />
