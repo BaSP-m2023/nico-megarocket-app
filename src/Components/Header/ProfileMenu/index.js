@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './profileMenu.module.css';
 import { getAllAdmins } from 'redux/admins/thunks';
 import { getAllMembers } from 'redux/members/thunks';
@@ -8,6 +8,7 @@ import { getFirebaseUidFromToken } from 'helper/firebase';
 import { useSelector, useDispatch } from 'react-redux';
 
 const ProfileMenu = () => {
+  const locationData = useLocation();
   const dispatch = useDispatch();
   const [userCurrent, setUserCurrent] = useState('');
   const admins = useSelector((state) => state.admins.list);
@@ -81,22 +82,24 @@ const ProfileMenu = () => {
 
   return (
     <>
-      <Link to={userData()?.link} className={styles.links}>
-        <div className={styles.container}>
-          {sessionStorage.getItem('img') ? (
-            <img className={styles.profileImg} src={profilePic} />
-          ) : (
-            profilePic
-          )}
-          <div className={styles.profileInfoContainer}>
-            <p className={styles.userName}>
-              {userData()?.firstName} {userData()?.lastName}{' '}
-              <span className={styles.userRole}>({role})</span>
-            </p>
-            <p className={styles.userEmail}>{userData()?.email}</p>
+      {locationData.path !== '/auth/recover-password' && (
+        <Link to={userData()?.link} className={styles.links}>
+          <div className={styles.container}>
+            {sessionStorage.getItem('img') ? (
+              <img className={styles.profileImg} src={profilePic} />
+            ) : (
+              profilePic
+            )}
+            <div className={styles.profileInfoContainer}>
+              <p className={styles.userName}>
+                {userData()?.firstName} {userData()?.lastName}{' '}
+                <span className={styles.userRole}>({role})</span>
+              </p>
+              <p className={styles.userEmail}>{userData()?.email}</p>
+            </div>
           </div>
-        </div>
-      </Link>
+        </Link>
+      )}
     </>
   );
 };
