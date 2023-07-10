@@ -63,12 +63,24 @@
   color: var(--primary);
   cursor: pointer;
   background-color: var(--white);
+  transition: all .2s ease;
 }
 
 .cardButton:hover {
-  transform: translateY(-2px);
-  color: var(--white);
-  background-color: var(--primary);
+  font-size: .8rem;
+}
+
+.cardButtonJoin {
+  color: var(--secondary-dark);
+  border: solid var(--secondary-dark);
+  transition: all .2s ease;
+}
+
+.cardButtonJoin:hover {
+  transform: scale(1.05);
+  font-size: 1rem;
+  background-color: #00000000;
+  color: var(--secondary-dark);
 }
 
 @media only screen and (min-width: 601px) {

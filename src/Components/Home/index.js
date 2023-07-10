@@ -8,11 +8,13 @@ function Home() {
   const gymImageGym = `${process.env.PUBLIC_URL}/assets/images/dumbells.jpg`;
   const gymImageGymOne = `${process.env.PUBLIC_URL}/assets/images/gym-sports.jpg`;
   const gymImageGymTwo = `${process.env.PUBLIC_URL}/assets/images/youngers-training.jpg`;
+  const logo = `${process.env.PUBLIC_URL}/assets/images/logo.png`;
 
   return (
     <section className={styles.container}>
       <section className={styles.sectionHead}>
         <div className={styles.containerSectionHead}>
+          <img src={logo} alt="Rocket logo" />
           <h1 className={styles.Title}>MEGA ROCKET WEB</h1>
           <h2 id={styles.sectionHeadWelcome}>WELCOME</h2>
           <p className={styles.Text}>
