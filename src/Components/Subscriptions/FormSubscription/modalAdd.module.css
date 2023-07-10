@@ -41,8 +41,8 @@
   cursor: pointer;
 }
 
-.inputMemberContainer{
-  margin-top:30px;
+.inputMemberContainer {
+  margin-top: 30px;
 }
 
 .hidden {
@@ -58,4 +58,11 @@
   width: 12px;
   margin: 0 10px;
   cursor: pointer;
+}
+
+.searchInput {
+  margin: 0 10px;
+  border: 2px solid var(--primary);
+  border-radius: 5px;
+  padding: 4px;
 }

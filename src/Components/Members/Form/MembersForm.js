@@ -123,7 +123,7 @@ const MembersForm = () => {
     firstName: data.firstName,
     lastName: data.lastName,
     dni: data.dni,
-    birthday: data.date && new Date(data.birthday).toISOString().substr(0, 10),
+    birthday: new Date(data.birthday).toISOString().substr(0, 10),
     phone: data.phone,
     city: data.city,
     isActive: data.isActive,
@@ -204,8 +204,8 @@ const MembersForm = () => {
               setModalConfirmOpen={setModalAddConfirmOpen}
               message={
                 id
-                  ? 'Are sure do you want update this member?'
-                  : 'Are sure do you want add this member?'
+                  ? 'Are you sure you want to update this member?'
+                  : 'Are you sure you want to add this member?'
               }
               testId="member-modal-confirm"
             />
@@ -213,7 +213,9 @@ const MembersForm = () => {
           {modalSuccess && (
             <ModalSuccess
               setModalSuccessOpen={setModalSuccessOpen}
-              message={id ? 'Member edited' : 'Member added'}
+              message={
+                id ? 'Member has been updated succesfully' : 'Member has been updated succesfully'
+              }
               testId="member-modal-success"
             />
           )}

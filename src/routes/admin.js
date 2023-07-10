@@ -13,6 +13,7 @@ import FormSubscription from 'Components/Subscriptions/FormSubscription/Index';
 import Activities from 'Components/Activities/';
 import ModalAddActivity from 'Components/Activities/FormActivities';
 import ProfileForm from 'Components/Users/Admin/profile/Form';
+import NotAllowed from 'Components/Auth/NotAllowed';
 
 const routes = [
   {
@@ -63,6 +64,7 @@ const AdminRoutes = () => {
         <Route exact path={`${url}/subscription`} component={AdminSubscriptions} />
         <Route path={`${url}/subscriptions/form/:id?`} component={FormSubscription} />
         <Route exact path={`${url}/activities`} component={Activities} />
+        <Route exact path={`${url}/not-allowed`} component={NotAllowed} />
         <Route path={`${url}/activities/form/:id?`} component={ModalAddActivity} />
         <Redirect to={`${url}/classes`} />
       </Switch>

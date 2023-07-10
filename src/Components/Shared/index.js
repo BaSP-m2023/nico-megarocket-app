@@ -13,3 +13,5 @@ export { default as InputPlaceholder } from './Inputs/InputPlaceholder';
 export { default as ButtonActive } from './ButtonActive';
 export { default as ProfilePicList } from './ChangeImg';
 export { default as OptionMultipleInput } from './Inputs/OptionMultipleInput';
+export { default as TextArea } from './Inputs/TextArea';
+export { default as ModalInfo } from './Modals/ModalInfo';

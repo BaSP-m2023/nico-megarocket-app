@@ -21,7 +21,7 @@ const ModalSuccess = ({ setModalSuccessOpen, message, testId }) => {
         </div>
 
         <div className={styles.contentContainer}>
-          <p className={styles.textModal}>{message} succesfully!</p>
+          <p className={styles.textModal}>{message}</p>
           <div className={styles.buttons}>
             <button className={styles.btnAccept} onClick={onClose}>
               OK
