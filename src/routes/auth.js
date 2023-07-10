@@ -10,17 +10,17 @@ const routes = [
   {
     name: 'Home',
     path: '/auth',
-    icon: 'HomeB.png'
+    icon: 'newhome.svg'
   },
   {
     name: 'Login',
     path: '/auth/login',
-    icon: 'login.png'
+    icon: 'login.svg'
   },
   {
     name: 'Sign Up',
     path: '/auth/sign-up',
-    icon: 'sign-up.png'
+    icon: 'signup.svg'
   }
 ];
 

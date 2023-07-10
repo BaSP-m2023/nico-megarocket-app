@@ -10,17 +10,17 @@ const routes = [
   {
     name: 'Classes',
     path: '/member/classes',
-    icon: 'class.png'
+    icon: 'calendar.svg'
   },
   {
     name: 'Activities',
     path: '/member/activities',
-    icon: 'runner.png'
+    icon: 'activities.svg'
   },
   {
     name: 'Profile',
     path: '/member/profile',
-    icon: 'member.png'
+    icon: 'profile.svg'
   }
 ];
 
