@@ -15,13 +15,13 @@
 
 .Title {
   font-weight: 700;
-  font-size: 60px;
+  font-size: 50px;
   line-height: 47px;
   color: var(--white);
 }
 
 .Text {
-  font-size: 40px;
+  font-size: 30px;
   line-height: 42px;
   color: var(--white);
 }
@@ -59,12 +59,18 @@
   margin-bottom: 30px;
 }
 
+.containerSectionHead img {
+  width: 200px;
+  height: 200px;
+  margin-bottom: -30px;
+}
+
 .bannerVideo {
-  width: 2000px;
-  height: 1100px;
+  width: 167.1vh;
+  height: 100vh;
   z-index: -1;
   position: absolute;
-  margin-top: -410px;
+  margin-top: -310px;
 }
 
 .containerSectionHead {
@@ -291,7 +297,7 @@
 .sectionActivitiesList div li {
   width: 70px;
   text-align: center;
-  font-size: 35px;
+  font-size: 25px;
   list-style: none;
   margin-bottom: 25px;
   margin-top: 25px;
@@ -613,8 +619,8 @@
   }
 
   .sectionAboutContainer p {
-    font-size: 30px;
-    line-height: 40px;
+    font-size: 20px;
+    line-height: 35px;
   }
 
   #sectionAboutContainerTop p {
