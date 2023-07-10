@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from './recoverPassword.module.css';
 import { Inputs, Button, ModalSuccess, ModalError } from 'Components/Shared';
 import Joi from 'joi';
@@ -9,6 +9,7 @@ import { getAllAdmins } from 'redux/admins/thunks';
 import { getAllMembers } from 'redux/members/thunks';
 import { getTrainers } from 'redux/trainers/thunks';
 import { login } from 'redux/auth/thunks';
+import { logout } from 'redux/auth/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -47,8 +48,13 @@ const RecoverPassword = () => {
     mode: 'onBlur',
     resolver: joiResolver(schema)
   });
+
   const logForData = async () => {
     await dispatch(login(data));
+  };
+
+  const logOut = async () => {
+    await dispatch(logout());
   };
 
   const emailExistsInDB = (data) => {
@@ -63,7 +69,7 @@ const RecoverPassword = () => {
     }
   };
 
-  const onSubmit = async (data) => {
+  const dataManage = async (data) => {
     if (emailExistsInDB(data)) {
       await dispatch(recoverPassword(data));
       setModalSuccess(true);
@@ -71,19 +77,26 @@ const RecoverPassword = () => {
         setModalSuccess(false);
         history.push('/auth/login');
       }, 2000);
+      logOut();
     } else {
       setHeaderMessage('Oops!');
       setMessage('No account registered with this email');
       setModalError(true);
+      logOut();
     }
   };
 
-  useEffect(() => {
+  const onSubmit = (data) => {
     logForData();
-    dispatch(getAllAdmins);
-    dispatch(getAllMembers);
-    dispatch(getTrainers);
-  }, []);
+    setTimeout(() => {
+      dispatch(getAllAdmins);
+      dispatch(getAllMembers);
+      dispatch(getTrainers);
+    }, 500);
+    setTimeout(() => {
+      dataManage(data);
+    }, 1000);
+  };
 
   return (
     <form className={styles.formRecoverPassword} onSubmit={handleSubmit(onSubmit)}>
