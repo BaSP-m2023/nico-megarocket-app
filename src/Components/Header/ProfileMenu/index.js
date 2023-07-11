@@ -56,15 +56,21 @@ const ProfileMenu = () => {
     }
   };
 
-  const defaultPic = !sessionStorage.getItem('img') ? (
+  const defaultPic = (
     <div className={styles.defaultImg}>
       <p className={styles.profileInitials}>
         <span>{userData()?.firstName.charAt()}</span> <span>{userData()?.lastName.charAt()}</span>
       </p>
     </div>
-  ) : (
-    sessionStorage.getItem('img')
   );
+
+  const showData = () => {
+    if (typeof profilePic === 'string') {
+      return <img src={profilePic} className={styles.profileImg} />;
+    } else {
+      return profilePic;
+    }
+  };
 
   useEffect(() => {
     setProfilePic(sessionStorage.getItem('img'));
@@ -75,9 +81,22 @@ const ProfileMenu = () => {
     dispatch(getAllMembers);
     dispatch(getTrainers);
   }, []);
+
   useEffect(() => {
     currentUser();
-    setProfilePic(defaultPic);
+    if (member) {
+      if (member?.picture) {
+        setProfilePic(member.picture);
+      } else {
+        setProfilePic(defaultPic);
+      }
+    }
+    if (admin) {
+      setProfilePic(defaultPic);
+    }
+    if (trainer) {
+      setProfilePic(defaultPic);
+    }
   }, [admin || trainer || member]);
 
   return (
@@ -85,11 +104,8 @@ const ProfileMenu = () => {
       {locationData.path !== '/auth/recover-password' && (
         <Link to={userData()?.link} className={styles.links}>
           <div className={styles.container}>
-            {sessionStorage.getItem('img') ? (
-              <img className={styles.profileImg} src={profilePic} />
-            ) : (
-              profilePic
-            )}
+            {member ? <img src={profilePic} className={styles.profileImg} /> : showData()}
+
             <div className={styles.profileInfoContainer}>
               <p className={styles.userName}>
                 {userData()?.firstName} {userData()?.lastName}{' '}
