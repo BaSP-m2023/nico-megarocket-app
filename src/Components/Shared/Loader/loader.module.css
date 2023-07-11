@@ -8,8 +8,28 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.600);
+  animation: showContainer .8s;
   color: white;
   z-index: 999;
+}
+
+@keyframes showContainer {
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+@keyframes showLoader {
+  0%{
+    transform: scale(0);
+
+  }
+  100%{
+    transform: scale(1);
+  }
 }
 
 .containerLoader {
@@ -20,6 +40,7 @@
   overflow: hidden;
   width: 18rem;
   height: 17rem;
+  animation: showLoader 0.2s;
   background-color: var(--primary);
 }
 

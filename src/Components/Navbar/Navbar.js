@@ -40,7 +40,7 @@ const Navbar = (props) => {
             </NavLink>
           </li>
         ))}
-        {!!token && <LogOut isHovered={isHovered} />}
+        <div className={styles.logoutButton}>{!!token && <LogOut isHovered={isHovered} />}</div>
       </ul>
     </nav>
   );
