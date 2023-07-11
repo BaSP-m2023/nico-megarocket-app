@@ -10,6 +10,7 @@ function Admins() {
   const isError = useSelector((state) => state.admins.error);
   const dispatch = useDispatch();
   const [toastErroOpen, setToastErroOpen] = useState(isError);
+  const [showLoader, setShowLoader] = useState(false);
 
   const history = useHistory();
   const columnTitleArray = ['Admin', 'DNI', 'Phone', 'E-Mail', 'City'];
@@ -31,12 +32,22 @@ function Admins() {
     setToastErroOpen(!!isError);
   }, [isError]);
 
+  useEffect(() => {
+    if (!isPending) {
+      setShowLoader(true);
+      const timer = setTimeout(() => {
+        setShowLoader(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isPending]);
+
   return (
     <section>
       <div>
         <AddButton entity="Admin" createMode={createMode} testId="add-admin-btn" />
       </div>
-      {isPending ? (
+      {showLoader ? (
         <Loader testId="admin-table-loader" />
       ) : (
         <TableComponent

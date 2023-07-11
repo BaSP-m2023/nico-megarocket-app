@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { AddButton, TableComponent, Loader } from 'Components/Shared';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -7,7 +7,8 @@ import { getClasses, deleteClass } from 'redux/classes/thunks';
 function Classes() {
   const dispatch = useDispatch();
   const classes = useSelector((state) => state.classes.list);
-  const loading = useSelector((state) => state.classes.pending);
+  const isPending = useSelector((state) => state.classes.pending);
+  const [showLoader, setShowLoader] = useState(false);
 
   const columnTitleArray = ['Activity', 'Day', 'Hour', 'Trainer', 'Slots'];
 
@@ -22,6 +23,16 @@ function Classes() {
   useEffect(() => {
     getClasses(dispatch);
   }, []);
+
+  useEffect(() => {
+    if (!isPending) {
+      setShowLoader(true);
+      const timer = setTimeout(() => {
+        setShowLoader(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isPending]);
 
   const history = useHistory();
 
@@ -38,7 +49,7 @@ function Classes() {
   return (
     <section>
       <AddButton entity={'Class'} createMode={createMode} testId="add-class-btn" />{' '}
-      {loading ? (
+      {showLoader ? (
         <Loader testId="classes-table-loader" />
       ) : (
         <TableComponent
