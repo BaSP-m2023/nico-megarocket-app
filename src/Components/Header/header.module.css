@@ -13,6 +13,19 @@
   color:white;
 }
 
+.containerLogo {
+  display: flex;
+  margin-left: -170px;
+}
+
+.imgLogo {
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  display: flex;
+  margin-left: -50px;
+}
+
 .socialIcon {
   margin-left: 15px;
   filter: invert();

@@ -254,7 +254,9 @@ const FormClasses = () => {
           onConfirm={formSubmit}
           setModalConfirmOpen={setModalConfirmOpen}
           message={
-            id ? 'Are you sure you want to update this?' : 'Are you sure you want to create this?'
+            id
+              ? 'Are you sure you want to update this class?'
+              : 'Are you sure you want to add this class?'
           }
           testId="classes-modal-confirm"
         />
@@ -264,9 +266,7 @@ const FormClasses = () => {
           <ModalSuccess
             setModalSuccessOpen={setModalSuccessOpen}
             message={
-              id
-                ? 'The class has been updated successfully'
-                : 'The class has been created successfully'
+              id ? 'Class has been updated successfully' : 'Class has been created successfully'
             }
             testId="classes-modal-success"
           />
@@ -275,7 +275,7 @@ const FormClasses = () => {
       {toastError && (
         <ToastError
           setToastErroOpen={setToastError}
-          message="The class already exists at that time and day"
+          message="Class already exists at that time and day"
         />
       )}
     </div>
