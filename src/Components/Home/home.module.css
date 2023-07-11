@@ -1,8 +1,8 @@
 .container {
   display: flex;
   flex-direction: column;
-  padding: 0px;
-  margin: 0px;
+  padding: 0px 0px;
+  margin-left: 0px;
   font-family: 'Roboto', sans-serif;
   width: 100%;
 }
@@ -15,27 +15,41 @@
 
 .Title {
   font-weight: 700;
-  font-size: 30px;
+  font-size: 50px;
   line-height: 47px;
-  color: var(--primary);
+  color: var(--white);
 }
 
 .Text {
-  font-size: 20px;
-  line-height: 23px;
-  color: var(--primary);
+  font-size: 30px;
+  line-height: 42px;
+  color: var(--white);
 }
 
-.sectionTitle {
+.sectionTitleWhite {
   margin-top: 0px;
   text-align: center;
   text-decoration: underline;
   text-decoration-thickness: 3px;
   text-underline-offset: 8px;
   text-decoration-color: var(--secondary-dark);
-  font-size: 30px;
+  font-size: 40px;
+  line-height: 35px;
+  color: var(--white);
+  margin-top: 30px;
+}
+
+.sectionTitleBlue {
+  margin-top: 0px;
+  text-align: center;
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 8px;
+  text-decoration-color: var(--secondary-dark);
+  font-size: 40px;
   line-height: 35px;
   color: var(--primary);
+  margin-top: 30px;
 }
 
 .sectionHead {
@@ -45,11 +59,26 @@
   margin-bottom: 30px;
 }
 
+.containerSectionHead img {
+  width: 200px;
+  height: 200px;
+  margin-bottom: -30px;
+}
+
+.bannerVideo {
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  position: absolute;
+  margin-top: -310px;
+}
+
 .containerSectionHead {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  position: relative;
 }
 
 .containerSectionHead h1 {
@@ -84,7 +113,7 @@
   font-weight: 876;
   font-size: 16px;
   line-height: 28px;
-  color: var(--primary);
+  color: var(--white);
 }
 
 .sectionFeaturesArticles img {
@@ -96,6 +125,7 @@
   width: 95%;
   margin: 20px 20px 20px;
   font-size: 14px;
+  color: var(--white);
 }
 
 .sectionAboutContainer {
@@ -118,6 +148,8 @@
 .sectionAboutContainer img {
   width: 90%;
   margin: 0px 10px 0px 10px;
+  border: solid 5px var(--secondary-dark);
+  border-radius: 5px;
 }
 
 .sectionAboutContainer button {
@@ -136,13 +168,17 @@
   margin-bottom: 20px;
 }
 
+.getInTouch {
+  background-color: var(--white);
+}
+
 .sectionTouchForm {
   display: flex;
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 .sectionTouchForm div {
@@ -261,21 +297,81 @@
 .sectionActivitiesList div li {
   width: 70px;
   text-align: center;
+  font-size: 25px;
+  list-style: none;
+  margin-bottom: 25px;
+  margin-top: 25px;
+  margin-right: 80px;
 }
 
 .sectionActivities img {
   width: 90%;
   margin: 0px 10px 0px 10px;
+  border-radius: 5px;
+  border: solid 5px var(--secondary-dark);
+}
+
+.memberships {
+  background-color: var(--primary);
 }
 
 .sectionMembership {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   margin-bottom: 30px;
   font-weight: 600;
   font-size: 14px;
   line-height: 100%;
   color: var(--primary);
+}
+
+.cardMembership {
+  display: flex;
+  background-color: var(--white);
+  width: 300px;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+.cardTitle {
+  font-size: 40px;
+  color: var(--secondary-dark);
+  line-height: 1;
+  margin-top: 20px;
+}
+
+.cardBody {
+  display: flex;
+  color: var(--primary);
+  align-items: center;
+  flex-direction: column;
+  height: 220px;
+}
+
+.cardBody ul {
+  margin-left: -38px;
+}
+
+.cardBody li {
+  margin-top: 22px;
+  display: flex;
+  justify-content: center;
+  font-size: 15px;
+}
+
+.cardInfo {
+  background-color: var(--secondary);
+  color: var(--white);
+  display: flex;
+  font-size: 20px;
+  height: 60px;
+  width: 300px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0 0 20px 20px;
 }
 
 .sectionMembershipTable {
@@ -335,7 +431,8 @@
   .sectionFeatures {
     display: flex;
     flex-direction: column;
-    margin-right: 20px;
+    background-color: var(--primary);
+    margin-bottom: -6px;
   }
 
   .sectionFeaturesTitles {
@@ -364,6 +461,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: -230px;
+    background-color: var(--white);
   }
 
   .formButtonTop {
@@ -469,16 +568,18 @@
 @media only screen and (min-width: 1025px) {
   .sectionHead {
     justify-content: space-evenly;
-    margin-bottom: 50px;
+    margin-bottom: 80px;
+    height: 100vh;
   }
 
   .containerSectionHead {
-    width: 40%;
+    width: 100%;
+    margin-top: -200px;
   }
 
   #sectionHeadWelcome {
-    margin-top: 0px;
-    font-size: 20px;
+    margin-top: 10px;
+    font-size: 30px;
     font-weight: 100;
   }
 
@@ -514,15 +615,16 @@
 
   .sectionFeaturesArticles p {
     font-size: 20px;
-    margin-left: 63px;
+    margin-bottom: 35px;
   }
 
   .sectionAboutContainer p {
-    font-size: 18px;
+    font-size: 20px;
+    line-height: 35px;
   }
 
   #sectionAboutContainerTop p {
-    text-align: right;
+    text-align: left;
   }
 
   .sectionTouchForm select {

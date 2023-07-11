@@ -7,8 +7,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--black);
-  color: var(--primary);
+  background-color: rgba(0, 0, 0, 0.600);
+  color: white;
+  z-index: 999;
 }
 
 .containerLoader {
@@ -16,9 +17,80 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
   width: 18rem;
   height: 17rem;
-  background-color: rgba(255, 255, 255, 0.946);
+  background-color: var(--primary);
+}
+
+.containerMuscle {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 4rem;
+  animation: mucleUp 1s ease infinite;
+}
+
+@keyframes mucleUp {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.containerLoader .containerMuscle .logoCenter {
+  width: 4.8rem;
+  height: 4.8rem;
+  animation-delay: .3s;
+}
+
+.containerLoader .containerMuscle .muscleRigth {
+  position: relative;
+  top: 1rem;
+  width:1.5rem;
+  height: 1.5rem;
+  transform: rotateY(180deg) translateX(-1.9rem);
+  animation: mucleRigth .6s ease-in-out;
+}
+
+.containerLoader .containerMuscle .muscleLeft {
+  position: relative;
+  top: 1rem;
+  width:1.5rem;
+  height: 1.5rem;
+  transform: translateX(-1.9rem);
+  animation: mucleLeft .6s ease-in-out;
+}
+
+@keyframes mucleRigth {
+  0% {
+    transform: translateX(-9rem) rotateY(180deg);
+  }
+  100% {
+    transform: translateX(1.9rem) rotateY(180deg);
+  }
+}
+
+@keyframes mucleLeft {
+  0% {
+    transform: translateX(9rem);
+  }
+  100% {
+    transform: translateX(-1.9rem);
+  }
+}
+
+.subContainerLoader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .loadsRoller {
@@ -30,72 +102,6 @@
 .loadsRoller div {
   animation: loadsRoller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   transform-origin: 40px 40px;
-}
-.loadsRoller div:after {
-  content: " ";
-  display: block;
-  position: absolute;
-  width: .35rem;
-  height: .35rem;
-  border-radius: 50%;
-  background: var(--primary);
-  margin: -4px 0 0 -4px;
-}
-.loadsRoller div:nth-child(1) {
-  animation-delay: -0.036s;
-}
-.loadsRoller div:nth-child(1):after {
-  top: 63px;
-  left: 63px;
-}
-.loadsRoller div:nth-child(2) {
-  animation-delay: -0.072s;
-}
-.loadsRoller div:nth-child(2):after {
-  top: 68px;
-  left: 56px;
-}
-.loadsRoller div:nth-child(3) {
-  animation-delay: -0.108s;
-}
-.loadsRoller div:nth-child(3):after {
-  top: 71px;
-  left: 48px;
-}
-.loadsRoller div:nth-child(4) {
-  animation-delay: -0.144s;
-}
-.loadsRoller div:nth-child(4):after {
-  top: 72px;
-  left: 40px;
-}
-.loadsRoller div:nth-child(5) {
-  animation-delay: -0.18s;
-}
-.loadsRoller div:nth-child(5):after {
-  top: 71px;
-  left: 32px;
-}
-.loadsRoller div:nth-child(6) {
-  animation-delay: -0.216s;
-}
-.loadsRoller div:nth-child(6):after {
-  top: 68px;
-  left: 24px;
-}
-.loadsRoller div:nth-child(7) {
-  animation-delay: -0.252s;
-}
-.loadsRoller div:nth-child(7):after {
-  top: 63px;
-  left: 17px;
-}
-.loadsRoller div:nth-child(8) {
-  animation-delay: -0.288s;
-}
-.loadsRoller div:nth-child(8):after {
-  top: 56px;
-  left: 12px;
 }
 @keyframes loadsRoller {
   0% {
@@ -120,7 +126,7 @@
   top: .4rem;
   width: 3px;
   height: 3px;
-  background: var(--primary);
+  background: white;
   border-radius: 50%;
   animation: loadsDefault 1.2s linear infinite;
 }
@@ -142,5 +148,25 @@
   }
   50% {
     transform: scale(1.5);
+  }
+}
+
+.barLoader {
+  overflow: hidden;
+  width: 100%;
+  height: .8rem;
+  text-align: center;
+  font-size: .6rem;
+  font-weight: bold;
+  background-color: var(--secondary-dark);
+  animation: loadBar 1s ease-in-out;
+}
+
+@keyframes loadBar {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
   }
 }

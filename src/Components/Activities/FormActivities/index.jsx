@@ -154,7 +154,7 @@ const ModalAddActivity = () => {
           onConfirm={formSubmit}
           message={
             editMode
-              ? 'Are you sure you want to edit this Activity?'
+              ? 'Are you sure you want to update this Activity?'
               : 'Are you sure you want to add this Activity?'
           }
           setModalConfirmOpen={setModalUpdateConfirmOpen}
