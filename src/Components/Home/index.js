@@ -1,4 +1,5 @@
 import styles from './home.module.css';
+import { FormLand } from 'Components/Shared';
 
 function Home() {
   const gymCalendarIconTime = `${process.env.PUBLIC_URL}/assets/images/icon-calendar-time.png`;
@@ -173,43 +174,7 @@ function Home() {
       <section className={styles.getInTouch}>
         <h2 className={styles.sectionTitleBlue}>Get in Touch</h2>
         <article>
-          <form className={styles.sectionTouchForm}>
-            <div className={styles.formContainerTop}>
-              <div>
-                <label htmlFor="firstName">First Name</label>
-                <input className={styles.formInput} type="text" placeholder="Enter name" />
-              </div>
-              <div>
-                <label htmlFor="firstName">Last Name</label>
-                <input className={styles.formInput} type="text" placeholder="Enter last name" />
-              </div>
-              <div>
-                <label htmlFor="emailAddress">Email address</label>
-                <input className={styles.formInput} type="text" placeholder="Enter address" />
-              </div>
-              <div>
-                <input className={styles.formButtonTop} type="submit" value="Submit" />
-              </div>
-            </div>
-            <div className={styles.formContainerBottom}>
-              <div>
-                <label>Contact Reason</label>
-                <select>
-                  <option value="chose">Chose contact reason</option>
-                  <option value="claim">I want to make a claim</option>
-                  <option value="suggestion">I want to realize a query or suggestion</option>
-                  <option value="membership">I want to know the memberships and costs</option>
-                </select>
-              </div>
-              <div>
-                <label>Message</label>
-                <textarea name="message" placeholder="Enter your message"></textarea>
-              </div>
-              <div>
-                <input className={styles.formButton} type="submit" value="Submit" />
-              </div>
-            </div>
-          </form>
+          <FormLand />
         </article>
       </section>
     </section>

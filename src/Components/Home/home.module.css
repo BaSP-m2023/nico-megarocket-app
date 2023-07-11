@@ -479,6 +479,7 @@
     font-size: 16px;
     line-height: 19px;
     color: var(--primary);
+    cursor: pointer;
   }
 
   .sectionTouchForm div {
@@ -489,7 +490,7 @@
   }
 
   .formButton {
-    display: none;
+    /* display: none; */
   }
 
   .sectionAboutFlexContainer {
