@@ -12,12 +12,12 @@ const routes = [
   {
     name: 'Classes',
     path: '/trainer/classes',
-    icon: 'class.png'
+    icon: 'calendar.svg'
   },
   {
     name: 'Profile',
     path: '/trainer/profile',
-    icon: 'member.png'
+    icon: 'profile.svg'
   }
 ];
 

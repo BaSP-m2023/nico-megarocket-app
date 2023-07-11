@@ -9,7 +9,7 @@ const ModalSuccess = ({ message, testId }) => {
           <p className={styles.titleModal}>SUCCESSFUL</p>
         </div>
         <div className={styles.contentContainer}>
-          <p className={styles.textModal}>{message} succesfully!</p>
+          <p className={styles.textModal}>{message}</p>
         </div>
       </div>
     </div>
