@@ -42,7 +42,6 @@ const FormSubscription = () => {
   const membersInput =
     searchMember.length > 0
       ? membersActive.filter((member) => {
-          console.log(member);
           return member.firstName.toLowerCase().includes(searchMember.toLowerCase());
         })
       : membersActive;
@@ -199,21 +198,6 @@ const FormSubscription = () => {
   const handleIconClick = (memberId) => {
     setSelectedLi(memberId);
   };
-
-  // useEffect(() => {
-  //   const handleClickOutside = () => {
-  //     if (selectedLi) {
-  //       setSelectedLi(null);
-  //     }
-  //   };
-
-  //   document.addEventListener('click', handleClickOutside);
-
-  //   return () => {
-  //     document.removeEventListener('click', handleClickOutside);
-  //   };
-  // }, [selectedLi]);
-
   return (
     <section className={style.containerModal}>
       <form className={style.containerForm} onSubmit={handleSubmit(onSubmit)}>
@@ -252,7 +236,15 @@ const FormSubscription = () => {
               error={errors.classId?.message}
             />
           )}
-          {selectedClass && <>{slots <= 0 ? <p>No slots available</p> : <p>Slots: {slots}</p>}</>}
+          {selectedClass && (
+            <>
+              {slots <= 0 ? (
+                <p className={style.slots}>No slots available</p>
+              ) : (
+                <p className={style.slots}>Slots: {slots}</p>
+              )}
+            </>
+          )}
         </div>
         <div className={style.inputContainer}>
           Members:
@@ -275,7 +267,6 @@ const FormSubscription = () => {
             disabled={!isSlotsAvailable}
           />
         </div>
-
         <ul className={style.list}>
           {membersSelected.map((member) => {
             {
@@ -288,7 +279,7 @@ const FormSubscription = () => {
                           {oneMember.firstName} {oneMember.lastName}
                           <div className={style.boxClose}>
                             <img
-                              className={style.icon}
+                              className={style.iconPic}
                               onClick={() => {
                                 handleIconClick(member);
                               }}
