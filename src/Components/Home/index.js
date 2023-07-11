@@ -2,13 +2,14 @@ import styles from './home.module.css';
 import { FormLand } from 'Components/Shared';
 
 function Home() {
-  const gymCalendarIconTime = `${process.env.PUBLIC_URL}/assets/images/icon-calendar-time.png`;
-  const gymCalendarIcon = `${process.env.PUBLIC_URL}/assets/images/icon-calendar.png`;
-  const gymIconList = `${process.env.PUBLIC_URL}/assets/images/icon-list.png`;
-  const gymIconMessage = `${process.env.PUBLIC_URL}/assets/images/icon-message2.png`;
+  const gymCalendarIconTime = `${process.env.PUBLIC_URL}/assets/images/reservation.svg`;
+  const gymCalendarIcon = `${process.env.PUBLIC_URL}/assets/images/calendarHome.svg`;
+  const gymIconList = `${process.env.PUBLIC_URL}/assets/images/membership.svg`;
+  const gymIconMessage = `${process.env.PUBLIC_URL}/assets/images/contact.svg`;
   const gymImageGym = `${process.env.PUBLIC_URL}/assets/images/dumbells.jpg`;
   const gymImageGymOne = `${process.env.PUBLIC_URL}/assets/images/gym-sports.jpg`;
   const gymImageGymTwo = `${process.env.PUBLIC_URL}/assets/images/youngers-training.jpg`;
+  const checkIcon = `${process.env.PUBLIC_URL}/assets/images/check.svg`;
   const logo = `${process.env.PUBLIC_URL}/assets/images/logo.png`;
 
   return (
@@ -136,35 +137,65 @@ function Home() {
         <h2 className={styles.sectionTitleWhite}>Memberships</h2>
         <article className={styles.sectionMembership}>
           <div className={styles.cardMembership}>
-            <div className={styles.cardTitle}>Only Classes</div>
+            <h5 className={styles.cardTitle}>Only Classes</h5>
             <div className={styles.cardBody}>
-              <ul>
-                <li>Free access to classes prior enrollment</li>
-                <li>Scheduling visualization</li>
+              <ul className={styles.benefitsList}>
+                <li>
+                  <img src={checkIcon} className={styles.checkIcon} />
+                  <p>Free access to classes prior enrollment</p>
+                </li>
+                <li>
+                  <img src={checkIcon} className={styles.checkIcon} />
+                  <p>Scheduling visualization</p>
+                </li>
               </ul>
             </div>
             <div className={styles.cardInfo}>More info</div>
           </div>
           <div className={styles.cardMembership}>
-            <div className={styles.cardTitle}>Classic</div>
+            <h5 className={styles.cardTitle}>Classic</h5>
             <div className={styles.cardBody}>
-              <ul>
-                <li>Free access to the fitness room</li>
-                <li>Personalized followUp by a trainer</li>
-                <li>Scheduling visualization</li>
+              <ul className={styles.benefitsList}>
+                <li>
+                  <img src={checkIcon} className={styles.checkIcon} />
+                  <p>Free access to the fitness room</p>
+                </li>
+                <li>
+                  <img src={checkIcon} className={styles.checkIcon} />
+                  <p>Personalized followUp by a trainer</p>
+                </li>
+                <li>
+                  <img src={checkIcon} className={styles.checkIcon} />
+                  <p>Scheduling visualization</p>
+                </li>
               </ul>
             </div>
             <div className={styles.cardInfo}>More info</div>
           </div>
           <div className={styles.cardMembership}>
-            <div className={styles.cardTitle}>Black</div>
+            <h5 className={styles.cardTitle}>Black</h5>
             <div className={styles.cardBody}>
-              <ul>
-                <li>Free access to classes prior enrollment</li>
-                <li>Free access to classes prior enrollment</li>
-                <li>Free access to the fitness room</li>
-                <li>Personalized followUp by a trainer</li>
-                <li>Scheduling visualization</li>
+              <ul className={styles.benefitsList}>
+                <li>
+                  <img src={checkIcon} className={styles.checkIcon} />
+                  <p>Free access to classes prior enrollment</p>
+                </li>
+                <li>
+                  <img src={checkIcon} className={styles.checkIcon} />
+                  <p>Free access to classes prior enrollment</p>
+                </li>
+                <li>
+                  <img src={checkIcon} className={styles.checkIcon} />
+                  <p>Free access to the fitness room</p>
+                </li>
+                <li>
+                  <img src={checkIcon} className={styles.checkIcon} />
+                  <p>Personalized followUp by a trainer</p>
+                </li>
+                <li>
+                  <img src={checkIcon} className={styles.checkIcon} />
+                  <p>Scheduling visualization</p>
+                </li>
               </ul>
             </div>
             <div className={styles.cardInfo}>More info</div>

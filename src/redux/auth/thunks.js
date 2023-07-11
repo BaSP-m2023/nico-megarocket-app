@@ -53,7 +53,8 @@ export const signUpMember = (data) => {
         dispatch(signUpError({ error: false, message: 'No error' }));
         return dispatch(signUpSuccess(newData));
       }
-      return dispatch(signUpError({ error: true, message: newData.message.code }));
+      const errorMessage = newData.message.code || newData.message;
+      return dispatch(signUpError({ error: true, message: errorMessage }));
     } catch (err) {
       return dispatch(signUpError({ error: true, message: err }));
     }
