@@ -204,7 +204,7 @@ const SignForm = () => {
             <div className={styles.inputContainer}>
               <Inputs
                 nameInput="firstName"
-                nameTitle="Name"
+                nameTitle="First Name"
                 register={register}
                 type="text"
                 error={errors.firstName?.message}
