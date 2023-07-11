@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './modalConfirm.module.css';
 
 const ModalConfirm = ({ message, method, onConfirm, setModalConfirmOpen, testId }) => {
+  const [isConfirming, setIsConfirming] = useState(false);
   const onConfirmFunction = () => {
+    setIsConfirming(true);
     onConfirm(), setTimeout(() => setModalConfirmOpen(false), 800);
   };
 
@@ -42,6 +44,7 @@ const ModalConfirm = ({ message, method, onConfirm, setModalConfirmOpen, testId 
               className={
                 method.toLowerCase() === 'delete' ? styles.btnAcceptDelete : styles.btnAccept
               }
+              disabled={isConfirming}
               onClick={onConfirmFunction}
             >
               {method}
