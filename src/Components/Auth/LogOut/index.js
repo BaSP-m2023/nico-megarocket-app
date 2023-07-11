@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import styles from './logout.module.css';
 
-function LogOut() {
+function LogOut({ isHovered }) {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -17,10 +17,10 @@ function LogOut() {
     <div className={styles.logButton} onClick={logoutAction} data-testId="log-out-btn">
       <img
         className={styles.logImg}
-        src={`${process.env.PUBLIC_URL}/assets/images/logout.png`}
+        src={`${process.env.PUBLIC_URL}/assets/images/logout.svg`}
         alt={'log out icon'}
       />
-      <p className={styles.logText}>Log Out</p>
+      <p className={isHovered ? styles.logText : styles.logTextHidden}>Log Out</p>
     </div>
   );
 }
