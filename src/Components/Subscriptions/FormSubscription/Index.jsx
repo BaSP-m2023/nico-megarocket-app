@@ -194,6 +194,26 @@ const FormSubscription = () => {
     setSlots(selectedClass.slots);
   }, [classes]);
 
+  const [selectedLi, setSelectedLi] = useState(null);
+
+  const handleIconClick = (memberId) => {
+    setSelectedLi(memberId);
+  };
+
+  // useEffect(() => {
+  //   const handleClickOutside = () => {
+  //     if (selectedLi) {
+  //       setSelectedLi(null);
+  //     }
+  //   };
+
+  //   document.addEventListener('click', handleClickOutside);
+
+  //   return () => {
+  //     document.removeEventListener('click', handleClickOutside);
+  //   };
+  // }, [selectedLi]);
+
   return (
     <section className={style.containerModal}>
       <form className={style.containerForm} onSubmit={handleSubmit(onSubmit)}>
@@ -264,13 +284,37 @@ const FormSubscription = () => {
                   return (
                     <li key={member}>
                       <div className={style.listMembers}>
-                        {oneMember.firstName} {oneMember.lastName}
-                        <img
-                          src="/assets/images/icon-cross.png"
-                          alt="Cross icon"
-                          onClick={() => deleteItemList(member)}
-                        ></img>
+                        <div className={style.eachMember}>
+                          {oneMember.firstName} {oneMember.lastName}
+                          <div className={style.boxClose}>
+                            <img
+                              className={style.icon}
+                              onClick={() => {
+                                handleIconClick(member);
+                              }}
+                              src={`${process.env.PUBLIC_URL}/assets/images/${'info.png'}`}
+                            />
+                            <div
+                              onClick={() => deleteItemList(member)}
+                              className={style.close_icon}
+                            />
+                          </div>
+                        </div>
                       </div>
+                      {selectedLi === member && (
+                        <div className={style.speechBalloon}>
+                          <div className={style.speechElements}>
+                            <p title={'Email'}>{oneMember.email}</p>
+                            <p title={'Dni'}>{oneMember.dni}</p>
+                            <div
+                              onClick={() => {
+                                setSelectedLi(null);
+                              }}
+                              className={`${style.boxClick} ${style.close_icon}`}
+                            />
+                          </div>
+                        </div>
+                      )}
                     </li>
                   );
                 }

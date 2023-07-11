@@ -6,7 +6,6 @@
   font-size: 15px;
   padding: 10px;
 }
-
 .containerInput {
   display: flex;
   flex-direction: column;
@@ -15,7 +14,6 @@
 .containerInput label {
   margin-bottom: 10px;
 }
-
 .error {
   margin-top: 3px;
   margin-left: 5px;
@@ -33,7 +31,6 @@
   border: 2px solid var(--red);
   margin-top: 0;
 }
-
 .nameLabel{
   display: flex;
   flex-direction: column;
@@ -42,12 +39,10 @@
   margin-bottom: 10px;
   transition: 0.2s ease;
 }
-
 .labelError {
   color: var(--red);
   font-size: 19px;
 }
-
 .errorLogo {
   display: flex;
   align-items: center;
@@ -59,9 +54,22 @@
   font-weight: bold;
   border-radius: 25px;
 }
-
 .errorContainer{
   display:flex;
   align-items:center;
   gap:10px;
+}
+.optionInput::-webkit-scrollbar {
+  width:10px;  
+}
+.optionInput::-webkit-scrollbar-button {  
+  display: none;
+} 
+.optionInput::-webkit-scrollbar-thumb {  
+  background-color: #797979;
+  border-radius: 20px;
+  border: 2px solid #f1f2f3;
+} 
+.optionInput::-webkit-scrollbar-track {  
+  border-radius: 10px;
 }
