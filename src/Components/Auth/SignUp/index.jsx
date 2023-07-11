@@ -213,6 +213,48 @@ const SignForm = () => {
             </div>
             <div className={styles.inputContainer}>
               <Inputs
+                nameInput="birthday"
+                nameTitle="Birthday"
+                register={register}
+                type="date"
+                error={errors.birthday?.message}
+                testId="signup-birthday-input"
+              />
+            </div>
+            <div className={styles.inputContainer}>
+              <Inputs
+                nameInput="city"
+                nameTitle="City"
+                register={register}
+                type="text"
+                error={errors.city?.message}
+                testId="signup-city-input"
+              />
+            </div>
+            <div className={styles.inputContainer}>
+              <Inputs
+                nameInput="phone"
+                nameTitle="Phone"
+                register={register}
+                type="number"
+                error={errors.phone?.message}
+                testId="signup-phone-input"
+              />
+            </div>
+            <div className={styles.inputContainer}>
+              <Inputs
+                nameTitle="Password"
+                nameInput="password"
+                register={register}
+                type="password"
+                error={errors.password?.message}
+                testId="signup-password-input"
+              />
+            </div>
+          </div>
+          <div className={styles.groupContainer}>
+            <div className={styles.inputContainer}>
+              <Inputs
                 nameTitle="Last Name"
                 nameInput="lastName"
                 register={register}
@@ -233,38 +275,6 @@ const SignForm = () => {
             </div>
             <div className={styles.inputContainer}>
               <Inputs
-                nameInput="birthday"
-                nameTitle="Birthday"
-                register={register}
-                type="date"
-                error={errors.birthday?.message}
-                testId="signup-birthday-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameInput="phone"
-                nameTitle="Phone"
-                register={register}
-                type="number"
-                error={errors.phone?.message}
-                testId="signup-phone-input"
-              />
-            </div>
-          </div>
-          <div className={styles.groupContainer}>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameInput="city"
-                nameTitle="City"
-                register={register}
-                type="text"
-                error={errors.city?.message}
-                testId="signup-city-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
                 nameInput="postalCode"
                 nameTitle="Postal Code"
                 register={register}
@@ -281,16 +291,6 @@ const SignForm = () => {
                 type="email"
                 error={errors.email?.message}
                 testId="signup-email-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameTitle="Password"
-                nameInput="password"
-                register={register}
-                type="password"
-                error={errors.password?.message}
-                testId="signup-password-input"
               />
             </div>
             <div className={styles.inputContainer}>
