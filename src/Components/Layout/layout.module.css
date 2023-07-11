@@ -23,16 +23,11 @@ aside {
 .switchContainer {
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: 100vw;
 }
 
 .asideContainer {
   height: auto;
-  width: 5%;
-  transition: all 0.3s;
+  z-index: 1;
 }
 
-.asideContainer:hover{
-  width:15%;
-  transition: all 0.3s;
-}

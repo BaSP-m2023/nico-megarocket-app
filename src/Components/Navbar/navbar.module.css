@@ -1,28 +1,44 @@
 .navbar {
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--secondary);
   height: 100vh;
+  width: 70px;
+  transition: all 0.4s;
+  background-color: var(--secondary);
+  overflow: hidden;
 }
+
+.navbar:hover{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width:200px;
+  height: 100vh;
+  transition: all 0.4s;
+  background-color: var(--secondary);
+}
+
 .rutes {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  list-style-type: none;
-  padding: 0;
-  gap: 30px;
   margin-top: 5rem;
+  padding: 0;
+  list-style-type: none;
+  gap: 30px;
 }
 
 .navbarLink {
+  display: flex;
+  padding-bottom: 10px;
+  gap: 15px;
+  padding-left: 10px;
   font-size: 1rem;
   text-decoration: none;
   color: var(--primary);
-  display: flex;
   align-items: center;
-  gap: 15px;
-  padding-bottom: 10px;
   transition: 0.2s color;
   font-weight: 400;
 }
@@ -38,10 +54,12 @@
 .navbarLink:hover {
   transform: scale(1.05);
   transition: all 0.2s;
+  border-left: 1px solid black;
 }
 
 .navbarLink.active {
   color: white;
+  filter: brightness(0) invert() drop-shadow(2px 2px 4px var(--primary));
 }
 
 .navIcon {
@@ -49,5 +67,6 @@
 }
 
 .logoutButton {
-  display: none;
+  position: absolute;
+  bottom: 10%;
 }
