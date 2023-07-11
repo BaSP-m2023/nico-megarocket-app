@@ -263,7 +263,11 @@ const FormClasses = () => {
         {modalSuccessOpen && (
           <ModalSuccess
             setModalSuccessOpen={setModalSuccessOpen}
-            message={id ? 'The class has been updated' : 'The class has been created'}
+            message={
+              id
+                ? 'The class has been updated successfully'
+                : 'The class has been created successfully'
+            }
             testId="classes-modal-success"
           />
         )}
