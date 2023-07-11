@@ -142,6 +142,7 @@ const SignForm = () => {
       membership: data.membership,
       birthday: data.birthday
     };
+
     if (Object.values(errors).length === 0) {
       try {
         const responseSignUp = await dispatch(signUpMember(memberEdit));
@@ -197,7 +198,11 @@ const SignForm = () => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={styles.container}
+        encType="multipart/form-data"
+      >
         <h1 className={styles.title}>Sign Up</h1>
         <div className={styles.form}>
           <div className={styles.groupContainer}>
