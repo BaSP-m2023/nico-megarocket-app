@@ -9,6 +9,8 @@ const SuperAdmins = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const superAdminState = useSelector((state) => state.superAdmin);
+  const isPending = useSelector((state) => state.superAdmin.pending);
+  const [showLoader, setShowLoader] = useState(false);
   const superadmins = useSelector((state) => state.superAdmin.list);
 
   useEffect(() => {
@@ -18,6 +20,16 @@ const SuperAdmins = () => {
   useEffect(() => {
     setToastErrorOpen(!!superAdminState.error);
   }, [superAdminState.error]);
+
+  useEffect(() => {
+    if (!isPending) {
+      setShowLoader(true);
+      const timer = setTimeout(() => {
+        setShowLoader(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isPending]);
 
   const handleClick = (item) => {
     history.push(`super-admins/form/${item._id}`, { params: { ...item, mode: 'edit' } });
@@ -31,7 +43,7 @@ const SuperAdmins = () => {
       <section>
         <AddButton entity={'Super Admin'} createMode={createMode} />
         <div>
-          {superAdminState.loading ? (
+          {showLoader ? (
             <Loader />
           ) : (
             <TableComponent

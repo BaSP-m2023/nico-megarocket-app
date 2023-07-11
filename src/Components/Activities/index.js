@@ -10,6 +10,7 @@ function Activities() {
   const isPending = useSelector((state) => state.activities.pending);
   const isError = useSelector((state) => state.activities.error);
   const [toastErroOpen, setToastErroOpen] = useState(isError);
+  const [showLoader, setShowLoader] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -19,6 +20,16 @@ function Activities() {
   useEffect(() => {
     setToastErroOpen(isError);
   }, [isError]);
+
+  useEffect(() => {
+    if (!isPending) {
+      setShowLoader(true);
+      const timer = setTimeout(() => {
+        setShowLoader(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isPending]);
 
   const createMode = () => {
     history.push('/admin/activities/form', { params: { mode: 'created' } });
@@ -34,7 +45,7 @@ function Activities() {
   return (
     <section>
       <AddButton entity="Activity" createMode={createMode} testId="add-activity-btn" />
-      {isPending ? (
+      {showLoader ? (
         <Loader testId="activity-table-loader" />
       ) : (
         <TableComponent
