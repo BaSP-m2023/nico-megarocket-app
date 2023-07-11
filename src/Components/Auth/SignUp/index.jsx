@@ -14,6 +14,7 @@ const SignForm = () => {
   const history = useHistory();
   const [openModalSuccess, setOpenModalSuccess] = useState(null);
   const [error, setError] = useState(null);
+  const [messageError, setMessageError] = useState('');
   const [toastError, setToastError] = useState(null);
 
   const schema = Joi.object({
@@ -154,6 +155,11 @@ const SignForm = () => {
         }
         if (responseSignUp.type === 'SIGN_UP_ERROR') {
           setToastError(true);
+          if (responseSignUp.payload.message.includes('auth')) {
+            setMessageError('Email already exists');
+          } else {
+            setMessageError(responseSignUp.payload.message);
+          }
         }
       } catch (error) {
         setToastError(true);
@@ -176,7 +182,7 @@ const SignForm = () => {
       {toastError && (
         <ToastError
           setToastErroOpen={setToastError}
-          message={'Email is already in use'}
+          message={messageError}
           testId="member-form-toast-error"
         />
       )}
