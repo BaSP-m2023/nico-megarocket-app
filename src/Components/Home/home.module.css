@@ -333,6 +333,7 @@
   border-radius: 20px;
   margin-bottom: 5px;
   margin-top: 10px;
+  cursor:pointer;
 }
 
 .cardTitle {
@@ -347,22 +348,20 @@
   color: var(--primary);
   align-items: center;
   flex-direction: column;
+  margin:20px;
   height: 220px;
 }
 
-.cardBody ul {
-  margin-left: -38px;
-}
-
 .cardBody li {
-  margin-top: 22px;
   display: flex;
   justify-content: center;
+  align-items:center;
   font-size: 15px;
+  gap:12px;
 }
 
 .cardInfo {
-  background-color: var(--secondary);
+  background-color: var(--secondary-dark);
   color: var(--white);
   display: flex;
   font-size: 20px;
@@ -371,6 +370,29 @@
   justify-content: center;
   align-items: center;
   border-radius: 0 0 20px 20px;
+}
+
+.checkIcon{
+  width:20px;
+}
+
+.benefitsList{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  gap:13px;
+  margin:0;
+  padding:0;
+}
+
+.benefitsList img{
+  margin: 0;
+  padding:0;
+}
+.benefitsList p{
+  margin:0;
+  padding:0;
 }
 
 .sectionMembershipTable {
@@ -594,6 +616,7 @@
   .sectionFeaturesTitles {
     display: flex;
     flex-direction: row;
+    align-items:center;
     font-size: 24px;
   }
 
