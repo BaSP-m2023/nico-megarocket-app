@@ -5,7 +5,6 @@
   align-items: center;
   color: var(--Blue);
 }
-
 .containerForm {
   margin: 30px 0;
   padding: 30px;
@@ -17,7 +16,6 @@
   justify-content: space-around;
   align-items: center;
 }
-
 .containerForm h3 {
   text-align: center;
   font-size: 36px;
@@ -25,44 +23,148 @@
   color: var(--Blue);
   margin: 0 0 30px 0;
 }
-
 .containerForm .containerAdd {
   display: flex;
   justify-content: space-evenly;
   flex-direction: row;
 }
-
 .list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 380px;
+  padding: 10px 0;
+  align-items: center;
+  justify-content: center;
   list-style: none;
+  border: 1px solid var(--dark-grey);
+  background-color: var(--light-grey);
+  border-radius: 5px;
+  gap: 7px;
+  overflow-y: auto;
 }
-
-.listMembers img {
-  margin: 0 10px;
-  cursor: pointer;
+.listMembers{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
+.eachMember{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: var(--white);
+  color: var(--primary);
+  font-weight: 500;
+  border-radius: 10px;
+  padding-left: 5px;
+  padding-right: 3px;
+  position: relative;
+  border: 1px solid var(--primary);
+}
 .inputMemberContainer {
   margin-top: 30px;
 }
-
 .hidden {
   display: none;
 }
-
 .formEdited {
   display: flex;
   align-items: center;
 }
-
 .icon {
   width: 12px;
   margin: 0 10px;
   cursor: pointer;
 }
-
+.iconPic {
+  width: 18px;
+  height: 18px;
+  border-radius: 16px;
+  margin: 0 7px;
+  cursor: pointer;
+  transition: all 1s;
+}
+.iconPic:hover{
+  background-color: var(--secondary);
+  transition: all 1s;
+}
 .searchInput {
   margin: 0 10px;
   border: 2px solid var(--primary);
   border-radius: 5px;
   padding: 4px;
+}
+.boxClose{
+  display: flex;
+  justify-content: flex-end;
+}
+.close_icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 30px;
+  margin-top: 1px;
+  cursor: pointer;
+  position: relative;
+  transition: all 1s;
+}
+.close_icon:before,
+.close_icon:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 15px;
+  height: 2px;
+  background-color: var(--black);
+  transform-origin: center;
+}
+.close_icon:before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.close_icon:after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+.close_icon:hover{
+  background-color: var(--ligth-red);
+  width: 16px;
+  height: 16px;
+  transition: all 1s;
+  border-radius: 30px;
+}
+.speechBalloon {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  transform: translateX(-70%);
+  background-color: var(--white);
+  border: 1px solid black;
+  border-radius: 5px;
+  height: 30px;
+  margin-right: -80px;
+  margin-top: -60px;
+  padding-left: 10px;
+  z-index: 2;
+}
+.speechBalloon::before {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 90%;
+  transform: translateX(-55%);
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 20px solid var(--white);
+}
+.speechElements{
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  z-index: 2;
+}
+.boxClick{
+  margin-top: 20px;
+}
+.slots{
+  text-align: center;
 }
