@@ -8,7 +8,7 @@ import Home from 'Components/Home';
 const routes = [
   {
     name: 'Home',
-    path: '/auth',
+    path: '/auth/home',
     icon: 'newhome.svg'
   },
   {
@@ -28,11 +28,11 @@ const AuthRoute = () => {
   return (
     <Layout routes={routes}>
       <Switch>
-        <Route exact path={`${url}/`} component={Home} />
+        <Route exact path={`${url}/home`} component={Home} />
         <Route exact path={`${url}/login`} component={LoginForm} />
         <Route exact path={`${url}/sign-up`} component={SignForm} />
         <Route exact path={`${url}/recover-password`} component={RecoverPassword} />
-        <Redirect path={`${url}/login`} />
+        <Redirect to={`${url}/home`} />
       </Switch>
     </Layout>
   );
