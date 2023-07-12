@@ -11,6 +11,12 @@ const ModalSuccess = ({ message, testId }) => {
         <div className={styles.contentContainer}>
           <p className={styles.textModal}>{message}</p>
         </div>
+        <div className={styles.ldsRing}>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       </div>
     </div>
   );

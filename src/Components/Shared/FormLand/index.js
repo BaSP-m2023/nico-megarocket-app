@@ -24,10 +24,10 @@ const FormLand = () => {
         opcionSelected: 'chose',
         message: ''
       });
-    }, 5000);
+    }, 4000);
     setTimeout(() => {
       setModalSucc(false);
-    }, 5000);
+    }, 4000);
   };
 
   const handleChange = (e) => {
@@ -111,7 +111,9 @@ const FormLand = () => {
       )}
       {modalSucc && (
         <ModalSuccess
-          message={`${val.firstName} ${val.lastName} thank you for submitting the contact form. We will get back to you soon!`}
+          message={`${val.firstName?.charAt(0).toUpperCase() + val.firstName?.slice(1)} ${
+            val.lastName?.charAt(0).toUpperCase() + val.lastName?.slice(1)
+          } thank you for submitting the contact form. We will get back to you soon!`}
         />
       )}
     </>
