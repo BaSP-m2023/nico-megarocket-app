@@ -15,7 +15,6 @@ const FormLand = () => {
   const closeModal = () => {
     setModalConfirmOpen(false);
     setModalSucc(true);
-    console.log(val);
     setTimeout(() => {
       setVal({
         firstName: '',

@@ -511,10 +511,6 @@
     margin: 0px 10px 0px 0px;
   }
 
-  .formButton {
-    /* display: none; */
-  }
-
   .sectionAboutFlexContainer {
     display: flex;
     flex-direction: column;
