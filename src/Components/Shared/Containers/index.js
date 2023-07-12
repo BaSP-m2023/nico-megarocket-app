@@ -177,6 +177,9 @@ function DivContainer({ item, testId }) {
           <p className={toggle ? styles.textClasses : styles.textSelectedClasses}>
             {item.activity.name}
           </p>
+          <p className={toggle ? styles.enrolledClasses : styles.enrolledSelectedClasses}>
+            Enrolled
+          </p>
           <p className={toggle ? styles.slotsClasses : styles.slotsSelectedClasses}>
             {item.slots} Slots
           </p>
