@@ -123,11 +123,14 @@
   padding: 0 0 0 9px;
   color: var(--primary);
   font-weight: 600;
+  transition: all .1s ease-in;
 }
 
 .buttonEdit:hover {
-  background-color: var(--primary);
-  color: var(--white);
+  background-color: #c8c798;
+  border-color: #c8c798;
+  color: #000;
+  filter: invert();
 }
 
 .profileIcon {
