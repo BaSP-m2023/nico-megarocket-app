@@ -6,12 +6,6 @@ import LogOut from 'Components/Auth/LogOut';
 const Navbar = (props) => {
   const [isHovered, setIsHovered] = useState(false);
   const token = sessionStorage.getItem('token');
-  const currentPath = window.location.pathname;
-  const shouldApplyHomeButtonStyle =
-    currentPath === '/auth' ||
-    currentPath === '/auth/login' ||
-    currentPath === '/auth/sign-up' ||
-    currentPath === '/auth/recover-password';
 
   return (
     <nav
@@ -21,10 +15,7 @@ const Navbar = (props) => {
     >
       <ul className={styles.rutes}>
         {props.routes.map((route) => (
-          <li
-            className={shouldApplyHomeButtonStyle ? styles.homeButtons : styles.anchor}
-            key={route.name}
-          >
+          <li key={route.name}>
             <NavLink
               to={route.path}
               className={styles.navbarLink}

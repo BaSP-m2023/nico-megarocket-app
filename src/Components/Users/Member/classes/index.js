@@ -102,6 +102,17 @@ const MemberClasses = () => {
           })}
         </tbody>
       </table>
+      <div className={styles.statusContainer}>
+        <div className={`${styles.statusAvailable} ${styles.statusBox}`}>
+          <p className={styles.textStatus}>Available</p>
+        </div>
+        <div className={`${styles.statusDisabled} ${styles.statusBox}`}>
+          <p className={styles.textStatus}>Disabled</p>
+        </div>
+        <div className={`${styles.statusEnrolled} ${styles.statusBox}`}>
+          <p className={styles.textStatus}>Enrolled</p>
+        </div>
+      </div>
     </div>
   );
 };
