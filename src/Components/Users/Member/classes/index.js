@@ -61,10 +61,16 @@ const MemberClasses = () => {
         ) : (
           <h3>Select the class you want to join:</h3>
         )}
-        <select value={selectedClass || 'Pick class'} onChange={handleChange}>
-          <option value="">Pick class</option>
+        <select
+          className={styles.optionInput}
+          value={selectedClass || 'Pick class'}
+          onChange={handleChange}
+        >
+          <option className={styles.selectOption} value="">
+            Pick class
+          </option>
           {classesArray.map((item, index) => (
-            <option key={index} value={item.activity.name}>
+            <option className={styles.selectOption} key={index} value={item.activity.name}>
               {item.activity.name}
             </option>
           ))}
