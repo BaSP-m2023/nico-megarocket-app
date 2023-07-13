@@ -62,15 +62,23 @@ const ModalInfo = ({ data, setModalInfo }) => {
               </tr>
             </thead>
             <tbody>
-              {data.members.map((item) => (
-                <tr key={item._id}>
-                  <td>
-                    {item.firstName} {item.lastName}
+              {data.members.length === 0 ? (
+                <tr>
+                  <td colSpan="3" className={styles.spanAlone}>
+                    Zero member enrolled
                   </td>
-                  <td>{item.email}</td>
-                  <td>{item.dni}</td>
                 </tr>
-              ))}
+              ) : (
+                data.members.map((item) => (
+                  <tr key={item._id}>
+                    <td>
+                      {item.firstName} {item.lastName}
+                    </td>
+                    <td>{item.email}</td>
+                    <td>{item.dni}</td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

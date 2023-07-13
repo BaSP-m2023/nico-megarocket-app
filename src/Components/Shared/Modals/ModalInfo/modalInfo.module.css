@@ -162,3 +162,7 @@
   border: 1.5px solid var(--secondary);
   transition: all 0.2s;
 }
+.spanAlone {
+  text-align: center !important;
+  height: 40px;
+}
