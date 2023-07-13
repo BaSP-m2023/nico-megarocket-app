@@ -1,3 +1,9 @@
+.container {
+  width: 100%;
+  position: relative;
+  margin: 0 auto;
+}
+
 .containerTable {
   display: flex;
   flex-direction: column;
@@ -17,22 +23,18 @@
   margin: 4rem auto;
 }
 
-.container {
-  width: 80%;
-  position: relative;
-  margin: 0 auto;
-}
-
 .table {
   width: 100%;
   border-collapse: collapse;
-  background: var(--secondary);
   color: #373867;
   border-radius: 3px;
   overflow: hidden;
   box-shadow: 0px 6px 30px -7px rgba(0, 0, 0, 0.75);
   margin: 20px 0;
-  min-width: 700px;
+}
+
+.table .containerTHead tr {
+  background: var(--secondary);
 }
 
 .table tr td,
@@ -46,16 +48,15 @@
   transition: all 0.1s;
 }
 
-.table tr td:nth-last-child(-n + 2):hover {
+.table .containerTbody td:nth-last-child(-n + 2):hover {
   background-color: transparent;
   transform: scale(1.2);
 }
 
-.table tr td:hover {
-  max-width: 280px;
-  background-color: var(--primary);
-  color: #fff;
+.table .containerTbody tr:hover {
+  background-color: rgba(168, 202, 151, 0.774);
   cursor: pointer;
+  transition: all .1s ease-in;
 }
 
 .rowBackground1 {
