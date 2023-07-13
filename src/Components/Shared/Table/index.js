@@ -44,7 +44,7 @@ const TableComponent = ({
       if (Array.isArray(item)) {
         if (item.length === 1) {
           return item[0][fieldValue?.arrayFirstValue] + ' ' + item[0][fieldValue?.arraySecondValue];
-        } else {
+        } else if (item.length !== 0) {
           return (
             <span>
               {item[0][fieldValue?.arrayFirstValue]} {item[0][fieldValue?.arraySecondValue]}{' '}
@@ -93,7 +93,11 @@ const TableComponent = ({
 
   const ifNotExist = (item) => {
     if (item?.length === 0) {
-      return <span>This element Was Deleted. Edit to add</span>;
+      if (located === '/admin/subscription') {
+        return <span>No member added</span>;
+      } else {
+        return <span>This element Was Deleted. Edit to add</span>;
+      }
     }
   };
 
@@ -185,7 +189,6 @@ const TableComponent = ({
               {filtered
                 .map((row, index) => {
                   const rowClass = index % 2 === 0 ? styles.rowBackground1 : styles.rowBackground2;
-
                   return (
                     <tr className={rowClass} key={index}>
                       {columns.map((column, columnIndex) => (
