@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './signUp.module.css';
-import { Inputs, OptionInput, Button, ToastError } from 'Components/Shared';
+import { Inputs, OptionInput, Button, ToastError, ModalSignUp } from 'Components/Shared';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -13,6 +13,7 @@ const SignForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [openModalSuccess, setOpenModalSuccess] = useState(null);
+  const [modalShow, setModalShow] = useState(false);
   const [error, setError] = useState(null);
   const [messageError, setMessageError] = useState('');
   const [toastError, setToastError] = useState(null);
@@ -167,6 +168,13 @@ const SignForm = () => {
     }
   };
 
+  useEffect(() => {
+    const role = sessionStorage.getItem('role');
+    if (role) {
+      setModalShow(true);
+    }
+  }, []);
+
   const memberships = ['Classic', 'Black', 'Only Classes'];
 
   return (
@@ -186,7 +194,7 @@ const SignForm = () => {
           testId="member-form-toast-error"
         />
       )}
-
+      {modalShow && <ModalSignUp setModalShow={setModalShow} />}
       {error && (
         <div className={styles.boxError} data-testid="signUp-error-pop">
           <div className={styles.lineError}>
