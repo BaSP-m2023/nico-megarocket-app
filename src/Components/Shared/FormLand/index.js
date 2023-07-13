@@ -76,7 +76,7 @@ const FormLand = () => {
             />
           </div>
           <div>
-            <input className={styles.formButtonTop} type="submit" value="Submit" />
+            <input className={styles.formButtonDesktop} type="submit" value="Submit" />
           </div>
         </div>
         <div className={styles.formContainerBottom}>
@@ -98,6 +98,10 @@ const FormLand = () => {
               onChange={handleChange}
             ></textarea>
           </div>
+        </div>
+
+        <div>
+          <input className={styles.formButtonTop} type="submit" value="Submit" />
         </div>
       </form>
       {modalConfirmOpen && (

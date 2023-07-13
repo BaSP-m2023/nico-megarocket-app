@@ -41,7 +41,8 @@ function Home() {
               today.
             </p>
           </article>
-          <article className={styles.sectionAboutContainer} id={styles.sectionAboutContainerBot}>
+          <div className={styles.divider}></div>
+          <article className={styles.sectionAboutContainerTwo} id={styles.sectionAboutContainerBot}>
             <img
               className={styles.sectionAboutImage}
               src={gymImageGymOne}
@@ -110,15 +111,11 @@ function Home() {
         <h2 className={styles.sectionTitleBlue}>Gym activities</h2>
         <article className={styles.sectionActivities}>
           <ul className={styles.sectionActivitiesList}>
-            <div className={styles.activitiesListTop}>
-              <li>Crossfit</li>
-              <li>Spinning</li>
-              <li>Functional</li>
-            </div>
-            <div className={styles.activitiesListBot}>
-              <li>Fitness</li>
-              <li>Boxing</li>
-            </div>
+            <li className={styles.activityItem}>Crossfit</li>
+            <li className={styles.activityItem}>Spinning</li>
+            <li className={styles.activityItem}>Functional</li>
+            <li className={styles.activityItem}>Fitness</li>
+            <li className={styles.activityItem}>Boxing</li>
           </ul>
           <img
             className={styles.sectionActivitiesImg}
