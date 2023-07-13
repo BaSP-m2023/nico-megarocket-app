@@ -17,7 +17,7 @@ function Home() {
       <section className={styles.sectionHead}>
         <div className={styles.containerSectionHead}>
           <img src={logo} alt="Rocket logo" />
-          <h1 className={styles.Title}>MEGA ROCKET WEB</h1>
+          <h1 className={styles.title}>MEGA ROCKET WEB</h1>
           <h2 id={styles.sectionHeadWelcome}>WELCOME</h2>
           <p className={styles.Text}>
             Mega Rocket web is a monthly management system for members and trainers so that they can
@@ -33,22 +33,17 @@ function Home() {
         <h2 className={styles.sectionTitleBlue}>About Mega Rocket</h2>
         <div className={styles.sectionAboutFlexContainer}>
           <article className={styles.sectionAboutContainer} id={styles.sectionAboutContainerTop}>
-            <img src={gymImageGym} alt="The inside of a gym" />
+            <img src={gymImageGym} className={styles.sectionAboutImage} alt="The inside of a gym" />
             <p className={styles.sectionAboutTextDesktop}>
               We are Mega Rocket web, one of the oldest but most modern gyms in the region, with a
               unique monthly management system for members and trainers in the country, so they can
               access our gym dynamically. The best version of you awaits, join our Mega Rocket
               today.
             </p>
-            <p className={styles.sectionAboutTextMobile}>
-              We are Mega Rocket web, one of the oldest but most modern gyms in the region, with a
-              unique monthly management system for members and trainers. (...)
-            </p>
-            <button>Learn More</button>
           </article>
           <article className={styles.sectionAboutContainer} id={styles.sectionAboutContainerBot}>
             <img
-              className={styles.sectionAboutImg}
+              className={styles.sectionAboutImage}
               src={gymImageGymOne}
               alt="A man running in a treadmill"
             />
@@ -58,11 +53,6 @@ function Home() {
               different memberships. We are here to help you achieve your best quality of life in a
               fun daily activity at our facilities.
             </p>
-            <p className={styles.sectionAboutTextMobile}>
-              On this website you will have at your disposal the possibility of taking our classes,
-              directed by our best personal trainers and accessing many privileges (...)
-            </p>
-            <button>Learn More</button>
           </article>
         </div>
       </section>
@@ -71,7 +61,11 @@ function Home() {
         <div className={styles.sectionFeaturesContainer}>
           <article className={styles.sectionFeaturesArticles}>
             <span className={styles.sectionFeaturesTitles}>
-              <img src={gymCalendarIconTime} alt="Calendar icon with clock" />
+              <img
+                src={gymCalendarIconTime}
+                alt="Calendar icon with clock"
+                className={styles.featuresIcons}
+              />
               Shift reservations
             </span>
             <p className={styles.Text}>
@@ -82,7 +76,7 @@ function Home() {
           </article>
           <article className={styles.sectionFeaturesArticles}>
             <span className={styles.sectionFeaturesTitles}>
-              <img src={gymCalendarIcon} alt="Calendar icon" />
+              <img src={gymCalendarIcon} alt="Calendar icon" className={styles.featuresIcons} />
               Scheduling & opening hours
             </span>
             <p className={styles.Text}>
@@ -92,7 +86,7 @@ function Home() {
           </article>
           <article className={styles.sectionFeaturesArticles}>
             <span className={styles.sectionFeaturesTitles}>
-              <img src={gymIconList} alt="List icon" />
+              <img src={gymIconList} alt="List icon" className={styles.featuresIcons} />
               Membership management
             </span>
             <p className={styles.Text}>
@@ -102,7 +96,7 @@ function Home() {
           </article>
           <article className={styles.sectionFeaturesArticles}>
             <span className={styles.sectionFeaturesTitles}>
-              <img src={gymIconMessage} alt="Message icon" />
+              <img src={gymIconMessage} alt="Message icon" className={styles.featuresIcons} />
               Contact form & suggestions
             </span>
             <p className={styles.Text}>
