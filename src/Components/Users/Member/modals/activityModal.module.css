@@ -9,7 +9,7 @@
   left: 0;
   z-index: 1;
   overflow: hidden;
-  background-color: var(--black);
+  background-color: rgba(0, 0, 0, 0.700);
 }
 
 .activityCard {
@@ -55,15 +55,22 @@
 }
 
 .cardButton {
-  width: 83px;
-  height: 35px;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  color: var(--primary);
+  margin: 5px;
+  width: 80px;
+  height: 40px;
+  background-color: white;
+  border: solid black 1px;
   cursor: pointer;
-  background-color: var(--white);
-  transition: all .2s ease;
+  border-radius: 5px;
+  color: var(--primary);
+  line-height: 20px;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: 0.2s;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .cardButton:hover {
@@ -71,16 +78,17 @@
 }
 
 .cardButtonJoin {
-  color: var(--secondary-dark);
-  border: solid var(--secondary-dark);
-  transition: all .2s ease;
+  border: none;
+  background-color: var(--secondary);
+  color: black;
 }
 
-.cardButtonJoin:hover {
-  transform: scale(1.05);
-  font-size: 1rem;
-  background-color: #00000000;
-  color: var(--secondary-dark);
+.cardButton:hover{
+  background-color: var(--primary);
+  color: white;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+  font-size: 12px;
 }
 
 @media only screen and (min-width: 601px) {

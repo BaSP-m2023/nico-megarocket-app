@@ -44,7 +44,6 @@
 
 .titleSelect select {
   margin: 0 10px;
-  height: 20px;
 }
 
 .table {
@@ -53,6 +52,28 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+}
+
+.optionInput {
+  width: 130px;
+  height:30px;
+  border: 1px solid #999;
+  font-size: 14px;
+  color: var(--primary);
+  background-color: #eee;
+  border-radius: 5px;
+  box-shadow: 2px 2px #f0f0f0;
+  cursor: pointer;
+}
+
+.selectOption {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 14px;
+  color: var(--primary);
+  cursor: pointer;
 }
 
 .statusContainer {
