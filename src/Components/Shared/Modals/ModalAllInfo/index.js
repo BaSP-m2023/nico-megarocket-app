@@ -1,10 +1,11 @@
 import React from 'react';
 import styles from './modalAllInfo.module.css';
 import { ButtonForm } from 'Components/Shared';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const ModalInfo = ({ data, setModalAllInfo }) => {
   const history = useHistory();
+  const located = useLocation().pathname;
 
   return (
     <div className={styles.wholeContainer}>
@@ -94,12 +95,18 @@ const ModalInfo = ({ data, setModalAllInfo }) => {
             <ButtonForm
               nameImg="edit.svg"
               onAction={() => {
-                history.push(
-                  `/admin/${!data.membership ? 'trainers' : 'members'}/form/${data._id}`,
-                  {
+                if (located === '/admin/activities') {
+                  history.push(`/admin/activities/form/${data._id}`, {
                     params: { ...data, mode: 'edit' }
-                  }
-                );
+                  });
+                } else {
+                  history.push(
+                    `/admin/${!data.membership ? 'trainers' : 'members'}/form/${data._id}`,
+                    {
+                      params: { ...data, mode: 'edit' }
+                    }
+                  );
+                }
               }}
               testId="edit-btn"
             />
