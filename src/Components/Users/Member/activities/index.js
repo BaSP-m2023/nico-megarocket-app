@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Cards from './Cards';
 import styles from '../activities/activities.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllActivities } from 'redux/activities/thunks';
+import { Loader } from 'Components/Shared';
 
 const MemberActivities = () => {
   const activities = useSelector((state) => state.activities.list);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
   const activitiesImg = [
     ['Boxing.svg', 'cardBoxing.png'],
     ['Bodybuilding.svg', 'cardBodyBuilding.png'],
@@ -20,22 +22,33 @@ const MemberActivities = () => {
 
   useEffect(() => {
     getAllActivities(dispatch);
+    if (loading) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+    }
   }, []);
 
   return (
-    <div className={styles.mainContainer}>
-      {activities.map((item) => {
-        return (
-          <Cards
-            key={item._id}
-            title={item.name}
-            description={item.description}
-            image={randomImage()}
-            testId={`${item.name}-card`}
-          />
-        );
-      })}
-    </div>
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className={styles.mainContainer}>
+          {activities.map((item) => {
+            return (
+              <Cards
+                key={item._id}
+                title={item.name}
+                description={item.description}
+                image={randomImage()}
+                testId={`${item.name}-card`}
+              />
+            );
+          })}
+        </div>
+      )}
+    </>
   );
 };
 

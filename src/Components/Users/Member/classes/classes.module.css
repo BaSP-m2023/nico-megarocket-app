@@ -27,7 +27,6 @@
 .tdContainer p {
   text-align: center;
   margin: 0px 0px 0px 0px;
-  padding: 0;
   border-radius: 15px;
 }
 
@@ -45,7 +44,6 @@
 
 .titleSelect select {
   margin: 0 10px;
-  height: 20px;
 }
 
 .table {
@@ -54,4 +52,67 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+}
+
+.optionInput {
+  width: 130px;
+  height:30px;
+  border: 1px solid #999;
+  font-size: 14px;
+  color: var(--primary);
+  background-color: #eee;
+  border-radius: 5px;
+  box-shadow: 2px 2px #f0f0f0;
+  cursor: pointer;
+}
+
+.selectOption {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 14px;
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.statusContainer {
+  display: flex;
+  width: 70%;
+  flex-direction: row;
+  margin-top: 10px;
+}
+
+.statusBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 90px;
+  margin-right: 10px;
+  border-radius: 5px;
+  border-width: 4px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 14px;
+}
+
+.statusAvailable {
+  border: 2px solid var(--secondary-dark);
+  color:var(--primary);
+  background-color: var(--secondary-dark);
+}
+
+.statusEnrolled {
+  border: 2px solid var(--primary);
+  color:var(--secondary-dark);
+  background-color: var(--primary);
+}
+
+.statusDisabled {
+  border: 2px solid var(--light-grey);
+  color:var(--primary);
+  background-color: var(--light-grey);
 }

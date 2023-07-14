@@ -22,6 +22,7 @@
 
 .Text {
   font-size: 30px;
+  width: 80%;
   line-height: 42px;
   color: var(--white);
 }
@@ -333,6 +334,7 @@
   border-radius: 20px;
   margin-bottom: 5px;
   margin-top: 10px;
+  cursor:pointer;
 }
 
 .cardTitle {
@@ -347,22 +349,20 @@
   color: var(--primary);
   align-items: center;
   flex-direction: column;
+  margin:20px;
   height: 220px;
 }
 
-.cardBody ul {
-  margin-left: -38px;
-}
-
 .cardBody li {
-  margin-top: 22px;
   display: flex;
   justify-content: center;
+  align-items:center;
   font-size: 15px;
+  gap:12px;
 }
 
 .cardInfo {
-  background-color: var(--secondary);
+  background-color: var(--secondary-dark);
   color: var(--white);
   display: flex;
   font-size: 20px;
@@ -371,6 +371,29 @@
   justify-content: center;
   align-items: center;
   border-radius: 0 0 20px 20px;
+}
+
+.checkIcon{
+  width:20px;
+}
+
+.benefitsList{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  gap:13px;
+  margin:0;
+  padding:0;
+}
+
+.benefitsList img{
+  margin: 0;
+  padding:0;
+}
+.benefitsList p{
+  margin:0;
+  padding:0;
 }
 
 .sectionMembershipTable {
@@ -478,6 +501,7 @@
     font-size: 16px;
     line-height: 19px;
     color: var(--primary);
+    cursor: pointer;
   }
 
   .sectionTouchForm div {
@@ -485,10 +509,6 @@
     flex-direction: column;
     align-items: left;
     margin: 0px 10px 0px 0px;
-  }
-
-  .formButton {
-    display: none;
   }
 
   .sectionAboutFlexContainer {
@@ -594,6 +614,7 @@
   .sectionFeaturesTitles {
     display: flex;
     flex-direction: row;
+    align-items:center;
     font-size: 24px;
   }
 
@@ -634,5 +655,43 @@
   .sectionTouchForm textarea {
     width: 400px;
     height: 210px;
+  }
+}
+
+.ldsRing {
+  display: inline-block;
+  position: relative;
+  top: -1rem;
+  width: 30px;
+  height: 30px;
+  margin: auto;
+}
+.ldsRing div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  margin: 8px;
+  border: 3px solid var(--secondary-dark);
+  border-radius: 50%;
+  animation: ldsRing 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: var(--secondary-dark) transparent transparent transparent;
+}
+.ldsRing div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.ldsRing div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.ldsRing div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes ldsRing {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

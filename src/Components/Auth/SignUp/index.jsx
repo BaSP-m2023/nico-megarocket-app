@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './signUp.module.css';
-import { Inputs, OptionInput, Button, ToastError } from 'Components/Shared';
+import { Inputs, OptionInput, Button, ToastError, ModalSignUp } from 'Components/Shared';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -13,7 +13,9 @@ const SignForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [openModalSuccess, setOpenModalSuccess] = useState(null);
+  const [modalShow, setModalShow] = useState(false);
   const [error, setError] = useState(null);
+  const [messageError, setMessageError] = useState('');
   const [toastError, setToastError] = useState(null);
 
   const schema = Joi.object({
@@ -155,12 +157,24 @@ const SignForm = () => {
         }
         if (responseSignUp.type === 'SIGN_UP_ERROR') {
           setToastError(true);
+          if (responseSignUp.payload.message.includes('auth')) {
+            setMessageError('Email already exists');
+          } else {
+            setMessageError(responseSignUp.payload.message);
+          }
         }
       } catch (error) {
         setToastError(true);
       }
     }
   };
+
+  useEffect(() => {
+    const role = sessionStorage.getItem('role');
+    if (role) {
+      setModalShow(true);
+    }
+  }, []);
 
   const memberships = ['Classic', 'Black', 'Only Classes'];
 
@@ -177,11 +191,11 @@ const SignForm = () => {
       {toastError && (
         <ToastError
           setToastErroOpen={setToastError}
-          message={'Email is already in use'}
+          message={messageError}
           testId="member-form-toast-error"
         />
       )}
-
+      {modalShow && <ModalSignUp setModalShow={setModalShow} />}
       {error && (
         <div className={styles.boxError} data-testid="signUp-error-pop">
           <div className={styles.lineError}>
@@ -209,13 +223,55 @@ const SignForm = () => {
             <div className={styles.inputContainer}>
               <Inputs
                 nameInput="firstName"
-                nameTitle="Name"
+                nameTitle="First Name"
                 register={register}
                 type="text"
                 error={errors.firstName?.message}
                 testId="signup-name-input"
               />
             </div>
+            <div className={styles.inputContainer}>
+              <Inputs
+                nameInput="birthday"
+                nameTitle="Birthday"
+                register={register}
+                type="date"
+                error={errors.birthday?.message}
+                testId="signup-birthday-input"
+              />
+            </div>
+            <div className={styles.inputContainer}>
+              <Inputs
+                nameInput="city"
+                nameTitle="City"
+                register={register}
+                type="text"
+                error={errors.city?.message}
+                testId="signup-city-input"
+              />
+            </div>
+            <div className={styles.inputContainer}>
+              <Inputs
+                nameInput="phone"
+                nameTitle="Phone"
+                register={register}
+                type="number"
+                error={errors.phone?.message}
+                testId="signup-phone-input"
+              />
+            </div>
+            <div className={styles.inputContainer}>
+              <Inputs
+                nameTitle="Password"
+                nameInput="password"
+                register={register}
+                type="password"
+                error={errors.password?.message}
+                testId="signup-password-input"
+              />
+            </div>
+          </div>
+          <div className={styles.groupContainer}>
             <div className={styles.inputContainer}>
               <Inputs
                 nameTitle="Last Name"
@@ -238,38 +294,6 @@ const SignForm = () => {
             </div>
             <div className={styles.inputContainer}>
               <Inputs
-                nameInput="birthday"
-                nameTitle="Birthday"
-                register={register}
-                type="date"
-                error={errors.birthday?.message}
-                testId="signup-birthday-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameInput="phone"
-                nameTitle="Phone"
-                register={register}
-                type="number"
-                error={errors.phone?.message}
-                testId="signup-phone-input"
-              />
-            </div>
-          </div>
-          <div className={styles.groupContainer}>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameInput="city"
-                nameTitle="City"
-                register={register}
-                type="text"
-                error={errors.city?.message}
-                testId="signup-city-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
                 nameInput="postalCode"
                 nameTitle="Postal Code"
                 register={register}
@@ -286,16 +310,6 @@ const SignForm = () => {
                 type="email"
                 error={errors.email?.message}
                 testId="signup-email-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameTitle="Password"
-                nameInput="password"
-                register={register}
-                type="password"
-                error={errors.password?.message}
-                testId="signup-password-input"
               />
             </div>
             <div className={styles.inputContainer}>

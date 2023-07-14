@@ -42,7 +42,6 @@ const FormSubscription = () => {
   const membersInput =
     searchMember.length > 0
       ? membersActive.filter((member) => {
-          console.log(member);
           return member.firstName.toLowerCase().includes(searchMember.toLowerCase());
         })
       : membersActive;
@@ -194,6 +193,11 @@ const FormSubscription = () => {
     setSlots(selectedClass.slots);
   }, [classes]);
 
+  const [selectedLi, setSelectedLi] = useState(null);
+
+  const handleIconClick = (memberId) => {
+    setSelectedLi(memberId);
+  };
   return (
     <section className={style.containerModal}>
       <form className={style.containerForm} onSubmit={handleSubmit(onSubmit)}>
@@ -232,7 +236,15 @@ const FormSubscription = () => {
               error={errors.classId?.message}
             />
           )}
-          {selectedClass && <>{slots <= 0 ? <p>No slots available</p> : <p>Slots: {slots}</p>}</>}
+          {selectedClass && (
+            <>
+              {slots <= 0 ? (
+                <p className={style.slots}>No slots available</p>
+              ) : (
+                <p className={style.slots}>Slots: {slots}</p>
+              )}
+            </>
+          )}
         </div>
         <div className={style.inputContainer}>
           Members:
@@ -255,7 +267,6 @@ const FormSubscription = () => {
             disabled={!isSlotsAvailable}
           />
         </div>
-
         <ul className={style.list}>
           {membersSelected.map((member) => {
             {
@@ -264,13 +275,37 @@ const FormSubscription = () => {
                   return (
                     <li key={member}>
                       <div className={style.listMembers}>
-                        {oneMember.firstName} {oneMember.lastName}
-                        <img
-                          src="/assets/images/icon-cross.png"
-                          alt="Cross icon"
-                          onClick={() => deleteItemList(member)}
-                        ></img>
+                        <div className={style.eachMember}>
+                          {oneMember.firstName} {oneMember.lastName}
+                          <div className={style.boxClose}>
+                            <img
+                              className={style.iconPic}
+                              onClick={() => {
+                                handleIconClick(member);
+                              }}
+                              src={`${process.env.PUBLIC_URL}/assets/images/${'info.png'}`}
+                            />
+                            <div
+                              onClick={() => deleteItemList(member)}
+                              className={style.close_icon}
+                            />
+                          </div>
+                        </div>
                       </div>
+                      {selectedLi === member && (
+                        <div className={style.speechBalloon}>
+                          <div className={style.speechElements}>
+                            <p title={'Email'}>{oneMember.email}</p>
+                            <p title={'Dni'}>{oneMember.dni}</p>
+                            <div
+                              onClick={() => {
+                                setSelectedLi(null);
+                              }}
+                              className={`${style.boxClick} ${style.close_icon}`}
+                            />
+                          </div>
+                        </div>
+                      )}
                     </li>
                   );
                 }

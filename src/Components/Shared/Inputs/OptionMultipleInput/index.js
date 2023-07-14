@@ -13,7 +13,7 @@ const SelectMultipleInput = ({
 }) => {
   const ifFirstName = (item) => {
     if (item.firstName && item.lastName) {
-      return `${item.firstName} ${item.lastName}`;
+      return `${item.firstName} ${item.lastName} (${item.email})`;
     }
   };
 
