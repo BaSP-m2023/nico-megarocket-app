@@ -18,7 +18,7 @@ function Header() {
     <header>
       <div className={styles.container}>
         <div className={styles.containerLogo}>
-          <a href="#" onClick={handleLinkClick}>
+          <a href="#" title="go back to Home" onClick={handleLinkClick}>
             <div className={styles.imgLogo}>
               <img src={logo} alt="Rocket logo" />
             </div>
