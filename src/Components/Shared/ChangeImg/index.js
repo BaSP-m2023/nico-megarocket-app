@@ -16,6 +16,7 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
   const admin = admins.find((oneAdmin) => oneAdmin.email === userCurrent);
   const member = members.find((oneMember) => oneMember.email === userCurrent);
   const trainer = trainers.find((oneTrainer) => oneTrainer.email === userCurrent);
+  const imgFile = document.getElementById('imgFile');
   const token = sessionStorage.getItem('token');
 
   const currentUser = async () => {
@@ -39,7 +40,9 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
         picture: image ? image : ''
       };
       setTogglePhotoEdit(false);
+      sessionStorage.setItem('img', image);
       await updateAdmin(dispatch, admin._id, userEdit);
+      imgFile.value = '';
     }
     if (sessionStorage.getItem('role') === 'TRAINER') {
       const userEdit = {
@@ -61,7 +64,9 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
         body: JSON.stringify(userEdit)
       };
       setTogglePhotoEdit(false);
+      sessionStorage.setItem('img', image);
       await dispatch(updateTrainer(trainer._id, body));
+      imgFile.value = '';
     }
     if (sessionStorage.getItem('role') === 'MEMBER') {
       const userEdit = {
@@ -86,7 +91,9 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
         body: JSON.stringify(userEdit)
       };
       setTogglePhotoEdit(false);
+      sessionStorage.setItem('img', image);
       await dispatch(editMember(member._id, body));
+      imgFile.value = '';
     }
   };
 
@@ -98,7 +105,6 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
       reader.onload = () => {
         const base64Result = reader.result;
         setTimeout(() => {
-          sessionStorage.setItem('img', base64Result);
           imageUpload(base64Result);
         }, 1000);
       };
@@ -114,10 +120,8 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
 
   const goToDefaultImg = () => {
     const image = '';
-    const imgFile = document.getElementById('imgFile');
     imgFile.value = '';
     setTimeout(() => {
-      sessionStorage.removeItem('img');
       imageUpload(image);
     }, 1000);
   };
