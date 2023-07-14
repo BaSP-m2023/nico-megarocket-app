@@ -140,12 +140,13 @@ const FormAdmin = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className={styles.containerForm}>
-          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-            <div className={styles.container}>
+        <div className={styles.container}>
+          <h3 className={styles.title}>{id ? 'Edit Admin' : 'Add Admin'}</h3>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className={styles.form}>
               <div className={styles.groupContainer}>
                 <Inputs
-                  nameTitle="Name"
+                  nameTitle="First name"
                   register={register}
                   nameInput="firstName"
                   type="text"
@@ -153,15 +154,7 @@ const FormAdmin = () => {
                   error={errors.firstName?.message}
                   testId="input-admin-name"
                 />
-                <Inputs
-                  nameTitle="LastName"
-                  register={register}
-                  nameInput="lastName"
-                  type="text"
-                  isDisabled={false}
-                  error={errors.lastName?.message}
-                  testId="input-admin-lastname"
-                />
+
                 <Inputs
                   nameTitle="DNI"
                   register={register}
@@ -171,17 +164,7 @@ const FormAdmin = () => {
                   error={errors.dni?.message}
                   testId="input-admin-dni"
                 />
-                <Inputs
-                  nameTitle="Phone"
-                  register={register}
-                  nameInput="phone"
-                  type="text"
-                  isDisabled={false}
-                  error={errors.phone?.message}
-                  testId="input-admin-phone"
-                />
-              </div>
-              <div className={styles.groupContainer}>
+
                 <Inputs
                   nameTitle="E-Mail"
                   register={register}
@@ -191,15 +174,7 @@ const FormAdmin = () => {
                   error={errors.email?.message}
                   testId="input-admin-email"
                 />
-                <Inputs
-                  nameTitle="City"
-                  register={register}
-                  nameInput="city"
-                  type="text"
-                  isDisabled={false}
-                  error={errors.city?.message}
-                  testId="input-admin-city"
-                />
+
                 <Inputs
                   nameTitle="Password"
                   register={register}
@@ -208,6 +183,37 @@ const FormAdmin = () => {
                   isDisabled={false}
                   error={errors.password?.message}
                   testId="input-admin-password"
+                />
+              </div>
+              <div className={styles.groupContainer}>
+                <Inputs
+                  nameTitle="Last name"
+                  register={register}
+                  nameInput="lastName"
+                  type="text"
+                  isDisabled={false}
+                  error={errors.lastName?.message}
+                  testId="input-admin-lastname"
+                />
+
+                <Inputs
+                  nameTitle="Phone"
+                  register={register}
+                  nameInput="phone"
+                  type="text"
+                  isDisabled={false}
+                  error={errors.phone?.message}
+                  testId="input-admin-phone"
+                />
+
+                <Inputs
+                  nameTitle="City"
+                  register={register}
+                  nameInput="city"
+                  type="text"
+                  isDisabled={false}
+                  error={errors.city?.message}
+                  testId="input-admin-city"
                 />
                 <Inputs
                   nameTitle="Repeat Password"
@@ -222,8 +228,8 @@ const FormAdmin = () => {
             </div>
 
             <div className={styles.buttonContainer}>
+              <Button text={id ? 'Update' : 'Add'} clickAction={() => {}} testId="admin-save-btn" />
               <Button text="reset" clickAction={() => reset()} testId="admin-reset-btn" />
-              <Button text="Save" clickAction={() => {}} testId="admin-save-btn" />
               <Button
                 clickAction={(e) => {
                   e.preventDefault();
