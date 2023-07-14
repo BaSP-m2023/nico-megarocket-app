@@ -64,17 +64,13 @@ const ProfileMenu = () => {
     </div>
   );
 
-  const showData = () => {
-    if (typeof profilePic === 'string') {
-      return <img src={profilePic} className={styles.profileImg} />;
-    } else {
-      return profilePic;
-    }
-  };
-
   useEffect(() => {
     setProfilePic(sessionStorage.getItem('img'));
   }, [sessionStorage.getItem('img')]);
+
+  useEffect(() => {
+    setProfilePic(defaultPic);
+  }, [!profilePic]);
 
   useEffect(() => {
     dispatch(getAllAdmins);
@@ -86,7 +82,8 @@ const ProfileMenu = () => {
     currentUser();
     if (member) {
       if (member?.picture) {
-        setProfilePic(member.picture);
+        sessionStorage.setItem('img', member.picture);
+        setProfilePic(sessionStorage.getItem('img'));
       } else {
         setProfilePic(defaultPic);
       }
@@ -104,7 +101,11 @@ const ProfileMenu = () => {
       {locationData.path !== '/auth/recover-password' && (
         <Link to={userData()?.link} className={styles.links}>
           <div className={styles.container}>
-            {member ? <img src={profilePic} className={styles.profileImg} /> : showData()}
+            {typeof profilePic === 'string' ? (
+              <img src={profilePic} className={styles.profileImg} />
+            ) : (
+              profilePic
+            )}
 
             <div className={styles.profileInfoContainer}>
               <p className={styles.userName}>
