@@ -208,6 +208,16 @@ function Home() {
           <FormLand />
         </article>
       </section>
+      <section className={styles.info}>
+        <div className={styles.card}>
+          <h4 className={styles.findUs}>Contact & Where to find us</h4>
+          <div className={styles.infoContainer}>
+            <p className={styles.ubication}>Rosario: Direccion 1234 - +54 341-4569878</p>
+            <p className={styles.ubication}>Montevideo: Direccion 1234 - +598 11-3489838</p>
+            <p className={styles.ubication}>radiumrocket@gmail.com</p>
+          </div>
+        </div>
+      </section>
     </section>
   );
 }

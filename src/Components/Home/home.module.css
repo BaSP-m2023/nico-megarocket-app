@@ -60,6 +60,7 @@
   text-align: center;
   position: relative;
   padding: 20px;
+  width:100%;
 }
 
 .bannerVideo {
@@ -411,7 +412,11 @@
   display: flex;
 }
 
-@media only screen and (max-width: 980px) {
+.info{
+  display:none;
+}
+
+@media only screen and (max-width: 768px) {
   .sectionActivities {
     gap: 1rem;
   }
@@ -458,6 +463,35 @@
 
   .memberships{
     margin-left: 11px;
+  }
+
+  .info{
+    display:flex;
+  }
+
+  .card{
+    background-color:var(--secondary-dark);
+    width:100%;
+    margin: 0 auto;
+    border-radius:5px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    color:white;
+  }
+
+  .findUs{
+    font-size:25px;
+    margin:15px;
+  }
+
+  .infoContainer{
+    width:80%;
+    text-align:center;
+  }
+
+  .ubication{
+    font-size:12px;
   }
 }
 
