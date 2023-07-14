@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './profile.module.css';
-import { ButtonForm, ProfilePicList, Loader } from 'Components/Shared';
+import { ButtonForm, ImageUploader, Loader } from 'Components/Shared';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { getAllMembers } from 'redux/members/thunks';
@@ -16,16 +16,13 @@ const MemberProfile = (testId) => {
   const member = members.find((oneTrainer) => oneTrainer.email === userCurrent);
   const [profilePic, setProfilePic] = useState('');
   const [photoEdit, setPhotoEdit] = useState(false);
-  const [counter, setCounter] = useState(0);
   const [loading, setLoading] = useState(true);
-  const defaultProfile = !profilePic ? (
+  const defaultProfile = (
     <div className={styles.defaultImg}>
       <p className={styles.profileInitials}>
         <span>{member?.firstName.charAt()}</span> <span>{member?.lastName.charAt()}</span>
       </p>
     </div>
-  ) : (
-    sessionStorage.getItem('img')
   );
 
   const currentUser = async () => {
@@ -37,9 +34,21 @@ const MemberProfile = (testId) => {
     }
   };
 
+  const togglePhotoEdit = () => {
+    setPhotoEdit(!photoEdit);
+  };
+
   const handleEditClick = () => {
     history.push(`/member/profile/form/${member._id}`, { params: { ...member } });
   };
+
+  useEffect(() => {
+    setProfilePic(defaultProfile);
+  }, [!profilePic]);
+
+  useEffect(() => {
+    setProfilePic(sessionStorage.getItem('img'));
+  }, [sessionStorage.getItem('img')]);
 
   useEffect(() => {
     getAllMembers(dispatch);
@@ -52,17 +61,17 @@ const MemberProfile = (testId) => {
 
   useEffect(() => {
     currentUser();
-    setProfilePic(defaultProfile);
+    if (member?.picture) {
+      sessionStorage.setItem('img', member.picture);
+      setProfilePic(sessionStorage.getItem('img'));
+    } else {
+      setProfilePic(defaultProfile);
+    }
   }, [member]);
 
   if (!member) {
     return null;
   }
-
-  const togglePhotoEdit = () => {
-    setCounter(counter + 1);
-    setPhotoEdit(!photoEdit);
-  };
 
   return (
     <div className={styles.wholeContainer}>
@@ -71,7 +80,7 @@ const MemberProfile = (testId) => {
       ) : (
         <section className={styles.container} data-testid={testId}>
           <div className={styles.profilePhotoContainer} data-testid="photo-container">
-            {typeof profilePic === 'string' ? (
+            {sessionStorage.getItem('img') ? (
               <img className={styles.profileImg} src={profilePic} alt="profile image" />
             ) : (
               profilePic
@@ -82,12 +91,7 @@ const MemberProfile = (testId) => {
               onClick={togglePhotoEdit}
               alt="camera"
             />
-            <ProfilePicList
-              profilePic={setProfilePic}
-              photoEdit={setPhotoEdit}
-              show={photoEdit}
-              counter={counter}
-            />
+            <ImageUploader setTogglePhotoEdit={togglePhotoEdit} photoEdit={photoEdit} />
             <h1 className={styles.adminName}>
               {member.firstName} {member.lastName}
             </h1>

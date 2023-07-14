@@ -62,7 +62,7 @@
   cursor: pointer;
 }
 .adminName {
-  margin-top: -20px;
+  margin-top: -40px;
   font-size: 1.5rem;
   font-weight: 400;
   color: rgba(55, 56, 103, 1);
@@ -144,3 +144,4 @@
   align-self: flex-start;
   gap:5px;
 }
+

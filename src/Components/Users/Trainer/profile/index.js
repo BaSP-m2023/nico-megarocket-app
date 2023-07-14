@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './profile.module.css';
-import { ButtonForm, Loader, ProfilePicList } from 'Components/Shared';
+import { ButtonForm, Loader } from 'Components/Shared';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { getTrainers } from 'redux/trainers/thunks';
@@ -81,12 +81,7 @@ const TrainerProfile = () => {
               onClick={togglePhotoEdit}
               alt="camera"
             />
-            <ProfilePicList
-              profilePic={setProfilePic}
-              photoEdit={setPhotoEdit}
-              show={photoEdit}
-              counter={counter}
-            />
+
             <h1 className={styles.adminName}>
               {trainer.firstName} {trainer.lastName}
             </h1>

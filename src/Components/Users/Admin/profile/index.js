@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styles from './profile.module.css';
-import { ButtonForm, Loader, ProfilePicList } from 'Components/Shared';
+import { ButtonForm, Loader } from 'Components/Shared';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { getAllAdmins } from 'redux/admins/thunks';
 import { getFirebaseUidFromToken } from 'helper/firebase';
 import 'firebase/compat/auth';
-const editProfilePicBtn = `${process.env.PUBLIC_URL}/assets/images/image.png`;
 
 const AdminProfile = ({ testId }) => {
   const dispatch = useDispatch();
@@ -15,8 +14,6 @@ const AdminProfile = ({ testId }) => {
   const admins = useSelector((state) => state.admins.list);
   const admin = admins.find((oneAdmin) => oneAdmin.email === userCurrent);
   const [profilePic, setProfilePic] = useState('');
-  const [photoEdit, setPhotoEdit] = useState(false);
-  const [counter, setCounter] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const defaultProfile = !profilePic ? (
@@ -59,10 +56,7 @@ const AdminProfile = ({ testId }) => {
   if (!admin) {
     return null;
   }
-  const togglePhotoEdit = () => {
-    setCounter(counter + 1);
-    setPhotoEdit(!photoEdit);
-  };
+
   return (
     <div className={styles.wholeContainer}>
       {loading ? (
@@ -75,18 +69,6 @@ const AdminProfile = ({ testId }) => {
             ) : (
               profilePic
             )}
-            <img
-              className={styles.editPhotoButton}
-              src={editProfilePicBtn}
-              onClick={togglePhotoEdit}
-              alt="camera"
-            />
-            <ProfilePicList
-              profilePic={setProfilePic}
-              photoEdit={setPhotoEdit}
-              show={photoEdit}
-              counter={counter}
-            />
             <h1 className={styles.adminName}>
               {admin.firstName} {admin.lastName}
             </h1>
