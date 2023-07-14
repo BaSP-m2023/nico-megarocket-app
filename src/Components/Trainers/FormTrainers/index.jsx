@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
-import { ModalConfirm, ModalSuccess, ToastError, Inputs, Button } from 'Components/Shared';
+import { ModalConfirm, ModalSuccess, ToastError, Inputs, Button, Loader } from 'Components/Shared';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { createTrainer, updateTrainer } from 'redux/trainers/thunks';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,12 +13,14 @@ const FormTrainer = () => {
   const [toastErrorOpen, setToastErrorOpen] = useState(false);
   const [modalSuccess, setModalSuccess] = useState(false);
   const [inputForm, setInputForm] = useState('');
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const location = useLocation();
   const updateData = location.state.params;
   const dispatch = useDispatch();
   const isError = useSelector((store) => store.trainers.formError);
   const token = sessionStorage.getItem('token');
+
   const schema = Joi.object({
     firstName: Joi.string().min(3).max(30).required(),
     lastName: Joi.string().min(3).max(30).required(),
@@ -117,136 +119,158 @@ const FormTrainer = () => {
     }
   }, [isError]);
 
+  useEffect(() => {
+    if (loading) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+    }
+  }, []);
+
   return (
-    <div className={styles.container}>
-      <h3 className={styles.title}>Add Trainer</h3>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.form}>
-          <div className={styles.groupContainer}>
-            <div>
-              <Inputs
-                nameTitle="First name"
-                register={register}
-                nameInput="firstName"
-                type="text"
-                error={errors.firstName?.message}
-              />
-            </div>
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className={styles.container}>
+          <h3 className={styles.title}>Add Trainer</h3>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className={styles.form}>
+              <div className={styles.groupContainer}>
+                <div>
+                  <Inputs
+                    nameTitle="First name"
+                    register={register}
+                    nameInput="firstName"
+                    type="text"
+                    error={errors.firstName?.message}
+                  />
+                </div>
 
-            <div>
-              <Inputs
-                nameTitle="DNI"
-                register={register}
-                nameInput="dni"
-                type="number"
-                error={errors.dni?.message}
-              />
-            </div>
-            <div>
-              <Inputs
-                nameTitle="Phone"
-                register={register}
-                nameInput="phone"
-                type="number"
-                error={errors.phone?.message}
-              />
-            </div>
+                <div>
+                  <Inputs
+                    nameTitle="DNI"
+                    register={register}
+                    nameInput="dni"
+                    type="number"
+                    error={errors.dni?.message}
+                  />
+                </div>
+                <div>
+                  <Inputs
+                    nameTitle="Phone"
+                    register={register}
+                    nameInput="phone"
+                    type="number"
+                    error={errors.phone?.message}
+                  />
+                </div>
 
-            {!id && (
-              <div>
-                <Inputs
-                  nameTitle="Password"
-                  register={register}
-                  nameInput="password"
-                  type="password"
-                  error={errors.password?.message}
-                />
+                {!id && (
+                  <div>
+                    <Inputs
+                      nameTitle="Password"
+                      register={register}
+                      nameInput="password"
+                      type="password"
+                      error={errors.password?.message}
+                    />
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-          <div className={styles.groupContainer}>
-            <div>
-              <Inputs
-                nameTitle="Last name"
-                register={register}
-                nameInput="lastName"
-                type="text"
-                error={errors.lastName?.message}
-              />
-            </div>
-            <div>
-              <Inputs
-                nameTitle="City"
-                register={register}
-                nameInput="city"
-                type="text"
-                error={errors.city?.message}
-              />
-            </div>
+              <div className={styles.groupContainer}>
+                <div>
+                  <Inputs
+                    nameTitle="Last name"
+                    register={register}
+                    nameInput="lastName"
+                    type="text"
+                    error={errors.lastName?.message}
+                  />
+                </div>
+                <div>
+                  <Inputs
+                    nameTitle="City"
+                    register={register}
+                    nameInput="city"
+                    type="text"
+                    error={errors.city?.message}
+                  />
+                </div>
 
-            <div>
-              <Inputs
-                nameTitle="Email"
-                register={register}
-                nameInput="email"
-                type="text"
-                error={errors.email?.message}
-              />
-            </div>
+                <div>
+                  <Inputs
+                    nameTitle="Email"
+                    register={register}
+                    nameInput="email"
+                    type="text"
+                    error={errors.email?.message}
+                  />
+                </div>
 
-            {!id && (
-              <div>
-                <Inputs
-                  nameTitle="Repeat Password"
-                  register={register}
-                  nameInput="repeatPassword"
-                  type="password"
-                  error={errors.repeatPassword?.message}
-                />
+                {!id && (
+                  <div>
+                    <Inputs
+                      nameTitle="Repeat Password"
+                      register={register}
+                      nameInput="repeatPassword"
+                      type="password"
+                      error={errors.repeatPassword?.message}
+                    />
+                  </div>
+                )}
+                <div>
+                  <Inputs
+                    nameTitle="Salary"
+                    register={register}
+                    nameInput="salary"
+                    type="number"
+                    error={errors.salary?.message}
+                  />
+                </div>
               </div>
-            )}
-            <div>
-              <Inputs
-                nameTitle="Salary"
-                register={register}
-                nameInput="salary"
-                type="number"
-                error={errors.salary?.message}
+            </div>
+            <div className={styles.buttonContainer}>
+              <Button
+                clickAction={() => {}}
+                text={id ? 'Update' : 'Add'}
+                testId="trainer-save-btn"
+              />
+              <Button clickAction={() => reset()} text="Reset" testId="trainer-reset-btn" />
+              <Button
+                text="Cancel"
+                clickAction={() => history.goBack()}
+                testId="trainer-cancel-btn"
               />
             </div>
-          </div>
-        </div>
-        <div className={styles.buttonContainer}>
-          <Button clickAction={() => {}} text={id ? 'Update' : 'Add'} testId="trainer-save-btn" />
-          <Button clickAction={() => reset()} text="Reset" testId="trainer-reset-btn" />
-          <Button text="Cancel" clickAction={() => history.goBack()} testId="trainer-cancel-btn" />
-        </div>
-      </form>
+          </form>
 
-      {modalUpdateConfirmOpen && (
-        <ModalConfirm
-          method={id ? 'Edit' : 'Create'}
-          message={
-            id
-              ? 'Are you sure you want to update this trainer?'
-              : 'Are you sure you want to add this trainer?'
-          }
-          onConfirm={formSubmit}
-          setModalConfirmOpen={setModalUpdateConfirmOpen}
-        />
+          {modalUpdateConfirmOpen && (
+            <ModalConfirm
+              method={id ? 'Edit' : 'Create'}
+              message={
+                id
+                  ? 'Are you sure you want to update this trainer?'
+                  : 'Are you sure you want to add this trainer?'
+              }
+              onConfirm={formSubmit}
+              setModalConfirmOpen={setModalUpdateConfirmOpen}
+            />
+          )}
+          {modalSuccess && (
+            <ModalSuccess
+              setModalSuccessOpen={setModalSuccess}
+              message={
+                id ? 'Trainer has been updated succesfully' : 'Trainer has been added succesfully'
+              }
+            />
+          )}
+          {toastErrorOpen && (
+            <ToastError setToastErroOpen={setToastErrorOpen} message={isError.message} />
+          )}
+        </div>
       )}
-      {modalSuccess && (
-        <ModalSuccess
-          setModalSuccessOpen={setModalSuccess}
-          message={
-            id ? 'Trainer has been updated succesfully' : 'Trainer has been added succesfully'
-          }
-        />
-      )}
-      {toastErrorOpen && (
-        <ToastError setToastErroOpen={setToastErrorOpen} message={isError.message} />
-      )}
-    </div>
+    </>
   );
 };
 

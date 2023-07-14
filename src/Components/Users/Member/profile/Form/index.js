@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './profile-form.module.css';
 import {
   Inputs,
@@ -6,7 +6,8 @@ import {
   ModalConfirm,
   ModalSuccess,
   ToastError,
-  OptionInput
+  OptionInput,
+  Loader
 } from 'Components/Shared';
 import { editMember } from 'redux/members/thunks';
 import { useParams, useLocation, useHistory } from 'react-router-dom';
@@ -36,6 +37,7 @@ const MemberProfileForm = () => {
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [toastErroOpen, setToastErroOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('Error in database');
+  const [loading, setLoading] = useState(true);
   const memberships = ['Classic', 'Black', 'Only Classes'];
   const [memberToEdit, setMemberToEdit] = useState({});
 
@@ -123,6 +125,13 @@ const MemberProfileForm = () => {
       setToastErroOpen(true);
     }
   };
+  useEffect(() => {
+    if (loading) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+    }
+  }, []);
 
   const confirmation = () => {
     setModalSuccessOpen(true);
@@ -131,127 +140,135 @@ const MemberProfileForm = () => {
     }, 2000);
   };
   return (
-    <div className={styles.containerForm}>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.boxInput}>
-          <div className={styles.inputForm}>
-            <Inputs
-              type="text"
-              nameInput={'firstName'}
-              nameTitle={'Name'}
-              register={register}
-              error={errors.firstName?.message}
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className={styles.containerForm}>
+          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            <div className={styles.boxInput}>
+              <div className={styles.inputForm}>
+                <Inputs
+                  type="text"
+                  nameInput={'firstName'}
+                  nameTitle={'Name'}
+                  register={register}
+                  error={errors.firstName?.message}
+                />
+              </div>
+              <div className={styles.inputForm}>
+                <Inputs
+                  type="text"
+                  nameInput={'lastName'}
+                  nameTitle={'Last Name'}
+                  register={register}
+                  error={errors.lastName?.message}
+                />
+              </div>
+            </div>
+            <div className={styles.boxInput}>
+              <div className={styles.inputForm}>
+                <Inputs
+                  type="text"
+                  nameInput={'dni'}
+                  nameTitle={'DNI'}
+                  register={register}
+                  error={errors.dni?.message}
+                />
+              </div>
+              <div className={styles.inputForm}>
+                <Inputs
+                  type="text"
+                  nameInput={'phone'}
+                  nameTitle={'Phone'}
+                  register={register}
+                  error={errors.phone?.message}
+                />
+              </div>
+            </div>
+            <div className={styles.boxInput}>
+              <div className={styles.inputForm}>
+                <Inputs
+                  type="text"
+                  nameInput={'city'}
+                  nameTitle={'City'}
+                  register={register}
+                  error={errors.city?.message}
+                />
+              </div>
+              <div className={styles.inputForm}>
+                <Inputs
+                  type="email"
+                  nameInput={'email'}
+                  nameTitle={'E-Mail'}
+                  register={register}
+                  error={errors.email?.message}
+                />
+              </div>
+            </div>
+            <div className={styles.boxInput}>
+              <div className={styles.inputForm}>
+                <Inputs
+                  type="number"
+                  nameInput={'postalCode'}
+                  nameTitle={'Postal Code'}
+                  register={register}
+                  error={errors.postalCode?.message}
+                />
+              </div>
+              <div className={styles.inputForm}>
+                <Inputs
+                  type="date"
+                  nameInput={'birthday'}
+                  nameTitle={'Date Of Birth'}
+                  register={register}
+                  error={errors.birthday?.message}
+                />
+              </div>
+            </div>
+            <div className={styles.boxInput}>
+              <div className={styles.optionInputForm}>
+                <OptionInput
+                  name={'membership'}
+                  dataLabel={'Membership'}
+                  data={memberships}
+                  register={register}
+                  error={errors.membership?.message}
+                />
+              </div>
+            </div>
+            <div className={styles.buttonsBox}>
+              <Button clickAction={() => {}} text="Save" />
+              <Button text="Reset" clickAction={() => reset()} />
+              <Button
+                clickAction={(e) => {
+                  e.preventDefault();
+                  history.goBack();
+                }}
+                text="Cancel"
+              />
+            </div>
+          </form>
+          {modalConfirmOpen && (
+            <ModalConfirm
+              method={'Edit'}
+              message={'Are you sure you want to edit the member?'}
+              onConfirm={submitMember}
+              setModalConfirmOpen={setModalConfirmOpen}
             />
-          </div>
-          <div className={styles.inputForm}>
-            <Inputs
-              type="text"
-              nameInput={'lastName'}
-              nameTitle={'Last Name'}
-              register={register}
-              error={errors.lastName?.message}
+          )}
+          {modalSuccessOpen && (
+            <ModalSuccess
+              message={'Member edited successfully'}
+              setModalSuccessOpen={setModalSuccessOpen}
             />
-          </div>
+          )}
+          {toastErroOpen && (
+            <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />
+          )}
         </div>
-        <div className={styles.boxInput}>
-          <div className={styles.inputForm}>
-            <Inputs
-              type="text"
-              nameInput={'dni'}
-              nameTitle={'DNI'}
-              register={register}
-              error={errors.dni?.message}
-            />
-          </div>
-          <div className={styles.inputForm}>
-            <Inputs
-              type="text"
-              nameInput={'phone'}
-              nameTitle={'Phone'}
-              register={register}
-              error={errors.phone?.message}
-            />
-          </div>
-        </div>
-        <div className={styles.boxInput}>
-          <div className={styles.inputForm}>
-            <Inputs
-              type="text"
-              nameInput={'city'}
-              nameTitle={'City'}
-              register={register}
-              error={errors.city?.message}
-            />
-          </div>
-          <div className={styles.inputForm}>
-            <Inputs
-              type="email"
-              nameInput={'email'}
-              nameTitle={'E-Mail'}
-              register={register}
-              error={errors.email?.message}
-            />
-          </div>
-        </div>
-        <div className={styles.boxInput}>
-          <div className={styles.inputForm}>
-            <Inputs
-              type="number"
-              nameInput={'postalCode'}
-              nameTitle={'Postal Code'}
-              register={register}
-              error={errors.postalCode?.message}
-            />
-          </div>
-          <div className={styles.inputForm}>
-            <Inputs
-              type="date"
-              nameInput={'birthday'}
-              nameTitle={'Date Of Birth'}
-              register={register}
-              error={errors.birthday?.message}
-            />
-          </div>
-        </div>
-        <div className={styles.boxInput}>
-          <div className={styles.optionInputForm}>
-            <OptionInput
-              name={'membership'}
-              dataLabel={'Membership'}
-              data={memberships}
-              register={register}
-              error={errors.membership?.message}
-            />
-          </div>
-        </div>
-        <div className={styles.buttonsBox}>
-          <Button clickAction={() => {}} text="Save" />
-          <Button text="Reset" clickAction={() => reset()} />
-          <Button
-            clickAction={(e) => {
-              e.preventDefault();
-              history.goBack();
-            }}
-            text="Cancel"
-          />
-        </div>
-      </form>
-      {modalConfirmOpen && (
-        <ModalConfirm
-          method={'Edit'}
-          message={'Are you sure you want to edit the member?'}
-          onConfirm={submitMember}
-          setModalConfirmOpen={setModalConfirmOpen}
-        />
       )}
-      {modalSuccessOpen && (
-        <ModalSuccess
-          message={'Member edited successfully'}
-          setModalSuccessOpen={setModalSuccessOpen}
-        />
-      )}
-      {toastErroOpen && <ToastError setToastErroOpen={setToastErroOpen} message={toastMessage} />}
-    </div>
+    </>
   );
 };
 
