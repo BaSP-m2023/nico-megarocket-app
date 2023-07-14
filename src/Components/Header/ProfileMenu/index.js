@@ -106,7 +106,6 @@ const ProfileMenu = () => {
             ) : (
               profilePic
             )}
-
             <div className={styles.profileInfoContainer}>
               <p className={styles.userName}>
                 {userData()?.firstName} {userData()?.lastName}{' '}
