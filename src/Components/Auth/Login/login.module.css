@@ -163,3 +163,28 @@
 .shakeAnimation {
   animation: shakeAnimation 0.3s ease-in-out;
 }
+
+@media only screen and (max-width: 900px) {
+  .wholeContainer {
+    max-width: 90%;
+    margin-left:4rem;
+    margin-bottom:10rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+
+  .wholeContainer{
+    margin:0;
+    width:90%;
+  }
+
+  .formSuperAdmin {
+    justify-content: start;
+    margin-top: 20px;
+  }
+
+  .forgotPass {
+    font-size: 10px;
+  }
+}
