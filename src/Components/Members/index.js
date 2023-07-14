@@ -1,4 +1,5 @@
-import { TableComponent, ToastError, Loader } from 'Components/Shared';
+import { TableComponent, ToastError, Loader, AddButton } from 'Components/Shared';
+import styles from 'Components/Shared/AddButton/addButton.module.css';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -46,6 +47,7 @@ function Members() {
 
   return (
     <section>
+      <AddButton visibles={styles.visibles} />
       {showLoader ? (
         <Loader />
       ) : (

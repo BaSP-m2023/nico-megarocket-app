@@ -31,3 +31,8 @@
   width: 15px;
   height: 15px;
 }
+
+.visibles {
+  opacity: 0;
+  visibility: 0;
+}

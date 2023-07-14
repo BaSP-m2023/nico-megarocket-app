@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Loader, TableComponent, ToastError } from 'Components/Shared';
+import { Loader, TableComponent, ToastError, AddButton } from 'Components/Shared';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getSuscription, deleteSubscription } from 'redux/subscriptions/thunks';
 import { getClasses } from 'redux/classes/thunks';
+import styles from 'Components/Shared/AddButton/addButton.module.css';
 
 function Subscriptions() {
   const dispatch = useDispatch();
@@ -55,6 +56,7 @@ function Subscriptions() {
 
   return (
     <section>
+      <AddButton visibles={styles.visibles} />
       {showLoader ? (
         <Loader />
       ) : (
