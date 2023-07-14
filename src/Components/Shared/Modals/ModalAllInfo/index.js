@@ -21,37 +21,57 @@ const ModalInfo = ({ data, setModalAllInfo }) => {
         </div>
         <div className={styles.classInfo}>
           <h1 className={styles.titleModal}>
-            {data?.firstName} {data?.lastName}
+            {data?.description ? `${data?.name}` : `${data?.firstName} ${data?.lastName}`}
           </h1>
         </div>
         <div className={styles.otherInfo}>
-          <p>
-            <span className={styles.subTitle}>Email:</span>{' '}
-            <span className={styles.dataSubTitle}>{data?.email}</span>
-          </p>
+          {data?.description ? (
+            ''
+          ) : (
+            <p>
+              <span className={styles.subTitle}>Email:</span>{' '}
+              <span className={styles.dataSubTitle}>{data?.email}</span>
+            </p>
+          )}
         </div>
         <div className={styles.tableBox}>
           <table className={styles.tableModal}>
             <thead>
               <tr>
-                <th>Phone</th>
-                <th>City</th>
-                {!data.membership ? (
+                {data.description ? (
                   <>
-                    <th>DNI</th>
-                    <th>Salary/h</th>
+                    <th>Description</th>
                   </>
                 ) : (
                   <>
-                    <th>Membership</th>
-                    <th>Postal code</th>
+                    <th>Phone</th>
+                    <th>City</th>
+                    {!data.membership ? (
+                      <>
+                        <th>DNI</th>
+                        <th>Salary/h</th>
+                      </>
+                    ) : (
+                      <>
+                        <th>Membership</th>
+                        <th>Postal code</th>
+                      </>
+                    )}
                   </>
                 )}
               </tr>
             </thead>
             <tbody className={styles.tableBody}>
-              <td>{data?.phone}</td>
-              <td>{data?.city}</td>
+              {data.description ? (
+                <>
+                  <td>{data?.description}</td>
+                </>
+              ) : (
+                <>
+                  <td>{data?.phone}</td>
+                  <td>{data?.city}</td>
+                </>
+              )}
               {!data.membership ? (
                 <>
                   <td>{data?.dni}</td>

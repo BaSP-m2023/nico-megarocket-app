@@ -202,7 +202,8 @@ const TableComponent = ({
                               setInfo(row);
                             } else if (
                               located === '/admin/trainers' ||
-                              located === '/admin/members'
+                              located === '/admin/members' ||
+                              located === '/admin/activities'
                             ) {
                               setModalAllInfo(true);
                               setAllInfo(row);

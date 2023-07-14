@@ -156,4 +156,6 @@
   transition: all 0.2s;
 }
 
-
+.tableBody td {
+  max-width: 8rem;
+}
