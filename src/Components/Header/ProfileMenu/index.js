@@ -89,10 +89,20 @@ const ProfileMenu = () => {
       }
     }
     if (admin) {
-      setProfilePic(defaultPic);
+      if (admin?.picture) {
+        sessionStorage.setItem('img', admin.picture);
+        setProfilePic(sessionStorage.getItem('img'));
+      } else {
+        setProfilePic(defaultPic);
+      }
     }
     if (trainer) {
-      setProfilePic(defaultPic);
+      if (trainer?.picture) {
+        sessionStorage.setItem('img', trainer.picture);
+        setProfilePic(sessionStorage.getItem('img'));
+      } else {
+        setProfilePic(defaultPic);
+      }
     }
   }, [admin || trainer || member]);
 
