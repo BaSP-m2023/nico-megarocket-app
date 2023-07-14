@@ -155,3 +155,37 @@
 .memberLenght{
   font-weight: bolder;
 }
+
+@media screen and (max-width: 1150px) {
+  .container {
+    width: 80%;
+  }
+
+  .containerTable {
+    width: 80%;
+  }
+
+  .table tr td,
+.table tr th {
+  padding: 15px 5px 15px 20px;
+}
+}
+
+@media screen and (min-width: 768px) and (max-width: 950px) {
+  .container {
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    margin: 0 0 0 4rem;
+  }
+
+  .containerTable {
+    font-size: .8rem;
+  }
+
+  .table tr td,
+  .table tr th {
+    padding: 7px 5px 7px 5px;
+  }
+}
+
