@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router-dom';
 import styles from './home.module.css';
 import { FormLand } from 'Components/Shared';
 
@@ -6,23 +7,25 @@ function Home() {
   const gymCalendarIcon = `${process.env.PUBLIC_URL}/assets/images/calendarHome.svg`;
   const gymIconList = `${process.env.PUBLIC_URL}/assets/images/membership.svg`;
   const gymIconMessage = `${process.env.PUBLIC_URL}/assets/images/contact.svg`;
-  const gymImageGym = `${process.env.PUBLIC_URL}/assets/images/dumbells.jpg`;
+  const runMachine = `${process.env.PUBLIC_URL}/assets/images/run-machine.jpg`;
   const gymImageGymOne = `${process.env.PUBLIC_URL}/assets/images/gym-sports.jpg`;
   const gymImageGymTwo = `${process.env.PUBLIC_URL}/assets/images/youngers-training.jpg`;
   const checkIcon = `${process.env.PUBLIC_URL}/assets/images/check.svg`;
   const logo = `${process.env.PUBLIC_URL}/assets/images/logo.png`;
+  const history = useHistory();
 
   return (
     <section className={styles.container}>
       <section className={styles.sectionHead}>
         <div className={styles.containerSectionHead}>
-          <img src={logo} alt="Rocket logo" />
-          <h1 className={styles.title}>MEGA ROCKET WEB</h1>
-          <h2 id={styles.sectionHeadWelcome}>WELCOME</h2>
-          <p className={styles.Text}>
-            Mega Rocket web is a monthly management system for members and trainers so that they can
-            dynamically sign up for their activities in the gym
-          </p>
+          <div className={styles.content}>
+            <img className={styles.rocketLogo} src={logo} alt="Rocket logo" />
+            <h1 className={styles.title}>welcome to the mega rocket family</h1>
+            <p className={styles.Text}>
+              Mega Rocket web is a monthly management system for members and trainers so that they
+              can dynamically sign up for their activities in the gym
+            </p>
+          </div>
           <video className={styles.bannerVideo} autoPlay loop muted>
             <source src="/assets/video/video.mp4" type="video/mp4" />
             Your browser does not support the video tag.
@@ -33,7 +36,7 @@ function Home() {
         <h2 className={styles.sectionTitleBlue}>About Mega Rocket</h2>
         <div className={styles.sectionAboutFlexContainer}>
           <article className={styles.sectionAboutContainer} id={styles.sectionAboutContainerTop}>
-            <img src={gymImageGym} className={styles.sectionAboutImage} alt="The inside of a gym" />
+            <img src={runMachine} className={styles.sectionAboutImage} alt="The inside of a gym" />
             <p className={styles.sectionAboutTextDesktop}>
               We are Mega Rocket web, one of the oldest but most modern gyms in the region, with a
               unique monthly management system for members and trainers in the country, so they can
@@ -141,7 +144,9 @@ function Home() {
                 </li>
               </ul>
             </div>
-            <div className={styles.cardInfo}>More info</div>
+            <div onClick={() => history.push('/auth/sign-up')} className={styles.cardInfo}>
+              More info
+            </div>
           </div>
           <div className={styles.cardMembership}>
             <h5 className={styles.cardTitle}>Classic</h5>
@@ -161,7 +166,9 @@ function Home() {
                 </li>
               </ul>
             </div>
-            <div className={styles.cardInfo}>More info</div>
+            <div onClick={() => history.push('/auth/sign-up')} className={styles.cardInfo}>
+              More info
+            </div>
           </div>
           <div className={styles.cardMembership}>
             <h5 className={styles.cardTitle}>Black</h5>
@@ -189,7 +196,9 @@ function Home() {
                 </li>
               </ul>
             </div>
-            <div className={styles.cardInfo}>More info</div>
+            <div onClick={() => history.push('/auth/sign-up')} className={styles.cardInfo}>
+              More info
+            </div>
           </div>
         </article>
       </section>
