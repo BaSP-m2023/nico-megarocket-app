@@ -13,13 +13,12 @@ const FormTrainer = () => {
   const [toastErrorOpen, setToastErrorOpen] = useState(false);
   const [modalSuccess, setModalSuccess] = useState(false);
   const [inputForm, setInputForm] = useState('');
-  const [showLoader, setShowLoader] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const location = useLocation();
   const updateData = location.state.params;
   const dispatch = useDispatch();
   const isError = useSelector((store) => store.trainers.formError);
-  const isPending = useSelector((state) => state.trainers.pending);
   const token = sessionStorage.getItem('token');
 
   const schema = Joi.object({
@@ -121,18 +120,16 @@ const FormTrainer = () => {
   }, [isError]);
 
   useEffect(() => {
-    if (!isPending) {
-      setShowLoader(true);
-      const timer = setTimeout(() => {
-        setShowLoader(false);
-      }, 1000);
-      return () => clearTimeout(timer);
+    if (loading) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     }
-  }, [isPending]);
+  }, []);
 
   return (
     <>
-      {showLoader ? (
+      {loading ? (
         <Loader />
       ) : (
         <div className={styles.container}>

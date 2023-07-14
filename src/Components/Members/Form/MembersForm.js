@@ -19,13 +19,12 @@ import Joi from 'joi';
 const MembersForm = () => {
   const dispatch = useDispatch();
   const isError = useSelector((state) => state.members.errorForm);
-  const isPending = useSelector((state) => state.members.pending);
   const token = sessionStorage.getItem('token');
   const [toastError, setToastErroOpen] = useState(false);
   const [modalAddConfirmOpen, setModalAddConfirmOpen] = useState(false);
   const [modalSuccess, setModalSuccessOpen] = useState(false);
   const [member, setMember] = useState({});
-  const [showLoader, setShowLoader] = useState(false);
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
   const history = useHistory();
   const data = location.state.params;
@@ -195,20 +194,18 @@ const MembersForm = () => {
   }, [isError]);
 
   useEffect(() => {
-    if (!isPending) {
-      setShowLoader(true);
-      const timer = setTimeout(() => {
-        setShowLoader(false);
-      }, 1000);
-      return () => clearTimeout(timer);
+    if (loading) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     }
-  }, [isPending]);
+  }, []);
 
   const memberships = ['Classic', 'Black', 'Only Classes'];
 
   return (
     <>
-      {showLoader ? (
+      {loading ? (
         <Loader />
       ) : (
         <div className={styles.container}>
