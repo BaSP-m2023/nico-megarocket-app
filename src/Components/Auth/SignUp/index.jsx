@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './signUp.module.css';
-import { Inputs, OptionInput, Button, ToastError } from 'Components/Shared';
+import { Inputs, OptionInput, Button, ToastError, ModalSignUp } from 'Components/Shared';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -13,9 +13,11 @@ const SignForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [openModalSuccess, setOpenModalSuccess] = useState(null);
+  const [modalShow, setModalShow] = useState(false);
   const [error, setError] = useState(null);
   const [messageError, setMessageError] = useState('');
   const [toastError, setToastError] = useState(null);
+  const [base64Picture, setBase64Picture] = useState('');
 
   const schema = Joi.object({
     firstName: Joi.string()
@@ -121,6 +123,24 @@ const SignForm = () => {
       .required()
   });
 
+  const handlePictureChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const base64Result = reader.result;
+        console.log(base64Picture);
+        setBase64Picture(base64Result);
+      };
+      reader.onerror = (error) => {
+        console.log(error);
+      };
+    } else {
+      setBase64Picture('');
+    }
+  };
+
   const {
     register,
     handleSubmit,
@@ -141,8 +161,10 @@ const SignForm = () => {
       password: data.password,
       postalCode: data.postalCode,
       membership: data.membership,
-      birthday: data.birthday
+      birthday: data.birthday,
+      picture: base64Picture
     };
+
     if (Object.values(errors).length === 0) {
       try {
         const responseSignUp = await dispatch(signUpMember(memberEdit));
@@ -167,6 +189,13 @@ const SignForm = () => {
     }
   };
 
+  useEffect(() => {
+    const role = sessionStorage.getItem('role');
+    if (role) {
+      setModalShow(true);
+    }
+  }, []);
+
   const memberships = ['Classic', 'Black', 'Only Classes'];
 
   return (
@@ -186,7 +215,7 @@ const SignForm = () => {
           testId="member-form-toast-error"
         />
       )}
-
+      {modalShow && <ModalSignUp setModalShow={setModalShow} />}
       {error && (
         <div className={styles.boxError} data-testid="signUp-error-pop">
           <div className={styles.lineError}>
@@ -203,7 +232,11 @@ const SignForm = () => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={styles.container}
+        encType="multipart/form-data"
+      >
         <h1 className={styles.title}>Sign Up</h1>
         <div className={styles.form}>
           <div className={styles.groupContainer}>
@@ -318,6 +351,19 @@ const SignForm = () => {
                 error={errors.membership?.message}
                 testId="signup-membership-input"
               />
+            </div>
+            <div className={styles.inputContainer}>
+              <label className={styles.nameLabel}>Picture</label>
+              <input type="file" name="picture" onChange={handlePictureChange} />
+              {base64Picture && (
+                <img
+                  className={styles.image}
+                  src={base64Picture}
+                  alt="Thumbnail"
+                  width="100"
+                  height="100"
+                />
+              )}
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@ import ButtonForm from '../ButtonForm';
 import styles from './table.module.css';
 import { useState } from 'react';
 import { ModalConfirm, ModalSuccess, ButtonActive } from '../index';
-import { ModalInfo } from 'Components/Shared';
+import { ModalInfo, ModalAllInfo } from 'Components/Shared';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -20,8 +20,10 @@ const TableComponent = ({
   const fieldValue = valueField;
   const [successModal, setModalSuccess] = useState(false);
   const [modalConfirm, setModalConfirm] = useState(false);
+  const [modalAllInfo, setModalAllInfo] = useState(false);
   const [modalInfo, setModalInfo] = useState(false);
   const [info, setInfo] = useState({});
+  const [allInfo, setAllInfo] = useState({});
   const [idDelete, setIdDelete] = useState('');
   const dispatch = useDispatch();
   const located = useLocation().pathname;
@@ -44,7 +46,7 @@ const TableComponent = ({
       if (Array.isArray(item)) {
         if (item.length === 1) {
           return item[0][fieldValue?.arrayFirstValue] + ' ' + item[0][fieldValue?.arraySecondValue];
-        } else {
+        } else if (item.length !== 0) {
           return (
             <span>
               {item[0][fieldValue?.arrayFirstValue]} {item[0][fieldValue?.arraySecondValue]}{' '}
@@ -93,7 +95,11 @@ const TableComponent = ({
 
   const ifNotExist = (item) => {
     if (item?.length === 0) {
-      return <span>This element Was Deleted. Edit to add</span>;
+      if (located === '/admin/subscription') {
+        return <span>No member added</span>;
+      } else {
+        return <span>This element Was Deleted. Edit to add</span>;
+      }
     }
   };
 
@@ -171,7 +177,7 @@ const TableComponent = ({
       ) : (
         <div className={styles.containerTable}>
           <table className={styles.table}>
-            <thead>
+            <thead className={styles.containerTHead}>
               <tr className={styles.tableContent}>
                 {columnTitleArray.map((column, index) => (
                   <th key={column[index]}>{column}</th>
@@ -181,11 +187,10 @@ const TableComponent = ({
                 <th>Delete</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className={styles.containerTbody}>
               {filtered
                 .map((row, index) => {
                   const rowClass = index % 2 === 0 ? styles.rowBackground1 : styles.rowBackground2;
-
                   return (
                     <tr className={rowClass} key={index}>
                       {columns.map((column, columnIndex) => (
@@ -195,6 +200,13 @@ const TableComponent = ({
                             if (column === 'members') {
                               setModalInfo(true);
                               setInfo(row);
+                            } else if (
+                              located === '/admin/trainers' ||
+                              located === '/admin/members' ||
+                              located === '/admin/activities'
+                            ) {
+                              setModalAllInfo(true);
+                              setAllInfo(row);
                             }
                           }}
                         >
@@ -244,6 +256,7 @@ const TableComponent = ({
           </div>
         </div>
       )}
+      {modalAllInfo && <ModalAllInfo data={allInfo} setModalAllInfo={setModalAllInfo} />}
       {modalConfirm && (
         <ModalConfirm
           onConfirm={() => onConfirm()}

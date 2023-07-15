@@ -9,7 +9,7 @@ const routes = [
   {
     name: 'Admin',
     path: '/superAdmin/admin',
-    icon: 'admin.png'
+    icon: 'member.svg'
   }
 ];
 

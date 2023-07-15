@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './addButton.module.css';
 
-const AddButton = ({ entity, createMode, testId }) => {
+const AddButton = ({ entity, createMode, testId, visibles }) => {
   return (
-    <div className={styles.container_button} data-testid={testId}>
+    <div className={`${styles.container_button} ${visibles}`} data-testid={testId}>
       <button className={styles.add_button} onClick={createMode}>
         <img
           className={styles.add_btn_img}

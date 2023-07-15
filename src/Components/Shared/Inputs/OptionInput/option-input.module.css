@@ -1,9 +1,23 @@
 .optionInput {
-  width: 255px;
-  border: 1px solid;
+  width: 230px;
   height: 30px;
-  border-radius: 4px;
-  font-size: 15px;
+  border: 1px solid #999;
+  font-size: 14px;
+  color: var(--primary);
+  background-color: #eee;
+  border-radius: 5px;
+  box-shadow: 2px 2px #f0f0f0;
+  cursor: pointer;
+}
+
+.selectOption {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 14px;
+  color: var(--primary);
+  cursor: pointer;
 }
 
 .containerInput {
@@ -20,9 +34,11 @@
   width: 230px;
   text-align: left;
 }
+
 .spaceErrorMsg {
   margin-top: 0;
 }
+
 .errorInput {
   border: 2px solid var(--red);
   margin-top: 0;

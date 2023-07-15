@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './modalInfo.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClasses } from 'redux/classes/thunks';
@@ -12,6 +12,7 @@ const ModalInfo = ({ data, setModalInfo }) => {
   const trainers = useSelector((state) => state.trainers.list);
   const trainer = trainers.find((oneTrainer) => oneTrainer._id === data.classId.trainer[0]);
   const activity = activities.find((oneAct) => oneAct._id === data.classId.activity);
+  const [isClosing, setIsClosing] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
   useEffect(() => {
@@ -24,16 +25,22 @@ const ModalInfo = ({ data, setModalInfo }) => {
     return null;
   }
 
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setModalInfo(false);
+    }, 300);
+  };
+
   return (
-    <div className={styles.wholeContainer}>
-      <div className={styles.container}>
+    <div className={`${styles.wholeContainer}  ${isClosing ? styles.animationExit : ''}`}>
+      <div
+        className={`${styles.container} ${styles.animation} ${
+          isClosing ? styles.animationModalExit : ''
+        }`}
+      >
         <div className={styles.boxClose}>
-          <div
-            onClick={() => {
-              setModalInfo(false);
-            }}
-            className={styles.close_icon}
-          />
+          <div onClick={handleClose} className={styles.close_icon} />
         </div>
         <div className={styles.classInfo}>
           <h1 className={styles.titleModal}>{activity.name}</h1>
@@ -44,7 +51,7 @@ const ModalInfo = ({ data, setModalInfo }) => {
           <p className={styles.trainerInfo}>
             <span className={styles.subTitle}>Trainer:</span>{' '}
             <span className={styles.dataSubTitle}>
-              {trainer.firstName} {trainer.lastName}
+              {trainer ? `${trainer.firstName} ${trainer.lastName}` : 'No trainer defined'}
             </span>
           </p>
           <div className={styles.slotsInfo}>
@@ -62,15 +69,23 @@ const ModalInfo = ({ data, setModalInfo }) => {
               </tr>
             </thead>
             <tbody>
-              {data.members.map((item) => (
-                <tr key={item._id}>
-                  <td>
-                    {item.firstName} {item.lastName}
+              {data.members.length === 0 ? (
+                <tr>
+                  <td colSpan="3" className={styles.spanAlone}>
+                    Zero member enrolled
                   </td>
-                  <td>{item.email}</td>
-                  <td>{item.dni}</td>
                 </tr>
-              ))}
+              ) : (
+                data.members.map((item) => (
+                  <tr key={item._id}>
+                    <td>
+                      {item.firstName} {item.lastName}
+                    </td>
+                    <td>{item.email}</td>
+                    <td>{item.dni}</td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

@@ -162,3 +162,55 @@
   border: 1.5px solid var(--secondary);
   transition: all 0.2s;
 }
+.spanAlone {
+  text-align: center !important;
+  height: 40px;
+}
+.animation{
+    animation-name: scale-up-center;
+		animation-duration: .3s;
+		animation-timing-function: ease;
+		animation-delay: 0s;
+		animation-iteration-count: 1;
+		animation-direction: normal;
+		animation-fill-mode: none;
+}
+@keyframes scale-up-center {
+  0% {
+    transform:scale(.2);
+  }
+  100% {
+    transform:scale(1);
+  }
+}
+.animationModalExit{
+  animation-name: scale-down-center;
+	animation-duration: 1.2s;
+	animation-timing-function: ease-out;
+	animation-delay: 0s;
+	animation-iteration-count: 1;
+	animation-direction: normal;
+	animation-fill-mode: none;
+}
+@keyframes scale-down-center {
+  0% {
+    transform:scale(1);
+  }
+  100% {
+    transform:scale(0);
+  }
+}
+.animationExit {
+  animation-name: fadeOut;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
