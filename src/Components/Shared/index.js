@@ -20,3 +20,4 @@ export { default as ModalSignUp } from './Modals/ModalSignUp';
 export { default as FormLand } from './FormLand';
 export { default as ModalAllInfo } from './Modals/ModalAllInfo';
 export { default as LoadHome } from './LoadHome';
+export { default as TableMobile } from './TableMobile';

@@ -3,6 +3,7 @@ import { AddButton, Loader, TableComponent, ToastError } from 'Components/Shared
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllActivities, deleteActivity } from 'redux/activities/thunks';
+import styles from 'Components/Shared/AddButton/addButton.module.css';
 
 function Activities() {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ function Activities() {
   const columns = ['name', 'description'];
 
   return (
-    <section>
+    <section className={styles.containerEachEntityTable}>
       <AddButton entity="Activity" createMode={createMode} testId="add-activity-btn" />
       {showLoader ? (
         <Loader testId="activity-table-loader" />

@@ -3,6 +3,7 @@ import { ToastError, AddButton, TableComponent, Loader } from 'Components/Shared
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllAdmins, adminDelete } from 'redux/admins/thunks';
+import styles from 'Components/Shared/AddButton/addButton.module.css';
 
 function Admins() {
   const admins = useSelector((state) => state.admins.list);
@@ -43,10 +44,8 @@ function Admins() {
   }, [isPending]);
 
   return (
-    <section>
-      <div>
-        <AddButton entity="Admin" createMode={createMode} testId="add-admin-btn" />
-      </div>
+    <section className={styles.containerEachEntityTable}>
+      <AddButton entity="Admin" createMode={createMode} testId="add-admin-btn" />
       {showLoader ? (
         <Loader testId="admin-table-loader" />
       ) : (

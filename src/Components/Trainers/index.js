@@ -3,6 +3,7 @@ import { AddButton, TableComponent, ToastError, Loader } from 'Components/Shared
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTrainers, deleteTrainer } from 'redux/trainers/thunks';
+import styles from 'Components/Shared/AddButton/addButton.module.css';
 
 function Trainers() {
   const [toastErroOpen, setToastErroOpen] = useState(false);
@@ -42,7 +43,7 @@ function Trainers() {
   const columnsValue = ['firstName', 'dni', 'phone', 'email', 'city', 'salary'];
 
   return (
-    <section>
+    <section className={styles.containerEachEntityTable}>
       <AddButton entity="Trainer" createMode={createMode} />
       {showLoader ? (
         <Loader />

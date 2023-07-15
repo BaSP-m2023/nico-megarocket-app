@@ -3,6 +3,7 @@ import { AddButton, TableComponent, Loader } from 'Components/Shared';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getClasses, deleteClass } from 'redux/classes/thunks';
+import styles from 'Components/Shared/AddButton/addButton.module.css';
 
 function Classes() {
   const dispatch = useDispatch();
@@ -47,7 +48,7 @@ function Classes() {
   };
 
   return (
-    <section>
+    <section className={styles.containerEachEntityTable}>
       <AddButton entity={'Class'} createMode={createMode} testId="add-class-btn" />{' '}
       {showLoader ? (
         <Loader testId="classes-table-loader" />

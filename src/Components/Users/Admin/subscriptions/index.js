@@ -2,11 +2,7 @@ import React from 'react';
 import Subscriptions from 'Components/Subscriptions';
 
 const AdminSubscriptions = () => {
-  return (
-    <div>
-      <Subscriptions />
-    </div>
-  );
+  return <Subscriptions />;
 };
 
 export default AdminSubscriptions;

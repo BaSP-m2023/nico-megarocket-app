@@ -1,7 +1,7 @@
 import ButtonForm from '../ButtonForm';
 import styles from './table.module.css';
 import { useState } from 'react';
-import { ModalConfirm, ModalSuccess, ButtonActive } from '../index';
+import { ModalConfirm, ModalSuccess, ButtonActive, TableMobile } from '../index';
 import { ModalInfo, ModalAllInfo } from 'Components/Shared';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -192,50 +192,64 @@ const TableComponent = ({
                 .map((row, index) => {
                   const rowClass = index % 2 === 0 ? styles.rowBackground1 : styles.rowBackground2;
                   return (
-                    <tr className={rowClass} key={index}>
-                      {columns.map((column, columnIndex) => (
-                        <td
-                          key={columnIndex}
-                          onClick={() => {
-                            if (column === 'members') {
-                              setModalInfo(true);
-                              setInfo(row);
-                            } else if (
-                              located === '/admin/trainers' ||
-                              located === '/admin/members' ||
-                              located === '/admin/activities'
-                            ) {
-                              setModalAllInfo(true);
-                              setAllInfo(row);
-                            }
-                          }}
-                        >
-                          {ifArray(row[column])}
-                          {ifObject(row[column])}
-                          {ifNotArrayNotObject(row, column)}
-                          {ifNotExist(row[column])}
-                        </td>
-                      ))}
-                      {(located === '/admin/trainers' || located === '/admin/members') && (
+                    <>
+                      <TableMobile
+                        row={row}
+                        columnTitleArray={columnTitleArray}
+                        columns={columns}
+                        handleClick={handleClick}
+                        onConfirmOpen={onConfirmOpen}
+                        ifArray={ifArray}
+                        ifNotArrayNotObject={ifNotArrayNotObject}
+                        ifNotExist={ifNotExist}
+                        ifObject={ifObject}
+                        classes={classes}
+                      />
+                      <tr className={rowClass} key={index}>
+                        {columns.map((column, columnIndex) => (
+                          <td
+                            key={columnIndex}
+                            onClick={() => {
+                              if (column === 'members') {
+                                setModalInfo(true);
+                                setInfo(row);
+                              } else if (
+                                located === '/admin/trainers' ||
+                                located === '/admin/members' ||
+                                located === '/admin/activities'
+                              ) {
+                                setModalAllInfo(true);
+                                setAllInfo(row);
+                              }
+                            }}
+                          >
+                            {ifArray(row[column])}
+                            {ifObject(row[column])}
+                            {ifNotArrayNotObject(row, column)}
+                            {ifNotExist(row[column])}
+                          </td>
+                        ))}
+                        {(located === '/admin/trainers' || located === '/admin/members') && (
+                          <td>
+                            <ButtonActive data={row} />
+                          </td>
+                        )}
                         <td>
-                          <ButtonActive data={row} />
+                          <ButtonForm
+                            nameImg="pencil-edit.svg"
+                            onAction={() => handleClick(row)}
+                            testId="edit-btn"
+                          />
                         </td>
-                      )}
-                      <td>
-                        <ButtonForm
-                          nameImg="pencil-edit.svg"
-                          onAction={() => handleClick(row)}
-                          testId="edit-btn"
-                        />
-                      </td>
-                      <td>
-                        <ButtonForm
-                          nameImg="trash-delete.svg"
-                          onAction={() => onConfirmOpen(row._id)}
-                          testId="delete-btn"
-                        />
-                      </td>
-                    </tr>
+                        <td>
+                          <ButtonForm
+                            nameImg="trash-delete.svg"
+                            onAction={() => onConfirmOpen(row._id)}
+                            testId="delete-btn"
+                          />
+                        </td>
+                      </tr>
+                    </>
                   );
                 })
                 .slice((currentPage - 1) * 6, currentPage * 6)}

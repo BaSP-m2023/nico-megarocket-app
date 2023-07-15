@@ -46,7 +46,7 @@ function Members() {
   const columnTitleArray = ['Full Name', 'Email', 'Phone', 'City', 'Postal Code', 'Membership'];
 
   return (
-    <section>
+    <section className={styles.containerEachEntityTable}>
       <AddButton visibles={styles.visibles} />
       {showLoader ? (
         <Loader />
