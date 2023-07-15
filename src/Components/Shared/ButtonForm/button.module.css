@@ -17,3 +17,10 @@
   transition: all .5s;
   cursor: pointer;
 }
+
+@media screen and (max-width: 950px) {
+  .icon {
+    width: 15px;
+    height: 15px;
+  }
+}
