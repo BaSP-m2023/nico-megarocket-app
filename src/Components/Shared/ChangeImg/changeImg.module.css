@@ -65,10 +65,12 @@ height: 40px;
 
 .warningMessage{
   position: absolute;
-  bottom: -13px;
-  width: 290px;
+  bottom: -35px;
+  width: 270px;
+  margin-right: 40px;
   color: var(--red);
   text-decoration: underline;
+  text-align: center;
 }
 
 .loadImgButtonContainer{
