@@ -42,7 +42,7 @@
   height: 17rem;
   animation: showLoader 0.2s;
   background-color: var(--primary);
-  border-radius: 20px;
+  border-radius: 5px;
 }
 
 .containerMuscle {

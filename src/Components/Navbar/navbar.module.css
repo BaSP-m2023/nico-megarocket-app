@@ -63,7 +63,7 @@
 }
 
 @media only screen and (max-width: 601px) {
-  .navbar {
-    display: none;
+  .navbar{
+    display:none;
   }
 }
