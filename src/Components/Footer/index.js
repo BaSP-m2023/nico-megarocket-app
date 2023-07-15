@@ -5,6 +5,12 @@ function Footer() {
     <footer className={styles.container}>
       <div className={styles.main}>
         <p className={styles.appName}>MegaRocket</p>
+        <div className={styles.contact}>
+          <p className={styles.infoTitle}>Find Us</p>
+          <p className={styles.info}>Rosario: Address 1234 - +54 341-4569878</p>
+          <p className={styles.info}>Montevideo: Address 1234 - +598 11-3489838</p>
+          <p className={styles.info}>radiumrocket@gmail.com</p>
+        </div>
       </div>
       <div className={styles.license}>
         <div className={styles.copyright}>Copyright © {new Date().getFullYear()} Radium Rocket</div>

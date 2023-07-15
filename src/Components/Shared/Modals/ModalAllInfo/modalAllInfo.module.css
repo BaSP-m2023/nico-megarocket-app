@@ -160,4 +160,7 @@
   .wholeContainer {
     display: none;
   }
+  .tableBody td {
+    max-width: 8rem;
+  }
 }

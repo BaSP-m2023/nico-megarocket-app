@@ -61,20 +61,20 @@
   z-index: 10;
   cursor: pointer;
 }
-.adminName {
+.userName {
   margin-top: -20px;
   font-size: 1.5rem;
   font-weight: 400;
   color: rgba(55, 56, 103, 1);
 }
-.adminInfoTitle {
+.userInfoTitle {
   font-size: 20px;
   font-weight: 700;
   color: rgba(55, 56, 103, 1);
   text-align: start;
   width: 100%;
 }
-.adminInfoContainer {
+.userInfoContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -84,12 +84,12 @@
   padding: 12px 5px;
   margin-bottom: 15px;
 }
-.adminInfoPlaceholder {
+.userInfoPlaceholder {
   font-size: 14px;
   font-weight: 400;
   color: var(--dark-grey);
 }
-.adminInfo {
+.userInfo {
   font-size: 14px;
   font-weight: 600;
   color: var(--primary);
@@ -144,3 +144,4 @@
   align-self: flex-start;
   gap:5px;
 }
+
