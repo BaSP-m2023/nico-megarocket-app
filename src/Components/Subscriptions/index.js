@@ -55,7 +55,7 @@ function Subscriptions() {
   };
 
   return (
-    <section>
+    <section className={styles.containerEachEntityTable}>
       <AddButton visibles={styles.visibles} />
       {showLoader ? (
         <Loader />

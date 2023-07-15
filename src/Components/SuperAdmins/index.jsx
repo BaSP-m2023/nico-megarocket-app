@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { ToastError, AddButton, TableComponent, Loader } from 'Components/Shared';
 import { getSuperAdmins, superAdminDelete } from 'redux/superAdmins/thunks';
 import { useSelector, useDispatch } from 'react-redux';
+import styles from 'Components/Shared/AddButton/addButton.module.css';
 
 const SuperAdmins = () => {
   const [toastErrorOpen, setToastErrorOpen] = useState(false);
@@ -40,7 +41,7 @@ const SuperAdmins = () => {
 
   return (
     <div>
-      <section>
+      <section className={styles.containerEachEntityTable}>
         <AddButton entity={'Super Admin'} createMode={createMode} />
         <div>
           {showLoader ? (

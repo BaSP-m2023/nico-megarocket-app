@@ -5,6 +5,7 @@ import { getAllAdmins, updateAdmin } from 'redux/admins/thunks';
 import { getTrainers, updateTrainer } from 'redux/trainers/thunks';
 import { getAllMembers, editMember } from 'redux/members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
+import ToastError from '../Modals/ToastError';
 import ButtonForm from '../ButtonForm';
 
 const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
@@ -16,6 +17,8 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
   const admin = admins.find((oneAdmin) => oneAdmin.email === userCurrent);
   const member = members.find((oneMember) => oneMember.email === userCurrent);
   const trainer = trainers.find((oneTrainer) => oneTrainer.email === userCurrent);
+  const [toastErrorOpen, setToastErrorOpen] = useState(false);
+  const [toastErrorMessage, setToastErrorMessage] = useState('');
   const imgFile = document.getElementById('imgFile');
   const token = sessionStorage.getItem('token');
 
@@ -26,6 +29,12 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
     } catch (error) {
       return error;
     }
+  };
+
+  const isImageFile = (file) => {
+    const imageTypes = ['image/jpeg', 'image/png'];
+
+    return imageTypes.includes(file.type);
   };
 
   const imageUpload = async (image) => {
@@ -99,14 +108,25 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
 
   const handlePictureChange = (event) => {
     const file = event.target.files[0];
-    if (file) {
+    if (file && isImageFile(file)) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
         const base64Result = reader.result;
-        setTimeout(() => {
-          imageUpload(base64Result);
-        }, 1000);
+        const size = base64Result.length;
+        if (size < 82400) {
+          setTimeout(() => {
+            imageUpload(base64Result);
+          }, 1000);
+        } else {
+          setTogglePhotoEdit(false);
+          imgFile.value = '';
+          setToastErrorMessage('Image loaded exceeds the allowed size');
+          setToastErrorOpen(true);
+          setTimeout(() => {
+            setToastErrorOpen(false);
+          }, 2500);
+        }
       };
       reader.onerror = (error) => {
         return {
@@ -115,6 +135,14 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
           error: true
         };
       };
+    } else {
+      setTogglePhotoEdit(false);
+      imgFile.value = '';
+      setToastErrorMessage('Only .png/.jpeg files are allowed');
+      setToastErrorOpen(true);
+      setTimeout(() => {
+        setToastErrorOpen(false);
+      }, 2500);
     }
   };
 
@@ -145,7 +173,9 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
     <div className={styles.container}>
       <div className={!photoEdit ? styles.hidden : styles.allButtonsContainer}>
         <div className={styles.loadImgButtonContainer}>
-          <span className={styles.warningMessage}>ATTENTION!!!: Images max weight: 60kb </span>
+          <span className={styles.warningMessage}>
+            ATTENTION!!!: Images (.png/.jpeg) max weight: 60kb{' '}
+          </span>
           <label htmlFor="imgFile" id="labelImgFile" className={styles.loadImgButtonLabel}>
             Load Image
           </label>
@@ -163,6 +193,13 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
           </div>
         )}
       </div>
+      {toastErrorOpen && (
+        <ToastError
+          setToastErroOpen={setToastErrorOpen}
+          message={toastErrorMessage}
+          testId="admin-list-toast-error"
+        />
+      )}
     </div>
   );
 };

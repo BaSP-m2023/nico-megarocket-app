@@ -156,6 +156,11 @@
   transition: all 0.2s;
 }
 
-.tableBody td {
-  max-width: 8rem;
+@media screen and (max-width: 768px) {
+  .wholeContainer {
+    display: none;
+  }
+  .tableBody td {
+    max-width: 8rem;
+  }
 }
