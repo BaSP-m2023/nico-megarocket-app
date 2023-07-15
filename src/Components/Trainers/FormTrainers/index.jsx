@@ -114,7 +114,6 @@ const FormTrainer = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log(data, 'data');
     if (updateData.mode === 'created') {
       setInputForm({
         firstName: data.firstName,

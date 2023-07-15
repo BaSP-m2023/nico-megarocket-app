@@ -21,23 +21,39 @@ const FormAdmin = () => {
   const data = location.state.params;
   const dispatch = useDispatch();
 
-  const schema = Joi.object({
-    firstName: Joi.string().min(3).max(15).required(),
-    lastName: Joi.string().min(3).max(15).required(),
-    dni: Joi.number().min(10000000).max(99999999).required(),
-    phone: Joi.string().min(9).max(12).required(),
-    email: Joi.string()
-      .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
-      .required(),
-    city: Joi.string().min(2).max(10).required(),
-    password: Joi.string()
-      .min(8)
-      .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
-      .message('The password must have at least one Uppercase,a number and 8 characters.'),
-    repeatPassword: Joi.string().valid(Joi.ref('password')).required().messages({
-      'any.only': "Passwords don't match"
-    })
-  });
+  const schemaTrainer = () => {
+    if (data.mode === 'create') {
+      return Joi.object({
+        firstName: Joi.string().min(3).max(15).required(),
+        lastName: Joi.string().min(3).max(15).required(),
+        dni: Joi.number().min(10000000).max(99999999).required(),
+        phone: Joi.string().min(9).max(12).required(),
+        email: Joi.string()
+          .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+          .required(),
+        city: Joi.string().min(2).max(10).required(),
+        password: Joi.string()
+          .min(8)
+          .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
+          .message('The password must have at least one Uppercase,a number and 8 characters.'),
+        repeatPassword: Joi.string().valid(Joi.ref('password')).required().messages({
+          'any.only': "Passwords don't match"
+        })
+      });
+    } else {
+      return Joi.object({
+        firstName: Joi.string().min(3).max(15).required(),
+        lastName: Joi.string().min(3).max(15).required(),
+        dni: Joi.number().min(10000000).max(99999999).required(),
+        phone: Joi.string().min(9).max(12).required(),
+        email: Joi.string()
+          .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+          .required(),
+        city: Joi.string().min(2).max(10).required()
+      });
+    }
+  };
+  const schema = schemaTrainer();
 
   const adminUpdated = {
     firstName: data.firstName,
@@ -45,9 +61,7 @@ const FormAdmin = () => {
     dni: data.dni,
     phone: data.phone,
     email: data.email,
-    city: data.city,
-    password: data.password,
-    repeatPassword: data.password
+    city: data.city
   };
 
   const {
@@ -114,16 +128,26 @@ const FormAdmin = () => {
   };
 
   const onSubmit = async (dataAdmin) => {
-    const newAdmin = {
-      firstName: dataAdmin.firstName,
-      lastName: dataAdmin.lastName,
-      dni: dataAdmin.dni,
-      phone: dataAdmin.phone,
-      email: dataAdmin.email,
-      city: dataAdmin.city,
-      password: dataAdmin.password
-    };
-    setInputValue(newAdmin);
+    if (data.mode === 'create') {
+      setInputValue({
+        firstName: dataAdmin.firstName,
+        lastName: dataAdmin.lastName,
+        dni: dataAdmin.dni,
+        phone: dataAdmin.phone,
+        email: dataAdmin.email,
+        city: dataAdmin.city,
+        password: dataAdmin.password
+      });
+    } else {
+      setInputValue({
+        firstName: dataAdmin.firstName,
+        lastName: dataAdmin.lastName,
+        dni: dataAdmin.dni,
+        phone: dataAdmin.phone,
+        email: dataAdmin.email,
+        city: dataAdmin.city
+      });
+    }
     openModal();
   };
 
@@ -174,16 +198,19 @@ const FormAdmin = () => {
                   error={errors.email?.message}
                   testId="input-admin-email"
                 />
-
-                <Inputs
-                  nameTitle="Password"
-                  register={register}
-                  nameInput="password"
-                  type="password"
-                  isDisabled={false}
-                  error={errors.password?.message}
-                  testId="input-admin-password"
-                />
+                {!id && (
+                  <div>
+                    <Inputs
+                      nameTitle="Password"
+                      register={register}
+                      nameInput="password"
+                      type="password"
+                      isDisabled={false}
+                      error={errors.password?.message}
+                      testId="input-admin-password"
+                    />
+                  </div>
+                )}
               </div>
               <div className={styles.groupContainer}>
                 <Inputs
@@ -215,15 +242,19 @@ const FormAdmin = () => {
                   error={errors.city?.message}
                   testId="input-admin-city"
                 />
-                <Inputs
-                  nameTitle="Repeat Password"
-                  register={register}
-                  nameInput="repeatPassword"
-                  type="password"
-                  isDisabled={false}
-                  error={errors.repeatPassword?.message}
-                  testId="input-admin-repeat-password"
-                />
+                {!id && (
+                  <div>
+                    <Inputs
+                      nameTitle="Repeat Password"
+                      register={register}
+                      nameInput="repeatPassword"
+                      type="password"
+                      isDisabled={false}
+                      error={errors.repeatPassword?.message}
+                      testId="input-admin-repeat-password"
+                    />
+                  </div>
+                )}
               </div>
             </div>
 
