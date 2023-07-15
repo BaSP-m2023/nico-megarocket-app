@@ -8,7 +8,8 @@
 
 .main {
   display: flex;
-  justify-content: space-between;
+  justify-content:center;
+  gap:50px;
   align-items: center;
   padding: 0 5%;
 }
@@ -60,6 +61,32 @@
 
 .containerSocial a img:hover {
   transform: scale(1.3);
+}
+
+.contact{
+  display:grid;
+  gap:5px;
+}
+
+.infoTitle{
+  font-size:14px;
+  font-weight:500;
+  color:var(--secondary);
+  padding:0;
+  margin:0;
+}
+
+.info{
+  color:var(--white);
+  font-size:10px;
+  padding:0;
+  margin:0;
+}
+
+@media screen and (max-width: 868px){
+  .contact{
+    display:none;
+  }
 }
 
 @media screen and (min-width: 750px) {

@@ -21,22 +21,37 @@ const FormTrainer = () => {
   const isError = useSelector((store) => store.trainers.formError);
   const token = sessionStorage.getItem('token');
 
-  const schema = Joi.object({
-    firstName: Joi.string().min(3).max(30).required(),
-    lastName: Joi.string().min(3).max(30).required(),
-    dni: Joi.number().min(10000000).max(99999999),
-    phone: Joi.string().min(9).max(12).required(),
-    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
-    password: Joi.string()
-      .min(8)
-      .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
-      .message('The password must have at least one Uppercase,a number and 8 characters.'),
-    repeatPassword: Joi.string().valid(Joi.ref('password')).required().messages({
-      'any.only': "Passwords don't match"
-    }),
-    city: Joi.string().min(5).max(25),
-    salary: Joi.number()
-  });
+  const schemaTrainer = () => {
+    if (updateData.mode === 'created') {
+      return Joi.object({
+        firstName: Joi.string().min(3).max(30).required(),
+        lastName: Joi.string().min(3).max(30).required(),
+        dni: Joi.number().min(10000000).max(99999999),
+        phone: Joi.string().min(9).max(12).required(),
+        email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+        password: Joi.string()
+          .min(8)
+          .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
+          .message('The password must have at least one Uppercase,a number and 8 characters.'),
+        repeatPassword: Joi.string().valid(Joi.ref('password')).required().messages({
+          'any.only': "Passwords don't match"
+        }),
+        city: Joi.string().min(5).max(25),
+        salary: Joi.number()
+      });
+    } else {
+      return Joi.object({
+        firstName: Joi.string().min(3).max(30).required(),
+        lastName: Joi.string().min(3).max(30).required(),
+        dni: Joi.number().min(10000000).max(99999999),
+        phone: Joi.string().min(9).max(12).required(),
+        email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+        city: Joi.string().min(5).max(25),
+        salary: Joi.number()
+      });
+    }
+  };
+  const schema = schemaTrainer();
 
   const updateTrainerData = {
     firstName: updateData.firstName,
@@ -44,7 +59,6 @@ const FormTrainer = () => {
     dni: updateData.dni,
     phone: updateData.phone,
     email: updateData.email,
-    password: updateData.password,
     city: updateData.city,
     salary: updateData.salary
   };
@@ -100,16 +114,29 @@ const FormTrainer = () => {
   };
 
   const onSubmit = async (data) => {
-    setInputForm({
-      firstName: data.firstName,
-      lastName: data.lastName,
-      dni: data.dni,
-      phone: data.phone,
-      email: data.email,
-      password: data.password,
-      city: data.city,
-      salary: data.salary
-    });
+    if (updateData.mode === 'created') {
+      setInputForm({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        dni: data.dni,
+        phone: data.phone,
+        email: data.email,
+        password: data.password,
+        city: data.city,
+        salary: data.salary
+      });
+    } else {
+      setInputForm({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        dni: data.dni,
+        phone: data.phone,
+        email: data.email,
+        city: data.city,
+        salary: data.salary
+      });
+    }
+    console.log(inputForm, 'input form');
     setModalUpdateConfirmOpen(true);
   };
 

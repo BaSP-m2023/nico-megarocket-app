@@ -51,7 +51,7 @@ const ModalInfo = ({ data, setModalInfo }) => {
           <p className={styles.trainerInfo}>
             <span className={styles.subTitle}>Trainer:</span>{' '}
             <span className={styles.dataSubTitle}>
-              {trainer.firstName} {trainer.lastName}
+              {trainer ? `${trainer.firstName} ${trainer.lastName}` : 'No trainer defined'}
             </span>
           </p>
           <div className={styles.slotsInfo}>
