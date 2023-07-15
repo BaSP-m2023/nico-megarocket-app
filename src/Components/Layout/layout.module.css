@@ -12,6 +12,7 @@ aside {
   height: 100vh;
 }
 
+
 .mainContainer {
   display: flex;
   flex-direction: row;
@@ -31,8 +32,17 @@ aside {
   z-index: 1;
 }
 
+
+
 @media only screen and (max-width: 601px) {
   aside {
     display: none;
   }
+  /* .hamburguerNavbar{
+    display: flex;
+    width: 100px;
+    height: 100px;
+    border: 1px solid red;
+    z-index: 1;
+  } */
 }

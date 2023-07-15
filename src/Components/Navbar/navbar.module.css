@@ -62,7 +62,7 @@
   bottom: 15%;
 }
 
-@media only screen and (max-width: 601px) {
+@media only screen and (max-width: 868px) {
   .navbar{
     display:none;
   }

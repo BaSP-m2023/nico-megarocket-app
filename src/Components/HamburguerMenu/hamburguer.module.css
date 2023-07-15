@@ -1,0 +1,76 @@
+.navbar{
+  display: none;
+}
+
+@media only screen and (max-width: 868px) {
+  .navbar {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    transition: all 0.4s;
+    background-color: var(--secondary);
+    z-index: 100;
+    margin-top: 70px;
+  }
+  .rutes {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    list-style-type: none;
+    gap: 20px;
+    padding-top: 20px;
+  }
+  .navbarLink, .logoutButton {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    text-decoration: none;
+    color: var(--primary);
+    transition: 0.2s color;
+    font-weight: 400;
+    transition: all 0.2s;
+    padding-bottom: 5px;
+  }
+  .navbarLink:hover {
+    transform: scale(1.05);
+    transition: all 0.2s;
+    border-bottom: 1px solid var(--primary);
+  }
+  .navbarLink.active {
+    color: white;
+    filter: brightness(0) invert() drop-shadow(2px 2px 4px var(--primary));
+  }
+  .navIcon {
+    width: 1.5rem;
+  }
+  .noToken{
+    display: none;
+  }
+  .animationShow {		
+		animation-name: slide-bottom;
+		animation-duration: 0.5s;
+		animation-timing-function: ease-out;
+		animation-delay: 0s;
+		animation-iteration-count: 1;
+		animation-direction: normal;
+		animation-fill-mode: none;
+
+	}
+	@keyframes slide-bottom {
+		0% {
+      transform: translateY(-70px);
+      opacity: 0;
+    }
+    100% {
+     transform: translateY(0);
+     opacity: 1;
+    }
+	}
+
+}

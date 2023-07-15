@@ -427,23 +427,35 @@
 }
 
 @media only screen and (max-width: 868px) {
+  .container {
+    margin: 0;
+    margin-top: 70px;
+  }
+  .bannerVideo,
+  .containerSectionHead,
+  .content{
+    height: 92vh;
+  }
+  .content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: -20px;
+  }
   .sectionActivities {
     gap: 1rem;
   }
-
   .cardTitle {
     font-size: 30px;
     margin: 25px 0;
   }
-
   .formButtonDesktop {
     display: none;
   }
-
   .sectionTouchForm {
     margin: 0;
   }
-
   .formButtonTop {
     display: flex;
     justify-content: center;
@@ -460,21 +472,18 @@
     margin: 20px 0;
     padding: 15px 0;
   }
-
   .sectionTouchForm div {
     display: flex;
     flex-direction: column;
   }
-
   .sectionTouchForm textarea {
     width: 265px;
     height: 100px;
   }
-
-  .memberships {
+  /* .memberships {
+    //ESTO CREABA EL SCROLL LATERAL
     margin-left: 11px;
-  }
-
+  } */
   .info {
     display: flex;
   }

@@ -1,49 +1,86 @@
-.container {
+.wholeContainer{
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
   align-items: center;
-  padding: 0 5%;
+  justify-content: center;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
   height: 70px;
   background-color: var(--primary);
 }
-
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+}
 .brand {
   font-weight: bold;
   font-size: 1.4rem;
   color:white;
 }
-
-a {
-  text-decoration: none;
+.boxTextImg{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
 }
-
 .containerLogo {
   display: flex;
-  margin-left: -170px;
+  flex-direction: row;
 }
-
 .imgLogo {
   height: 40px;
   width: 40px;
-  position: absolute;
   display: flex;
-  margin-left: -50px;
 }
-
 .socialIcon {
   margin-left: 15px;
   filter: invert();
 }
-
 .profileMenu{
   position: relative;
-  right: -230px;
   display: flex;
   align-items: center;
 }
-
-@media screen and (min-width: 750px) {
-  .container {
-    padding: 0 20%;
-  }
+.hamburguerMenu{
+  display: none;
 }
+.navIcon{
+  margin-bottom: -7px;
+  width: 25px;
+  height: 25px;
+}
+
+@media screen and (max-width: 868px) {
+  .wholeContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    z-index: 200;
+  }
+  .containerLogo{
+    margin-right: auto;
+  }
+  .hamburguerMenu{
+    display: block;
+    margin-right: 15px;
+    cursor: pointer;
+  }
+  
+}
+
+
+@media screen and (max-width: 430px) {
+  /* Aquí van los estilos específicos para móviles */
+}
+
+

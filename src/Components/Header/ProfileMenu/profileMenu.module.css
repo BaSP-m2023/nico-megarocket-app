@@ -2,6 +2,7 @@
 display: flex;
 justify-content: center;
 align-items: center;
+z-index: 100;
 }
 .profileImg{
   width: 35px;
@@ -57,4 +58,11 @@ color: white;
 
 .links {
   text-decoration: none;
+}
+
+@media screen and (max-width: 868px) {
+  /* .container{
+    z-index: 10;
+    border: 2px solid green; 
+  } */
 }
