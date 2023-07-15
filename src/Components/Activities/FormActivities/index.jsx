@@ -1,7 +1,15 @@
 import { useForm } from 'react-hook-form';
 import React, { useState, useEffect } from 'react';
 import style from './modalAdd.module.css';
-import { ModalConfirm, ModalSuccess, Inputs, Button, ToastError } from 'Components/Shared';
+import {
+  ModalConfirm,
+  ModalSuccess,
+  Inputs,
+  Button,
+  ToastError,
+  TextArea,
+  Loader
+} from 'Components/Shared';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { addActivity, updateActivity } from 'redux/activities/thunks';
@@ -15,10 +23,12 @@ const ModalAddActivity = () => {
   const [toastError, setToastError] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [inputForm, setInputForm] = useState('');
+  const [showLoader, setShowLoader] = useState(false);
   const history = useHistory();
   const { id } = useParams();
   const location = useLocation();
   const isError = useSelector((store) => store.activities.formError);
+  const isPending = useSelector((state) => state.activities.pending);
   const updateData = location.state.params;
 
   const validationSchema = Joi.object({
@@ -75,24 +85,31 @@ const ModalAddActivity = () => {
     setToastError(!!isError);
   }, [isError]);
 
+  useEffect(() => {
+    if (!isPending) {
+      setShowLoader(true);
+      const timer = setTimeout(() => {
+        setShowLoader(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isPending]);
+
   const handleUpdateButtonClick = () => {
     setModalUpdateConfirmOpen(true);
   };
 
   const formSubmit = async () => {
     if (id) {
-      handleUpdateButtonClick();
       const putActivity = await updateActivity(dispatch, id, inputForm);
       if (putActivity.type === 'UPDATE_ACTIVITIES_SUCCESS') {
-        setToastError(false);
-        setModalSuccessOpen(false);
+        setModalSuccessOpen(true);
         setTimeout(() => {
           history.goBack();
         }, 1000);
       }
     } else {
       const postActivity = await addActivity(dispatch, inputForm);
-      console.log(postActivity);
       if (postActivity.type === 'ADD_ACTIVITIES_SUCCESS') {
         setModalSuccessOpen(true);
         setTimeout(() => {
@@ -104,90 +121,88 @@ const ModalAddActivity = () => {
 
   const onSubmit = async (data) => {
     setInputForm(data);
-    setModalUpdateConfirmOpen(true);
+    handleUpdateButtonClick();
   };
 
   return (
-    <section className={style.containerModal}>
-      <form className={style.containerForm} onSubmit={handleSubmit(onSubmit)}>
-        <h3 className={style.title}>{id ? 'Edit Activity' : 'Add Activity'}</h3>
-        <Inputs
-          nameTitle="Name:"
-          register={register}
-          nameInput="name"
-          type="text"
-          error={errors.name?.message}
-          testId="input-activity-name"
-        />
-        <Inputs
-          nameTitle="Description:"
-          type="text"
-          register={register}
-          nameInput="description"
-          error={errors.description?.message}
-          testId="input-activity-description"
-        />
-        <div className={style.radioMainContainer}>
-          <label className={style.nameLabel}>Status</label>
-          <div className={style.radioContainer}>
-            <label>
-              Active
-              <input
-                {...register('isActive', {
-                  required: { value: true, message: 'This field is required' }
-                })}
-                type="radio"
-                name="isActive"
-                value={true}
+    <>
+      {showLoader ? (
+        <Loader testId="activity-table-loader" />
+      ) : (
+        <section className={style.containerModal}>
+          <form className={style.containerForm} onSubmit={handleSubmit(onSubmit)}>
+            <h3 className={style.title}>{id ? 'Edit Activity' : 'Add Activity'}</h3>
+            <div className={style.inputContainer}>
+              <Inputs
+                nameTitle="Name"
+                register={register}
+                nameInput="name"
+                type="text"
+                error={errors.name?.message}
+                testId="input-activity-name"
               />
-            </label>
-            <label>
-              Inactive
-              <input
-                {...register('isActive', {
-                  required: { value: true, message: 'This field is required' }
-                })}
-                type="radio"
-                name="isActive"
-                value={false}
+              <TextArea
+                nameTitle={'Description'}
+                nameInput={'description'}
+                register={register}
+                error={errors.description?.message}
+                testId="input-activity-description"
               />
-            </label>
-          </div>
-        </div>
-        <div className={style.containerAddButton}>
-          <Button clickAction={() => {}} text={id ? 'Save' : 'Add'} testId="activity-save-btn" />
-          <Button clickAction={() => reset()} text="Reset" testId="activity-reset-btn" />
-          <Button clickAction={() => history.goBack()} text="Cancel" testId="activity-cancel-btn" />
-        </div>
-      </form>
-      {modalUpdateConfirmOpen && (
-        <ModalConfirm
-          method={editMode ? 'Edit' : 'Create'}
-          onConfirm={formSubmit}
-          message={
-            editMode
-              ? 'Are you sure you want to edit this Activity?'
-              : 'Are you sure you want to add this Activity?'
-          }
-          setModalConfirmOpen={setModalUpdateConfirmOpen}
-          testId="activity-modal-confirm"
-        />
+              {!id && (
+                <input
+                  {...register('isActive', {
+                    required: { value: true, message: 'This field is required' }
+                  })}
+                  type="hidden"
+                  name="isActive"
+                  value={true}
+                />
+              )}
+            </div>
+            <div className={style.containerAddButton}>
+              <Button
+                clickAction={() => {}}
+                text={id ? 'Save' : 'Add'}
+                testId="activity-save-btn"
+              />
+              <Button clickAction={() => reset()} text="Reset" testId="activity-reset-btn" />
+              <Button
+                clickAction={() => history.goBack()}
+                text="Cancel"
+                testId="activity-cancel-btn"
+              />
+            </div>
+          </form>
+          {modalUpdateConfirmOpen && (
+            <ModalConfirm
+              method={editMode ? 'Edit' : 'Create'}
+              onConfirm={formSubmit}
+              message={
+                editMode
+                  ? 'Are you sure you want to update this Activity?'
+                  : 'Are you sure you want to add this Activity?'
+              }
+              setModalConfirmOpen={setModalUpdateConfirmOpen}
+              testId="activity-modal-confirm"
+            />
+          )}
+          {modalSuccessOpen && (
+            <ModalSuccess
+              setModalSuccessOpen={setModalSuccessOpen}
+              message="Activity added successfully"
+              testId="activity-modal-success"
+            />
+          )}
+          {toastError && (
+            <ToastError
+              setToastErroOpen={setToastError}
+              message={isError}
+              testId="activity-form-toast-error"
+            />
+          )}
+        </section>
       )}
-      {modalSuccessOpen && (
-        <ModalSuccess
-          setModalSuccessOpen={setModalSuccessOpen}
-          message="Activity added successfully"
-          testId="activity-modal-success"
-        />
-      )}
-      {toastError && (
-        <ToastError
-          setToastErroOpen={setToastError}
-          message={isError.message}
-          testId="activity-form-toast-error"
-        />
-      )}
-    </section>
+    </>
   );
 };
 

@@ -7,6 +7,7 @@
   width: 100%;
 }
 .form{
+  margin:50px 0;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -25,6 +26,7 @@
 .buttonsBox{
   display: flex;
   justify-content: center;
+  gap:20px;
 }
 .optionInputForm{
   display: flex;

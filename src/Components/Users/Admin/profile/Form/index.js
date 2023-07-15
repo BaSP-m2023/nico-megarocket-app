@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './profile-form.module.css';
-import { Inputs, Button, ModalConfirm, ModalSuccess, ToastError } from 'Components/Shared';
+import { Inputs, Button, ModalConfirm, ModalSuccess, ToastError, Loader } from 'Components/Shared';
 import { updateAdmin } from 'redux/admins/thunks';
 import { useParams, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -24,7 +24,7 @@ const ProfileForm = () => {
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [toastErroOpen, setToastErroOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('Error in database');
-
+  const [loading, setLoading] = useState(true);
   const [adminToEdit, setAdminToEdit] = useState({});
 
   const history = useHistory();
@@ -97,6 +97,14 @@ const ProfileForm = () => {
     }
   };
 
+  useEffect(() => {
+    if (loading) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+    }
+  }, []);
+
   const confirmation = () => {
     setModalSuccessOpen(true);
     setTimeout(() => {
@@ -105,111 +113,118 @@ const ProfileForm = () => {
   };
 
   return (
-    <div className={styles.containerForm}>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.boxInput}>
-          <div className={styles.inputForm}>
-            <Inputs
-              type="text"
-              nameInput={'firstName'}
-              nameTitle={'Name'}
-              register={register}
-              error={errors.firstName?.message}
-              testId="input-admin-name"
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className={styles.containerForm}>
+          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            <div className={styles.boxInput}>
+              <div className={styles.inputForm}>
+                <Inputs
+                  type="text"
+                  nameInput={'firstName'}
+                  nameTitle={'Name'}
+                  register={register}
+                  error={errors.firstName?.message}
+                  testId="input-admin-name"
+                />
+              </div>
+              <div className={styles.inputForm}>
+                <Inputs
+                  type="text"
+                  nameInput={'lastName'}
+                  nameTitle={'Last Name'}
+                  register={register}
+                  error={errors.lastName?.message}
+                  testId="input-admin-lastname"
+                />
+              </div>
+            </div>
+            <div className={styles.boxInput}>
+              <div className={styles.inputForm}>
+                <Inputs
+                  type="text"
+                  nameInput={'dni'}
+                  nameTitle={'DNI'}
+                  register={register}
+                  error={errors.dni?.message}
+                  testId="input-admin-dni"
+                />
+              </div>
+              <div className={styles.inputForm}>
+                <Inputs
+                  type="text"
+                  nameInput={'phone'}
+                  nameTitle={'Phone'}
+                  register={register}
+                  error={errors.phone?.message}
+                  testId="input-admin-phone"
+                />
+              </div>
+            </div>
+            <div className={styles.boxInput}>
+              <div className={styles.inputForm}>
+                <Inputs
+                  type="text"
+                  nameInput={'city'}
+                  nameTitle={'City'}
+                  register={register}
+                  error={errors.city?.message}
+                  testId="input-admin-city"
+                />
+              </div>
+              <div className={styles.inputForm}>
+                <Inputs
+                  type="email"
+                  nameInput={'email'}
+                  nameTitle={'E-Mail'}
+                  register={register}
+                  error={errors.email?.message}
+                  testId="input-admin-email"
+                  isDisabled={id ? 'true' : 'false'}
+                />
+              </div>
+            </div>
+            <div className={styles.buttonsBox}>
+              <Button clickAction={() => {}} text="Save" testId="admin-save-btn" />
+              <Button text="Reset" clickAction={() => reset()} testId="admin-reset-btn" />
+              <Button
+                clickAction={(e) => {
+                  e.preventDefault();
+                  history.goBack();
+                }}
+                text="Cancel"
+                testId="admin-cancel-btn"
+              />
+            </div>
+          </form>
+          {modalConfirmOpen && (
+            <ModalConfirm
+              method={'Edit'}
+              message={'Are you sure you want to edit the admin?'}
+              onConfirm={submitAdmin}
+              setModalConfirmOpen={setModalConfirmOpen}
+              testId="admin-modal-confirm"
             />
-          </div>
-          <div className={styles.inputForm}>
-            <Inputs
-              type="text"
-              nameInput={'lastName'}
-              nameTitle={'Last Name'}
-              register={register}
-              error={errors.lastName?.message}
-              testId="input-admin-lastname"
+          )}
+          {modalSuccessOpen && (
+            <ModalSuccess
+              message={'Admin edited successfully'}
+              setModalSuccessOpen={setModalSuccessOpen}
+              testId="admin-modal-success"
             />
-          </div>
+          )}
+          {toastErroOpen && (
+            <ToastError
+              setToastErroOpen={setToastErroOpen}
+              message={toastMessage}
+              testId="admin-form-toast-error"
+            />
+          )}
         </div>
-        <div className={styles.boxInput}>
-          <div className={styles.inputForm}>
-            <Inputs
-              type="text"
-              nameInput={'dni'}
-              nameTitle={'DNI'}
-              register={register}
-              error={errors.dni?.message}
-              testId="input-admin-dni"
-            />
-          </div>
-          <div className={styles.inputForm}>
-            <Inputs
-              type="text"
-              nameInput={'phone'}
-              nameTitle={'Phone'}
-              register={register}
-              error={errors.phone?.message}
-              testId="input-admin-phone"
-            />
-          </div>
-        </div>
-        <div className={styles.boxInput}>
-          <div className={styles.inputForm}>
-            <Inputs
-              type="text"
-              nameInput={'city'}
-              nameTitle={'City'}
-              register={register}
-              error={errors.city?.message}
-              testId="input-admin-city"
-            />
-          </div>
-          <div className={styles.inputForm}>
-            <Inputs
-              type="email"
-              nameInput={'email'}
-              nameTitle={'E-Mail'}
-              register={register}
-              error={errors.email?.message}
-              testId="input-admin-email"
-            />
-          </div>
-        </div>
-        <div className={styles.buttonsBox}>
-          <Button text="Reset" clickAction={() => reset()} testId="admin-reset-btn" />
-          <Button clickAction={() => {}} text="Save" testId="admin-save-btn" />
-          <Button
-            clickAction={(e) => {
-              e.preventDefault();
-              history.goBack();
-            }}
-            text="Cancel"
-            testId="admin-cancel-btn"
-          />
-        </div>
-      </form>
-      {modalConfirmOpen && (
-        <ModalConfirm
-          method={'Edit'}
-          message={'Are you sure you want to edit the admin?'}
-          onConfirm={submitAdmin}
-          setModalConfirmOpen={setModalConfirmOpen}
-          testId="admin-modal-confirm"
-        />
       )}
-      {modalSuccessOpen && (
-        <ModalSuccess
-          message={'Admin edited successfully'}
-          setModalSuccessOpen={setModalSuccessOpen}
-          testId="admin-modal-success"
-        />
-      )}
-      {toastErroOpen && (
-        <ToastError
-          setToastErroOpen={setToastErroOpen}
-          message={toastMessage}
-          testId="admin-form-toast-error"
-        />
-      )}
-    </div>
+    </>
   );
 };
 

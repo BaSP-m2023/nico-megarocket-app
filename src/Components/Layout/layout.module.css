@@ -9,14 +9,12 @@ aside {
   position: sticky;
   top: 0;
   left: 0;
-  background-color: var(--primary);
   height: 100vh;
 }
 
 .mainContainer {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   width: 100%;
   min-height: 100vh;
   position: relative;
@@ -25,10 +23,16 @@ aside {
 .switchContainer {
   display: flex;
   justify-content: center;
-  width: 85%;
+  width: 100%;
 }
 
 .asideContainer {
   height: auto;
-  width: 15%;
+  z-index: 1;
+}
+
+@media only screen and (max-width: 601px){
+  aside{
+    display:none;
+  }
 }

@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './recoverPassword.module.css';
-import { Inputs, Button } from 'Components/Shared';
+import { Inputs, Button, ModalSuccess, ModalError } from 'Components/Shared';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
-import ModalSuccess from 'Components/Shared/Modals/ModalSuccess';
 import { recoverPassword } from 'redux/auth/thunks';
-import { useDispatch } from 'react-redux';
+import { getAllAdmins } from 'redux/admins/thunks';
+import { getAllMembers } from 'redux/members/thunks';
+import { getTrainers } from 'redux/trainers/thunks';
+import { login } from 'redux/auth/thunks';
+import { logout } from 'redux/auth/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 const schema = Joi.object({
@@ -22,9 +26,21 @@ const schema = Joi.object({
 });
 
 const RecoverPassword = () => {
-  const [modalSucces, setModalSucces] = useState(false);
+  const [modalSuccess, setModalSuccess] = useState(false);
+  const [modalError, setModalError] = useState(false);
+  const [message, setMessage] = useState('');
+  const [headerMessage, setHeaderMessage] = useState('');
   const dispatch = useDispatch();
   const history = useHistory();
+  const admins = useSelector((state) => state.admins.list);
+  const trainers = useSelector((state) => state.trainers.list);
+  const members = useSelector((state) => state.members.list);
+  const token = sessionStorage.getItem('token');
+  const data = {
+    email: 'admin@admin.com',
+    password: 'Eladmin1'
+  };
+
   const {
     register,
     handleSubmit,
@@ -34,14 +50,64 @@ const RecoverPassword = () => {
     resolver: joiResolver(schema)
   });
 
-  const onSubmit = async (data) => {
-    await dispatch(recoverPassword(data));
-    setModalSucces(true);
-    setTimeout(() => {
-      setModalSucces(false);
-      history.push('/auth/login');
-    }, 2000);
+  const logForData = async () => {
+    await dispatch(login(data));
   };
+
+  const logOut = async () => {
+    await dispatch(logout());
+  };
+
+  const emailExistsInDB = (data) => {
+    if (admins?.some((admin) => admin.email === data.email)) {
+      return true;
+    }
+    if (trainers?.some((trainer) => trainer.email === data.email)) {
+      return true;
+    }
+    if (members?.some((member) => member.email === data.email)) {
+      return true;
+    }
+  };
+
+  const dataManage = async (data) => {
+    if (emailExistsInDB(data)) {
+      await dispatch(recoverPassword(data));
+      setModalSuccess(true);
+      setTimeout(() => {
+        setModalSuccess(false);
+        history.push('/auth/login');
+      }, 2000);
+      logOut();
+    } else {
+      setHeaderMessage('Oops!');
+      setMessage('No account registered with this email');
+      setModalError(true);
+      logOut();
+    }
+  };
+
+  const onSubmit = (data) => {
+    dataManage(data);
+  };
+
+  useEffect(() => {
+    logForData();
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(getAllAdmins);
+      dispatch(getAllMembers);
+      dispatch(getTrainers);
+    }, 1000);
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      logOut();
+    }, 1500);
+  }, [token]);
 
   return (
     <form className={styles.formRecoverPassword} onSubmit={handleSubmit(onSubmit)}>
@@ -65,10 +131,12 @@ const RecoverPassword = () => {
         </div>
       </div>
 
-      {modalSucces && (
-        <ModalSuccess
-          setModalSuccessOpen={setModalSucces}
-          message={'We send you a verification code to your email!'}
+      {modalSuccess && <ModalSuccess message={'We send you a verification code to your email!'} />}
+      {modalError && (
+        <ModalError
+          setModalErrorOpen={setModalError}
+          message={message}
+          headerMessage={headerMessage}
         />
       )}
     </form>

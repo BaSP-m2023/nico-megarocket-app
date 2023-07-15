@@ -1,37 +1,44 @@
 .container {
+position:relative;
+bottom: 130px;
+left: 240px;
+display: flex;
+justify-content: center;
+align-items: flex-end;
+height: 40px;
+}
+
+.allButtonsContainer{
   position: absolute;
-  top: 25vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
-  width: 600px;
-  height: 500px;
-  box-shadow: 10px 8px 5px -8px rgba(0, 0, 0, 0.75);
-  z-index: 10;
-  animation-name: show;
-  animation-duration: 1s;
-  animation-direction: alternate;
-  animation-fill-mode: both;
+  height: 50px;
+  margin: 0 0 0 75px;
+  transition: all .3s ease;
 }
 
 .hidden {
-  display: none;
+  opacity: 0;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  margin: 0 0 0 75px;
+  transform: translateX(-20px);
+  transition: all .3s ease;
 }
 
 .hide {
   position: absolute;
-  top: 25vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
-  width: 600px;
-  height: 500px;
-  box-shadow: 10px 8px 5px -8px rgba(0, 0, 0, 0.75);
-  z-index: 10;
+  height: 50px;
+  margin: 0 0 0 75px;
   animation-name: hide;
-  animation-duration: 1s;
+  animation-duration: .3s;
   animation-direction: alternate;
   animation-fill-mode: forwards;
 }
@@ -48,76 +55,61 @@
   z-index: 1;
 }
 
-.picContainer {
+.editPhotoButtonsContainer{
   display: flex;
-  position: relative;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
-  width: 100%;
-  height: 100%;
-  padding-top: 25px;
-  background-color: var(--primary);
-  overflow-y: scroll;
+  height: 50px;
+  margin: 0 0 35px 75px;
 }
 
-.customScrollbar::-webkit-scrollbar {
-  width: .3rem;
-  background-color: var(--primary);
-}
-
-.customScrollbar::-webkit-scrollbar-thumb {
-  background-color: var(--light-grey);
-}
-
-.customScrollbar::-webkit-scrollbar-track {
-  background-color: rgba(255, 255, 255, 0.15);
-}
-
-.customScrollbar::-webkit-scrollbar-corner {
-  background-color: aqua;
-}
-
-.picStyle {
-  width: 150px;
-  height: 150px;
-  margin: 20px;
-  box-shadow: 1px 0px 25px -8px rgba(0, 0, 0, 0.75);
-  cursor: pointer;
-}
-.picStyle:hover {
-  transform: scale(1.01);
-}
-.closeButton {
+.warningMessage{
   position: absolute;
-  top: 3px;
-  right: 8px;
-  cursor: pointer;
-  font-size: 1.2rem;
+  bottom: -35px;
+  width: 270px;
+  margin-right: 40px;
+  color: var(--red);
+  text-decoration: underline;
+  text-align: center;
+}
+
+.loadImgButtonContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 40px;
+}
+
+.loadImgButton{
+  display: none;
+}
+
+.loadImgButtonLabel{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 100px;
+  height: 20px;
+  margin-right: 40px;
+  border-radius: 5px;
+  background-color: var(--secondary);
+  color: var(--primary);
+  font-size: 12px;
   font-weight: 600;
-  color: white;
-  z-index: 2;
+  transition: all .3s;
+  cursor: pointer;
+}
+.loadImgButtonLabel:hover{
+  color: var(--white);
+  background-color: var(--primary);
 }
 
-@keyframes show {
-  0% {
-    opacity: 0;
-    transform: scale(0);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
+.deleteButton{
+  transition: all .4s;
 }
 
-@keyframes hide {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0);
-    display: none;
-  }
+.deleteButton:hover{
+  transform: scale(1.1);
 }
+

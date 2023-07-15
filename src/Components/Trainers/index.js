@@ -3,12 +3,14 @@ import { AddButton, TableComponent, ToastError, Loader } from 'Components/Shared
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTrainers, deleteTrainer } from 'redux/trainers/thunks';
+import styles from 'Components/Shared/AddButton/addButton.module.css';
 
 function Trainers() {
   const [toastErroOpen, setToastErroOpen] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
   const isError = useSelector((state) => state.trainers.error);
   const trainers = useSelector((state) => state.trainers.list);
-  const isLoading = useSelector((state) => state.trainers.pending);
+  const isPending = useSelector((state) => state.trainers.pending);
   const history = useHistory();
   const dispatch = useDispatch();
   const createMode = () => {
@@ -27,13 +29,23 @@ function Trainers() {
     setToastErroOpen(!!isError);
   }, [isError]);
 
+  useEffect(() => {
+    if (!isPending) {
+      setShowLoader(true);
+      const timer = setTimeout(() => {
+        setShowLoader(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isPending]);
+
   const columnsTable = ['Trainer', 'DNI', 'Phone', 'Email', 'City', 'Salary/Hour'];
   const columnsValue = ['firstName', 'dni', 'phone', 'email', 'city', 'salary'];
 
   return (
-    <section>
+    <section className={styles.containerEachEntityTable}>
       <AddButton entity="Trainer" createMode={createMode} />
-      {isLoading ? (
+      {showLoader ? (
         <Loader />
       ) : (
         <TableComponent

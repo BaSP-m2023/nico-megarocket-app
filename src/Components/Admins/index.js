@@ -3,6 +3,7 @@ import { ToastError, AddButton, TableComponent, Loader } from 'Components/Shared
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllAdmins, adminDelete } from 'redux/admins/thunks';
+import styles from 'Components/Shared/AddButton/addButton.module.css';
 
 function Admins() {
   const admins = useSelector((state) => state.admins.list);
@@ -10,6 +11,7 @@ function Admins() {
   const isError = useSelector((state) => state.admins.error);
   const dispatch = useDispatch();
   const [toastErroOpen, setToastErroOpen] = useState(isError);
+  const [showLoader, setShowLoader] = useState(false);
 
   const history = useHistory();
   const columnTitleArray = ['Admin', 'DNI', 'Phone', 'E-Mail', 'City'];
@@ -31,12 +33,20 @@ function Admins() {
     setToastErroOpen(!!isError);
   }, [isError]);
 
+  useEffect(() => {
+    if (!isPending) {
+      setShowLoader(true);
+      const timer = setTimeout(() => {
+        setShowLoader(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isPending]);
+
   return (
-    <section>
-      <div>
-        <AddButton entity="Admin" createMode={createMode} testId="add-admin-btn" />
-      </div>
-      {isPending ? (
+    <section className={styles.containerEachEntityTable}>
+      <AddButton entity="Admin" createMode={createMode} testId="add-admin-btn" />
+      {showLoader ? (
         <Loader testId="admin-table-loader" />
       ) : (
         <TableComponent

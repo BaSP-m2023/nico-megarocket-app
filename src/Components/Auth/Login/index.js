@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './login.module.css';
 import { useHistory } from 'react-router-dom';
 import { Inputs, Button } from 'Components/Shared';
@@ -42,6 +42,27 @@ function LoginForm() {
     mode: 'onBlur',
     resolver: joiResolver(schema)
   });
+
+  useEffect(() => {
+    const role = sessionStorage.getItem('role');
+    switch (role) {
+      case 'SUPER_ADMIN':
+        history.push('/superAdmin/admin');
+        break;
+      case 'ADMIN':
+        history.push('/admin');
+        break;
+      case 'MEMBER':
+        history.push('/member');
+        break;
+      case 'TRAINER':
+        history.push('/trainer');
+        break;
+      default: {
+        break;
+      }
+    }
+  }, []);
 
   const onSubmit = async (data) => {
     if (Object.values(errors).length === 0) {

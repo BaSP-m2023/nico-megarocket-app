@@ -1,27 +1,33 @@
 .logButton {
   display: flex;
   flex-direction: row;
+  justify-content:space-between;
   align-items: center;
   cursor: pointer;
   height: 35px;
-  margin-left: -13px;
+  gap:15px;
+  transition: all 0.2s;
 }
 .logImg {
   width: 25px;
   height: 25px;
 }
 .logText {
+  display:flex;
   font-size: 1rem;
-  font-weight: 600;
+   font-weight: 400;
   text-transform: capitalize;
   color: var(--primary);
+  transition: all 0.2s;
 }
-
 .logButton:hover {
   transform: scale(1.05);
   transition: all 0.2s;
+  border-left: 1px solid var(--primary);
 }
-
+.logTextHidden {
+  display: none;
+}
 .logButton:hover .logText {
-  color: var(--white);
+  color: var(--primary);
 }

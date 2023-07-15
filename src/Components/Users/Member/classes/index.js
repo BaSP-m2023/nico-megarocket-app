@@ -3,24 +3,38 @@ import { useSelector, useDispatch } from 'react-redux';
 import styles from 'Components/Users/Member/classes/classes.module.css';
 import { getClasses } from 'redux/classes/thunks';
 import DivContainer from 'Components/Shared/Containers';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { Loader } from 'Components/Shared';
 
 const MemberClasses = () => {
   const dispatch = useDispatch();
   let classes = useSelector((state) => state.classes.list);
   const classesArray = useSelector((state) => state.classes.list);
-  const [selectedClass, setSelectedClass] = useState(false);
+  const location = useLocation();
+  const [loading, setLoading] = useState(true);
+  const userJoined = location.state && location.state.params;
+  const [selectedClass, setSelectedClass] = useState(
+    userJoined ? userJoined?.activity : classes[0]?.activity?.name
+  );
   if (selectedClass) {
-    classes = classesArray.filter((item) => item.activity.name === selectedClass);
+    classes = selectedClass
+      ? classesArray.filter((item) => item.activity.name === selectedClass)
+      : [];
   }
 
   useEffect(() => {
     if (classes.length > 0 && !selectedClass) {
-      setSelectedClass(classes[0].activity?.name);
+      setSelectedClass(userJoined ? userJoined?.activity : classes[0]?.activity?.name);
     }
   }, [classes, selectedClass]);
 
   useEffect(() => {
     getClasses(dispatch);
+    if (loading) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+    }
   }, []);
 
   const daysArray = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -47,52 +61,78 @@ const MemberClasses = () => {
   };
 
   return (
-    <div className={styles.table}>
-      <div className={styles.titleSelect}>
-        <h3>Select the class you want to join:</h3>
-        <select onChange={handleChange}>
-          {classesArray.map((item, index) => {
-            return (
-              <option key={index} value={item._id ? item.activity.name : item}>
-                {item.activity.name}
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className={styles.table}>
+          <div className={styles.titleSelect}>
+            {!classes[0]?.activity?.name ? (
+              <h3>Class was no created yet, select another class you want to join:</h3>
+            ) : (
+              <h3>Select the class you want to join:</h3>
+            )}
+            <select
+              className={styles.optionInput}
+              value={selectedClass || 'Pick class'}
+              onChange={handleChange}
+            >
+              <option className={styles.selectOption} value="">
+                Pick class
               </option>
-            );
-          })}
-        </select>
-      </div>
-      <table className={styles.tableContainer}>
-        <thead>
-          <tr>
-            <th className={styles.daysContainer}>Times</th>
-            {daysArray.map((item, index) => {
-              return (
-                <th className={styles.daysContainer} key={index}>
-                  {item}
-                </th>
-              );
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {hoursArray.map((row, index) => {
-            return (
-              <tr className={styles.trContainer2} key={index}>
-                <td className={styles.trContainer}>{row}</td>
-                {daysArray.map((day) => {
+              {classesArray.map((item, index) => (
+                <option className={styles.selectOption} key={index} value={item.activity.name}>
+                  {item.activity.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <table className={styles.tableContainer}>
+            <thead>
+              <tr>
+                <th className={styles.daysContainer}>Times</th>
+                {daysArray.map((item, index) => {
                   return (
-                    <td className={styles.tdContainer} key={day}>
-                      {classes.map((item) => {
-                        return tableItem(item, day, row);
-                      })}
-                    </td>
+                    <th className={styles.daysContainer} key={index}>
+                      {item}
+                    </th>
                   );
                 })}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+            </thead>
+            <tbody>
+              {hoursArray.map((row, index) => {
+                return (
+                  <tr className={styles.trContainer2} key={index}>
+                    <td className={styles.trContainer}>{row}</td>
+                    {daysArray.map((day) => {
+                      return (
+                        <td className={styles.tdContainer} key={day}>
+                          {classes.map((item) => {
+                            return tableItem(item, day, row);
+                          })}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          <div className={styles.statusContainer}>
+            <div className={`${styles.statusAvailable} ${styles.statusBox}`}>
+              <p className={styles.textStatus}>Available</p>
+            </div>
+            <div className={`${styles.statusDisabled} ${styles.statusBox}`}>
+              <p className={styles.textStatus}>Disabled</p>
+            </div>
+            <div className={`${styles.statusEnrolled} ${styles.statusBox}`}>
+              <p className={styles.textStatus}>Enrolled</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

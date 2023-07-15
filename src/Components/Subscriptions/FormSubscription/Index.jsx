@@ -7,7 +7,8 @@ import {
   ModalSuccess,
   OptionInput,
   OptionMultipleInput,
-  ToastError
+  ToastError,
+  Loader
 } from 'Components/Shared';
 import style from '../FormSubscription/modalAdd.module.css';
 import { addSubscriptions, updateSubscriptions, getSuscription } from 'redux/subscriptions/thunks';
@@ -25,6 +26,8 @@ const FormSubscription = () => {
   const [toastError, setModalError] = useState(false);
   const [membersSelected, setMembersSelected] = useState([]);
   const [subscription, setSubscription] = useState({});
+  const [searchMember, setSearchMember] = useState('');
+  const [showLoader, setShowLoader] = useState(false);
   const [slots, setSlots] = useState(0);
   const history = useHistory();
   const { id } = useParams();
@@ -32,11 +35,19 @@ const FormSubscription = () => {
   const classes = useSelector((state) => state.classes.list);
   const subscriptions = useSelector((state) => state.subscription.data);
   const members = useSelector((state) => state.members.list);
+  const isPending = useSelector((state) => state.subscription.pending);
   const data = location.state.params;
 
   const membersActive = members.filter((member) => {
     return member.isActive === true;
   });
+
+  const membersInput =
+    searchMember.length > 0
+      ? membersActive.filter((member) => {
+          return member.firstName.toLowerCase().includes(searchMember.toLowerCase());
+        })
+      : membersActive;
 
   const schema = Joi.object({
     date: Joi.date().required().messages({
@@ -76,6 +87,16 @@ const FormSubscription = () => {
     resolver: joiResolver(schema),
     defaultValues: { ...subscriptionUpdated }
   });
+
+  useEffect(() => {
+    if (!isPending) {
+      setShowLoader(true);
+      const timer = setTimeout(() => {
+        setShowLoader(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isPending]);
 
   const subscriptionClassIds = subscriptions.map((subs) => subs.classId);
 
@@ -185,14 +206,43 @@ const FormSubscription = () => {
     setSlots(selectedClass.slots);
   }, [classes]);
 
+  const [selectedLi, setSelectedLi] = useState(null);
+
+  const handleIconClick = (memberId) => {
+    setSelectedLi(memberId);
+  };
   return (
-    <section className={style.containerModal}>
-      <form className={style.containerForm} onSubmit={handleSubmit(onSubmit)}>
-        <h3>{id ? 'Edit subscription' : 'Add subscription'}</h3>
-        <div className={style.inputMemberContainer}>
-          {id ? (
-            <>
-              <div className={id ? style.hidden : ''}>
+    <>
+      {showLoader ? (
+        <Loader />
+      ) : (
+        <section className={style.containerModal}>
+          <form className={style.containerForm} onSubmit={handleSubmit(onSubmit)}>
+            <h3>{id ? 'Edit subscription' : 'Add subscription'}</h3>
+            <div className={style.inputMemberContainer}>
+              {id ? (
+                <>
+                  <div className={id ? style.hidden : ''}>
+                    <OptionInput
+                      data={unSubscribedClasses}
+                      dataLabel="Class"
+                      setValue={{}}
+                      aValue={{}}
+                      name="classId"
+                      register={register}
+                      error={errors.classId?.message}
+                    />
+                  </div>
+                  <p className={id ? style.formEdited : style.hidden}>
+                    {selectedClass.activity?.name} - {selectedClass?.hour}
+                    <img
+                      className={style.icon}
+                      onClick={() => handleClick()}
+                      src={`${process.env.PUBLIC_URL}/assets/images/pencil-edit.svg`}
+                    />
+                  </p>
+                </>
+              ) : (
                 <OptionInput
                   data={unSubscribedClasses}
                   dataLabel="Class"
@@ -202,95 +252,118 @@ const FormSubscription = () => {
                   register={register}
                   error={errors.classId?.message}
                 />
-              </div>
-              <p className={id ? style.formEdited : style.hidden}>
-                {selectedClass.activity?.name} - {selectedClass?.hour}
-                <img
-                  className={style.icon}
-                  onClick={() => handleClick()}
-                  src={`${process.env.PUBLIC_URL}/assets/images/pencil-edit.svg`}
-                />
-              </p>
-            </>
-          ) : (
-            <OptionInput
-              data={unSubscribedClasses}
-              dataLabel="Class"
-              setValue={{}}
-              aValue={{}}
-              name="classId"
+              )}
+              {selectedClass && (
+                <>
+                  {slots <= 0 ? (
+                    <p className={style.slots}>No slots available</p>
+                  ) : (
+                    <p className={style.slots}>Slots: {slots}</p>
+                  )}
+                </>
+              )}
+            </div>
+            <div className={style.inputContainer}>
+              Members:
+              <input
+                className={style.searchInput}
+                type="text"
+                placeholder="Search Member..."
+                onChange={(e) => setSearchMember(e.target.value)}
+              />
+              <OptionMultipleInput
+                membersSelected={membersSelected.length === 0 ? '' : membersSelected}
+                onAction={handleMiembroClick}
+                data={membersInput}
+                dataLabel="Member"
+                setValue={{}}
+                aValue={{}}
+                name="members"
+                register={register}
+                error={errors.members?.message}
+                disabled={!isSlotsAvailable}
+              />
+            </div>
+            <ul className={style.list}>
+              {membersSelected.map((member) => {
+                {
+                  return members.map((oneMember) => {
+                    if (oneMember._id === member) {
+                      return (
+                        <li key={member}>
+                          <div className={style.listMembers}>
+                            <div className={style.eachMember}>
+                              {oneMember.firstName} {oneMember.lastName}
+                              <div className={style.boxClose}>
+                                <img
+                                  className={style.iconPic}
+                                  onClick={() => {
+                                    handleIconClick(member);
+                                  }}
+                                  src={`${process.env.PUBLIC_URL}/assets/images/${'info.png'}`}
+                                />
+                                <div
+                                  onClick={() => deleteItemList(member)}
+                                  className={style.close_icon}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          {selectedLi === member && (
+                            <div className={style.speechBalloon}>
+                              <div className={style.speechElements}>
+                                <p title={'Email'}>{oneMember.email}</p>
+                                <p title={'Dni'}>{oneMember.dni}</p>
+                                <div
+                                  onClick={() => {
+                                    setSelectedLi(null);
+                                  }}
+                                  className={`${style.boxClick} ${style.close_icon}`}
+                                />
+                              </div>
+                            </div>
+                          )}
+                        </li>
+                      );
+                    }
+                    return null;
+                  });
+                }
+              })}
+            </ul>
+            <Inputs
+              nameTitle="Date:"
+              nameInput="date"
+              type="date"
               register={register}
-              error={errors.classId?.message}
+              error={errors.date?.message}
+            />
+            <div className={style.containerAdd}>
+              <Button clickAction={() => {}} text={id ? 'Save' : 'Add'} />
+              <Button clickAction={() => reset()} text="Reset" />
+              <Button clickAction={goBack} text="Cancel" />
+            </div>
+          </form>
+          {modalConfirmOpen && (
+            <ModalConfirm
+              method="Confirm"
+              onConfirm={onConfirm}
+              message="Are you sure you want to update this subscription?"
+              setModalConfirmOpen={setModalConfirmOpen}
             />
           )}
-          {selectedClass && <>{slots <= 0 ? <p>No slots available</p> : <p>Slots: {slots}</p>}</>}
-        </div>
-        <div className={style.inputContainer}>
-          <OptionMultipleInput
-            membersSelected={membersSelected.length === 0 ? '' : membersSelected}
-            onAction={handleMiembroClick}
-            data={membersActive}
-            dataLabel="Member"
-            setValue={{}}
-            aValue={{}}
-            name="members"
-            register={register}
-            error={errors.members?.message}
-            disabled={!isSlotsAvailable}
-          />
-        </div>
-
-        <ul className={style.list}>
-          {membersSelected.map((member) => {
-            {
-              return members.map((oneMember) => {
-                if (oneMember._id === member) {
-                  return (
-                    <li key={member}>
-                      <div className={style.listMembers}>
-                        {oneMember.firstName} {oneMember.lastName}
-                        <img
-                          src="/assets/images/icon-cross.png"
-                          alt="Cross icon"
-                          onClick={() => deleteItemList(member)}
-                        ></img>
-                      </div>
-                    </li>
-                  );
-                }
-                return null;
-              });
-            }
-          })}
-        </ul>
-        <Inputs
-          nameTitle="Date:"
-          nameInput="date"
-          type="date"
-          register={register}
-          error={errors.date?.message}
-        />
-        <div className={style.containerAdd}>
-          <Button clickAction={() => {}} text={id ? 'Save' : 'Add'} />
-          <Button clickAction={() => reset()} text="Reset" />
-          <Button clickAction={goBack} text="Cancel" />
-        </div>
-      </form>
-      {modalConfirmOpen && (
-        <ModalConfirm
-          method="Confirm"
-          onConfirm={onConfirm}
-          message="Are you sure?"
-          setModalConfirmOpen={setModalConfirmOpen}
-        />
+          {modalSuccessOpen && (
+            <ModalSuccess
+              message="Subscription has been updated succesfully"
+              setModalSuccessOpen={setModalSuccessOpen}
+            />
+          )}
+          {toastError && (
+            <ToastError setToastErroOpen={setModalError} message="Pick at least one member" />
+          )}
+        </section>
       )}
-      {modalSuccessOpen && (
-        <ModalSuccess message="Success!" setModalSuccessOpen={setModalSuccessOpen} />
-      )}
-      {toastError && (
-        <ToastError setToastErroOpen={setModalError} message="Pick at least one member" />
-      )}
-    </section>
+    </>
   );
 };
 export default FormSubscription;

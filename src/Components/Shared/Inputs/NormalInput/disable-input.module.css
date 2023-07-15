@@ -9,10 +9,11 @@
 
 .normalInput:focus {
   outline: 0;
-  border-bottom-color: #373867;
+  border-bottom-color: var(--primary);
 }
 .nameLabel {
   margin-top: 10px;
+  font-weight:500;
 }
 .nameLabel label {
   display: flex;
@@ -25,7 +26,7 @@
 }
 
 .labelError label {
-  color: red;
+  color: var(--red);
   font-size: 19px;
 }
 .error {
@@ -34,12 +35,13 @@
   width: 255px;
 }
 .errorInput {
-  border-bottom: solid red;
+  border-bottom: solid var(--red);
   margin-top: 0;
 }
 .spaceErrorMsg {
   margin-top: 0;
   height: 30px;
+  color: var(--red);
 }
 
 .errorLogo {
@@ -48,7 +50,7 @@
   justify-content: center;
   width: 15px;
   height: 15px;
-  background-color: red;
+  background-color: var(--red);
   color: #ffffff;
   font-weight: bold;
   border-radius: 25px;

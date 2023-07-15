@@ -15,6 +15,8 @@
   box-shadow: 0px 20px 30px -5px #373867;
   border: 3px solid var(--primary);
 }
+
+
 .titleLogin {
   text-align: center;
   font-size: 36px;
@@ -81,7 +83,7 @@
 .MsgError {
   font-size: 12px;
   text-align: center;
-  color: var(--white);
+  color: var(--red);
   font-weight: 500;
 }
 .emptyBox {
@@ -107,7 +109,7 @@
   left: 50%;
   width: 15px;
   height: 2px;
-  background-color: red;
+  background-color: var(--red);
   transform-origin: center;
 }
 .close_icon:before {
@@ -162,4 +164,29 @@
 }
 .shakeAnimation {
   animation: shakeAnimation 0.3s ease-in-out;
+}
+
+@media only screen and (max-width: 900px) {
+  .wholeContainer {
+    max-width: 90%;
+    margin-left:4rem;
+    margin-bottom:10rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+
+  .wholeContainer{
+    margin:0;
+    width:90%;
+  }
+
+  .formSuperAdmin {
+    justify-content: start;
+    margin-top: 20px;
+  }
+
+  .forgotPass {
+    font-size: 10px;
+  }
 }

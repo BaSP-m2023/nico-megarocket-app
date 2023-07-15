@@ -13,7 +13,7 @@ const SelectMultipleInput = ({
 }) => {
   const ifFirstName = (item) => {
     if (item.firstName && item.lastName) {
-      return `${item.firstName} ${item.lastName}`;
+      return `${item.firstName} ${item.lastName} (${item.email})`;
     }
   };
 
@@ -34,9 +34,7 @@ const SelectMultipleInput = ({
       <label
         htmlFor="selectInput"
         className={error ? `${styles.nameLabel} ${styles.labelError}` : styles.nameLabel}
-      >
-        {dataLabel}
-      </label>
+      ></label>
       <select
         onClick={onAction}
         multiple
