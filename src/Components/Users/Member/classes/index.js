@@ -37,6 +37,20 @@ const MemberClasses = () => {
     }
   }, []);
 
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const daysArray = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const hoursArray = [
     '08:00',
@@ -94,7 +108,7 @@ const MemberClasses = () => {
                 {daysArray.map((item, index) => {
                   return (
                     <th className={styles.daysContainer} key={index}>
-                      {item}
+                      {screenWidth > 967 ? item : item.slice(0, 1 - item.length)}
                     </th>
                   );
                 })}
