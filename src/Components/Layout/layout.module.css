@@ -4,15 +4,12 @@
   justify-content: flex-end;
   min-height: 100vh;
 }
-
 aside {
   position: sticky;
   top: 0;
   left: 0;
   height: 100vh;
 }
-
-
 .mainContainer {
   display: flex;
   flex-direction: row;
@@ -20,27 +17,30 @@ aside {
   min-height: 100vh;
   position: relative;
 }
-
 .switchContainer {
   display: flex;
   justify-content: center;
   width: 100%;
 }
-
 .asideContainer {
   height: auto;
   z-index: 1;
+}
+.headerSpace{
+  display: none;
+}
+
+@media only screen and (max-width: 868px) {
+  .headerSpace{
+    display: block;
+    width: 200px;
+    height: 70px;
+  }
 }
 
 @media only screen and (max-width: 601px){
   aside{
     display:none;
   }
-  /* .hamburguerNavbar{
-    display: flex;
-    width: 100px;
-    height: 100px;
-    border: 1px solid red;
-    z-index: 1;
-  } */
+
 }

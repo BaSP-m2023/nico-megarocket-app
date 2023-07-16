@@ -17,17 +17,19 @@ function Header({ setClickHamburguer, clickHamburguer }) {
   return (
     <header className={styles.wholeContainer}>
       <div className={styles.container}>
-        <div
-          className={styles.hamburguerMenu}
-          onClick={() => {
-            setClickHamburguer(!clickHamburguer);
-          }}
-        >
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/images/menuH.png`}
-            alt={`icon menu `}
-            className={styles.navIcon}
-          />
+        <div className={styles.hamburguerMenu}>
+          <label htmlFor="burger" className={styles.burger}>
+            <input
+              id="burger"
+              type="checkbox"
+              onClick={() => {
+                setClickHamburguer(!clickHamburguer);
+              }}
+            />
+            <span></span>
+            <span></span>
+            <span></span>
+          </label>
         </div>
         <div className={styles.containerLogo}>
           <div className={styles.boxTextImg} title="go back to Home" onClick={handleLinkClick}>

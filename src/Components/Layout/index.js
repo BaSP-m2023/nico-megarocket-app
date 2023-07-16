@@ -11,6 +11,7 @@ function Layout(props) {
   return (
     <div className={styles.container}>
       <Header setClickHamburguer={setClickHamburguer} clickHamburguer={clickHamburguer} />
+      <div className={styles.headerSpace}></div>
       <div className={styles.hamburguerNavbar}>
         {clickHamburguer && (
           <HambMenu routes={props.routes} setClickHamburguer={setClickHamburguer} />

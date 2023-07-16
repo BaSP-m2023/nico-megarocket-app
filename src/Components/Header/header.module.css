@@ -3,7 +3,6 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 100vw;
   display: flex;
   flex-direction: row;
   height: 70px;
@@ -37,10 +36,6 @@
   width: 40px;
   display: flex;
 }
-.socialIcon {
-  margin-left: 15px;
-  filter: invert();
-}
 .profileMenu{
   position: relative;
   display: flex;
@@ -67,6 +62,10 @@
     height: 70px;
     z-index: 200;
   }
+  .container{
+    width: 90%;
+    justify-content: space-around;
+  }
   .containerLogo{
     margin-right: auto;
   }
@@ -75,7 +74,78 @@
     margin-right: 15px;
     cursor: pointer;
   }
+  .burger input {
+    display: none;
+  }
+  .burger {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    background: transparent;
+    cursor: pointer;
+    display: block;
+  }
   
+  .burger span {
+    display: block;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background: var(--secondary-dark);
+    border-radius: 9px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: .25s ease-in-out;
+  }
+  
+  .burger span:nth-of-type(1) {
+    top: 2px;
+    transform-origin: left center;
+  }
+  
+  .burger span:nth-of-type(2) {
+    top: 50%;
+    transform: translateY(-50%);
+    transform-origin: left center;
+  }
+  
+  .burger span:nth-of-type(3) {
+    top: 94%;
+    transform-origin: left center;
+    transform: translateY(-100%);
+  }
+  
+  .burger input:checked ~ span:nth-of-type(1) {
+    top: 0;
+    left: 3px;
+    transform: rotate(405deg);
+  }
+  
+  .burger input:checked ~ span:nth-of-type(2) {
+    width: 0%;
+    opacity: 0;
+  }
+  
+  .burger input:checked ~ span:nth-of-type(3) {
+    top: 17.5px;
+    left: 3px;
+    transform: rotate(-405deg);
+  }
+  
+  
+}
+
+@media screen and (max-width: 601px) {
+  .containerLogo{
+    margin-left: 0;
+  }
+  .containerLogo{
+    margin-right: 0;
+  }
+  .brand{
+    display: none;
+  }
 }
 
 

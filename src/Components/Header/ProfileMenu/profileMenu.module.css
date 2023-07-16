@@ -60,9 +60,8 @@ color: white;
   text-decoration: none;
 }
 
-@media screen and (max-width: 868px) {
-  /* .container{
-    z-index: 10;
-    border: 2px solid green; 
-  } */
+@media screen and (max-width: 601px) {
+  .profileInfoContainer{
+    display: none;
+  }
 }

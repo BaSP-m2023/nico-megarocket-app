@@ -59,6 +59,7 @@
 }
 .logoutButton {
   position: absolute;
+  margin-left: 10px;
   bottom: 15%;
 }
 

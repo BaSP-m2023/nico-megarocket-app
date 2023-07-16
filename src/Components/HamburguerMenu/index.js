@@ -9,6 +9,13 @@ const HambMenu = (props) => {
 
   return (
     <nav className={`${styles.navbar} ${styles.animationShow}`}>
+      <div className={styles.logoMobile}>
+        <img
+          className={styles.rocketLogo}
+          src={`${process.env.PUBLIC_URL}/assets/images/logo.png`}
+          alt="Rocket logo"
+        />
+      </div>
       <ul className={styles.rutes}>
         {props.routes.map((route) => (
           <li
@@ -32,10 +39,10 @@ const HambMenu = (props) => {
             </NavLink>
           </li>
         ))}
-        <div className={token ? `styles.logoutButton` : `styles.noToken`}>
-          {!!token && <LogOut isHovered={isHovered} />}
-        </div>
       </ul>
+      <div className={token ? styles.logoutButton : styles.noToken}>
+        {!!token && <LogOut isHovered={isHovered} />}
+      </div>
     </nav>
   );
 };
