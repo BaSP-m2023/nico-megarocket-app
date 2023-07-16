@@ -32,3 +32,20 @@
   flex-direction: row;
   margin-top: 20px;
 }
+
+@media screen and (max-width: 600px) {
+  .containerModal {
+    display: flex;
+    justify-content: center;
+    height: 30rem;
+    width: 100%;
+  }
+
+  .containerForm {
+    width: 80%;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+}

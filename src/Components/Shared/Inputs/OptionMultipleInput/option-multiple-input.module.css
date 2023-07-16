@@ -60,19 +60,25 @@
   gap:10px;
 }
 .optionInput::-webkit-scrollbar {
-  width:10px;  
+  width:10px;
 }
-.optionInput::-webkit-scrollbar-button {  
+.optionInput::-webkit-scrollbar-button {
   display: none;
-} 
-.optionInput::-webkit-scrollbar-thumb {  
+}
+.optionInput::-webkit-scrollbar-thumb {
   background-color: #797979;
   border-radius: 20px;
   border: 2px solid #f1f2f3;
-} 
-.optionInput::-webkit-scrollbar-track {  
+}
+.optionInput::-webkit-scrollbar-track {
   border-radius: 10px;
 }
 .darkerName{
   font-weight: bold;
+}
+
+@media screen and (max-width:500px) {
+  .optionInput {
+    width: 100%;
+  }
 }

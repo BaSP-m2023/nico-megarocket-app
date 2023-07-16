@@ -40,7 +40,6 @@
   padding: 10px 0;
   cursor: pointer;
   text-transform: uppercase;
-  margin-button: 10px;
 }
 
 .submitButton:hover {
@@ -51,6 +50,7 @@
 .inputContainer {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   margin: 5px 0;
 }
 
@@ -78,4 +78,28 @@
 .radioContainer div {
   margin: 0 10px;
   font-size: 15px;
+}
+
+@media screen and (max-width:750px) {
+  .container {
+    width: 80%;
+  }
+
+  .inputsContainer {
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .inputGroups {
+    display: grid;
+    gap: 20px;
+  }
+
+  .form {
+    flex-wrap: wrap;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
 }
