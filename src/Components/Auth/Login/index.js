@@ -88,6 +88,10 @@ function LoginForm() {
     }
   };
 
+  const eye = `${process.env.PUBLIC_URL}/assets/images/visibility.png`;
+  const noEye = `${process.env.PUBLIC_URL}/assets/images/noVisible.png`;
+  const [view, setView] = useState(false);
+
   return (
     <form className={styles.formSuperAdmin} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.wholeContainer}>
@@ -102,15 +106,18 @@ function LoginForm() {
             testId="login-input-email"
             className={styles.inputs}
           />
-          <Inputs
-            type="password"
-            nameInput={'password'}
-            nameTitle={'Password'}
-            register={register}
-            error={errors.password?.message}
-            testId="login-input-password"
-            className={styles.inputs}
-          />
+          <div className={styles.containerPasswordEye}>
+            <Inputs
+              type={view ? 'text' : 'password'}
+              nameInput={'password'}
+              nameTitle={'Password'}
+              register={register}
+              error={errors.password?.message}
+              testId="login-input-password"
+              className={styles.inputs}
+            />
+            <img onClick={() => setView(!view)} src={view ? eye : noEye} />
+          </div>
         </div>
         {errorPop ? (
           <div
