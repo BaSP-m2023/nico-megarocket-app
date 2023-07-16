@@ -77,3 +77,15 @@
   align-items:center;
   gap:10px;
 }
+
+@media screen and (max-width:1200px) {
+  .containerInput {
+    align-items: center;
+  }
+
+  .errorContainer{
+    align-items:center;
+    gap:1px;
+    margin-right: -30px;
+  }
+}

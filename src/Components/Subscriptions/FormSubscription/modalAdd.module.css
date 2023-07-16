@@ -168,3 +168,31 @@
 .slots{
   text-align: center;
 }
+
+@media screen and (max-width:500px) {
+  .containerForm {
+    width: 80%;
+  }
+
+  .containerForm h3 {
+    font-size: 1.5rem;
+  }
+
+  .list {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .inputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+    width: 100%;
+    font-size: .8rem;
+  }
+
+  .searchInput {
+    margin: 0;
+    padding: 2px;
+  }
+}
