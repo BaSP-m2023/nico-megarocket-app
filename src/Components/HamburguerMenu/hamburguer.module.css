@@ -116,7 +116,6 @@
     font-size: 1rem;
     text-decoration: none;
     color: var(--primary);
-    transition: 0.2s color;
     font-weight: 400;
     transition: all 0.2s;
     padding-bottom: 5px;

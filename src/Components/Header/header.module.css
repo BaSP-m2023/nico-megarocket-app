@@ -49,6 +49,13 @@
   width: 25px;
   height: 25px;
 }
+.imgLoginButton{
+  display: none;
+}
+.loginButton{
+  width: 37px;
+  height: 37px;
+}
 
 @media screen and (max-width: 868px) {
   .wholeContainer{
@@ -132,11 +139,28 @@
     left: 3px;
     transform: rotate(-405deg);
   }
-  
+  .imgLoginButton{
+    cursor: pointer;
+    display: block;
+    transition: all .3s;
+  }
+  .imgLoginButton:hover{
+    cursor: pointer;
+    display: block;
+    transform: scale(1.125);
+    transition: all .3s;
+  }
   
 }
 
 @media screen and (max-width: 601px) {
+  .imgLoginButton{
+    display: block;
+  }
+  .container{
+    width: 90%;
+    justify-content: space-between;
+  }
   .containerLogo{
     margin-left: 0;
   }
@@ -146,11 +170,36 @@
   .brand{
     display: none;
   }
+  .imgLogo{
+    transition: all .3s;
+  }
+  .imgLogo:hover{
+    cursor: pointer;
+    transform: scale(1.125);
+    transition: all .3s;
+  }
+  .profileMenu{
+    width: 37px;
+    height: 37px;    
+    transition: all .3s;
+  }
+  .profileMenu:hover{
+    transform: scale(1.125);
+    transition: all .3s;
+  }
 }
 
 
 @media screen and (max-width: 430px) {
-  /* Aquí van los estilos específicos para móviles */
+
+  .loginButton{
+    cursor: pointer;
+    width: 37px;
+    height: 37px;
+    z-index: 100;
+  }
+
 }
+
 
 

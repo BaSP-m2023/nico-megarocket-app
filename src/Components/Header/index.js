@@ -22,6 +22,7 @@ function Header({ setClickHamburguer, clickHamburguer }) {
             <input
               id="burger"
               type="checkbox"
+              checked={clickHamburguer}
               onClick={() => {
                 setClickHamburguer(!clickHamburguer);
               }}
@@ -39,7 +40,25 @@ function Header({ setClickHamburguer, clickHamburguer }) {
             <div className={styles.brand}>Mega Rocket Gym</div>
           </div>
         </div>
-        <div className={styles.profileMenu}>{token && <ProfileMenu />}</div>
+        <div className={styles.profileMenu}>
+          {token ? (
+            <ProfileMenu />
+          ) : (
+            <div
+              className={styles.loginButton}
+              onClick={() => {
+                history.push('/auth/login');
+                setClickHamburguer(false);
+              }}
+            >
+              <img
+                className={styles.imgLoginButton}
+                src={`${process.env.PUBLIC_URL}/assets/images/door-in.png`}
+                alt="Rocket logo"
+              />
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );
