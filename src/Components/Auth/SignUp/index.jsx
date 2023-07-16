@@ -18,7 +18,6 @@ const SignForm = () => {
   const [loading, setLoading] = useState(true);
   const [messageError, setMessageError] = useState('');
   const [toastError, setToastError] = useState(null);
-  const [base64Picture, setBase64Picture] = useState('');
 
   const schema = Joi.object({
     firstName: Joi.string()
@@ -124,24 +123,6 @@ const SignForm = () => {
       .required()
   });
 
-  const handlePictureChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        const base64Result = reader.result;
-        console.log(base64Picture);
-        setBase64Picture(base64Result);
-      };
-      reader.onerror = (error) => {
-        console.log(error);
-      };
-    } else {
-      setBase64Picture('');
-    }
-  };
-
   const {
     register,
     handleSubmit,
@@ -162,8 +143,7 @@ const SignForm = () => {
       password: data.password,
       postalCode: data.postalCode,
       membership: data.membership,
-      birthday: data.birthday,
-      picture: base64Picture
+      birthday: data.birthday
     };
 
     if (Object.values(errors).length === 0) {
@@ -364,19 +344,6 @@ const SignForm = () => {
                     error={errors.membership?.message}
                     testId="signup-membership-input"
                   />
-                </div>
-                <div className={styles.inputContainer}>
-                  <label className={styles.nameLabel}>Picture</label>
-                  <input type="file" name="picture" onChange={handlePictureChange} />
-                  {base64Picture && (
-                    <img
-                      className={styles.image}
-                      src={base64Picture}
-                      alt="Thumbnail"
-                      width="100"
-                      height="100"
-                    />
-                  )}
                 </div>
               </div>
             </div>
