@@ -40,7 +40,12 @@ const HambMenu = (props) => {
           </li>
         ))}
       </ul>
-      <div className={token ? styles.logoutButton : styles.noToken}>
+      <div
+        onClick={() => {
+          props.setClickHamburguer(false);
+        }}
+        className={token ? styles.logoutButton : styles.noToken}
+      >
         {!!token && <LogOut isHovered={isHovered} />}
       </div>
     </nav>

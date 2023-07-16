@@ -542,7 +542,8 @@
       url('/public/assets/images/dumbells.jpg');
     background-repeat: no-repeat;
     background-position: center;
-    padding: 20px 0;
+    height: 92vh;
+    margin-top: -7px;
   }
 
   .bannerVideo {
