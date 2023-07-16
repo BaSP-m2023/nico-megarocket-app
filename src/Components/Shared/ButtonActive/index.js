@@ -4,7 +4,7 @@ import { updateIsActiveTrainer } from 'redux/trainers/thunks';
 import { editIsActiveMember } from 'redux/members/thunks';
 import { useDispatch } from 'react-redux';
 
-const ButtonActive = ({ data }) => {
+const ButtonActive = ({ data, handlefocus }) => {
   const token = sessionStorage.getItem('token');
   const [isChecked, setIsChecked] = useState(data.isActive);
 
@@ -63,6 +63,20 @@ const ButtonActive = ({ data }) => {
     send();
   }, [isChecked]);
 
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <div className={styles.container}>
       <div className={isChecked ? styles.toggleSwitched : styles.toggleSwitch}>
@@ -70,7 +84,12 @@ const ButtonActive = ({ data }) => {
           type="checkbox"
           className={styles.checkbox}
           onChange={handlerChange}
-          onClick={() => setIsChecked(!isChecked)}
+          onClick={() => {
+            {
+              screenWidth < 967 && handlefocus();
+            }
+            setIsChecked(!isChecked);
+          }}
           checked={isChecked}
         />
         <label className={styles.label}>

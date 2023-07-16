@@ -75,7 +75,7 @@ const TableMobile = ({
             ))}
             {(located === '/admin/trainers' || located === '/admin/members') && (
               <p>
-                <ButtonActive data={row} />
+                <ButtonActive data={row} handlefocus={handlefocus} />
               </p>
             )}
             <div className={styles.containerActionsMobile}>
