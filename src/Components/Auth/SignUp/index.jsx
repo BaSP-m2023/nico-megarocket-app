@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './signUp.module.css';
-import { Inputs, OptionInput, Button, ToastError, ModalSignUp } from 'Components/Shared';
+import { Inputs, OptionInput, Button, ToastError, ModalSignUp, Loader } from 'Components/Shared';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -15,6 +15,7 @@ const SignForm = () => {
   const [openModalSuccess, setOpenModalSuccess] = useState(null);
   const [modalShow, setModalShow] = useState(false);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [messageError, setMessageError] = useState('');
   const [toastError, setToastError] = useState(null);
   const [base64Picture, setBase64Picture] = useState('');
@@ -196,183 +197,201 @@ const SignForm = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (loading) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+    }
+  }, []);
+
   const memberships = ['Classic', 'Black', 'Only Classes'];
 
   return (
-    <div>
-      {openModalSuccess && (
-        <ModalSuccess
-          setModalSuccessOpen={setOpenModalSuccess}
-          message={'Sign In Successfully!'}
-          testId="member-modal-success"
-        />
-      )}
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div>
+          {openModalSuccess && (
+            <ModalSuccess
+              setModalSuccessOpen={setOpenModalSuccess}
+              message={'Sign In Successfully!'}
+              testId="member-modal-success"
+            />
+          )}
 
-      {toastError && (
-        <ToastError
-          setToastErroOpen={setToastError}
-          message={messageError}
-          testId="member-form-toast-error"
-        />
-      )}
-      {modalShow && <ModalSignUp setModalShow={setModalShow} />}
-      {error && (
-        <div className={styles.boxError} data-testid="signUp-error-pop">
-          <div className={styles.lineError}>
-            <div className={styles.errorLogo}>!</div>
-            Sign In error
-            <div
-              onClick={() => {
-                setError(false);
-              }}
-              className={styles.close_icon}
-            ></div>
-          </div>
-          <p className={styles.MsgError}>Email is already user</p>
-        </div>
-      )}
+          {toastError && (
+            <ToastError
+              setToastErroOpen={setToastError}
+              message={messageError}
+              testId="member-form-toast-error"
+            />
+          )}
+          {modalShow && <ModalSignUp setModalShow={setModalShow} />}
+          {error && (
+            <div className={styles.boxError} data-testid="signUp-error-pop">
+              <div className={styles.lineError}>
+                <div className={styles.errorLogo}>!</div>
+                Sign In error
+                <div
+                  onClick={() => {
+                    setError(false);
+                  }}
+                  className={styles.close_icon}
+                ></div>
+              </div>
+              <p className={styles.MsgError}>Email is already user</p>
+            </div>
+          )}
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={styles.container}
-        encType="multipart/form-data"
-      >
-        <h1 className={styles.title}>Sign Up</h1>
-        <div className={styles.form}>
-          <div className={styles.groupContainer}>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameInput="firstName"
-                nameTitle="First Name"
-                register={register}
-                type="text"
-                error={errors.firstName?.message}
-                testId="signup-name-input"
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className={styles.container}
+            encType="multipart/form-data"
+          >
+            <h1 className={styles.title}>Sign Up</h1>
+            <div className={styles.form}>
+              <div className={styles.groupContainer}>
+                <div className={styles.inputContainer}>
+                  <Inputs
+                    nameInput="firstName"
+                    nameTitle="First Name"
+                    register={register}
+                    type="text"
+                    error={errors.firstName?.message}
+                    testId="signup-name-input"
+                  />
+                </div>
+                <div className={styles.inputContainer}>
+                  <Inputs
+                    nameInput="birthday"
+                    nameTitle="Birthday"
+                    register={register}
+                    type="date"
+                    error={errors.birthday?.message}
+                    testId="signup-birthday-input"
+                  />
+                </div>
+                <div className={styles.inputContainer}>
+                  <Inputs
+                    nameInput="city"
+                    nameTitle="City"
+                    register={register}
+                    type="text"
+                    error={errors.city?.message}
+                    testId="signup-city-input"
+                  />
+                </div>
+                <div className={styles.inputContainer}>
+                  <Inputs
+                    nameInput="phone"
+                    nameTitle="Phone"
+                    register={register}
+                    type="number"
+                    error={errors.phone?.message}
+                    testId="signup-phone-input"
+                  />
+                </div>
+                <div className={styles.inputContainer}>
+                  <Inputs
+                    nameTitle="Password"
+                    nameInput="password"
+                    register={register}
+                    type="password"
+                    error={errors.password?.message}
+                    testId="signup-password-input"
+                  />
+                </div>
+              </div>
+              <div className={styles.groupContainer}>
+                <div className={styles.inputContainer}>
+                  <Inputs
+                    nameTitle="Last Name"
+                    nameInput="lastName"
+                    register={register}
+                    type="text"
+                    error={errors.lastName?.message}
+                    testId="signup-lastname-input"
+                  />
+                </div>
+                <div className={styles.inputContainer}>
+                  <Inputs
+                    nameTitle="DNI"
+                    nameInput="dni"
+                    register={register}
+                    type="text"
+                    error={errors.dni?.message}
+                    testId="signup-dni-input"
+                  />
+                </div>
+                <div className={styles.inputContainer}>
+                  <Inputs
+                    nameInput="postalCode"
+                    nameTitle="Postal Code"
+                    register={register}
+                    type="number"
+                    error={errors.postalCode?.message}
+                    testId="signup-postalcode-input"
+                  />
+                </div>
+                <div className={styles.inputContainer}>
+                  <Inputs
+                    nameTitle="Email"
+                    nameInput="email"
+                    register={register}
+                    type="email"
+                    error={errors.email?.message}
+                    testId="signup-email-input"
+                  />
+                </div>
+                <div className={styles.inputContainer}>
+                  <Inputs
+                    nameTitle="Repeat Password"
+                    nameInput="repeatPassword"
+                    register={register}
+                    type="password"
+                    error={errors.repeatPassword?.message}
+                    testId="signup-repeatpassword-input"
+                  />
+                </div>
+                <div className={styles.inputContainer}>
+                  <OptionInput
+                    data={memberships}
+                    name="membership"
+                    dataLabel="Membership"
+                    register={register}
+                    error={errors.membership?.message}
+                    testId="signup-membership-input"
+                  />
+                </div>
+                <div className={styles.inputContainer}>
+                  <label className={styles.nameLabel}>Picture</label>
+                  <input type="file" name="picture" onChange={handlePictureChange} />
+                  {base64Picture && (
+                    <img
+                      className={styles.image}
+                      src={base64Picture}
+                      alt="Thumbnail"
+                      width="100"
+                      height="100"
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className={styles.buttonsGroup}>
+              <Button clickAction={() => {}} text="Sign In" testId="signup-btn" />
+              <Button
+                text="Cancel"
+                clickAction={() => history.goBack()}
+                testId="signup-cancel-btn"
               />
             </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameInput="birthday"
-                nameTitle="Birthday"
-                register={register}
-                type="date"
-                error={errors.birthday?.message}
-                testId="signup-birthday-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameInput="city"
-                nameTitle="City"
-                register={register}
-                type="text"
-                error={errors.city?.message}
-                testId="signup-city-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameInput="phone"
-                nameTitle="Phone"
-                register={register}
-                type="number"
-                error={errors.phone?.message}
-                testId="signup-phone-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameTitle="Password"
-                nameInput="password"
-                register={register}
-                type="password"
-                error={errors.password?.message}
-                testId="signup-password-input"
-              />
-            </div>
-          </div>
-          <div className={styles.groupContainer}>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameTitle="Last Name"
-                nameInput="lastName"
-                register={register}
-                type="text"
-                error={errors.lastName?.message}
-                testId="signup-lastname-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameTitle="DNI"
-                nameInput="dni"
-                register={register}
-                type="text"
-                error={errors.dni?.message}
-                testId="signup-dni-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameInput="postalCode"
-                nameTitle="Postal Code"
-                register={register}
-                type="number"
-                error={errors.postalCode?.message}
-                testId="signup-postalcode-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameTitle="Email"
-                nameInput="email"
-                register={register}
-                type="email"
-                error={errors.email?.message}
-                testId="signup-email-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameTitle="Repeat Password"
-                nameInput="repeatPassword"
-                register={register}
-                type="password"
-                error={errors.repeatPassword?.message}
-                testId="signup-repeatpassword-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <OptionInput
-                data={memberships}
-                name="membership"
-                dataLabel="Membership"
-                register={register}
-                error={errors.membership?.message}
-                testId="signup-membership-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <label className={styles.nameLabel}>Picture</label>
-              <input type="file" name="picture" onChange={handlePictureChange} />
-              {base64Picture && (
-                <img
-                  className={styles.image}
-                  src={base64Picture}
-                  alt="Thumbnail"
-                  width="100"
-                  height="100"
-                />
-              )}
-            </div>
-          </div>
+          </form>
         </div>
-        <div className={styles.buttonsGroup}>
-          <Button clickAction={() => {}} text="Sign In" testId="signup-btn" />
-          <Button text="Cancel" clickAction={() => history.goBack()} testId="signup-cancel-btn" />
-        </div>
-      </form>
-    </div>
+      )}
+    </>
   );
 };
 
