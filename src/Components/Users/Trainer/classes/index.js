@@ -16,7 +16,7 @@ const TrainersClasses = () => {
   const trainers = useSelector((state) => state.trainers.list);
   const trainer = trainers.find((oneTrainer) => oneTrainer.email === userCurrent);
   const trainerClasses = classes.filter((oneClass) => {
-    if (oneClass.trainer[0].email === userCurrent) {
+    if (oneClass.trainer[0]?.email === userCurrent) {
       return oneClass;
     }
   });
@@ -43,6 +43,20 @@ const TrainersClasses = () => {
       }, 2000);
     }
   }, [trainer]);
+
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   if (!trainer) {
     return null;
@@ -86,7 +100,7 @@ const TrainersClasses = () => {
               {daysArray.map((item, index) => {
                 return (
                   <th className={styles.daysContainer} key={index}>
-                    {item}
+                    {screenWidth > 967 ? item : item?.slice(0, 1 - item.length)}
                   </th>
                 );
               })}

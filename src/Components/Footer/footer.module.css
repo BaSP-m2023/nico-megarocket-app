@@ -81,6 +81,22 @@
   font-size:10px;
   padding:0;
   margin:0;
+  transition: all .2s ease-in;
+}
+
+.info a{
+  color:var(--white);
+  text-decoration: none;
+  transition: all .2s ease-in;
+}
+
+.info a:hover{
+  color:var(--secondary-light);
+}
+
+.info:hover{
+  color:var(--secondary-light);
+  transform: scale(1.01);
 }
 
 @media screen and (max-width: 868px){
