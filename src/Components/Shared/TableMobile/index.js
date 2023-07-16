@@ -19,6 +19,14 @@ const TableMobile = ({
   const [arrow, setArrow] = useState(false);
   const located = useLocation().pathname;
   const classses = classes;
+  const handleBlur = () => {
+    setDesployed(true);
+    setArrow(false);
+  };
+  const handlefocus = () => {
+    setDesployed(false);
+    setArrow(true);
+  };
 
   const nameOfAllEntities = (item) => {
     if (item?.firstName) {
@@ -39,13 +47,7 @@ const TableMobile = ({
   return (
     <>
       <div className={styles.containerTableMobile}>
-        <div
-          className={styles.arrowMobile}
-          onClick={() => {
-            setDesployed(!desployed);
-            setArrow(!arrow);
-          }}
-        >
+        <div className={styles.arrowMobile} tabIndex={1} onBlur={handleBlur} onFocus={handlefocus}>
           <div className={styles.containerNameAndIcon}>
             <img
               src={`${process.env.PUBLIC_URL}/assets/images/arrowMob.png`}
