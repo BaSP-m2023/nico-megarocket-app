@@ -57,4 +57,36 @@ describe('My Correct Login application', () => {
     await expect(newClassCells[3]).toHaveTextContaining('Bar Blodie');
     await expect(newClassCells[4]).toHaveTextContaining('10');
   });
+
+  it('should show me a form after click to modify a class', async () => {
+    const classesRows = await AdminClassesPage.classesRows;
+    const classesLen = classesRows.length;
+    const targetClassIndex = classesLen - 1;
+    const newClass = classesRows[targetClassIndex];
+    const newClassCells = newClass.$$('td');
+    await newClassCells[5].click();
+    await AdminClassesPage.hourClassInput.selectByIndex(2);
+    await AdminClassesPage.classesSaveBtn.click();
+    await expect(AdminClassesPage.confirmCreateModal).toBeDisplayed();
+  });
+
+  it('should show the list of classes after update a class when confirm the modal', async () => {
+    await AdminClassesPage.confirmModalBtn.click();
+    await AdminClassesPage.addBtnClass.waitForDisplayed();
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/admin/classes');
+  });
+
+  it('should show the modify class in the list', async () => {
+    const paginationButtons = await AdminClassesPage.classPagination;
+    const paginationLen = paginationButtons.length;
+    const targetButtonIndex = paginationLen - 2;
+    await AdminClassesPage.classPagination[targetButtonIndex].click();
+    const classesRows = await AdminClassesPage.classesRows;
+    const classesLen = classesRows.length;
+    const targetClassIndex = classesLen - 1;
+    const newClass = classesRows[targetClassIndex];
+    const newClassCells = newClass.$$('td');
+    await expect(newClassCells[2]).toHaveTextContaining('09:00');
+  });
 });
