@@ -15,20 +15,29 @@ const activityModal = ({ title, description, imageName, onClose, testId }) => {
       onClose();
     }, 300);
   };
+
+  const defaultImg = (
+    <img
+      className={styles.cardImage}
+      src={`${process.env.PUBLIC_URL}/assets/images/rocket.jpg`}
+      alt="default img"
+    />
+  );
+
   return (
     <div
       className={`${styles.container}  ${isClosing ? styles.animationExit : ''}`}
       data-testid={testId}
     >
       <div
-        className={`${styles.activityCard} ${styles.animation} 
+        className={`${styles.activityCard} ${styles.animation}
         ${isClosing ? styles.animationModalExit : ''}`}
       >
-        <img
-          className={styles.cardImage}
-          src={`${process.env.PUBLIC_URL}/assets/images/${imageName}`}
-          alt={`image ${title}`}
-        />
+        {imageName ? (
+          <img className={styles.cardImage} src={imageName} alt={`image ${title}`} />
+        ) : (
+          defaultImg
+        )}
         <div className={styles.activityCardText}>
           <div>
             <h2 className={styles.cardSubtitle}>{title}</h2>

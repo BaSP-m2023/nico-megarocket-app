@@ -30,6 +30,7 @@
 }
 
 .cardImage {
+  width: 230px;
   border-radius: 5px 0 0 5px;
 }
 

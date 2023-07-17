@@ -3,11 +3,10 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  height: 100%;
   width: 100%;
+  margin:20px 0;
 }
 .form{
-  margin:50px 0;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -26,11 +25,10 @@
 .buttonsBox{
   display: flex;
   justify-content: center;
-  gap:20px;
 }
-.optionInputForm{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 100%;
+
+@media screen and (max-width:650px) {
+  .boxInput{
+    flex-direction: column;
+  }
 }
