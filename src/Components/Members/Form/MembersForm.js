@@ -240,110 +240,109 @@ const MembersForm = () => {
           <h3 className={styles.title}>{id ? 'Edit Member' : 'Add Member'}</h3>
           <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
             <section className={styles.inputGroups}>
-              <div className={styles.inputGroup}>
-                <div className={styles.inputContainer}>
-                  <Inputs
-                    error={errors.firstName?.message}
-                    register={register}
-                    nameTitle="First name"
-                    type="text"
-                    nameInput="firstName"
-                    testId="input-member-name"
-                  />
-                </div>
-
-                <div className={styles.inputContainer}>
-                  <Inputs
-                    error={errors.dni?.message}
-                    register={register}
-                    nameTitle="DNI"
-                    type="text"
-                    nameInput="dni"
-                    testId="input-member-dni"
-                  />
-                </div>
-
-                <div className={styles.inputContainer}>
-                  <Inputs
-                    error={errors.phone?.message}
-                    register={register}
-                    nameTitle="Phone"
-                    type="number"
-                    nameInput="phone"
-                    required
-                    testId="input-member-phone"
-                  />
-                </div>
-
-                <div className={styles.inputContainer}>
-                  <Inputs
-                    error={errors.city?.message}
-                    register={register}
-                    nameTitle="City"
-                    type="text"
-                    nameInput="city"
-                    required
-                    testId="input-member-city"
-                  />
-                </div>
+              <div className={styles.inputContainer}>
+                <Inputs
+                  error={errors.firstName?.message}
+                  register={register}
+                  nameTitle="First name"
+                  type="text"
+                  nameInput="firstName"
+                  testId="input-member-name"
+                />
               </div>
-              <div className={styles.inputGroup}>
-                <div className={styles.inputContainer}>
-                  <Inputs
-                    error={errors.lastName?.message}
-                    register={register}
-                    nameTitle="Lastname"
-                    type="text"
-                    nameInput="lastName"
-                    testId="input-member-lastname"
-                  />
-                </div>
-                <div className={styles.inputContainer}>
-                  <Inputs
-                    error={errors.birthday?.message}
-                    register={register}
-                    nameTitle="Birthday"
-                    type="date"
-                    nameInput="birthday"
-                    required
-                    testId="input-member-birthday"
-                  />
-                </div>
 
-                <div className={styles.inputContainer}>
-                  <Inputs
-                    error={errors.email?.message}
-                    register={register}
-                    nameTitle="Email"
-                    type="email"
-                    nameInput="email"
-                    required
-                    testId="input-member-email"
-                  />
-                </div>
+              <div className={styles.inputContainer}>
+                <Inputs
+                  error={errors.lastName?.message}
+                  register={register}
+                  nameTitle="Last name"
+                  type="text"
+                  nameInput="lastName"
+                  testId="input-member-lastname"
+                />
+              </div>
 
-                <div className={styles.inputContainer}>
-                  <Inputs
-                    error={errors.postalCode?.message}
-                    register={register}
-                    nameTitle="Postal Code"
-                    type="number"
-                    nameInput="postalCode"
-                    required
-                    testId="input-member-postalcode"
-                  />
-                </div>
-                <div className={styles.inputContainer}>
-                  <OptionInput
-                    data={memberships}
-                    name="membership"
-                    dataLabel="Membership"
-                    register={register}
-                    error={errors.membership?.message}
-                    required
-                    testId="input-member-membership"
-                  />
-                </div>
+              <div className={styles.inputContainer}>
+                <Inputs
+                  error={errors.dni?.message}
+                  register={register}
+                  nameTitle="DNI"
+                  type="text"
+                  nameInput="dni"
+                  testId="input-member-dni"
+                />
+              </div>
+
+              <div className={styles.inputContainer}>
+                <Inputs
+                  error={errors.birthday?.message}
+                  register={register}
+                  nameTitle="Birthday"
+                  type="date"
+                  nameInput="birthday"
+                  required
+                  testId="input-member-birthday"
+                />
+              </div>
+
+              <div className={styles.inputContainer}>
+                <Inputs
+                  error={errors.email?.message}
+                  register={register}
+                  nameTitle="Email"
+                  type="email"
+                  nameInput="email"
+                  required
+                  testId="input-member-email"
+                />
+              </div>
+
+              <div className={styles.inputContainer}>
+                <Inputs
+                  error={errors.phone?.message}
+                  register={register}
+                  nameTitle="Phone"
+                  type="number"
+                  nameInput="phone"
+                  required
+                  testId="input-member-phone"
+                />
+              </div>
+
+              <div className={styles.inputContainer}>
+                <Inputs
+                  error={errors.city?.message}
+                  register={register}
+                  nameTitle="City"
+                  type="text"
+                  nameInput="city"
+                  required
+                  testId="input-member-city"
+                />
+              </div>
+
+              <div className={styles.inputContainer}>
+                <Inputs
+                  error={errors.postalCode?.message}
+                  register={register}
+                  nameTitle="Postal Code"
+                  type="number"
+                  nameInput="postalCode"
+                  required
+                  testId="input-member-postalcode"
+                />
+              </div>
+
+              <div className={styles.inputContainer}>
+                <OptionInput
+                  data={memberships}
+                  name="membership"
+                  dataLabel="Membership"
+                  register={register}
+                  error={errors.membership?.message}
+                  required
+                  testId="input-member-membership"
+                />
               </div>
             </section>
             <div className={styles.buttonContainer}>

@@ -232,119 +232,115 @@ const SignForm = () => {
           >
             <h1 className={styles.title}>Sign Up</h1>
             <div className={styles.form}>
-              <div className={styles.groupContainer}>
-                <div className={styles.inputContainer}>
-                  <Inputs
-                    nameInput="firstName"
-                    nameTitle="First Name"
-                    register={register}
-                    type="text"
-                    error={errors.firstName?.message}
-                    testId="signup-name-input"
-                  />
-                </div>
-                <div className={styles.inputContainer}>
-                  <Inputs
-                    nameInput="birthday"
-                    nameTitle="Birthday"
-                    register={register}
-                    type="date"
-                    error={errors.birthday?.message}
-                    testId="signup-birthday-input"
-                  />
-                </div>
-                <div className={styles.inputContainer}>
-                  <Inputs
-                    nameInput="city"
-                    nameTitle="City"
-                    register={register}
-                    type="text"
-                    error={errors.city?.message}
-                    testId="signup-city-input"
-                  />
-                </div>
-                <div className={styles.inputContainer}>
-                  <Inputs
-                    nameInput="phone"
-                    nameTitle="Phone"
-                    register={register}
-                    type="number"
-                    error={errors.phone?.message}
-                    testId="signup-phone-input"
-                  />
-                </div>
-                <div className={styles.inputContainer}>
-                  <Inputs
-                    nameTitle="Password"
-                    nameInput="password"
-                    register={register}
-                    type="password"
-                    error={errors.password?.message}
-                    testId="signup-password-input"
-                  />
-                </div>
+              <div className={styles.inputContainer}>
+                <Inputs
+                  nameInput="firstName"
+                  nameTitle="First Name"
+                  register={register}
+                  type="text"
+                  error={errors.firstName?.message}
+                  testId="signup-name-input"
+                />
               </div>
-              <div className={styles.groupContainer}>
-                <div className={styles.inputContainer}>
-                  <Inputs
-                    nameTitle="Last Name"
-                    nameInput="lastName"
-                    register={register}
-                    type="text"
-                    error={errors.lastName?.message}
-                    testId="signup-lastname-input"
-                  />
-                </div>
-                <div className={styles.inputContainer}>
-                  <Inputs
-                    nameTitle="DNI"
-                    nameInput="dni"
-                    register={register}
-                    type="text"
-                    error={errors.dni?.message}
-                    testId="signup-dni-input"
-                  />
-                </div>
-                <div className={styles.inputContainer}>
-                  <Inputs
-                    nameInput="postalCode"
-                    nameTitle="Postal Code"
-                    register={register}
-                    type="number"
-                    error={errors.postalCode?.message}
-                    testId="signup-postalcode-input"
-                  />
-                </div>
-                <div className={styles.inputContainer}>
-                  <Inputs
-                    nameTitle="Email"
-                    nameInput="email"
-                    register={register}
-                    type="email"
-                    error={errors.email?.message}
-                    testId="signup-email-input"
-                  />
-                </div>
-                <div className={styles.inputContainer}>
-                  <Inputs
-                    nameTitle="Repeat Password"
-                    nameInput="repeatPassword"
-                    register={register}
-                    type="password"
-                    error={errors.repeatPassword?.message}
-                    testId="signup-repeatpassword-input"
-                  />
-                </div>
-                <div className={styles.inputContainer}>
-                  <OptionInput
-                    data={memberships}
-                    name="membership"
-                    dataLabel="Membership"
-                    register={register}
-                    error={errors.membership?.message}
-                    testId="signup-membership-input"
-                  />
-                </div>
+              <div className={styles.inputContainer}>
+                <Inputs
+                  nameTitle="Last Name"
+                  nameInput="lastName"
+                  register={register}
+                  type="text"
+                  error={errors.lastName?.message}
+                  testId="signup-lastname-input"
+                />
+              </div>
+              <div className={styles.inputContainer}>
+                <Inputs
+                  nameTitle="DNI"
+                  nameInput="dni"
+                  register={register}
+                  type="text"
+                  error={errors.dni?.message}
+                  testId="signup-dni-input"
+                />
+              </div>
+              <div className={styles.inputContainer}>
+                <Inputs
+                  nameInput="birthday"
+                  nameTitle="Birthday"
+                  register={register}
+                  type="date"
+                  error={errors.birthday?.message}
+                  testId="signup-birthday-input"
+                />
+              </div>
+              <div className={styles.inputContainer}>
+                <Inputs
+                  nameInput="city"
+                  nameTitle="City"
+                  register={register}
+                  type="text"
+                  error={errors.city?.message}
+                  testId="signup-city-input"
+                />
+              </div>
+              <div className={styles.inputContainer}>
+                <Inputs
+                  nameInput="postalCode"
+                  nameTitle="Postal Code"
+                  register={register}
+                  type="number"
+                  error={errors.postalCode?.message}
+                  testId="signup-postalcode-input"
+                />
+              </div>
+              <div className={styles.inputContainer}>
+                <Inputs
+                  nameInput="phone"
+                  nameTitle="Phone"
+                  register={register}
+                  type="number"
+                  error={errors.phone?.message}
+                  testId="signup-phone-input"
+                />
+              </div>
+              <div className={styles.inputContainer}>
+                <Inputs
+                  nameTitle="Email"
+                  nameInput="email"
+                  register={register}
+                  type="email"
+                  error={errors.email?.message}
+                  testId="signup-email-input"
+                />
+              </div>
+              <div className={styles.inputContainer}>
+                <Inputs
+                  nameTitle="Password"
+                  nameInput="password"
+                  register={register}
+                  type="password"
+                  error={errors.password?.message}
+                  testId="signup-password-input"
+                />
+              </div>
+              <div className={styles.inputContainer}>
+                <Inputs
+                  nameTitle="Repeat Password"
+                  nameInput="repeatPassword"
+                  register={register}
+                  type="password"
+                  error={errors.repeatPassword?.message}
+                  testId="signup-repeatpassword-input"
+                />
+              </div>
+              <div className={styles.inputContainer}>
+                <OptionInput
+                  data={memberships}
+                  name="membership"
+                  dataLabel="Membership"
+                  register={register}
+                  error={errors.membership?.message}
+                  testId="signup-membership-input"
+                />
               </div>
             </div>
             <div className={styles.buttonsGroup}>

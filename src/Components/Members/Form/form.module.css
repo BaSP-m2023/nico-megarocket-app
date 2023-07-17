@@ -24,7 +24,9 @@
 
 .inputGroups {
   display: flex;
-  gap: 20px;
+  flex-wrap:wrap;
+  gap:20px;
+  justify-content:center;
 }
 
 .inputGroup {
