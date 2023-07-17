@@ -53,7 +53,7 @@ function Header({ setClickHamburguer, clickHamburguer }) {
             >
               <img
                 className={styles.imgLoginButton}
-                src={`${process.env.PUBLIC_URL}/assets/images/door-in.png`}
+                src={`${process.env.PUBLIC_URL}/assets/images/loginHeader.svg`}
                 alt="Rocket logo"
               />
             </div>
