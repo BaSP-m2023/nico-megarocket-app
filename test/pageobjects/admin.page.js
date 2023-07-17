@@ -10,7 +10,7 @@ class AdminClassesPage {
   }
 
   get loader() {
-    return $('[data-testid="admin-table-loader"]');
+    return $('[data-testid="classes-table"]');
   }
 
   get hourClassInput() {
@@ -51,6 +51,14 @@ class AdminClassesPage {
 
   get classesRows() {
     return $('[data-testid="classes-table"]').$$('tr');
+  }
+
+  get deleteConfirmModal() {
+    return $('[data-testid="delete-confirm-modal"]');
+  }
+
+  get deleteModalBtn() {
+    return this.deleteConfirmModal.$$('button')[1];
   }
 }
 

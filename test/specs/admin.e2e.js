@@ -51,7 +51,7 @@ describe('My Correct Login application', () => {
     const targetClassIndex = classesLen - 1;
     const newClass = classesRows[targetClassIndex];
     const newClassCells = newClass.$$('td');
-    await expect(newClassCells[0]).toHaveTextContaining('furbo');
+    await expect(newClassCells[0]).toHaveTextContaining('furbitoooo');
     await expect(newClassCells[1]).toHaveTextContaining('Monday');
     await expect(newClassCells[2]).toHaveTextContaining('08:00');
     await expect(newClassCells[3]).toHaveTextContaining('Bar Blodie');
@@ -88,5 +88,37 @@ describe('My Correct Login application', () => {
     const newClass = classesRows[targetClassIndex];
     const newClassCells = newClass.$$('td');
     await expect(newClassCells[2]).toHaveTextContaining('09:00');
+  });
+
+  it('should appears a confirm modal after click to delete a class', async () => {
+    const classesRows = await AdminClassesPage.classesRows;
+    const classesLen = classesRows.length;
+    const targetClassIndex = classesLen - 1;
+    const newClass = classesRows[targetClassIndex];
+    const newClassCells = newClass.$$('td');
+    await newClassCells[6].$('img').click();
+    await expect(AdminClassesPage.deleteConfirmModal).toBeDisplayed();
+  });
+
+  it('should delete a class after confirm the delete modal', async () => {
+    await AdminClassesPage.deleteModalBtn.click();
+    await AdminClassesPage.loader.waitForDisplayed();
+    await AdminClassesPage.loader.waitForDisplayed({ reverse: true });
+    const paginationButtons = await AdminClassesPage.classPagination;
+    const paginationLen = paginationButtons.length;
+    const targetButtonIndex = paginationLen - 1;
+    await AdminClassesPage.classPagination[targetButtonIndex].click();
+    const classesRows = await AdminClassesPage.classesRows;
+    const classesLen = classesRows.length;
+    const targetClassIndex = classesLen - 1;
+    const lastClass = classesRows[targetClassIndex];
+    const lastClassCells = await lastClass.$$('td').map((cell) => cell.textContent);
+    expect(
+      lastClassCells.includes('furbitoooo') &&
+        lastClassCells.includes('Monday') &&
+        lastClassCells.includes('09:00') &&
+        lastClassCells.includes('Bar Blodie') &&
+        lastClassCells.includes('10')
+    ).toBe(false);
   });
 });
