@@ -266,7 +266,7 @@
     border: solid 1px #b65c84;
     border-radius: 20rem;
     padding: .3rem;
-    transform: rotate(180deg);
+    transform: rotate(270deg);
     transition: all .2s ease-in;
   }
 

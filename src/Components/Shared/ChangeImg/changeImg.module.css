@@ -66,11 +66,12 @@ height: 40px;
 .warningMessage{
   position: absolute;
   bottom: -35px;
-  width: 270px;
+  width: 12rem;
   margin-right: 40px;
   color: var(--red);
   text-decoration: underline;
   text-align: center;
+  font-size: .8rem;
 }
 
 .loadImgButtonContainer{
@@ -113,3 +114,35 @@ height: 40px;
   transform: scale(1.1);
 }
 
+@media screen and (max-width: 720px) {
+  .warningMessage{
+    position: absolute;
+    top: -10rem;
+    right: -6rem;
+    width: 12rem;
+    font-size: .7rem;
+  }
+
+  .loadImgButtonContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 40px;
+  }
+
+  .loadImgButton{
+    display: none;
+  }
+
+  .loadImgButtonLabel{
+    position: absolute;
+    bottom: 0;
+    right: -3rem;
+  }
+
+  .allButtonsContainer{
+    position: absolute;
+    bottom: -5rem;
+    right: 10.5rem;
+  }
+}

@@ -144,3 +144,18 @@
   align-self: flex-start;
   gap:5px;
 }
+
+@media screen and (max-width:500px) {
+  .profileInfoContainer {
+    width: 100%;
+  }
+
+  .userInfoContainer {
+    width: 95%;
+    padding: .8rem 1rem;
+  }
+
+  .userInfoTitle {
+    font-size: 16px;
+  }
+}

@@ -22,7 +22,7 @@
   border-radius: 10px;
   box-shadow: 0px 20px 30px -5px rgba(0, 0, 0, 0.75);
   border: 3px solid var(--primary);
-  width: 45%;
+  width: 645.33px;
 }
 
 .title {
@@ -37,4 +37,28 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+@media screen and (max-width:750px) {
+  .container {
+    width: 80%;
+  }
+
+  .inputsContainer {
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .inputGroups {
+    display: grid;
+    gap: 20px;
+  }
+
+  .form {
+    flex-wrap: wrap;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
 }
