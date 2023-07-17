@@ -34,6 +34,7 @@
   font-size: 12px;
   width: 255px;
 }
+
 .errorInput {
   border-bottom: solid var(--red);
   margin-top: 0;
@@ -48,8 +49,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 15px;
+  width: 17px;
   height: 15px;
+  font-size: .6rem;
   background-color: var(--red);
   color: #ffffff;
   font-weight: bold;
@@ -62,4 +64,5 @@
   gap:10px;
   margin:0;
   width:250px;
+  height: 60px;
 }
