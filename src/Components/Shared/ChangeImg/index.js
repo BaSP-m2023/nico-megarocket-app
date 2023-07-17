@@ -173,12 +173,24 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
     <div className={styles.container}>
       <div className={!photoEdit ? styles.hidden : styles.allButtonsContainer}>
         <div className={styles.loadImgButtonContainer}>
-          <span className={styles.warningMessage}>
+          <span onClick={() => setTogglePhotoEdit(false)}>X</span>
+          <p className={styles.warningMessage}>
             ATTENTION!!!: Images (.png/.jpeg) max weight: 60kb{' '}
-          </span>
-          <label htmlFor="imgFile" id="labelImgFile" className={styles.loadImgButtonLabel}>
-            Load Image
-          </label>
+          </p>
+          <div className={styles.containerTrashOrLoad}>
+            <label htmlFor="imgFile" id="labelImgFile" className={styles.loadImgButtonLabel}>
+              Load Image
+            </label>
+            {sessionStorage.getItem('img') && (
+              <div className={styles.deleteButton}>
+                <ButtonForm
+                  nameImg="trash-delete.svg"
+                  onAction={goToDefaultImg}
+                  testId="delete-btn"
+                />
+              </div>
+            )}
+          </div>
           <input
             id="imgFile"
             className={styles.loadImgButton}
@@ -187,11 +199,6 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
             onChange={handlePictureChange}
           />
         </div>
-        {sessionStorage.getItem('img') && (
-          <div className={styles.deleteButton}>
-            <ButtonForm nameImg="trash-delete.svg" onAction={goToDefaultImg} testId="delete-btn" />
-          </div>
-        )}
       </div>
       {toastErrorOpen && (
         <ToastError

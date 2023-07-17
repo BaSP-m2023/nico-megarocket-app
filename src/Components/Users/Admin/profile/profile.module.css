@@ -146,6 +146,15 @@
 }
 
 @media screen and (max-width:500px) {
+  .defaultImg {
+    width: 130px;
+    height: 130px;
+  }
+
+  .profileInitials {
+    font-size: 3rem;
+  }
+
   .profileInfoContainer {
     width: 100%;
   }
@@ -157,5 +166,9 @@
 
   .userInfoTitle {
     font-size: 16px;
+  }
+
+  .profileInfoContainer {
+    width: 100%;
   }
 }
