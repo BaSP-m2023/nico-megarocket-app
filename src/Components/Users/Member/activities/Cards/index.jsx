@@ -23,11 +23,7 @@ function Cards({ title, description, image, testId }) {
     <div className={styles.container} data-testid={testId}>
       <div className={styles.cardContainer}>
         <div className={styles.imgContainer}>
-          <img
-            className={styles.cardImage}
-            src={`${process.env.PUBLIC_URL}/assets/images/${image[0]}`}
-            alt={`image ${title}`}
-          />
+          <img className={styles.cardImage} src={image} alt={`image ${title}`} />
         </div>
         <div className={styles.dataContainer}>
           <h2 className={styles.title}>{title}</h2>

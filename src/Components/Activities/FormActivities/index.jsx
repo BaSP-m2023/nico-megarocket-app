@@ -9,7 +9,7 @@ import {
   ToastError,
   TextArea,
   Loader,
-  ButtonForm
+  ActivityImg
 } from 'Components/Shared';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
@@ -23,18 +23,17 @@ const ModalAddActivity = () => {
   const [modalUpdateConfirmOpen, setModalUpdateConfirmOpen] = useState(false);
   const [toastError, setToastError] = useState(false);
   const [toastErrorImg, setToastErrorImg] = useState(false);
-  const [imgErrorMsg, setImgErrorMsg] = useState('');
   const [editMode, setEditMode] = useState(false);
   const [inputForm, setInputForm] = useState('');
   const [showLoader, setShowLoader] = useState(false);
+  const [send, setSend] = useState(false);
+  const [imgComing, setImgComing] = useState(false);
   const history = useHistory();
   const { id } = useParams();
   const location = useLocation();
   const isError = useSelector((store) => store.activities.formError);
   const isPending = useSelector((state) => state.activities.pending);
   const updateData = location.state.params;
-  const [base64img, setBase64Img] = useState('');
-  const imgFile = document.getElementById('imageFile');
 
   const validationSchema = Joi.object({
     name: Joi.string()
@@ -62,8 +61,7 @@ const ModalAddActivity = () => {
   const updateActivityData = {
     name: updateData.name,
     description: updateData.description,
-    isActive: updateData.isActive,
-    picture: updateData.picture
+    isActive: updateData.isActive
   };
 
   const {
@@ -102,7 +100,15 @@ const ModalAddActivity = () => {
   }, [isPending]);
 
   const handleUpdateButtonClick = () => {
-    setModalUpdateConfirmOpen(true);
+    if (imgComing) {
+      setSend(true);
+      setTimeout(() => {
+        setModalUpdateConfirmOpen(true);
+        setImgComing(false);
+      }, 2000);
+    } else {
+      setModalUpdateConfirmOpen(true);
+    }
   };
 
   const formSubmit = async () => {
@@ -125,72 +131,7 @@ const ModalAddActivity = () => {
     }
   };
 
-  const isImageFile = (file) => {
-    const imageTypes = ['image/jpeg', 'image/png'];
-
-    return imageTypes.includes(file.type);
-  };
-
-  const imageUpload = async (image) => {
-    const activityEdit = {
-      name: updateData.name,
-      description: updateData.description,
-      isActive: updateData.isActive,
-      picture: image ? image : ''
-    };
-    await updateActivity(dispatch, id, activityEdit);
-    imgFile.value = '';
-  };
-
-  const handlePictureChange = (event) => {
-    const file = event.target.files[0];
-    if (file && isImageFile(file)) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        const base64Result = reader.result;
-        const size = base64Result.length;
-        if (size < 82400) {
-          setTimeout(() => {
-            setBase64Img(base64Result);
-          }, 1000);
-        } else {
-          imgFile.value = '';
-          setImgErrorMsg('Image loaded exceeds the allowed size');
-          setToastErrorImg(true);
-          setTimeout(() => {
-            setToastErrorImg(false);
-          }, 2500);
-        }
-      };
-      reader.onerror = (error) => {
-        return {
-          message: error,
-          data: null,
-          error: true
-        };
-      };
-    } else {
-      imgFile ? (imgFile.value = '') : '';
-      setImgErrorMsg('Only .png/.jpeg files are allowed');
-      setToastErrorImg(true);
-      setTimeout(() => {
-        setToastErrorImg(false);
-      }, 2500);
-    }
-  };
-
-  const goToDefaultImg = () => {
-    const image = '';
-    imgFile.value = image;
-    setTimeout(() => {
-      imageUpload(image);
-    }, 1000);
-  };
-
   const onSubmit = async (data) => {
-    console.log(data);
-    imageUpload(base64img);
     setInputForm(data);
     handleUpdateButtonClick();
   };
@@ -230,6 +171,15 @@ const ModalAddActivity = () => {
                 />
               )}
             </div>
+            {id && (
+              <ActivityImg
+                activity={updateData}
+                id={id}
+                send={send}
+                setSend={setSend}
+                setImgComing={setImgComing}
+              />
+            )}
             <div className={style.containerAddButton}>
               <Button
                 clickAction={() => {}}
@@ -244,33 +194,6 @@ const ModalAddActivity = () => {
               />
             </div>
           </form>
-          <>
-            <div className={style.loadImgContainer}>
-              <label htmlFor="imageFile" className={style.loadImgButtonLabel}>
-                Image
-              </label>
-              <input
-                id="imageFile"
-                className={style.loadImgButton}
-                type="file"
-                accept="image/*"
-                onChange={handlePictureChange}
-              />
-              <div>{imgFile?.value}</div>
-            </div>
-            <span className={style.warningMessage}>
-              ATTENTION!!!: Images (.png/.jpeg) max weight: 60kb{' '}
-            </span>
-            {updateData.picture && (
-              <div className={style.deleteButton}>
-                <ButtonForm
-                  nameImg="trash-delete.svg"
-                  onAction={goToDefaultImg}
-                  testId="delete-btn"
-                />
-              </div>
-            )}
-          </>
           {modalUpdateConfirmOpen && (
             <ModalConfirm
               method={editMode ? 'Edit' : 'Create'}
@@ -301,7 +224,7 @@ const ModalAddActivity = () => {
           {toastErrorImg && (
             <ToastError
               setToastErroOpen={setToastErrorImg}
-              message={imgErrorMsg}
+              message="lalall"
               testId="activity-form-toast-error-img"
             />
           )}
