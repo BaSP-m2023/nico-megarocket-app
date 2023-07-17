@@ -2,7 +2,6 @@
 /* eslint-disable no-unused-vars */
 
 const HomePage = require('../pageobjects/home.page.js');
-const singUp = require('../pageobjects/sing.up.js');
 const SingUp = require('../pageobjects/sing.up.js');
 
 describe('sing up member', () => {
@@ -11,7 +10,7 @@ describe('sing up member', () => {
     browser.url('https://nico-megarocket-app.vercel.app/auth');
   });
 
-  it('cancel the process', async () => {
+  it('cancel the process to sing up', async () => {
     await expect(HomePage.navBtn[2]).toBeDisplayed();
     await HomePage.navBtn[2].click();
     const currentUrl = await browser.getUrl();
@@ -19,14 +18,14 @@ describe('sing up member', () => {
     await SingUp.singUpBtnCancelClick();
   });
 
-  it('success process', async () => {
+  it('success enter process', async () => {
     await expect(HomePage.navBtn[2]).toBeDisplayed();
     await HomePage.navBtn[2].click();
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/auth/sign-up');
   });
 
-  it('label displyed', async () => {
+  it('label displayed', async () => {
     await expect(SingUp.nameLabel).toBeDisplayed();
     await expect(SingUp.lastNameLabel).toBeDisplayed();
     await expect(SingUp.dniLabel).toBeDisplayed();

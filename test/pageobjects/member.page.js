@@ -6,6 +6,14 @@ class MemberPage {
     return $('nav').$$('[data-testid="home-btn"]');
   }
 
+  get textTittle() {
+    return $('h3=Select the class you want to join:');
+  }
+
+  get selectClasses() {
+    return $('select');
+  }
+
   get logoutBtn() {
     return $('[data-testid="log-out-btn"]');
   }
@@ -14,12 +22,12 @@ class MemberPage {
     return $('[data-testid="classes-container"]');
   }
 
-  get fulboCard() {
-    return $('[data-testid="fulbo-card"]');
+  get furboCard() {
+    return $('[data-testid="Furbitoo-card"]');
   }
 
-  get fulboCardBtn() {
-    return $('[data-testid="fulbo-card"] button');
+  get furboCardBtn() {
+    return $('[data-testid="Furbitoo-card"] button');
   }
 
   get boxingCard() {
@@ -54,12 +62,40 @@ class MemberPage {
     return $('[data-testid="Javascript-card"] button');
   }
 
+  get handballCard() {
+    return $('[data-testid="Handball-card"]');
+  }
+
+  get handballCardBtn() {
+    return $('[data-testid="Handball-card"] button');
+  }
+
+  get picapiedrasCard() {
+    return $('[data-testid="Picar piedras-card"]');
+  }
+
+  get picapiedrasCardBtn() {
+    return $('[data-testid="Picar piedras-card"] button');
+  }
+
+  get valorantCard() {
+    return $('[data-testid="Valorant-card"]');
+  }
+
+  get valorantCardBtn() {
+    return $('[data-testid="Valorant-card"] button');
+  }
+
   get activityModal() {
     return $('[data-testid="activity-modal"]');
   }
 
   get activityModalBtn() {
-    return $('[data-testid="activity-modal"] button');
+    return $('[data-testid="activity-modal"]').$$('button');
+  }
+
+  get joinButton() {
+    return $('button=Join');
   }
 
   get photo() {
@@ -70,8 +106,8 @@ class MemberPage {
     return $('[data-testid="info-container"]');
   }
 
-  async fulboCardBtnClick() {
-    return this.fulboCardBtn.click();
+  async furboCardBtnClick() {
+    return this.furboCardBtn.click();
   }
 
   async boxingCardBtnClick() {
@@ -88,6 +124,18 @@ class MemberPage {
 
   async javascriptCardBtnClick() {
     return this.javascriptCardBtn.click();
+  }
+
+  async handballCardBtnClick() {
+    return this.handballCardBtn.click();
+  }
+
+  async picapiedrasCardBtnClick() {
+    return this.picapiedrasCardBtn.click();
+  }
+
+  async valorantCardBtnClick() {
+    return this.valorantCardBtn.click();
   }
 
   async logoutBtnClick() {

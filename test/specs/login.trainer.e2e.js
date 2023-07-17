@@ -20,7 +20,7 @@ describe('login trainer', () => {
         const currentUrl = await browser.getUrl();
         return currentUrl === 'https://nico-megarocket-app.vercel.app/auth/login';
       },
-      { timeout: 3000, timeoutMsg: 'Thr URL do not change when I click.' }
+      { timeout: 3000, timeoutMsg: 'The URL do not change when I click.' }
     );
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/auth/login');
@@ -28,14 +28,14 @@ describe('login trainer', () => {
 
   it('Login succes', async () => {
     await Login.loginForm('barbi.millanoide@gmail.com', 'Lalala1234');
-    await expect(Login.loginBtn).toBeDisplayed();
+    await expect(Login.loginBtn).waitForDisplay();
     await Login.loginBtnClick();
     await browser.waitUntil(
       async () => {
         const currentUrl = await browser.getUrl();
         return currentUrl === 'https://nico-megarocket-app.vercel.app/trainer';
       },
-      { timeout: 3000, timeoutMsg: 'Thr URL do not change when I click.' }
+      { timeout: 3000, timeoutMsg: 'The URL do not change when I click.' }
     );
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/trainer');
@@ -50,7 +50,7 @@ describe('login trainer', () => {
         const currentUrl = await browser.getUrl();
         return currentUrl === 'https://nico-megarocket-app.vercel.app/auth/trainer/classes';
       },
-      { timeout: 3000, timeoutMsg: 'Thr URL do not change when I click.' }
+      { timeout: 3000, timeoutMsg: 'The URL do not change when I click.' }
     );
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/trainer/classes');
@@ -65,7 +65,7 @@ describe('login trainer', () => {
         const currentUrl = await browser.getUrl();
         return currentUrl === 'https://nico-megarocket-app.vercel.app/trainer/profile';
       },
-      { timeout: 3000, timeoutMsg: 'Thr URL do not change when I click.' }
+      { timeout: 3000, timeoutMsg: 'The URL do not change when I click.' }
     );
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/trainer/profile');

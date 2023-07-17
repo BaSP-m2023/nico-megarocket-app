@@ -15,20 +15,10 @@ describe('login member', () => {
     await expect(HomePage.navBtn[1]).toBeDisplayed();
     await expect(HomePage.navBtn[1]).toBeClickable();
     await HomePage.navBtn[1].click();
-    await browser.waitUntil(
-      async () => {
-        const currentUrl = await browser.getUrl();
-        return currentUrl === 'https://nico-megarocket-app.vercel.app/auth/login';
-      },
-      { timeout: 3000, timeoutMsg: 'Thr URL do not change when I click.' }
-    );
-    const currentUrl = await browser.getUrl();
-    expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/auth/login');
-  });
-
-  it('label displayed', async () => {
     await expect(Login.emailLabel).toBeDisplayed();
     await expect(Login.passwordLabel).toBeDisplayed();
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/auth/login');
   });
 
   it('Login with all empty', async () => {
@@ -51,34 +41,21 @@ describe('login member', () => {
   });
 
   it('Login succes', async () => {
-    await Login.loginForm('vigiyak708@edulena.com', '1234Gino');
+    await Login.loginForm('memberfive@gmail.com', 'Password1');
     await expect(Login.loginBtn).toBeDisplayed();
     await Login.loginBtnClick();
-    await browser.waitUntil(
-      async () => {
-        const currentUrl = await browser.getUrl();
-        return currentUrl === 'https://nico-megarocket-app.vercel.app/auth/member';
-      },
-      { timeout: 3000, timeoutMsg: 'Thr URL do not change when I click.' }
-    );
-    const currentUrl = await browser.getUrl();
-    expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/member');
-  });
-
-  it('See classes', async () => {
-    await expect(MemberPage.navBtn[0]).toBeDisplayed();
-    await expect(MemberPage.navBtn[0]).toBeClickable();
-    await MemberPage.navBtn[0].click();
-    await browser.waitUntil(
-      async () => {
-        const currentUrl = await browser.getUrl();
-        return currentUrl === 'https://nico-megarocket-app.vercel.app/auth/member/classes';
-      },
-      { timeout: 3000, timeoutMsg: 'Thr URL do not change when I click.' }
-    );
+    await MemberPage.textTittle.waitForDisplayed();
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/member/classes');
+  });
+
+  it('See and join classes', async () => {
     await expect(MemberPage.classesContainer).toBeDisplayed();
+    await MemberPage.selectClasses.selectByIndex(6);
+    await expect(MemberPage.classesContainer).toHaveTextContaining('Piscina');
+    await MemberPage.classesContainer.click();
+    await MemberPage.joinButton.waitForDisplayed();
+    await MemberPage.joinButton.click();
   });
 
   it('See activities', async () => {
@@ -90,28 +67,52 @@ describe('login member', () => {
         const currentUrl = await browser.getUrl();
         return currentUrl === 'https://nico-megarocket-app.vercel.app/member/activities';
       },
-      { timeout: 3000, timeoutMsg: 'Thr URL do not change when I click.' }
+      { timeout: 3000, timeoutMsg: 'The URL do not change when I click.' }
     );
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/member/activities');
-    await expect(MemberPage.fulboCard).toBeDisplayed();
+    await expect(MemberPage.furboCard).toBeDisplayed();
     await expect(MemberPage.boxingCard).toBeDisplayed();
     await expect(MemberPage.piscinaCard).toBeDisplayed();
     await expect(MemberPage.baseballCard).toBeDisplayed();
     await expect(MemberPage.javascriptCard).toBeDisplayed();
-    await expect(MemberPage.fulboCardBtn).toBeDisplayed();
+    await expect(MemberPage.handballCard).toBeDisplayed();
+    await expect(MemberPage.picapiedrasCard).toBeDisplayed();
+    await expect(MemberPage.valorantCard).toBeDisplayed();
+    await expect(MemberPage.furboCardBtn).toBeDisplayed();
     await expect(MemberPage.baseballCardBtn).toBeDisplayed();
     await expect(MemberPage.piscinaCardBtn).toBeDisplayed();
     await expect(MemberPage.baseballCardBtn).toBeDisplayed();
     await expect(MemberPage.javascriptCardBtn).toBeDisplayed();
-    await expect(MemberPage.fulboCardBtn).toBeClickable();
+    await expect(MemberPage.handballCardBtn).toBeDisplayed();
+    await expect(MemberPage.picapiedrasCardBtn).toBeDisplayed();
+    await expect(MemberPage.valorantCardBtn).toBeDisplayed();
+    await expect(MemberPage.furboCardBtn).toBeClickable();
     await expect(MemberPage.boxingCardBtn).toBeClickable();
     await expect(MemberPage.piscinaCardBtn).toBeClickable();
     await expect(MemberPage.baseballCardBtn).toBeClickable();
     await expect(MemberPage.javascriptCardBtn).toBeClickable();
-    await MemberPage.fulboCardBtnClick();
+    await expect(MemberPage.handballCardBtn).toBeClickable();
+    await expect(MemberPage.picapiedrasCardBtn).toBeClickable();
+    await expect(MemberPage.valorantCardBtn).toBeClickable();
+    await MemberPage.furboCardBtnClick();
     await expect(MemberPage.activityModal).toBeDisplayed();
-    await MemberPage.activityModalBtn.click();
+    await MemberPage.activityModalBtn[1].click();
+    await MemberPage.boxingCardBtnClick();
+    await expect(MemberPage.activityModal).toBeDisplayed();
+    await MemberPage.activityModalBtn[1].click();
+    await MemberPage.piscinaCardBtnClick();
+    await expect(MemberPage.activityModal).toBeDisplayed();
+    await MemberPage.activityModalBtn[1].click();
+    await MemberPage.baseballCardBtnClick();
+    await expect(MemberPage.activityModal).toBeDisplayed();
+    await MemberPage.activityModalBtn[1].click();
+    await MemberPage.javascriptCardBtnClick();
+    await expect(MemberPage.activityModal).toBeDisplayed();
+    await MemberPage.activityModalBtn[1].click();
+    await MemberPage.handballCardBtnClick();
+    await expect(MemberPage.activityModal).toBeDisplayed();
+    await MemberPage.activityModalBtn[1].click();
   });
 
   it('See profile', async () => {
