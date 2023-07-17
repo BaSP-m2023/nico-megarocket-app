@@ -13,6 +13,7 @@
   box-shadow: 0px 20px 30px -5px rgba(0, 0, 0, 0.75);
   border: 3px solid var(--primary);
 }
+
 .inputContainer{
   width: 255px;
 }
@@ -23,6 +24,56 @@
   font-family: sans-serif;
   color: var(--primary);
   margin: 0 0 30px 0;
+}
+
+.loadImgContainer{
+  display: flex;
+}
+
+.loadImgButtonLabel{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 25px;
+  border-radius: 5px;
+  background-color: var(--primary);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 600;
+  transition: all .3s;
+  cursor: pointer;
+}
+
+.loadImgButtonLabel:hover{
+  transform: scale(1.02);
+  opacity: .9;
+}
+
+.loadImgButton{
+  display: none;
+}
+
+.warningMessage{
+  display: block;
+  bottom: -35px;
+  width: 270px;
+  margin-right: 40px;
+  color: var(--red);
+  text-decoration: underline;
+  text-align: center;
+}
+
+.deleteButton{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px 0;
+  transition: all .4s;
+}
+
+.deleteButton:hover{
+  transform: scale(1.1);
 }
 
 .containerAddButton {

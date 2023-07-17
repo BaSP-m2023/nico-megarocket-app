@@ -1,54 +1,50 @@
 .container {
-position:relative;
-bottom: 130px;
-left: 240px;
+  position:fixed;
+  width: 20%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  z-index: 99;
+  bottom: 1rem;
+}
+
+.imgActivityContainer{
+position: relative;
+bottom:35px;
 display: flex;
 justify-content: center;
-align-items: flex-end;
-height: 40px;
+align-items: center;
+margin: 10px;
 }
 
 .allButtonsContainer{
-  position: absolute;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 50px;
-  margin: 0 0 0 75px;
+  height: 7rem;
   transition: all .3s ease;
 }
 
 .hidden {
   opacity: 0;
-  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 50px;
-  margin: 0 0 0 75px;
-  transform: translateX(-20px);
   transition: all .3s ease;
 }
 
 .hide {
-  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 50px;
-  margin: 0 0 0 75px;
-  animation-name: hide;
-  animation-duration: .3s;
-  animation-direction: alternate;
-  animation-fill-mode: forwards;
 }
+
 .title {
-  position: sticky;
-  top: 0;
   width: 100%;
   height: 50px;
-  margin: 0;
-  padding-top: 15px;
   text-align: center;
   background-color: var(--primary);
   color: var(--secondary);
@@ -59,40 +55,87 @@ height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50px;
-  margin: 0 0 35px 75px;
+  height: 6rem;
+}
+
+.containerTrashOrLoad {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
 
 .warningMessage{
-  position: absolute;
-  bottom: -35px;
   width: 12rem;
+  color: var(--red);
+  text-decoration: underline;
+  text-align: center;
+  font-size: .6rem;
+}
+
+.warningMessageActivity{
+  position: absolute;
+  bottom: -45px;
+  width: 270px;
   margin-right: 40px;
   color: var(--red);
   text-decoration: underline;
   text-align: center;
-  font-size: .8rem;
 }
 
 .loadImgButtonContainer{
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-right: 40px;
+  width: 13rem;
+  height: 6rem;
+  background-color: var(--white);
+  box-shadow: 0 1px 10px -3px black ;
+}
+
+.loadImgButtonContainer span{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: flex-end;
+  width: 1rem;
+  height: 1rem;
+  font-size: .5rem;
+  transition: all .2s;
+  cursor: pointer;
+}
+
+.loadImgButtonContainer span:hover{
+  transform: scale(1.1);
 }
 
 .loadImgButton{
   display: none;
 }
 
+.loadImgButtonLabelActivity{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100px;
+  height: 20px;
+  margin: 10px;
+  border-radius: 5px;
+  background-color: var(--secondary);
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 600;
+  transition: all .3s;
+  cursor: pointer;
+}
+
 .loadImgButtonLabel{
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
   width: 100px;
   height: 20px;
-  margin-right: 40px;
   border-radius: 5px;
   background-color: var(--secondary);
   color: var(--primary);
@@ -106,43 +149,20 @@ height: 40px;
   background-color: var(--primary);
 }
 
+.imgPlaceholder{
+  width: 50px;
+  height: 50px;
+}
+
 .deleteButton{
+  display: flex;
+  align-items: center;
+  font-size: .8rem;
+  height: 1.5rem;
+  transform: scale(.8);
   transition: all .4s;
 }
 
 .deleteButton:hover{
-  transform: scale(1.1);
-}
-
-@media screen and (max-width: 720px) {
-  .warningMessage{
-    position: absolute;
-    top: -10rem;
-    right: -6rem;
-    width: 12rem;
-    font-size: .7rem;
-  }
-
-  .loadImgButtonContainer{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 40px;
-  }
-
-  .loadImgButton{
-    display: none;
-  }
-
-  .loadImgButtonLabel{
-    position: absolute;
-    bottom: 0;
-    right: -3rem;
-  }
-
-  .allButtonsContainer{
-    position: absolute;
-    bottom: -5rem;
-    right: 10.5rem;
-  }
+  transform: scale(1);
 }

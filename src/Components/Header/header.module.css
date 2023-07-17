@@ -150,7 +150,6 @@
     transform: scale(1.125);
     transition: all .3s;
   }
-  
 }
 
 @media screen and (max-width: 601px) {
@@ -180,7 +179,7 @@
   }
   .profileMenu{
     width: 37px;
-    height: 37px;    
+    height: 37px;
     transition: all .3s;
   }
   .profileMenu:hover{
@@ -198,7 +197,6 @@
     height: 37px;
     z-index: 100;
   }
-
 }
 
 
