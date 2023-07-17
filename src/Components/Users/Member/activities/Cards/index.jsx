@@ -14,6 +14,18 @@ function Cards({ title, description, image, testId }) {
     setIsModalOpen(false);
   };
 
+  const defaultImg = (
+    <div className={styles.imgContainer}>
+      <div className={styles.cardImage}>
+        <img
+          className={styles.defaultImg}
+          src={`${process.env.PUBLIC_URL}/assets/images/rocket.jpg`}
+          alt="default img"
+        />
+      </div>
+    </div>
+  );
+
   useEffect(() => {
     const text = description.length > 62 ? description.slice(0, 62) + '...' : description;
     setcardDescription(text);
@@ -23,7 +35,11 @@ function Cards({ title, description, image, testId }) {
     <div className={styles.container} data-testid={testId}>
       <div className={styles.cardContainer}>
         <div className={styles.imgContainer}>
-          <img className={styles.cardImage} src={image} alt={`image ${title}`} />
+          {image ? (
+            <img className={styles.cardImage} src={image} alt={`image ${title}`} />
+          ) : (
+            defaultImg
+          )}
         </div>
         <div className={styles.dataContainer}>
           <h2 className={styles.title}>{title}</h2>
@@ -39,7 +55,7 @@ function Cards({ title, description, image, testId }) {
         <ActivityModal
           title={title}
           description={description}
-          imageName={image[1]}
+          imageName={image}
           onClose={handleCloseModal}
           testId="activity-modal"
         />

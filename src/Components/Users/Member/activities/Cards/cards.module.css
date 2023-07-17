@@ -17,14 +17,20 @@
   background-color: var(--primary);
 }
 
+.defaultImg{
+  width: 265px;
+  height: 190px;
+}
+
 .imgContainer {
   display: block;
   width: 265px;
-  height: 165px;
+  height: 190px;
 }
 
 .cardImage {
   width: 264px;
+  height: 190px;
   margin-left: -2px;
 }
 
