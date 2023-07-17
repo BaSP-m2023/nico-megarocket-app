@@ -13,6 +13,7 @@ export { default as InputError } from './Inputs/InputError';
 export { default as InputPlaceholder } from './Inputs/InputPlaceholder';
 export { default as ButtonActive } from './ButtonActive';
 export { default as ImageUploader } from './ChangeImg';
+export { default as ActivityImg } from './ChangeImg/changeActivityImg';
 export { default as OptionMultipleInput } from './Inputs/OptionMultipleInput';
 export { default as TextArea } from './Inputs/TextArea';
 export { default as ModalInfo } from './Modals/ModalInfo';

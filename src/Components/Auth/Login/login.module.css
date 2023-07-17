@@ -16,6 +16,17 @@
   border: 3px solid var(--primary);
 }
 
+.containerPasswordEye {
+  display: flex;
+  align-items: center;
+}
+
+.containerPasswordEye img {
+  margin:0 0 10px -20px;
+  width: .8rem;
+  height: .8rem;
+  cursor: pointer;
+}
 
 .titleLogin {
   text-align: center;

@@ -8,7 +8,8 @@ import {
   Button,
   ToastError,
   TextArea,
-  Loader
+  Loader,
+  ActivityImg
 } from 'Components/Shared';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
@@ -21,9 +22,12 @@ const ModalAddActivity = () => {
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
   const [modalUpdateConfirmOpen, setModalUpdateConfirmOpen] = useState(false);
   const [toastError, setToastError] = useState(false);
+  const [toastErrorImg, setToastErrorImg] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [inputForm, setInputForm] = useState('');
   const [showLoader, setShowLoader] = useState(false);
+  const [send, setSend] = useState(false);
+  const [imgComing, setImgComing] = useState(false);
   const history = useHistory();
   const { id } = useParams();
   const location = useLocation();
@@ -96,7 +100,15 @@ const ModalAddActivity = () => {
   }, [isPending]);
 
   const handleUpdateButtonClick = () => {
-    setModalUpdateConfirmOpen(true);
+    if (imgComing) {
+      setSend(true);
+      setTimeout(() => {
+        setModalUpdateConfirmOpen(true);
+        setImgComing(false);
+      }, 2000);
+    } else {
+      setModalUpdateConfirmOpen(true);
+    }
   };
 
   const formSubmit = async () => {
@@ -159,6 +171,15 @@ const ModalAddActivity = () => {
                 />
               )}
             </div>
+            {id && (
+              <ActivityImg
+                activity={updateData}
+                id={id}
+                send={send}
+                setSend={setSend}
+                setImgComing={setImgComing}
+              />
+            )}
             <div className={style.containerAddButton}>
               <Button
                 clickAction={() => {}}
@@ -198,6 +219,13 @@ const ModalAddActivity = () => {
               setToastErroOpen={setToastError}
               message={isError}
               testId="activity-form-toast-error"
+            />
+          )}
+          {toastErrorImg && (
+            <ToastError
+              setToastErroOpen={setToastErrorImg}
+              message="lalall"
+              testId="activity-form-toast-error-img"
             />
           )}
         </section>
