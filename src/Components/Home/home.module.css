@@ -438,6 +438,20 @@
   display: none;
 }
 
+.firstDivider{
+  margin-bottom: -25px;
+}
+.secondDivider{
+  margin-top: -22px;
+}
+
+.thirdDivider{
+  margin-bottom: -25px;
+}
+.fourthDivider{
+  margin-top: -25px;
+}
+
 @media only screen and (max-width: 868px) {
   .container {
     margin: 0;
