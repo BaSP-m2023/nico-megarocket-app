@@ -8,6 +8,15 @@ align-items: flex-end;
 height: 40px;
 }
 
+.imgActivityContainer{
+position: relative;
+bottom:35px;
+display: flex;
+justify-content: center;
+align-items: center;
+margin: 10px;
+}
+
 .allButtonsContainer{
   position: absolute;
   display: flex;
@@ -74,6 +83,16 @@ height: 40px;
   font-size: .8rem;
 }
 
+.warningMessageActivity{
+  position: absolute;
+  bottom: -45px;
+  width: 270px;
+  margin-right: 40px;
+  color: var(--red);
+  text-decoration: underline;
+  text-align: center;
+}
+
 .loadImgButtonContainer{
   display: flex;
   align-items: center;
@@ -83,6 +102,23 @@ height: 40px;
 
 .loadImgButton{
   display: none;
+}
+
+.loadImgButtonLabelActivity{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100px;
+  height: 20px;
+  margin: 10px;
+  border-radius: 5px;
+  background-color: var(--secondary);
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 600;
+  transition: all .3s;
+  cursor: pointer;
 }
 
 .loadImgButtonLabel{
@@ -104,6 +140,11 @@ height: 40px;
 .loadImgButtonLabel:hover{
   color: var(--white);
   background-color: var(--primary);
+}
+
+.imgPlaceholder{
+  width: 50px;
+  height: 50px;
 }
 
 .deleteButton{

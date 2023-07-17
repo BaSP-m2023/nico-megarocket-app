@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styles from './changeImg.module.css';
 import { getFirebaseUidFromToken } from 'helper/firebase';
 import { getAllAdmins, updateAdmin } from 'redux/admins/thunks';
@@ -19,7 +19,7 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
   const trainer = trainers.find((oneTrainer) => oneTrainer.email === userCurrent);
   const [toastErrorOpen, setToastErrorOpen] = useState(false);
   const [toastErrorMessage, setToastErrorMessage] = useState('');
-  const imgFile = document.getElementById('imgFile');
+  const imgFile = useRef();
   const token = sessionStorage.getItem('token');
 
   const currentUser = async () => {
@@ -51,7 +51,7 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
       setTogglePhotoEdit(false);
       sessionStorage.setItem('img', image);
       await updateAdmin(dispatch, admin._id, userEdit);
-      imgFile.value = '';
+      imgFile.current.value = '';
     }
     if (sessionStorage.getItem('role') === 'TRAINER') {
       const userEdit = {
@@ -75,7 +75,7 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
       setTogglePhotoEdit(false);
       sessionStorage.setItem('img', image);
       await dispatch(updateTrainer(trainer._id, body));
-      imgFile.value = '';
+      imgFile.current.value = '';
     }
     if (sessionStorage.getItem('role') === 'MEMBER') {
       const userEdit = {
@@ -102,7 +102,7 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
       setTogglePhotoEdit(false);
       sessionStorage.setItem('img', image);
       await dispatch(editMember(member._id, body));
-      imgFile.value = '';
+      imgFile.current.value = '';
     }
   };
 
@@ -120,7 +120,7 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
           }, 1000);
         } else {
           setTogglePhotoEdit(false);
-          imgFile.value = '';
+          imgFile.current.value = '';
           setToastErrorMessage('Image loaded exceeds the allowed size');
           setToastErrorOpen(true);
           setTimeout(() => {
@@ -137,7 +137,7 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
       };
     } else {
       setTogglePhotoEdit(false);
-      imgFile.value = '';
+      imgFile.current.value = '';
       setToastErrorMessage('Only .png/.jpeg files are allowed');
       setToastErrorOpen(true);
       setTimeout(() => {
@@ -148,7 +148,7 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
 
   const goToDefaultImg = () => {
     const image = '';
-    imgFile.value = '';
+    imgFile.current.value = '';
     setTimeout(() => {
       imageUpload(image);
     }, 1000);
@@ -181,6 +181,7 @@ const ImageUpload = ({ setTogglePhotoEdit, photoEdit }) => {
           </label>
           <input
             id="imgFile"
+            ref={imgFile}
             className={styles.loadImgButton}
             type="file"
             accept="image/*"
