@@ -85,46 +85,57 @@ const TrainersClasses = () => {
     <>
       {loading ? (
         <Loader />
-      ) : trainerClasses.length === 0 ? (
-        <div className={styles.notClass}>
-          <h1 className={styles.notClassTitle}>
-            Welcome, {trainer.firstName} {trainer.lastName}
-          </h1>
-          <p className={styles.notClassText}>No classes assigned.</p>
-        </div>
       ) : (
-        <table className={styles.tableContainer}>
-          <thead className={styles.thead}>
-            <tr>
-              <th className={styles.daysContainer}>Times</th>
-              {daysArray.map((item, index) => {
-                return (
-                  <th className={styles.daysContainer} key={index}>
-                    {screenWidth > 967 ? item : item?.slice(0, 1 - item.length)}
-                  </th>
-                );
-              })}
-            </tr>
-          </thead>
-          {hoursArray.map((row, index) => {
-            return (
-              <tbody key={index}>
-                <tr className={styles.trContainer2} key={index}>
-                  <td className={styles.trContainer}>{row}</td>
-                  {daysArray.map((day) => {
-                    return (
-                      <td className={styles.tdContainer} key={day}>
-                        {trainerClasses.map((item) => {
-                          return tableItem(item, day, row);
-                        })}
-                      </td>
-                    );
-                  })}
-                </tr>
-              </tbody>
-            );
-          })}
-        </table>
+        <div className={styles.containerAll}>
+          {trainerClasses.length === 0 ? (
+            <div className={styles.notClass}>
+              <h1 className={styles.notClassTitle}>
+                Welcome, {trainer.firstName} {trainer.lastName}
+              </h1>
+              <p className={styles.notClassText}>No classes assigned.</p>
+            </div>
+          ) : (
+            <div className={styles.notClass}>
+              <h1 className={styles.notClassTitle}>
+                Welcome, {trainer.firstName} {trainer.lastName}
+              </h1>
+              <p className={styles.notClassText}>Your assigned classes</p>
+            </div>
+          )}
+
+          <table className={styles.tableContainer}>
+            <thead className={styles.thead}>
+              <tr>
+                <th className={styles.daysContainer}>Times</th>
+                {daysArray.map((item, index) => {
+                  return (
+                    <th className={styles.daysContainer} key={index}>
+                      {screenWidth > 967 ? item : item?.slice(0, 1 - item.length)}
+                    </th>
+                  );
+                })}
+              </tr>
+            </thead>
+            {hoursArray.map((row, index) => {
+              return (
+                <tbody key={index}>
+                  <tr className={styles.trContainer2} key={index}>
+                    <td className={styles.trContainer}>{row}</td>
+                    {daysArray.map((day) => {
+                      return (
+                        <td className={styles.tdContainer} key={day}>
+                          {trainerClasses.map((item) => {
+                            return tableItem(item, day, row);
+                          })}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                </tbody>
+              );
+            })}
+          </table>
+        </div>
       )}
     </>
   );
