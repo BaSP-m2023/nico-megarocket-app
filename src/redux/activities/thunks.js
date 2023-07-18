@@ -26,6 +26,7 @@ export const getAllActivities = async (dispatch) => {
       const data = await response.json();
       const newData = data.data;
       dispatch(getActivitiesPending(false));
+      dispatch(getActivitiesError(false));
       dispatch(getActivitiesSuccess(newData));
     } else {
       dispatch(getActivitiesPending(false));
