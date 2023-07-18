@@ -9,6 +9,18 @@ class TrainerPage {
   get logoutBtn() {
     return $('nav').$$('[data-testid="log-out-btn"]');
   }
+
+  get textTittle() {
+    return $('h1=Welcome,');
+  }
+
+  get infoProfile() {
+    return $('[data-testid="info-container"]');
+  }
+
+  async logoutBtnClick() {
+    return this.logoutBtn.click();
+  }
 }
 
 module.exports = new TrainerPage();
