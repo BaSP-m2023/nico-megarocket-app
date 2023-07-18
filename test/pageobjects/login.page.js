@@ -1,5 +1,15 @@
 /* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+
 class LoginPage {
+  get emailLabel() {
+    return $('[data-testid="login-input-email"] label');
+  }
+
+  get passwordLabel() {
+    return $('[data-testid="login-input-password"] label');
+  }
+
   get emailInput() {
     return $('[data-testid="login-input-email"] input');
   }
@@ -30,6 +40,10 @@ class LoginPage {
 
   get loader() {
     return $('[data-testid="classes-table-loader"]');
+  }
+
+  async enterBtnClick() {
+    await this.enterBtn.click();
   }
 
   async login(username, password) {

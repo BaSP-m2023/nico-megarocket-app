@@ -1,5 +1,5 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 exports.config = {
   //
   // ====================
@@ -24,7 +24,15 @@ exports.config = {
   // then the current working directory is where your `package.json` resides, so `wdio`
   // will be called from there.
   //
-  specs: ['./test/specs/admin.e2e.js', './test/specs/login.e2e.js'],
+  specs: [
+    './test/specs/home.e2e.js',
+    './test/specs/singup.e2e.js',
+    './test/specs/login.member.e2e.js',
+    './test/specs/login.trainer.e2e.js',
+    './test/specs/admin.e2e.js',
+    './test/specs/login.e2e.js'
+  ],
+
   // Patterns to exclude.
   exclude: [
     // 'path/to/excluded/files'

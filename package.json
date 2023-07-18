@@ -72,7 +72,13 @@
     "husky": "^7.0.4",
     "lint-staged": "^12.1.2",
     "prettier": "^2.8.8",
+    "wdio": "^6.0.1",
     "wdio-chromedriver-service": "^8.1.1",
-    "wdio-wait-for": "^3.0.4"
-  }
+    "wdio-wait-for": "^3.0.5"
+  },
+  "description": "Mega Rocket App is a software project that offers a platform to administer and manage a gym. It provides essential functionalities to manage members, register trainers, schedule classes.",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
