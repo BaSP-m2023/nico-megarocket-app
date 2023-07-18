@@ -25,6 +25,7 @@ exports.config = {
   // will be called from there.
   //
   specs: [
+    './test/specs/home.e2e.js',
     './test/specs/singup.e2e.js',
     './test/specs/login.member.e2e.js',
     './test/specs/login.trainer.e2e.js',

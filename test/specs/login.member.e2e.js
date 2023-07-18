@@ -11,7 +11,7 @@ describe('login member', () => {
     browser.url('https://nico-megarocket-app.vercel.app/auth');
   });
 
-  it('success process', async () => {
+  it('success process enter to login page', async () => {
     await expect(HomePage.navBtn[1]).toBeDisplayed();
     await expect(HomePage.navBtn[1]).toBeClickable();
     await HomePage.navBtn[1].click();
@@ -21,29 +21,29 @@ describe('login member', () => {
     expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/auth/login');
   });
 
-  it('Login with all empty', async () => {
-    await Login.loginForm('', '');
-    await expect(Login.loginBtn).toBeDisplayed();
-    await expect(Login.loginBtn).toBeClickable();
-    await Login.loginBtnClick();
-    const errorEmailText = await Login.errorEmailInput.getText();
+  it('Login with all inputs empty', async () => {
+    await Login.login('', '');
+    await expect(Login.enterBtn).toBeDisplayed();
+    await expect(Login.enterBtn).toBeClickable();
+    await Login.enterBtnClick();
+    const errorEmailText = await Login.emailError.getText();
     expect(errorEmailText).toEqual('The email is a required field');
-    const errorPasswordText = await Login.errorPasswordInput.getText();
+    const errorPasswordText = await Login.pswError.getText();
     expect(errorPasswordText).toEqual('The password field is required');
   });
 
   it('Login with incorrect user', async () => {
-    await Login.loginForm('barbi@gmail.com', 'Hola12365');
-    await expect(Login.loginBtn).toBeDisplayed();
-    await Login.loginBtnClick();
-    const loginDenied = await Login.errorLoginDenied.getText();
+    await Login.login('barbi@gmail.com', 'Hola12365');
+    await expect(Login.enterBtn).toBeDisplayed();
+    await Login.enterBtnClick();
+    const loginDenied = await Login.loginErrorMsg.getText();
     expect(loginDenied).toEqual('The username or password is incorrect');
   });
 
   it('Login succes', async () => {
-    await Login.loginForm('memberfive@gmail.com', 'Password1');
-    await expect(Login.loginBtn).toBeDisplayed();
-    await Login.loginBtnClick();
+    await Login.login('memberfive@gmail.com', 'Password1');
+    await expect(Login.enterBtn).toBeDisplayed();
+    await Login.enterBtnClick();
     await MemberPage.textTittle.waitForDisplayed();
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://nico-megarocket-app.vercel.app/member/classes');
