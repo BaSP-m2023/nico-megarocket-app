@@ -3,51 +3,187 @@
   justify-content: center;
   align-items: center;
   position: fixed;
-  background-color: #00000078;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
   z-index: 1;
   overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.700);
 }
 
 .activityCard {
-  width: 35%;
-  height: 15rem;
-  background-color: #fff;
   display: flex;
+  width: 30%;
+  height: 30%;
+  min-width: 350px;
+  background-color: transparent;
+  border-bottom: var(--primary);
 }
 
-.activityCardImage {
-  width: 60%;
+.activityCardText {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--white);
+  border-radius: 0 5px 5px 0;
 }
 
-.subtitle {
-  margin: 20px;
-  font-size: 20px;
-  font-weight: bold;
-  color: #373867;
+.cardImage {
+  width: 230px;
+  border-radius: 5px 0 0 5px;
 }
 
-.description {
-  margin: 20px;
-  margin-top: 10px;
+.cardSubtitle {
+  margin: 10px;
   font-size: 15px;
-  color: #373867;
+  font-weight: bold;
+  color: var(--primary);
 }
 
-.activityButton {
-  width: 81px;
-  height: 35px;
-  position: relative;
-  background-color: #AACE9B;
-  color:#373867;
-  font-weight: bold;
-  border: none;
-  top: 40px;
-  right: 20px;
-  border-radius: 5px;
+.cardDescription {
+  margin: 10px;
+  font-size: 12px;
+  color: var(--primary);
+}
+
+.activityCardButton {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.cardButton {
+  margin: 5px;
+  width: 80px;
+  height: 40px;
+  background-color: white;
+  border: solid black 1px;
   cursor: pointer;
-  float: right;
+  border-radius: 5px;
+  color: var(--primary);
+  line-height: 20px;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: 0.2s;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.cardButton:hover {
+  font-size: .8rem;
+}
+
+.cardButtonJoin {
+  border: none;
+  background-color: var(--secondary);
+  color: black;
+}
+
+.cardButton:hover{
+  background-color: var(--primary);
+  color: white;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+  font-size: 12px;
+}
+
+@media only screen and (min-width: 601px) {
+  .activityCard {
+    width: 40%;
+    height: 40%;
+    min-width: 350px;
+  }
+
+  .cardImage {
+    height: 80%;
+  }
+
+  .activityCardText {
+    width: 80%;
+    height: 80%;
+  }
+
+  .cardSubtitle {
+    margin: 16px;
+    font-size: 16px;
+  }
+
+  .cardDescription {
+    margin: 16px;
+    font-size: 12px;
+  }
+}
+
+@media only screen and (min-width: 1025px) {
+  .activityCard {
+    width: 30%;
+    height: 40%;
+    min-width: 410px;
+  }
+
+  .cardImage {
+    height: 80%;
+  }
+
+  .cardSubtitle {
+    margin: 20px;
+    font-size: 20px;
+  }
+  .cardDescription {
+    margin: 20px;
+    font-size: 15px;
+  }
+}
+.animation{
+  animation-name: scale-up-center;
+  animation-duration: .3s;
+  animation-timing-function: ease;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: none;
+}
+@keyframes scale-up-center {
+0% {
+  transform:scale(.2);
+}
+100% {
+  transform:scale(1);
+}
+}
+.animationModalExit{
+animation-name: scale-down-center;
+animation-duration: 1.2s;
+animation-timing-function: ease-out;
+animation-delay: 0s;
+animation-iteration-count: 1;
+animation-direction: normal;
+animation-fill-mode: none;
+}
+@keyframes scale-down-center {
+0% {
+  transform:scale(1);
+}
+100% {
+  transform:scale(0);
+}
+}
+.animationExit {
+animation-name: fadeOut;
+animation-duration: 0.3s;
+animation-timing-function: ease-out;
+animation-fill-mode: forwards;
+}
+@keyframes fadeOut {
+from {
+  opacity: 1;
+}
+to {
+  opacity: 0;
+}
 }

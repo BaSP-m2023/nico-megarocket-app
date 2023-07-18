@@ -1,0 +1,116 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  width: 2rem;
+  height: 1rem;
+}
+
+.container .checkbox {
+  position: relative;
+  right: 3px;
+  width: 100%;
+  height: 1rem;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.container .toggleSwitch {
+  width: 90%;
+  height: 90%;
+  border-radius: .5rem;
+  background-color: #9a1931;
+  transition: all .5s ease-in;
+  box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.44) inset;
+}
+
+.container .toggleSwitched {
+  width: 90%;
+  height: 90%;
+  border-radius: .5rem;
+  background-color: var(--secondary-dark);
+  transition: all .5s ease-in;
+  box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.24) inset;
+}
+
+.container .label {
+  position: relative;
+}
+
+.container .label .inner {
+  position: absolute;
+  bottom: .45rem;
+  left: -2.2rem;
+  margin: 0;
+  padding: 0;
+  border-radius: 100%;
+  width: .95rem;
+  height: .95rem;
+  color: rgb(0, 0, 0, 0);
+  border: .1px solid rgba(0, 0, 0, 0.473);
+  background-color: var(--white);
+  transition: all .3s ease-in;
+  box-shadow: 0px 0px 5px -4px rgba(0,0,0,0.44);
+  font-size: 0.000001px;
+}
+
+.container .label .switch {
+  position: absolute;
+  bottom: .45rem;
+  margin: 0;
+  padding: 0;
+  border-radius: 100%;
+  width: .95rem;
+  height: .95rem;
+  color: rgb(0, 0, 0, 0);
+  background-color: var(--white);
+  border: .1px solid rgba(0, 0, 0, 0.473);
+  transition: all .3s ease-in;
+  transform: translateX(.93rem);
+  box-shadow: 0px 0px 5px -4px rgba(0,0,0,0.44);
+  font-size: 0.000001px;
+}
+
+@media screen and (max-width: 950px) {
+  .container .toggleSwitch {
+    width: 80%;
+    height: 80%;
+  }
+
+  .container .toggleSwitched {
+    width: 80%;
+    height: 80%;
+  }
+
+  .container .label .inner {
+    bottom: .50rem;
+    width: .85rem;
+    height: .85rem;
+  }
+
+  .container .label .switch {
+    bottom: .50rem;
+    width: .85rem;
+    height: .85rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    display: flex;
+    justify-content: flex-start;
+    margin: 0;
+  }
+
+  .container .label .inner {
+    position: absolute;
+    bottom: .50rem;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: .85rem;
+    height: .85rem;
+  }
+}

@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './signUp.module.css';
-import { Inputs, OptionInput, Button } from 'Components/Shared';
+import { Inputs, OptionInput, Button, ToastError, ModalSignUp, Loader } from 'Components/Shared';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import { signUpMember } from 'redux/auth/thunks';
+import ModalSuccess from 'Components/Shared/Modals/ModalSuccess/index';
 
 const SignForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const [openModalSuccess, setOpenModalSuccess] = useState(null);
+  const [modalShow, setModalShow] = useState(false);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [messageError, setMessageError] = useState('');
+  const [toastError, setToastError] = useState(null);
 
   const schema = Joi.object({
     firstName: Joi.string()
@@ -54,6 +61,7 @@ const SignForm = () => {
 
     phone: Joi.string()
       .min(10)
+      .max(10)
       .messages({
         'string.base': 'The phone number must be a text string',
         'string.empty': 'The phone number is a required field',
@@ -82,6 +90,10 @@ const SignForm = () => {
         'string.empty': 'The password field is required'
       }),
 
+    repeatPassword: Joi.string().valid(Joi.ref('password')).required().messages({
+      'any.only': "Passwords don't match"
+    }),
+
     city: Joi.string()
       .min(3)
       .max(15)
@@ -108,13 +120,6 @@ const SignForm = () => {
       .messages({
         'alternatives.types': 'Membership most be required'
       })
-      .required(),
-
-    isActive: Joi.boolean()
-      .messages({
-        'boolean.base': 'The isActive field must be a boolean',
-        'boolean.empty': 'The isActive field is a required field'
-      })
       .required()
   });
 
@@ -128,159 +133,241 @@ const SignForm = () => {
   });
 
   const onSubmit = async (data) => {
+    const memberEdit = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      dni: data.dni,
+      phone: data.phone,
+      email: data.email,
+      city: data.city,
+      password: data.password,
+      postalCode: data.postalCode,
+      membership: data.membership,
+      birthday: data.birthday
+    };
+
     if (Object.values(errors).length === 0) {
-      const responseSignUp = await dispatch(signUpMember(data));
-      if (responseSignUp.type === 'SIGN_UP_SUCCESS') {
-        history.push('/auth/login');
+      try {
+        const responseSignUp = await dispatch(signUpMember(memberEdit));
+        if (responseSignUp.type === 'SIGN_UP_SUCCESS') {
+          setOpenModalSuccess(true);
+          setTimeout(() => {
+            setOpenModalSuccess(false);
+            history.push('/auth/login');
+          }, 2000);
+        }
+        if (responseSignUp.type === 'SIGN_UP_ERROR') {
+          setToastError(true);
+          if (responseSignUp.payload.message.includes('auth')) {
+            setMessageError('Email already exists');
+          } else {
+            setMessageError(responseSignUp.payload.message);
+          }
+        }
+      } catch (error) {
+        setToastError(true);
       }
     }
   };
 
-  const memberships = ['Classic', 'Black', 'Only classes'];
+  useEffect(() => {
+    const role = sessionStorage.getItem('role');
+    if (role) {
+      setModalShow(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (loading) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+    }
+  }, []);
+
+  const memberships = ['Classic', 'Black', 'Only Classes'];
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
-        <div className={styles.form}>
-          <div className={styles.groupContainer}>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameInput="firstName"
-                nameTitle="Name"
-                register={register}
-                type="text"
-                error={errors.firstName?.message}
-                testId="signup-name-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameTitle="Lastname"
-                nameInput="lastName"
-                register={register}
-                type="text"
-                error={errors.lastName?.message}
-                testId="signup-lastname-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameTitle="DNI"
-                nameInput="dni"
-                register={register}
-                type="text"
-                error={errors.dni?.message}
-                testId="signup-dni-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameInput="birthday"
-                nameTitle="Birthday"
-                register={register}
-                type="date"
-                error={errors.birthday?.message}
-                testId="signup-birthday-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameInput="phone"
-                nameTitle="Phone"
-                register={register}
-                type="number"
-                error={errors.phone?.message}
-                testId="signup-phone-input"
-              />
-            </div>
-          </div>
-          <div className={styles.groupContainer}>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameInput="city"
-                nameTitle="City"
-                register={register}
-                type="text"
-                error={errors.city?.message}
-                testId="signup-city-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameInput="postalCode"
-                nameTitle="Postal Code"
-                register={register}
-                type="number"
-                error={errors.postalCode?.message}
-                testId="signup-postalcode-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <OptionInput
-                data={memberships}
-                name="membership"
-                dataLabel="Membership"
-                register={register}
-                error={errors.membership?.message}
-                testId="signup-membership-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameTitle="Email"
-                nameInput="email"
-                register={register}
-                type="email"
-                error={errors.email?.message}
-                testId="signup-email-input"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                nameTitle="Password"
-                nameInput="password"
-                register={register}
-                type="password"
-                error={errors.password?.message}
-                testId="signup-password-input"
-              />
-            </div>
-            <div className={styles.radioContainer} data-testid="active-selector">
-              <div>
-                <label>
-                  Active
-                  <input
-                    {...register('isActive', {
-                      required: { value: true, message: 'This field is required' }
-                    })}
-                    type="radio"
-                    name="isActive"
-                    value={true}
-                  />
-                </label>
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className={styles.wholeContainer}>
+          {openModalSuccess && (
+            <ModalSuccess
+              setModalSuccessOpen={setOpenModalSuccess}
+              message={'Sign In Successfully!'}
+              testId="member-modal-success"
+            />
+          )}
+
+          {toastError && (
+            <ToastError
+              setToastErroOpen={setToastError}
+              message={messageError}
+              testId="member-form-toast-error"
+            />
+          )}
+          {modalShow && <ModalSignUp setModalShow={setModalShow} />}
+          {error && (
+            <div className={styles.boxError} data-testid="signUp-error-pop">
+              <div className={styles.lineError}>
+                <div className={styles.errorLogo}>!</div>
+                Sign In error
+                <div
+                  onClick={() => {
+                    setError(false);
+                  }}
+                  className={styles.close_icon}
+                ></div>
               </div>
-              <div>
-                <label>
-                  Inactive
-                  <input
-                    {...register('isActive', {
-                      required: { value: true, message: 'This field is required' }
-                    })}
-                    type="radio"
-                    name="isActive"
-                    value={false}
+              <p className={styles.MsgError}>Email is already user</p>
+            </div>
+          )}
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className={styles.container}
+            encType="multipart/form-data"
+          >
+            <h1 className={styles.title}>Sign Up</h1>
+            <div className={styles.form}>
+              <div className={styles.groupContainer}>
+                <div className={styles.pairInputs}>
+                  <div className={styles.inputContainer}>
+                    <Inputs
+                      nameInput="firstName"
+                      nameTitle="First Name"
+                      register={register}
+                      type="text"
+                      error={errors.firstName?.message}
+                      testId="signup-name-input"
+                    />
+                  </div>
+                  <div className={styles.inputContainer}>
+                    <Inputs
+                      nameTitle="Last Name"
+                      nameInput="lastName"
+                      register={register}
+                      type="text"
+                      error={errors.lastName?.message}
+                      testId="signup-lastname-input"
+                    />
+                  </div>
+                </div>
+
+                <div className={styles.pairInputs}>
+                  <div className={styles.inputContainer}>
+                    <Inputs
+                      nameInput="birthday"
+                      nameTitle="Birthday"
+                      register={register}
+                      type="date"
+                      error={errors.birthday?.message}
+                      testId="signup-birthday-input"
+                    />
+                  </div>
+                  <div className={styles.inputContainer}>
+                    <Inputs
+                      nameTitle="DNI"
+                      nameInput="dni"
+                      register={register}
+                      type="text"
+                      error={errors.dni?.message}
+                      testId="signup-dni-input"
+                    />
+                  </div>
+                </div>
+                <div className={styles.pairInputs}>
+                  <div className={styles.inputContainer}>
+                    <Inputs
+                      nameInput="city"
+                      nameTitle="City"
+                      register={register}
+                      type="text"
+                      error={errors.city?.message}
+                      testId="signup-city-input"
+                    />
+                  </div>
+                  <div className={styles.inputContainer}>
+                    <Inputs
+                      nameInput="postalCode"
+                      nameTitle="Postal Code"
+                      register={register}
+                      type="number"
+                      error={errors.postalCode?.message}
+                      testId="signup-postalcode-input"
+                    />
+                  </div>
+                </div>
+                <div className={styles.pairInputs}>
+                  <div className={styles.inputContainer}>
+                    <Inputs
+                      nameTitle="Email"
+                      nameInput="email"
+                      register={register}
+                      type="email"
+                      error={errors.email?.message}
+                      testId="signup-email-input"
+                    />
+                  </div>
+                  <div className={styles.inputContainer}>
+                    <Inputs
+                      nameInput="phone"
+                      nameTitle="Phone"
+                      register={register}
+                      type="number"
+                      error={errors.phone?.message}
+                      testId="signup-phone-input"
+                    />
+                  </div>
+                </div>
+                <div className={styles.pairInputs}>
+                  <div className={styles.inputContainer}>
+                    <Inputs
+                      nameTitle="Password"
+                      nameInput="password"
+                      register={register}
+                      type="password"
+                      error={errors.password?.message}
+                      testId="signup-password-input"
+                    />
+                  </div>
+                  <div className={styles.inputContainer}>
+                    <Inputs
+                      nameTitle="Repeat Password"
+                      nameInput="repeatPassword"
+                      register={register}
+                      type="password"
+                      error={errors.repeatPassword?.message}
+                      testId="signup-repeatpassword-input"
+                    />
+                  </div>
+                </div>
+                <div className={styles.inputContainer}>
+                  <OptionInput
+                    data={memberships}
+                    name="membership"
+                    dataLabel="Membership"
+                    register={register}
+                    error={errors.membership?.message}
+                    testId="signup-membership-input"
                   />
-                </label>
+                </div>
               </div>
             </div>
-          </div>
+
+            <div className={styles.buttonsGroup}>
+              <Button clickAction={() => {}} text="Sign In" testId="signup-btn" />
+              <Button
+                text="Cancel"
+                clickAction={() => history.goBack()}
+                testId="signup-cancel-btn"
+              />
+            </div>
+          </form>
         </div>
-        <div className={styles.buttonsGroup}>
-          <Button clickAction={() => {}} text="Sign In" testId="signup-btn" />
-          <Button text="Cancel" clickAction={() => history.goBack()} testId="signup-cancel-btn" />
-        </div>
-      </form>
-    </div>
+      )}
+    </>
   );
 };
 

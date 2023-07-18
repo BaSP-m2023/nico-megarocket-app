@@ -3,6 +3,7 @@ import { AddButton, Loader, TableComponent, ToastError } from 'Components/Shared
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllActivities, deleteActivity } from 'redux/activities/thunks';
+import styles from 'Components/Shared/AddButton/addButton.module.css';
 
 function Activities() {
   const dispatch = useDispatch();
@@ -10,6 +11,7 @@ function Activities() {
   const isPending = useSelector((state) => state.activities.pending);
   const isError = useSelector((state) => state.activities.error);
   const [toastErroOpen, setToastErroOpen] = useState(isError);
+  const [showLoader, setShowLoader] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -19,6 +21,16 @@ function Activities() {
   useEffect(() => {
     setToastErroOpen(isError);
   }, [isError]);
+
+  useEffect(() => {
+    if (!isPending) {
+      setShowLoader(true);
+      const timer = setTimeout(() => {
+        setShowLoader(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isPending]);
 
   const createMode = () => {
     history.push('/admin/activities/form', { params: { mode: 'created' } });
@@ -32,9 +44,9 @@ function Activities() {
   const columns = ['name', 'description'];
 
   return (
-    <section>
+    <section className={styles.containerEachEntityTable}>
       <AddButton entity="Activity" createMode={createMode} testId="add-activity-btn" />
-      {isPending ? (
+      {showLoader ? (
         <Loader testId="activity-table-loader" />
       ) : (
         <TableComponent

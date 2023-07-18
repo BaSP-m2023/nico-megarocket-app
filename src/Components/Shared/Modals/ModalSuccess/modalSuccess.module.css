@@ -9,58 +9,127 @@
   width: 100%;
   height: 100%;
   overflow: auto;
+  z-index: 3;
 }
+
 .modalStyles {
   display: flex;
   flex-direction: column;
-  width: 720px;
-  height: 308px;
-  background-color: white;
+  width: 620px;
+  height: 220px;
+  background-color: var(--white);
   box-shadow: 0px 10px 23px rgba(0, 0, 0, 0.12);
   border-radius: 5px;
-
+  overflow: hidden;
+  gap: .95rem;
 }
-.close_icon{
-  align-self: flex-end;
-  width: 40px;
-  height: 40px;
+
+.imgContainer {
+  position: absolute;
   margin-top: 20px;
-  margin-right: 20px;
+  margin-left: 564px;
+}
+
+.modalHeader {
+  background-color: var(--primary);
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-radius: 5px;
+}
+
+.close_icon {
+  width: 30px;
+  height: 30px;
   cursor: pointer;
 }
-.text_cont{
+
+.text_cont {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-left: 35px;
 }
 .titleModal {
-  margin-top: -10px;
   font-style: normal;
-  font-weight: bold;
-  font-size: 32px;
-  color:#49A37B ;
+  font-size: 25px;
+  color: var(--secondary);
+  font-weight: 700;
 }
 .textModal {
-  margin-top: -15px;
-  font-size: 25px;
+  margin-top:-12px;
+  font-size: 20px;
+  margin-left:35px;
   font-weight: 500;
-  color: #373867;
+  color: var(--primary);
 }
-.buttons{
+.buttons {
   display: flex;
   justify-content: flex-end;
-  margin-right: 37px;
-  margin-top: 30px;
+  margin-right: 35px;
 }
+
+.contentContainer{
+  margin-top:33px;
+  display: flex;
+  flex-direction: column;
+}
+
 .btnAccept {
-  width: 160px;
-  height: 82px;
+  width: 110px;
+  height: 55px;
   cursor: pointer;
-  font-size: 30px;
-  border-radius: 11.5px;
-  background: #AACE9B ;
+  font-size: 20px;
+  border-radius: 5px;
+  background: var(--secondary);
   border: none;
-  color: #373867;
+  color: var(--primary);
   font-weight: bold;
+  transition: 0.2s ease;
+}
+
+.btnAccept:hover {
+  background-color: var(--primary);
+  color: var(--white);
+  font-size: 15px;
+}
+
+.ldsRing {
+  display: inline-block;
+  position: relative;
+  top: -1rem;
+  width: 30px;
+  height: 30px;
+  margin: auto;
+}
+.ldsRing div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  margin: 8px;
+  border: 3px solid var(--secondary-dark);
+  border-radius: 50%;
+  animation: ldsRing 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: var(--secondary-dark) transparent transparent transparent;
+}
+.ldsRing div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.ldsRing div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.ldsRing div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes ldsRing {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

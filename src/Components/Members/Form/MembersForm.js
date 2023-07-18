@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import {
   ModalConfirm,
@@ -6,7 +6,8 @@ import {
   ToastError,
   Inputs,
   Button,
-  OptionInput
+  OptionInput,
+  Loader
 } from 'Components/Shared';
 import { useLocation, useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { addMember, editMember } from 'redux/members/thunks';
@@ -18,10 +19,12 @@ import Joi from 'joi';
 const MembersForm = () => {
   const dispatch = useDispatch();
   const isError = useSelector((state) => state.members.errorForm);
+  const token = sessionStorage.getItem('token');
   const [toastError, setToastErroOpen] = useState(false);
   const [modalAddConfirmOpen, setModalAddConfirmOpen] = useState(false);
   const [modalSuccess, setModalSuccessOpen] = useState(false);
   const [member, setMember] = useState({});
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
   const history = useHistory();
   const data = location.state.params;
@@ -112,19 +115,17 @@ const MembersForm = () => {
       'any.only': 'The membership must be one of Black, Classic, or Only Classes'
     }),
 
-    isActive: Joi.boolean()
-      .messages({
-        'boolean.base': 'The isActive field must be a boolean',
-        'boolean.empty': 'The isActive field is a required field'
-      })
-      .required()
+    isActive: Joi.boolean().messages({
+      'boolean.base': 'The isActive field must be a boolean',
+      'boolean.empty': 'The isActive field is a required field'
+    })
   });
 
   const memberUpdate = {
     firstName: data.firstName,
     lastName: data.lastName,
     dni: data.dni,
-    birthday: data.birthday,
+    birthday: new Date(data.birthday).toISOString().substr(0, 10),
     phone: data.phone,
     city: data.city,
     isActive: data.isActive,
@@ -144,9 +145,18 @@ const MembersForm = () => {
     defaultValues: { ...memberUpdate }
   });
 
+  const memberBody = {
+    method: id ? 'PUT' : 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      token: token
+    },
+    body: JSON.stringify(member)
+  };
+
   const onConfirmFunction = async () => {
     if (!id) {
-      const addMemberResponse = await dispatch(addMember(member));
+      const addMemberResponse = await dispatch(addMember(memberBody));
       if (addMemberResponse.type === 'ADD_MEMBER_SUCCESS') {
         setToastErroOpen(false);
         setModalSuccessOpen(true);
@@ -156,7 +166,7 @@ const MembersForm = () => {
       }
       return setToastErroOpen(true);
     } else {
-      const editMemberResponse = await dispatch(editMember(id, member));
+      const editMemberResponse = await dispatch(editMember(id, memberBody));
       if (editMemberResponse.type === 'EDIT_MEMBER_SUCCESS') {
         setToastErroOpen(false);
         setModalSuccessOpen(true);
@@ -173,183 +183,193 @@ const MembersForm = () => {
     setModalAddConfirmOpen(true);
   };
 
+  useEffect(() => {
+    if (!location.pathname === '/api/auth/') {
+      if (isError.error) {
+        setToastErroOpen(true);
+      } else {
+        setToastErroOpen(false);
+      }
+    }
+  }, [isError]);
+
+  useEffect(() => {
+    if (loading) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+    }
+  }, []);
+
   const memberships = ['Classic', 'Black', 'Only Classes'];
 
   return (
-    <div className={styles.container}>
-      {
-        <div>
-          {modalAddConfirmOpen && (
-            <ModalConfirm
-              method={id ? 'Update' : 'Add'}
-              onConfirm={() => onConfirmFunction()}
-              setModalConfirmOpen={setModalAddConfirmOpen}
-              message={
-                id
-                  ? 'Are sure do you want update this member?'
-                  : 'Are sure do you want add this member?'
-              }
-              testId="member-modal-confirm"
-            />
-          )}
-          {modalSuccess && (
-            <ModalSuccess
-              setModalSuccessOpen={setModalSuccessOpen}
-              message={id ? 'Member edited' : 'Member added'}
-              testId="member-modal-success"
-            />
-          )}
-        </div>
-      }
-      <h3 className={styles.title}>{id ? 'Edit Member' : 'Add Member'}</h3>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <section className={styles.inputGroups}>
-          <div className={styles.inputGroup}>
-            <div className={styles.inputContainer}>
-              <Inputs
-                error={errors.firstName?.message}
-                register={register}
-                nameTitle="Name"
-                type="text"
-                nameInput="firstName"
-                testId="input-member-name"
-              />
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className={styles.container}>
+          {
+            <div>
+              {modalAddConfirmOpen && (
+                <ModalConfirm
+                  method={id ? 'Update' : 'Add'}
+                  onConfirm={() => onConfirmFunction()}
+                  setModalConfirmOpen={setModalAddConfirmOpen}
+                  message={
+                    id
+                      ? 'Are you sure you want to update this member?'
+                      : 'Are you sure you want to add this member?'
+                  }
+                  testId="member-modal-confirm"
+                />
+              )}
+              {modalSuccess && (
+                <ModalSuccess
+                  setModalSuccessOpen={setModalSuccessOpen}
+                  message={
+                    id
+                      ? 'Member has been updated succesfully'
+                      : 'Member has been updated succesfully'
+                  }
+                  testId="member-modal-success"
+                />
+              )}
             </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                error={errors.lastName?.message}
-                register={register}
-                nameTitle="Lastname"
-                type="text"
-                nameInput="lastName"
-                testId="input-member-lastname"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                error={errors.dni?.message}
-                register={register}
-                nameTitle="DNI"
-                type="text"
-                nameInput="dni"
-                testId="input-member-dni"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                error={errors.birthday?.message}
-                register={register}
-                nameTitle="Birthday"
-                type="date"
-                nameInput="birthday"
-                required
-                testId="input-member-birthday"
-              />
-            </div>
-          </div>
-          <div className={styles.inputGroup}>
-            <div className={styles.inputContainer}>
-              <Inputs
-                error={errors.phone?.message}
-                register={register}
-                nameTitle="Phone"
-                type="number"
-                nameInput="phone"
-                required
-                testId="input-member-phone"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                error={errors.email?.message}
-                register={register}
-                nameTitle="Email"
-                type="email"
-                nameInput="email"
-                required
-                testId="input-member-email"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                error={errors.city?.message}
-                register={register}
-                nameTitle="City"
-                type="text"
-                nameInput="city"
-                required
-                testId="input-member-city"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <Inputs
-                error={errors.postalCode?.message}
-                register={register}
-                nameTitle="Postal Code"
-                type="number"
-                nameInput="postalCode"
-                required
-                testId="input-member-postalcode"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <OptionInput
-                data={memberships}
-                name="membership"
-                dataLabel="Membership"
-                register={register}
-                error={errors.membership?.message}
-                required
-                testId="input-member-membership"
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <label className={styles.nameLabel}>Status</label>
-              <div className={styles.radioContainer}>
-                <div>
-                  <label>
-                    Active
-                    <input
-                      {...register('isActive', {
-                        required: { value: true, message: 'This field is required' }
-                      })}
-                      type="radio"
-                      name="isActive"
-                      value={true}
-                    />
-                  </label>
+          }
+          <h3 className={styles.title}>{id ? 'Edit Member' : 'Add Member'}</h3>
+          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            <section className={styles.inputGroups}>
+              <div className={styles.inputGroup}>
+                <div className={styles.inputContainer}>
+                  <Inputs
+                    error={errors.firstName?.message}
+                    register={register}
+                    nameTitle="First name"
+                    type="text"
+                    nameInput="firstName"
+                    testId="input-member-name"
+                  />
                 </div>
-                <div>
-                  <label>
-                    Inactive
-                    <input
-                      {...register('isActive', {
-                        required: { value: true, message: 'This field is required' }
-                      })}
-                      type="radio"
-                      name="isActive"
-                      value={false}
-                    />
-                  </label>
+
+                <div className={styles.inputContainer}>
+                  <Inputs
+                    error={errors.dni?.message}
+                    register={register}
+                    nameTitle="DNI"
+                    type="text"
+                    nameInput="dni"
+                    testId="input-member-dni"
+                  />
+                </div>
+
+                <div className={styles.inputContainer}>
+                  <Inputs
+                    error={errors.phone?.message}
+                    register={register}
+                    nameTitle="Phone"
+                    type="number"
+                    nameInput="phone"
+                    required
+                    testId="input-member-phone"
+                  />
+                </div>
+
+                <div className={styles.inputContainer}>
+                  <Inputs
+                    error={errors.city?.message}
+                    register={register}
+                    nameTitle="City"
+                    type="text"
+                    nameInput="city"
+                    required
+                    testId="input-member-city"
+                  />
                 </div>
               </div>
+              <div className={styles.inputGroup}>
+                <div className={styles.inputContainer}>
+                  <Inputs
+                    error={errors.lastName?.message}
+                    register={register}
+                    nameTitle="Lastname"
+                    type="text"
+                    nameInput="lastName"
+                    testId="input-member-lastname"
+                  />
+                </div>
+                <div className={styles.inputContainer}>
+                  <Inputs
+                    error={errors.birthday?.message}
+                    register={register}
+                    nameTitle="Birthday"
+                    type="date"
+                    nameInput="birthday"
+                    required
+                    testId="input-member-birthday"
+                  />
+                </div>
+
+                <div className={styles.inputContainer}>
+                  <Inputs
+                    error={errors.email?.message}
+                    register={register}
+                    nameTitle="Email"
+                    type="email"
+                    nameInput="email"
+                    required
+                    testId="input-member-email"
+                  />
+                </div>
+
+                <div className={styles.inputContainer}>
+                  <Inputs
+                    error={errors.postalCode?.message}
+                    register={register}
+                    nameTitle="Postal Code"
+                    type="number"
+                    nameInput="postalCode"
+                    required
+                    testId="input-member-postalcode"
+                  />
+                </div>
+                <div className={styles.inputContainer}>
+                  <OptionInput
+                    data={memberships}
+                    name="membership"
+                    dataLabel="Membership"
+                    register={register}
+                    error={errors.membership?.message}
+                    required
+                    testId="input-member-membership"
+                  />
+                </div>
+              </div>
+            </section>
+            <div className={styles.buttonContainer}>
+              <Button
+                clickAction={() => {}}
+                text={id ? 'Update' : 'Add'}
+                testId="member-save-btn"
+              />
+              <Button clickAction={() => reset()} text="Reset" testId="member-reset-btn" />
+              <Button
+                text="Cancel"
+                clickAction={() => history.goBack()}
+                testId="member-cancel-btn"
+              />
             </div>
-          </div>
-        </section>
-        <div className={styles.buttonContainer}>
-          <Button clickAction={() => {}} text={id ? 'Update' : 'Add'} testId="member-save-btn" />
-          <Button clickAction={() => reset()} text="Reset" testId="member-reset-btn" />
-          <Button text="Cancel" clickAction={() => history.goBack()} testId="member-cancel-btn" />
+          </form>
+          {toastError && (
+            <ToastError
+              setToastErroOpen={setToastErroOpen}
+              message={isError.message}
+              testId="member-form-toast-error"
+            />
+          )}
         </div>
-      </form>
-      {toastError && (
-        <ToastError
-          setToastErroOpen={setToastErroOpen}
-          message={isError.message}
-          testId="member-form-toast-error"
-        />
       )}
-    </div>
+    </>
   );
 };
 

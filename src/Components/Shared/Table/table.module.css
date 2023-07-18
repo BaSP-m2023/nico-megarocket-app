@@ -1,3 +1,16 @@
+.container {
+  width: 100%;
+  position: relative;
+  margin: 0 auto;
+}
+
+.containerTable {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 26rem;
+}
+
 .noneTrainer {
   display: flex;
   align-items: center;
@@ -5,26 +18,22 @@
   width: 40vw;
   height: 10rem;
   border-radius: 5px;
-  background-color: #d9d9d9ea;
+  background-color: var(--light-grey);
   font-size: 30px;
   margin: 4rem auto;
 }
 
-.container {
-  width: 80%;
-  position: relative;
-  margin: 0 auto;
-}
-
 .table {
-  width: 100%;
   border-collapse: collapse;
-  background: #d9d9d9ea;
   color: #373867;
   border-radius: 3px;
   overflow: hidden;
   box-shadow: 0px 6px 30px -7px rgba(0, 0, 0, 0.75);
   margin: 20px 0;
+}
+
+.table .containerTHead tr {
+  background: var(--secondary);
 }
 
 .table tr td,
@@ -38,32 +47,286 @@
   transition: all 0.1s;
 }
 
-.table tr td:nth-last-child(-n + 2):hover {
-  background-color: #37386700;
+.table .containerTbody td:nth-last-child(-n + 2):hover {
+  background-color: transparent;
   transform: scale(1.2);
 }
 
-.table tr td:hover {
-  transform: scale(1.1);
-  max-width: 280px;
-  background-color: #353090b2;
-  color: #fff;
+.table .containerTbody tr:hover {
+  background-color: rgba(168, 202, 151, 0.774);
   cursor: pointer;
+  transition: all .1s ease-in;
 }
 
 .rowBackground1 {
-  background-color: #aace9b90;
+  background-color: var(--light-grey);
 }
 
 .rowBackground2 {
-  background-color: #ffffff;
+  background-color: var(--white);
 }
 
-.trash_edit {
-  width: 20px;
-  height: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.searchField {
+  border: solid rgb(164, 164, 164);
+  border-radius: 0.6rem;
+  height: 1.4rem;
+  width: 2rem;
+  min-height: 1rem;
+  outline: none;
+  opacity: 0;
+  transition: all 0.3s ease-in;
   cursor: pointer;
 }
+
+.searchField:focus {
+  border-width: 0.3rem;
+  border-color: var(--secondary);
+  width: 14rem;
+  opacity: 1;
+}
+
+.buttonSearch {
+  position: relative;
+  right: 2rem;
+  top: 0.1rem;
+  background-color: var(--secondary);
+  border: solid var(--primary);
+  border-width: thin;
+  border-radius: 0.6rem;
+  font-weight: 600;
+  height: 1.8rem;
+  width: 2rem;
+  transition: all 0.1s ease-in;
+  z-index: -1;
+}
+
+.buttonSearch .magGlass {
+  width: 1rem;
+  height: 1rem;
+}
+
+.containerSearch {
+  height: 2rem;
+}
+
+.containerPaginate {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.containerPaginate .buttonPaginate {
+  background-color: transparent;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+.containerPaginate .buttonPaginate:hover {
+  transform: scale(1.15);
+}
+
+.containerPaginate .eachNumber {
+  background-color: transparent;
+  border: none;
+  transition: all 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.activePage {
+  background-color: var(--secondary);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+.memberLenght{
+  font-weight: bolder;
+}
+
+.containerTableMobile {
+  display: none;
+}
+
+.arrowMobile {
+  display: none;
+}
+
+.containerColumnsMobile {
+  display: none;
+}
+
+@media screen and (max-width: 1020px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .containerTable {
+    font-size: .8rem;
+  }
+
+  .table tr td,
+  .table tr th {
+    padding: 15px 5px 15px 5px;
+  }
+
+  .table {
+    margin: 20px -9px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .containerTableMobile {
+    display: block;
+  }
+
+  .table .containerTHead {
+    display: none;
+  }
+
+  .rowBackground1 {
+    display: none;
+    background-color: var(--white);
+    box-shadow: 0 2px 2px black;
+  }
+
+  .rowBackground2 {
+    display: none;
+    box-shadow: 0 2px 2px black;
+  }
+
+  .containerTr {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition-delay: .2s;
+    transition: all .3s ease-in;
+  }
+
+  .containerTrDeployed {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    height: 17rem;
+    overflow: visible;
+    transition: all .3s ease-in;
+  }
+
+  .containerActionsMobile {
+    display: flex;
+    align-items: center;
+  }
+
+  .table tr td,
+  .table tr th {
+    max-width: 20rem;
+  }
+
+  .arrowMobile {
+    display: block;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.207);
+    border-top: solid 1px rgba(0, 0, 0, 0.207);
+    height: 2.5rem;
+    width: 100%;
+  }
+
+  .containerColumnsMobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 40%;
+  }
+
+  .containerColumnsMobile p {
+    height: 2rem;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    margin: 0;
+  }
+
+  .containerNameAndIcon {
+    display: flex;
+    align-items: center;
+    margin-left: .5rem;
+    gap: 1.5rem;
+  }
+
+  .containerNameAndIcon img {
+    width: .5rem;
+    height: .5rem;
+    filter: invert();
+    background-color: #b65c84;
+    border: solid 1px #b65c84;
+    border-radius: 20rem;
+    padding: .3rem;
+    transform: rotate(270deg);
+    transition: all .2s ease-in;
+  }
+
+  .containerNameAndIcon .arrowDown {
+    transform: rotate(360deg);
+  }
+
+  .searchField {
+    width: 95%;
+    opacity: 1;
+  }
+
+  .searchField:focus {
+    width: 95%;
+    border-width: .2rem;
+    border-color: var(--secondary-dark);
+  }
+
+  .buttonSearch {
+    display: none;
+  }
+
+  .containerSearch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2rem;
+  }
+
+  .containerPaginate {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    border-radius: 2rem;
+    width: 70%;
+    height: 2rem;
+    background-color: var(--secondary-dark);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .containerPaginate .buttonPaginate {
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+    filter: invert();
+    transition: all 0.1s ease-in-out;
+  }
+
+  .activePage {
+    background-color: var(--secondary-dark);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  .noneTrainer {
+    font-size: 80%;
+  }
+}
+

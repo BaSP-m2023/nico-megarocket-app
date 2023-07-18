@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import formStyles from '../Form/formClasses.module.css';
-import { ModalConfirm, ModalSuccess, Button, Inputs, OptionInput, Loader } from 'Components/Shared';
+import {
+  ModalConfirm,
+  ModalSuccess,
+  Button,
+  Inputs,
+  OptionInput,
+  Loader,
+  ToastError
+} from 'Components/Shared';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getClasses, createClass, updateClass } from 'redux/classes/thunks';
@@ -10,47 +18,10 @@ import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 
-const schema = Joi.object({
-  hour: Joi.string()
-    .pattern(/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/)
-    .required()
-    .messages({
-      'string.pattern.base': 'Hour format is HH:mm'
-    }),
-  day: Joi.string()
-    .valid('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
-    .messages({
-      'any.only':
-        'The days can only be Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday'
-    })
-    .required(),
-  trainer: Joi.alternatives()
-    .try(
-      Joi.array().items(Joi.string().hex().length(24).required()),
-      Joi.string().hex().length(24).required()
-    )
-    .messages({
-      'alternatives.types': 'Trainer must be an array or a hexadecimal ID',
-      'string.hex': 'Trainer must be a hexadecimal ID',
-      'string.length': 'Trainer must have exactly 24 characters'
-    }),
-  activity: Joi.string().hex().length(24).required().messages({
-    'string.hex': 'Activity has to be a hexadecimal ID',
-    'string.length': 'Activity must have exactly 24 characters',
-    'string.base': 'Activity must be chosen',
-    'any.required': 'Activity is required'
-  }),
-  slots: Joi.number().min(0).max(20).required().messages({
-    'number.base': 'Slots must be a number',
-    'number.min': 'Slots must be at least 1',
-    'number.max': 'Slots cannot exceed 20',
-    'any.required': 'Slots is required'
-  })
-});
-
 const FormClasses = () => {
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
   const [modalSuccessOpen, setModalSuccessOpen] = useState(false);
+  const [toastError, setToastError] = useState(false);
   const [updClass, setUpdClass] = useState({});
 
   const { id } = useParams();
@@ -65,6 +36,44 @@ const FormClasses = () => {
   const isLoading = useSelector((state) => state.classes.pending);
 
   const daysArray = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  const schema = Joi.object({
+    hour: Joi.string()
+      .pattern(/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/)
+      .required()
+      .messages({
+        'string.pattern.base': 'Hour format is HH:mm'
+      }),
+    day: Joi.string()
+      .valid('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
+      .messages({
+        'any.only':
+          'The days can only be Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday'
+      })
+      .required(),
+    trainer: Joi.alternatives()
+      .try(
+        Joi.array().items(Joi.string().hex().length(24).required()),
+        Joi.string().hex().length(24).required()
+      )
+      .messages({
+        'alternatives.types': 'Trainer must be an array or a hexadecimal ID',
+        'string.hex': 'Trainer must be a hexadecimal ID',
+        'string.length': 'Trainer must have exactly 24 characters'
+      }),
+    activity: Joi.string().hex().length(24).required().messages({
+      'string.hex': 'Activity has to be a hexadecimal ID',
+      'string.length': 'Activity must have exactly 24 characters',
+      'string.base': 'Activity must be chosen',
+      'any.required': 'Activity is required'
+    }),
+    slots: Joi.number().min(0).max(20).required().messages({
+      'number.base': 'Slots must be a number',
+      'number.min': 'Slots must be at least 1',
+      'number.max': 'Slots cannot exceed 20',
+      'any.required': 'Slots is required'
+    })
+  });
 
   const classesData = {
     activity: updateItem?.activity ? updateItem.activity._id : '',
@@ -101,26 +110,46 @@ const FormClasses = () => {
     body: JSON.stringify(updClass)
   };
 
+  const isClassTimeTaken = (hour, day, activity) => {
+    return classes.some(
+      (item) => item.hour === hour && item.day === day && item.activity._id === activity
+    );
+  };
+
   const openModal = async (data) => {
-    let trainerArray = data.trainer;
-    if (typeof data.trainer !== 'object') {
-      trainerArray = [data.trainer];
+    const { hour, day, activity } = data;
+    if (id) {
+      let trainerArray = data.trainer;
+      if (typeof data.trainer !== 'object') {
+        trainerArray = [data.trainer];
+      }
+      setModalConfirmOpen(true);
+      setUpdClass({ ...data, trainer: trainerArray });
+    } else {
+      if (isClassTimeTaken(hour, day, activity)) {
+        setToastError(true);
+        return;
+      }
+      let trainerArray = data.trainer;
+      if (typeof data.trainer !== 'object') {
+        trainerArray = [data.trainer];
+      }
+      setModalConfirmOpen(true);
+      setUpdClass({ ...data, trainer: trainerArray });
     }
-    setModalConfirmOpen(true);
-    setUpdClass({ ...data, trainer: trainerArray });
   };
 
   const formSubmit = async () => {
     if (updateData.mode === 'edit') {
       setModalConfirmOpen(false);
-      await updateClass(id, classBody, dispatch);
+      await dispatch(updateClass(id, classBody));
       await setModalSuccessOpen(true);
       setTimeout(() => {
-        history.push('/admin/classes');
+        history.goBack();
         setModalSuccessOpen(false);
       }, 2000);
     } else {
-      await createClass(classBody, dispatch);
+      await dispatch(createClass(classBody));
       await setModalSuccessOpen(true);
       setTimeout(() => {
         history.goBack();
@@ -148,69 +177,71 @@ const FormClasses = () => {
       ) : (
         <form className={formStyles.form} onSubmit={handleSubmit(openModal)}>
           <div className={formStyles.container}>
-            <h2 className={formStyles.formTitle}>
-              {updateData.mode === 'edit' ? 'Update' : 'Create'} Class
-            </h2>
+            <h3 className={formStyles.formTitle}>
+              {updateData.mode === 'edit' ? 'Update' : 'Add'} Class
+            </h3>
             <div className={formStyles.inputs}>
-              <OptionInput
-                data={Hours}
-                dataLabel="Hour"
-                name="hour"
-                register={register}
-                error={errors.hour?.message}
-                testId="classes-hour-input"
-              />
-
-              <OptionInput
-                data={daysArray}
-                dataLabel="Day"
-                name="day"
-                register={register}
-                error={errors.day?.message}
-                testId="classes-day-input"
-              />
-
-              <OptionInput
-                data={trainers}
-                dataLabel="Trainers"
-                name="trainer"
-                register={register}
-                error={errors.trainer?.message}
-                testId="classes-trainer-input"
-              />
-
-              <OptionInput
-                data={activities}
-                dataLabel="Activities"
-                name="activity"
-                register={register}
-                error={errors.activity?.message}
-                testId="classes-activity-input"
-              />
-
-              <Inputs
-                type={'text'}
-                isDisabled={false}
-                nameInput={'slots'}
-                nameTitle="Slots"
-                register={register}
-                error={errors.slots?.message}
-                testId="classes-slots-input"
-              />
-            </div>
-            <div className={formStyles.buttons}>
-              <span className={formStyles.cancelButton}>
-                <Button
-                  clickAction={() => history.push('/admin/classes')}
-                  text="Cancel"
-                  testId="classes-cancel-btn"
+              <div className={formStyles.group}>
+                <OptionInput
+                  data={Hours}
+                  dataLabel="Hour"
+                  name="hour"
+                  register={register}
+                  error={errors.hour?.message}
+                  testId="classes-hour-input"
                 />
-              </span>
-              <Button clickAction={() => reset()} text="Reset" testId="classes-reset-btn" />
+
+                <OptionInput
+                  data={daysArray}
+                  dataLabel="Day"
+                  name="day"
+                  register={register}
+                  error={errors.day?.message}
+                  testId="classes-day-input"
+                />
+
+                <OptionInput
+                  data={trainers}
+                  dataLabel="Trainers"
+                  name="trainer"
+                  register={register}
+                  error={errors.trainer?.message}
+                  testId="classes-trainer-input"
+                />
+              </div>
+              <div className={formStyles.group}>
+                <OptionInput
+                  data={activities}
+                  dataLabel="Activities"
+                  name="activity"
+                  register={register}
+                  error={errors.activity?.message}
+                  testId="classes-activity-input"
+                />
+
+                <Inputs
+                  type={'text'}
+                  isDisabled={false}
+                  nameInput={'slots'}
+                  nameTitle="Slots"
+                  register={register}
+                  error={errors.slots?.message}
+                  testId="classes-slots-input"
+                />
+              </div>
+            </div>
+
+            <div className={formStyles.buttonContainer}>
               <Button
                 clickAction={() => {}}
-                text={updateData.mode === 'edit' ? 'Update' : 'Create'}
+                text={id ? 'Update' : 'Add'}
                 testId="classes-save-btn"
+              />
+              <Button clickAction={() => reset()} text="Reset" testId="classes-reset-btn" />
+              <Button
+                text="Cancel"
+                clickAction={() => history.goBack()}
+                testId="classes-cancel-btn"
               />
             </div>
           </div>
@@ -219,13 +250,13 @@ const FormClasses = () => {
 
       {modalConfirmOpen && (
         <ModalConfirm
-          method={updateData.mode === 'edit' ? 'Edit' : 'Create'}
+          method={id ? 'Edit' : 'Create'}
           onConfirm={formSubmit}
           setModalConfirmOpen={setModalConfirmOpen}
           message={
-            updateData.mode === 'edit'
-              ? 'Are you sure you want to update this?'
-              : 'Are you sure you want to create this?'
+            id
+              ? 'Are you sure you want to update this class?'
+              : 'Are you sure you want to add this class?'
           }
           testId="classes-modal-confirm"
         />
@@ -235,14 +266,18 @@ const FormClasses = () => {
           <ModalSuccess
             setModalSuccessOpen={setModalSuccessOpen}
             message={
-              updateData.mode === 'edit'
-                ? 'The class has been updated successfully'
-                : 'The class has been created successfully'
+              id ? 'Class has been updated successfully' : 'Class has been created successfully'
             }
             testId="classes-modal-success"
           />
         )}
       </div>
+      {toastError && (
+        <ToastError
+          setToastErroOpen={setToastError}
+          message="Class already exists at that time and day"
+        />
+      )}
     </div>
   );
 };

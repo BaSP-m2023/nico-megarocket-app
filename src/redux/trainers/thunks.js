@@ -5,6 +5,9 @@ import {
   updateTrainerPending,
   updateTrainerSuccess,
   updateTrainerError,
+  updateTrainerIsActivePending,
+  updateTrainerIsActiveSuccess,
+  updateTrainerIsActiveError,
   getTrainersPending,
   getTrainersSuccess,
   getTrainersFailure,
@@ -33,8 +36,6 @@ export const createTrainer = (body) => {
   };
 };
 
-const token = sessionStorage.getItem('token');
-
 export const updateTrainer = (id, body) => {
   return async (dispatch) => {
     try {
@@ -50,8 +51,25 @@ export const updateTrainer = (id, body) => {
   };
 };
 
+export const updateIsActiveTrainer = (id, body) => {
+  return async (dispatch) => {
+    try {
+      dispatch(updateTrainerIsActivePending(true));
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, body);
+      const data = await response.json();
+      dispatch(updateTrainerIsActivePending(false));
+      return dispatch(updateTrainerIsActiveSuccess(data));
+    } catch (error) {
+      dispatch(updateTrainerIsActivePending(false));
+      return dispatch(updateTrainerIsActiveError(true));
+    }
+  };
+};
+
 export const getTrainers = async (dispatch) => {
   try {
+    const token = sessionStorage.getItem('token');
+    dispatch(getTrainersPending(true));
     const reponse = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer`, {
       method: 'GET',
       headers: { token: token }
@@ -73,6 +91,7 @@ export const getTrainers = async (dispatch) => {
 export const deleteTrainer = (id) => {
   return async (dispatch) => {
     try {
+      const token = sessionStorage.getItem('token');
       dispatch(deleteTrainerPending(true));
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainer/${id}`, {
         method: 'DELETE',

@@ -12,37 +12,39 @@ import AdminSubscriptions from 'Components/Users/Admin/subscriptions';
 import FormSubscription from 'Components/Subscriptions/FormSubscription/Index';
 import Activities from 'Components/Activities/';
 import ModalAddActivity from 'Components/Activities/FormActivities';
+import ProfileForm from 'Components/Users/Admin/profile/Form';
+import NotAllowed from 'Components/Auth/NotAllowed';
 
 const routes = [
   {
     name: 'Classes',
     path: '/admin/classes',
-    icon: 'class.png'
+    icon: 'calendar.svg'
   },
   {
     name: 'Members',
     path: '/admin/members',
-    icon: 'member.png'
+    icon: 'member.svg'
   },
   {
     name: 'Trainers',
     path: '/admin/trainers',
-    icon: 'trainer.png'
+    icon: 'trainers.png'
   },
   {
     name: 'Activities',
     path: '/admin/activities',
-    icon: 'runner.png'
+    icon: 'activities.svg'
   },
   {
     name: 'Subscription',
     path: '/admin/subscription',
-    icon: 'suscription.png'
+    icon: 'journal-bookmark.svg'
   },
   {
     name: 'Profile',
     path: '/admin/profile',
-    icon: 'admin.png'
+    icon: 'profile.svg'
   }
 ];
 
@@ -51,7 +53,6 @@ const AdminRoutes = () => {
   return (
     <Layout routes={routes}>
       <Switch>
-        <Route exact path={`${url}/`} component={Classes} />
         <Route exact path={`${url}/classes`} component={Classes} />
         <Route exact path={`${url}/classes/ClassForm/:id?`} component={FormClasses} />
         <Route exact path={`${url}/trainers`} component={Trainers} />
@@ -59,11 +60,13 @@ const AdminRoutes = () => {
         <Route exact path={`${url}/members`} component={Members} />
         <Route path={`${url}/members/form/:id?`} component={MembersForm} />
         <Route exact path={`${url}/profile`} component={AdminProfile} />
+        <Route path={`${url}/profile/form/:id?`} component={ProfileForm} />
         <Route exact path={`${url}/subscription`} component={AdminSubscriptions} />
         <Route path={`${url}/subscriptions/form/:id?`} component={FormSubscription} />
         <Route exact path={`${url}/activities`} component={Activities} />
+        <Route exact path={`${url}/not-allowed`} component={NotAllowed} />
         <Route path={`${url}/activities/form/:id?`} component={ModalAddActivity} />
-        <Redirect path={`${url}/login`} />
+        <Redirect to={`${url}/classes`} />
       </Switch>
     </Layout>
   );

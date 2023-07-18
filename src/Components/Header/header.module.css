@@ -1,25 +1,203 @@
+.wholeContainer{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  height: 70px;
+  background-color: var(--primary);
+}
 .container {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 5%;
-  height: 50px;
-  background-color: #373867;
+  width: 95%;
 }
-
 .brand {
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 1.4rem;
   color:white;
 }
-
-.socialIcon {
-  margin-left: 15px;
-  filter: invert();
+.boxTextImg{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+.containerLogo {
+  display: flex;
+  flex-direction: row;
+}
+.imgLogo {
+  height: 40px;
+  width: 40px;
+  display: flex;
+}
+.profileMenu{
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.hamburguerMenu{
+  display: none;
+}
+.navIcon{
+  margin-bottom: -7px;
+  width: 25px;
+  height: 25px;
+}
+.imgLoginButton{
+  display: none;
+}
+.loginButton{
+  width: 37px;
+  height: 37px;
 }
 
-@media screen and (min-width: 750px) {
-  .container {
-    padding: 0 20%;
+@media screen and (max-width: 868px) {
+  .wholeContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    z-index: 200;
+  }
+  .container{
+    width: 90%;
+    justify-content: space-around;
+  }
+  .containerLogo{
+    margin-right: auto;
+  }
+  .hamburguerMenu{
+    display: block;
+    margin-right: 15px;
+    cursor: pointer;
+  }
+  .burger input {
+    display: none;
+  }
+  .burger {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    background: transparent;
+    cursor: pointer;
+    display: block;
+  }
+  
+  .burger span {
+    display: block;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background: var(--secondary-dark);
+    border-radius: 9px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: .25s ease-in-out;
+  }
+  
+  .burger span:nth-of-type(1) {
+    top: 2px;
+    transform-origin: left center;
+  }
+  
+  .burger span:nth-of-type(2) {
+    top: 50%;
+    transform: translateY(-50%);
+    transform-origin: left center;
+  }
+  
+  .burger span:nth-of-type(3) {
+    top: 94%;
+    transform-origin: left center;
+    transform: translateY(-100%);
+  }
+  
+  .burger input:checked ~ span:nth-of-type(1) {
+    top: 0;
+    left: 3px;
+    transform: rotate(405deg);
+  }
+  
+  .burger input:checked ~ span:nth-of-type(2) {
+    width: 0%;
+    opacity: 0;
+  }
+  
+  .burger input:checked ~ span:nth-of-type(3) {
+    top: 17.5px;
+    left: 3px;
+    transform: rotate(-405deg);
+  }
+  .imgLoginButton{
+    cursor: pointer;
+    display: block;
+    transition: all .3s;
+  }
+  .imgLoginButton:hover{
+    cursor: pointer;
+    display: block;
+    transform: scale(1.125);
+    transition: all .3s;
   }
 }
+
+@media screen and (max-width: 601px) {
+  .imgLoginButton{
+    display: block;
+  }
+  .container{
+    width: 90%;
+    justify-content: space-between;
+  }
+  .containerLogo{
+    margin-left: 0;
+  }
+  .containerLogo{
+    margin-right: 0;
+  }
+  .brand{
+    display: none;
+  }
+  .imgLogo{
+    transition: all .3s;
+  }
+  .imgLogo:hover{
+    cursor: pointer;
+    transform: scale(1.125);
+    transition: all .3s;
+  }
+  .profileMenu{
+    width: 37px;
+    height: 37px;
+    transition: all .3s;
+  }
+  .profileMenu:hover{
+    transform: scale(1.125);
+    transition: all .3s;
+  }
+}
+
+
+@media screen and (max-width: 430px) {
+
+  .loginButton{
+    cursor: pointer;
+    width: 37px;
+    height: 37px;
+    z-index: 100;
+  }
+}
+
+
+

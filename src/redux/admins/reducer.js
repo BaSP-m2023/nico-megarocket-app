@@ -69,7 +69,6 @@ const adminReducer = (state = INITIAL_STATE, action) => {
     }
 
     case EDIT_ADMIN_SUCCESS: {
-      // const adminUpdated = action.payload;
       const editedAdmins = state.list.map((admin) => {
         return admin._id === action.payload._id ? { ...admin, ...action.payload } : admin;
       });

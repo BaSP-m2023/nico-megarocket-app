@@ -8,6 +8,19 @@ body {
   box-sizing: border-box;
 }
 
+:root {
+  --primary: #373867;
+  --secondary: #aace9b;
+  --white: #ffffff;
+  --black: #333333;
+  --secondary-dark: #49a37b;
+  --secondary-light: #d2e3cc;
+  --light-grey: #d9d9d9;
+  --dark-grey: #3c4752;
+  --red: #E17162;
+  --ligth-red:#FF7162;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

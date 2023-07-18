@@ -6,11 +6,11 @@
   height: 100%;
   margin: 0;
   padding: 0;
-  border: 2px solid #373867;
+  border: 2px solid var(--primary);
   border-radius: 5px;
   align-items: center;
   cursor: pointer;
-  background-color: #49a37a;
+  background-color: var(--secondary-dark);
 }
 
 .classesContainer:hover {
@@ -25,7 +25,11 @@
   font-size: 14px;
   line-height: 14px;
   align-items: center;
-  color:#373867
+  color:var(--primary)
+}
+
+.enrolledClasses {
+  display: none;
 }
 
 .slotsClasses {
@@ -50,7 +54,7 @@
   border-radius: 5px;
   align-items: center;
   cursor: pointer;
-  background-color: #E0E0E0;
+  background-color: var(--light-grey);
 }
 
 .slotsFullClasses{
@@ -60,26 +64,36 @@
 .selectedContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
-  border: 1px solid #373867;
+  border: 1px solid var(--primary);
   border-radius: 5px;
   align-items: center;
   cursor: pointer;
-  background-color: #373867;
+  background-color: var(--primary);
 }
 
 .textSelectedClasses {
+  padding-top: 15px;
   font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 14px;
   line-height: 14px;
   align-items: center;
-  color:#49a37a;
+  color:var(--secondary-dark);
+}
+
+.enrolledSelectedClasses {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 10px;
+  line-height: 14px;
+  align-items: center;
+  color:var(--secondary-dark);
 }
 
 .slotsSelectedClasses {

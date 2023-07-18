@@ -4,22 +4,24 @@ import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import MemberActivities from 'Components/Users/Member/activities';
 import MemberClasses from 'Components/Users/Member/classes';
 import MemberProfile from 'Components/Users/Member/profile';
+import MemberProfileForm from 'Components/Users/Member/profile/Form';
+import NotAllowed from 'Components/Auth/NotAllowed';
 
 const routes = [
   {
     name: 'Classes',
     path: '/member/classes',
-    icon: 'class.png'
+    icon: 'calendar.svg'
   },
   {
     name: 'Activities',
     path: '/member/activities',
-    icon: 'runner.png'
+    icon: 'activities.svg'
   },
   {
     name: 'Profile',
     path: '/member/profile',
-    icon: 'member.png'
+    icon: 'profile.svg'
   }
 ];
 
@@ -28,11 +30,12 @@ const MemberRoutes = () => {
   return (
     <Layout routes={routes}>
       <Switch>
-        <Route exact path={`${url}/`} component={MemberClasses} />
         <Route exact path={`${url}/classes`} component={MemberClasses} />
         <Route exact path={`${url}/activities`} component={MemberActivities} />
         <Route exact path={`${url}/profile`} component={MemberProfile} />
-        <Redirect path={`${url}/login`} />
+        <Route exact path={`${url}/not-allowed`} component={NotAllowed} />
+        <Route path={`${url}/profile/form/:id?`} component={MemberProfileForm} />
+        <Redirect to={`${url}/classes`} />
       </Switch>
     </Layout>
   );

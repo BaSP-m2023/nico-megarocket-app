@@ -1,18 +1,18 @@
-.tableContainer{
+.tableContainer {
   width: 70%;
   height: 60%;
   margin-top: 30px;
   border-radius: 10px;
-  background-color: #e2e2e2;
+  background-color: var(--secondary-light);
 }
 
 .tdContainer {
-  height: 52px;
+  height: 2.8rem;
   width: 15%;
-  border: 10px solid #e2e2e2;
+  border: 10px solid var(--secondary-light);
   border-radius: 10px;
   border-width: 4px;
-  background-color: #FFFFFF;
+  background-color: var(--white);
 }
 
 .trContainer {
@@ -26,8 +26,7 @@
 
 .tdContainer p {
   text-align: center;
-  margin: 0px 0px 0px 0px;
-  padding: 0;
+  margin: 0;
   border-radius: 15px;
 }
 
@@ -38,4 +37,157 @@
   border-radius: 5px;
 }
 
+.titleSelect {
+  display: flex;
+  align-items: center;
+}
 
+.titleSelect select {
+  margin: 0 10px;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.optionInput {
+  width: 130px;
+  height:30px;
+  border: 1px solid #999;
+  font-size: 14px;
+  color: var(--primary);
+  background-color: #eee;
+  border-radius: 5px;
+  box-shadow: 2px 2px #f0f0f0;
+  cursor: pointer;
+}
+
+.selectOption {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 14px;
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.statusContainer {
+  display: flex;
+  width: 70%;
+  flex-direction: row;
+  margin-top: 10px;
+}
+
+.statusBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 90px;
+  margin-right: 10px;
+  border-radius: 5px;
+  border-width: 4px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 14px;
+}
+
+.statusAvailable {
+  border: 2px solid var(--secondary-dark);
+  color:var(--primary);
+  background-color: var(--secondary-dark);
+}
+
+.statusEnrolled {
+  border: 2px solid var(--primary);
+  color:var(--secondary-dark);
+  background-color: var(--primary);
+}
+
+.statusDisabled {
+  border: 2px solid var(--light-grey);
+  color:var(--primary);
+  background-color: var(--light-grey);
+}
+
+@media screen and (max-width: 1050px) {
+  .daysContainer {
+    height: 2rem;
+    font-size: 80%;
+  }
+
+  .trContainer {
+    height: 2rem;
+  }
+
+  .trContainer2 {
+    font-size: .8rem;
+    height: 2rem;
+  }
+
+  .tdContainer {
+    height: -2rem;
+  }
+
+  .titleSelect {
+    display: flex;
+    flex-direction: column;
+    font-size: .8rem;
+  }
+
+  .statusBox {
+    height: 25px;
+    width: 60px;
+    font-size: .6rem;
+  }
+
+}
+
+@media screen and (max-width: 630px) {
+  .table {
+    width: 28rem;
+  }
+
+  .tdContainer {
+    width: 15%;
+    min-width: 2.5rem;
+    border: 4px solid var(--secondary-light);
+  }
+
+  .trContainer {
+    border-radius: 5px;
+  }
+
+  .trContainer2 {
+    height: 20px;
+    background-color: rgba(170, 206, 155, 0.3);
+    text-align: center;
+  }
+
+  .tdContainer p {
+    text-align: center;
+    margin: 0;
+    border-radius: 15px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .tdContainer {
+    min-width: 1.8rem;
+  }
+
+  .trContainer {
+    border-radius: 5px;
+  }
+
+  .tdContainer p {
+    font-size: .7rem;
+  }
+}

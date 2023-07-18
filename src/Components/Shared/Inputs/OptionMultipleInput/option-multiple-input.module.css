@@ -1,0 +1,84 @@
+.optionInput {
+  width: 380px;
+  border: 1px solid;
+  height: 150px;
+  border-radius: 4px;
+  font-size: 15px;
+  padding: 10px;
+}
+.containerInput {
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+}
+.containerInput label {
+  margin-bottom: 10px;
+}
+.error {
+  margin-top: 3px;
+  margin-left: 5px;
+  color: rgb(240, 8, 8);
+  font-size: 12px;
+  width: 255px;
+  height: 30px;
+  text-align: left;
+}
+.spaceErrorMsg {
+  margin-top: 0;
+  height: 30px;
+}
+.errorInput {
+  border: 2px solid var(--red);
+  margin-top: 0;
+}
+.nameLabel{
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  transition: 0.2s ease;
+}
+.labelError {
+  color: var(--red);
+  font-size: 19px;
+}
+.errorLogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  background-color: var(--red);
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 25px;
+}
+.errorContainer{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.optionInput::-webkit-scrollbar {
+  width:10px;
+}
+.optionInput::-webkit-scrollbar-button {
+  display: none;
+}
+.optionInput::-webkit-scrollbar-thumb {
+  background-color: #797979;
+  border-radius: 20px;
+  border: 2px solid #f1f2f3;
+}
+.optionInput::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+.darkerName{
+  font-weight: bold;
+}
+
+@media screen and (max-width:500px) {
+  .optionInput {
+    width: 100%;
+  }
+}

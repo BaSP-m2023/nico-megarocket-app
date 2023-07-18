@@ -27,8 +27,11 @@ exports.config = {
   specs: [
     './test/specs/singup.e2e.js',
     './test/specs/login.member.e2e.js',
-    './test/specs/login.trainer.e2e.js'
+    './test/specs/login.trainer.e2e.js',
+    './test/specs/admin.e2e.js',
+    './test/specs/login.e2e.js'
   ],
+
   // Patterns to exclude.
   exclude: [
     // 'path/to/excluded/files'
@@ -243,7 +246,6 @@ exports.config = {
    * @param {boolean} result.passed    true if test has passed, otherwise false
    * @param {object}  result.retries   informations to spec related retries, e.g. `{ attempts: 0, limit: 0 }`
    */
-
   onComplete: function () {
     const reportError = new Error('Could not generate Allure report');
     const generation = allure(['generate', 'allure-results', '--clean']);
@@ -262,7 +264,6 @@ exports.config = {
       });
     });
   },
-
   afterTest: async function (test, context, { error, result, duration, passed, retries }) {
     if (error) {
       await browser.takeScreenshot();

@@ -2,13 +2,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #373867;
+  background-color: var(--primary);
   position:relative;
 }
 
 .main {
   display: flex;
-  justify-content: space-between;
+  justify-content:center;
+  gap:50px;
   align-items: center;
   padding: 0 5%;
 }
@@ -16,7 +17,7 @@
 .appName {
   font-size: 2rem;
   font-weight: bold;
-  color: #FFF;
+  color: var(--white);
 }
 
 .rutes {
@@ -32,7 +33,7 @@
   font-weight: 600;
   text-decoration: none;
   text-transform: capitalize;
-  color: #FFF;
+  color: var(--white);
 }
 
 .license {
@@ -42,7 +43,7 @@
   height: 50px;
   width: 90%;
   padding: 0 20px;
-  background-color: #AACE9B;
+  background-color: var(--secondary);
 }
 
 .copyright {
@@ -60,6 +61,48 @@
 
 .containerSocial a img:hover {
   transform: scale(1.3);
+}
+
+.contact{
+  display:grid;
+  gap:5px;
+}
+
+.infoTitle{
+  font-size:14px;
+  font-weight:500;
+  color:var(--secondary);
+  padding:0;
+  margin:0;
+}
+
+.info{
+  color:var(--white);
+  font-size:10px;
+  padding:0;
+  margin:0;
+  transition: all .2s ease-in;
+}
+
+.info a{
+  color:var(--white);
+  text-decoration: none;
+  transition: all .2s ease-in;
+}
+
+.info a:hover{
+  color:var(--secondary-light);
+}
+
+.info:hover{
+  color:var(--secondary-light);
+  transform: scale(1.01);
+}
+
+@media screen and (max-width: 868px){
+  .contact{
+    display:none;
+  }
 }
 
 @media screen and (min-width: 750px) {

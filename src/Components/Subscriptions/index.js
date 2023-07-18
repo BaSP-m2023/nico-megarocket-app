@@ -1,27 +1,42 @@
 import { useEffect, useState } from 'react';
-import { AddButton, Loader, TableComponent, ToastError } from 'Components/Shared';
+import { Loader, TableComponent, ToastError, AddButton } from 'Components/Shared';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getSuscription, deleteSubscription } from 'redux/subscriptions/thunks';
 import { getClasses } from 'redux/classes/thunks';
+import styles from 'Components/Shared/AddButton/addButton.module.css';
 
 function Subscriptions() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const loading = useSelector((state) => state.subscription.pending);
+  const isPending = useSelector((state) => state.subscription.pending);
   const subscription = useSelector((state) => state.subscription.data);
   const classes = useSelector((state) => state.classes.list);
   const error = useSelector((state) => state.subscription.error);
   const [toastError, setToastErroOpen] = useState(error);
+  const [showLoader, setShowLoader] = useState(false);
 
+  useEffect(() => {
+    for (const subs of subscription) {
+      if (subs.classId === null) {
+        dispatch(deleteSubscription(subs._id));
+      }
+    }
+  }, [subscription, dispatch]);
   useEffect(() => {
     getSuscription(dispatch);
     getClasses(dispatch);
   }, []);
 
-  const createMode = () => {
-    history.push('/admin/subscriptions/form/', { params: { mode: 'created' } });
-  };
+  useEffect(() => {
+    if (!isPending) {
+      setShowLoader(true);
+      const timer = setTimeout(() => {
+        setShowLoader(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isPending]);
 
   const handleClick = (item) => {
     history.push(`/admin/subscriptions/form/${item._id}`, { params: { ...item, mode: 'edit' } });
@@ -40,9 +55,9 @@ function Subscriptions() {
   };
 
   return (
-    <section>
-      <AddButton entity="Suscription" createMode={createMode} />
-      {loading ? (
+    <section className={styles.containerEachEntityTable}>
+      <AddButton visibles={styles.visibles} />
+      {showLoader ? (
         <Loader />
       ) : (
         <TableComponent

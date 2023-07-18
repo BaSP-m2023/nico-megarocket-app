@@ -1,27 +1,21 @@
 import React from 'react';
 import styles from './modalSuccess.module.css';
 
-const ModalSuccess = ({ setModalSuccessOpen, message, testId }) => {
-  const onClose = () => {
-    setModalSuccessOpen(false);
-  };
+const ModalSuccess = ({ message, testId }) => {
   return (
     <div className={styles.modalAlert} data-testid={testId}>
       <div className={styles.modalStyles}>
-        <img
-          className={styles.close_icon}
-          onClick={onClose}
-          src={`${process.env.PUBLIC_URL}/assets/images/Delete.svg`}
-          alt="cancel icon"
-        />
-        <div className={styles.text_cont}>
-          <h3 className={styles.titleModal}>SUCCESSFUL</h3>
+        <div className={styles.modalHeader}>
+          <p className={styles.titleModal}>SUCCESSFUL</p>
+        </div>
+        <div className={styles.contentContainer}>
           <p className={styles.textModal}>{message}</p>
         </div>
-        <div className={styles.buttons}>
-          <button className={styles.btnAccept} onClick={onClose}>
-            OK
-          </button>
+        <div className={styles.ldsRing}>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
         </div>
       </div>
     </div>

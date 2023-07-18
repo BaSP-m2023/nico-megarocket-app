@@ -1,52 +1,83 @@
-.formSuperAdmin{
+.formSuperAdmin {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   flex: 1;
-  color: #373867;
+  color: var(--primary);
 }
-.wholeContainer{
+.wholeContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 486px;
-  height: 579px;
   border-radius: 10px;
-  box-shadow: 0px 20px 30px -5px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 20px 30px -5px #373867;
+  border: 3px solid var(--primary);
 }
-.titleLogin{
-  margin-top: 40px;
+
+.containerPasswordEye {
+  display: flex;
+  align-items: center;
+}
+
+.containerPasswordEye img {
+  margin:0 0 10px -20px;
+  width: .8rem;
+  height: .8rem;
+  cursor: pointer;
+}
+
+.titleLogin {
   text-align: center;
   font-size: 36px;
   font-family: sans-serif;
+  color: var(--primary);
+  margin: 30px 0;
 }
-.containerForm{
+.containerForm {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-left: 10px;
 }
-.forgotPass{
-  margin-top: 35px;
-  background:none;
+.forgotPass {
+  background: none;
   border: none;
   cursor: pointer;
   font-family: sans-serif;
   font-weight: bold;
-  color: #373867;
+  color: var(--primary);
+  transition: 0.2s ease;
 }
-.sub_buttons{
- margin-top: 15px;
+.signUpThing {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: sans-serif;
+  font-weight: bold;
+  color: var(--primary);
+  transition: 0.2s ease;
 }
-.boxError{
+
+
+.forgotPass:hover {
+  font-size: 12px;
+}
+.sub_buttons {
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.boxError {
   display: flex;
   flex-direction: column;
   width: 255px;
   height: 70px;
   border-radius: 5px;
-  border: 1px solid #F13312;
+  border: 1px solid var(--red);
 }
-.lineError{
+.lineError {
   display: flex;
   flex-direction: row;
   height: 16px;
@@ -55,9 +86,9 @@
   margin-top: 10px;
   font-weight: bolder;
   text-transform: uppercase;
-  color: #F13312;
+  color: var(--red);
 }
-.errorLogo{
+.errorLogo {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,18 +96,18 @@
   margin-left: 5px;
   width: 25px;
   height: 25px;
-  background-color: red;
-  color: #FFFFFF;
+  background-color: var(--red);
+  color: var(--white);
   font-weight: bold;
   border-radius: 25px;
 }
-.MsgError{
+.MsgError {
   font-size: 12px;
   text-align: center;
-  color: #F13312;
+  color: var(--red);
   font-weight: 500;
 }
-.emptyBox{
+.emptyBox {
   display: flex;
   flex-direction: column;
   width: 255px;
@@ -84,7 +115,7 @@
   border-radius: 5px;
   border: 1px solid transparent;
 }
-.close_icon{
+.close_icon {
   width: 15px;
   height: 15px;
   cursor: pointer;
@@ -93,13 +124,13 @@
 }
 .close_icon:before,
 .close_icon:after {
-  content: "";
+  content: '';
   position: absolute;
   top: 50%;
   left: 50%;
   width: 15px;
   height: 2px;
-  background-color: red;
+  background-color: var(--red);
   transform-origin: center;
 }
 .close_icon:before {
@@ -107,4 +138,82 @@
 }
 .close_icon:after {
   transform: translate(-50%, -50%) rotate(-45deg);
+}
+.notAccountContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.notAccountContainer p {
+  font-size: 12px;
+}
+.newContainer {
+  display: flex;
+  flex-direction: column;
+  width: 54%;
+  align-items: center;
+  justify-content: space-between;
+}
+@keyframes shakeAnimation {
+  0% {
+    transform: translateX(0);
+  }
+  10% {
+    transform: translateX(-5px);
+  }
+  20% {
+    transform: translateX(5px);
+  }
+  30% {
+    transform: translateX(-5px);
+  }
+  40% {
+    transform: translateX(0);
+  }
+  60% {
+    transform: translateX(-5px);
+  }
+  70% {
+    transform: translateX(5px);
+  }
+  80% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+.shakeAnimation {
+  animation: shakeAnimation 0.3s ease-in-out;
+}
+
+@media only screen and (max-width: 900px) {
+  .wholeContainer {
+    max-width: 90%;
+    margin-bottom:10rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+
+  .wholeContainer{
+    margin:0;
+    width:90%;
+    min-width: 290px;
+  }
+
+  .formSuperAdmin {
+    justify-content: center;
+  }
+  .notAccountContainer{
+    display: flex;
+    justify-content: center;
+    width: 290px;
+    margin-bottom: 15px;
+  }
+
+  .forgotPass, .signUpThing{
+    font-size: 10px;
+  }
 }
