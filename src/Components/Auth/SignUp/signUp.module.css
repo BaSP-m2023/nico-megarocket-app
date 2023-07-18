@@ -1,11 +1,17 @@
+.wholeContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
 .container {
-  margin: 30px 0;
   padding: 30px;
   border-radius: 10px;
+  width: 545px;
+  margin:30px 0;
   box-shadow: 0px 20px 30px -5px rgba(0, 0, 0, 0.75);
   border: 3px solid var(--primary);
 }
-
 .form {
   margin: 30px 0;
   display: flex;
@@ -13,18 +19,25 @@
   color: var(--primary);
   padding-left: 10px;
 }
-
+.groupContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.pairInputs{
+  display: flex;
+  gap: 20px;
+}
 .buttonsGroup {
   display: flex;
   justify-content: center;
   flex-direction: row;
   gap: 20px;
 }
-
 .inputContainer {
   display: grid;
 }
-
 .title {
   text-align: center;
   font-size: 36px;
@@ -32,7 +45,6 @@
   color: var(--primary);
   margin: 0 0 30px 0;
 }
-
 .radioMainContainer {
   display: flex;
   flex-direction: column;
@@ -41,18 +53,15 @@
   border-radius: 10px;
   box-shadow: 0px 5px 8px -5px var(--primary);
 }
-
 .radioContainer {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
 .radioContainer div {
   margin: 0 10px;
   font-size: 15px;
 }
-
 .boxError {
   display: flex;
   flex-direction: column;
@@ -61,7 +70,6 @@
   border-radius: 5px;
   border: 1px solid var(--red);
 }
-
 .lineError {
   display: flex;
   flex-direction: row;
@@ -73,7 +81,6 @@
   text-transform: uppercase;
   color: var(--red);
 }
-
 .errorLogo {
   display: flex;
   align-items: center;
@@ -87,14 +94,12 @@
   font-weight: bold;
   border-radius: 25px;
 }
-
 .MsgError {
   font-size: 12px;
   text-align: center;
   color: var(--red);
   font-weight: 500;
 }
-
 .emptyBox {
   display: flex;
   flex-direction: column;
@@ -103,7 +108,6 @@
   border-radius: 5px;
   border: 1px solid transparent;
 }
-
 .close_icon {
   width: 15px;
   height: 15px;
@@ -111,7 +115,6 @@
   margin-left: 90px;
   position: relative;
 }
-
 .close_icon:before,
 .close_icon:after {
   content: '';
@@ -123,15 +126,12 @@
   background-color: var(--red);
   transform-origin: center;
 }
-
 .close_icon:before {
   transform: translate(-50%, -50%) rotate(45deg);
 }
-
 .close_icon:after {
   transform: translate(-50%, -50%) rotate(-45deg);
 }
-
 .nameLabel {
   display: flex;
   flex-direction: column;
@@ -142,25 +142,20 @@
   color: var(--primary);
   font-weight: 500;
 }
-
 .image {
   border-radius: 50px;
   margin: 10px;
 }
-
-@media only screen and (max-width: 900px) {
-  .container {
-    padding: 40px;
-    margin:20px 0 20px 73px;
-  }
-}
-
-@media only screen and (max-width:480px){
-  .form {
-    flex-direction: column;
-  }
-
+@media only screen and (max-width:665px){
   .container{
-    margin: 20px 0;
+    transition: all 0.5s;
+    width: 80vw;
+    min-width: 255px;
+    padding: 20px 10px;
+  }
+  .pairInputs{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
 }

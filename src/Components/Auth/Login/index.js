@@ -172,16 +172,14 @@ function LoginForm() {
                   Forgot Password?
                 </button>
               </div>
-              <div className={styles.notAccountContainer}>
+              <div
+                className={styles.notAccountContainer}
+                onClick={() => {
+                  history.push('/auth/sign-up');
+                }}
+              >
                 <p> Dont have an account?</p>
-                <button
-                  className={styles.forgotPass}
-                  onClick={() => {
-                    history.push('/auth/sign-up');
-                  }}
-                >
-                  Sign Up
-                </button>
+                <button className={styles.signUpThing}>Sign Up</button>
               </div>
             </div>
           </div>
