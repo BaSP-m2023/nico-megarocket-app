@@ -25,10 +25,10 @@ describe('My Correct Login application', () => {
   });
 
   it('should show a confirm modal when create a new class', async () => {
-    await AdminClassesPage.hourClassInput.selectByIndex(1);
-    await AdminClassesPage.activityClassInput.selectByIndex(1);
-    await AdminClassesPage.dayClassInput.selectByIndex(1);
-    await AdminClassesPage.trainerClassInput.selectByIndex(1);
+    await AdminClassesPage.hourClassInput.selectByIndex(2);
+    await AdminClassesPage.activityClassInput.selectByIndex(2);
+    await AdminClassesPage.dayClassInput.selectByIndex(2);
+    await AdminClassesPage.trainerClassInput.selectByIndex(2);
     await AdminClassesPage.slotsClassInput.setValue(10);
     await AdminClassesPage.classesSaveBtn.click();
     await expect(AdminClassesPage.confirmCreateModal).toBeDisplayed();
@@ -51,10 +51,10 @@ describe('My Correct Login application', () => {
     const targetClassIndex = classesLen - 1;
     const newClass = classesRows[targetClassIndex];
     const newClassCells = newClass.$$('td');
-    await expect(newClassCells[0]).toHaveTextContaining('furbitoooo');
-    await expect(newClassCells[1]).toHaveTextContaining('Monday');
-    await expect(newClassCells[2]).toHaveTextContaining('08:00');
-    await expect(newClassCells[3]).toHaveTextContaining('Bar Blodie');
+    await expect(newClassCells[0]).toHaveTextContaining('Boxing');
+    await expect(newClassCells[1]).toHaveTextContaining('Tuesday');
+    await expect(newClassCells[2]).toHaveTextContaining('09:00');
+    await expect(newClassCells[3]).toHaveTextContaining('Earlin Haaland');
     await expect(newClassCells[4]).toHaveTextContaining('10');
   });
 
@@ -65,7 +65,7 @@ describe('My Correct Login application', () => {
     const newClass = classesRows[targetClassIndex];
     const newClassCells = newClass.$$('td');
     await newClassCells[5].click();
-    await AdminClassesPage.hourClassInput.selectByIndex(2);
+    await AdminClassesPage.hourClassInput.selectByIndex(1);
     await AdminClassesPage.classesSaveBtn.click();
     await expect(AdminClassesPage.confirmCreateModal).toBeDisplayed();
   });
@@ -87,7 +87,7 @@ describe('My Correct Login application', () => {
     const targetClassIndex = classesLen - 1;
     const newClass = classesRows[targetClassIndex];
     const newClassCells = newClass.$$('td');
-    await expect(newClassCells[2]).toHaveTextContaining('09:00');
+    await expect(newClassCells[2]).toHaveTextContaining('08:00');
   });
 
   it('should appears a confirm modal after click to delete a class', async () => {
@@ -114,10 +114,10 @@ describe('My Correct Login application', () => {
     const lastClass = classesRows[targetClassIndex];
     const lastClassCells = await lastClass.$$('td').map((cell) => cell.textContent);
     expect(
-      lastClassCells.includes('furbitoooo') &&
-        lastClassCells.includes('Monday') &&
-        lastClassCells.includes('09:00') &&
-        lastClassCells.includes('Bar Blodie') &&
+      lastClassCells.includes('Boxing') &&
+        lastClassCells.includes('Tuesday') &&
+        lastClassCells.includes('08:00') &&
+        lastClassCells.includes('Earlin Haaland') &&
         lastClassCells.includes('10')
     ).toBe(false);
   });
