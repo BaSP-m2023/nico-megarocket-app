@@ -27,7 +27,7 @@ function Cards({ title, description, image, testId }) {
   );
 
   useEffect(() => {
-    const text = description.length > 62 ? description.slice(0, 62) + '...' : description;
+    const text = description.length > 62 ? description.slice(0, 52) + '...' : description;
     setcardDescription(text);
   }, []);
 

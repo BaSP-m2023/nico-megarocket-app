@@ -138,6 +138,10 @@
   transition: all 0.1s;
 }
 
+.tableModal tr .descriptions {
+  text-align: center;
+}
+
 .buttonEditBox{
   display: flex;
   align-items: center;
@@ -154,6 +158,23 @@
   background-color: var(--secondary);
   border: 1.5px solid var(--secondary);
   transition: all 0.2s;
+}
+
+.tableBody .infoDescription {
+  margin: auto;
+  width: 90%;
+  max-width: 30rem;
+  max-height: 4.5rem;
+  font-size: .85rem;
+  overflow-y: scroll;
+}
+
+.tableBody .infoDescription::-webkit-scrollbar {
+  width: .2rem;
+}
+
+.tableBody .infoDescription::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.556);
 }
 
 @media screen and (max-width: 768px) {

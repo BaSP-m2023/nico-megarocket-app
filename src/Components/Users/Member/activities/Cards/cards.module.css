@@ -42,12 +42,14 @@
 
 .textDescription {
   color: white;
+  font-size: .8rem;
   margin-top: 0px;
 }
 
 .dataContainer {
   display: flex;
   flex-direction: column;
+  width: 90%;
   margin-left: 13px;
 }
 
