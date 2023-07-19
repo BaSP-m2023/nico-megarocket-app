@@ -36,6 +36,12 @@ const ButtonActive = ({ data, handlefocus }) => {
 
   const dispatch = useDispatch();
 
+  const send = async () => {
+    const id = data._id;
+    !data.membership
+      ? await dispatch(updateIsActiveTrainer(id, updateBody))
+      : await dispatch(editIsActiveMember(id, updateBody));
+  };
   const handlerChange = (e) => {
     setBody({
       ...body,
@@ -52,16 +58,11 @@ const ButtonActive = ({ data, handlefocus }) => {
     body: JSON.stringify(body)
   };
 
-  const send = async () => {
-    const id = data._id;
-    !data.membership
-      ? await dispatch(updateIsActiveTrainer(id, updateBody))
-      : await dispatch(editIsActiveMember(id, updateBody));
-  };
-
   useEffect(() => {
-    send();
-  }, [isChecked]);
+    if (data.isActive !== isChecked) {
+      send();
+    }
+  }, [body, isChecked]);
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
