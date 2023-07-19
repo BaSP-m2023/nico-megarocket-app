@@ -41,7 +41,9 @@ const activityModal = ({ title, description, imageName, onClose, testId }) => {
         <div className={styles.activityCardText}>
           <div>
             <h2 className={styles.cardSubtitle}>{title}</h2>
-            <p className={styles.cardDescription}>{description}</p>
+            <div className={styles.containerDescription}>
+              <p className={styles.cardDescription}>{description}</p>
+            </div>
           </div>
           <div className={styles.activityCardButton}>
             <button

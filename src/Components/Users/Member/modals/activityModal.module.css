@@ -109,12 +109,25 @@
   }
 
   .cardSubtitle {
-    margin: 16px;
+    margin: 1rem 1rem 0 1rem;
     font-size: 16px;
   }
 
+  .containerDescription {
+    overflow-y: scroll;
+    height: 5rem;
+  }
+
+  .containerDescription::-webkit-scrollbar {
+    width: .2rem;
+  }
+
+  .containerDescription::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.47);
+  }
+
   .cardDescription {
-    margin: 16px;
+    margin: 0 1rem 1rem 1rem;
     font-size: 12px;
   }
 }
@@ -131,11 +144,11 @@
   }
 
   .cardSubtitle {
-    margin: 20px;
+    margin: 1rem 1rem .4rem 1rem;
     font-size: 20px;
   }
   .cardDescription {
-    margin: 20px;
+    margin: 1rem 1rem 0 1rem;
     font-size: 15px;
   }
 }
@@ -186,4 +199,20 @@ from {
 to {
   opacity: 0;
 }
+}
+
+@media only screen and (max-width: 600px) {
+  .activityCard {
+    display: flex;
+    flex-direction: column;
+    margin-top: -2rem;
+    width: 30%;
+    height: 30%;
+    min-width: 300px;
+    background-color: transparent;
+  }
+
+  .cardImage {
+    width: auto;
+  }
 }

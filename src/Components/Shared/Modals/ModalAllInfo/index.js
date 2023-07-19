@@ -41,7 +41,7 @@ const ModalInfo = ({ data, setModalAllInfo }) => {
               <tr>
                 {data.description ? (
                   <>
-                    <th>Description</th>
+                    <th className={styles.descriptions}>Description</th>
                   </>
                 ) : (
                   <>
@@ -65,7 +65,9 @@ const ModalInfo = ({ data, setModalAllInfo }) => {
             <tbody className={styles.tableBody}>
               {data.description ? (
                 <>
-                  <td>{data?.description}</td>
+                  <div className={styles.infoDescription}>
+                    <td>{data?.description}</td>
+                  </div>
                 </>
               ) : (
                 <>
