@@ -14,7 +14,7 @@
   border: 3px solid var(--primary);
 }
 
-.inputContainer{
+.inputContainer {
   width: 255px;
 }
 
@@ -26,11 +26,11 @@
   margin: 0 0 30px 0;
 }
 
-.loadImgContainer{
+.loadImgContainer {
   display: flex;
 }
 
-.loadImgButtonLabel{
+.loadImgButtonLabel {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,20 +41,20 @@
   color: var(--white);
   font-size: 12px;
   font-weight: 600;
-  transition: all .3s;
+  transition: all 0.3s;
   cursor: pointer;
 }
 
-.loadImgButtonLabel:hover{
+.loadImgButtonLabel:hover {
   transform: scale(1.02);
-  opacity: .9;
+  opacity: 0.9;
 }
 
-.loadImgButton{
+.loadImgButton {
   display: none;
 }
 
-.warningMessage{
+.warningMessage {
   display: block;
   bottom: -35px;
   width: 270px;
@@ -64,15 +64,15 @@
   text-align: center;
 }
 
-.deleteButton{
+.deleteButton {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 5px 0;
-  transition: all .4s;
+  transition: all 0.4s;
 }
 
-.deleteButton:hover{
+.deleteButton:hover {
   transform: scale(1.1);
 }
 
@@ -94,6 +94,7 @@
 
   .containerForm {
     width: 80%;
+    height: 37rem;
   }
 
   .title {

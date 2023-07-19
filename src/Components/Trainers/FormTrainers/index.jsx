@@ -160,7 +160,7 @@ const FormTrainer = () => {
         <Loader />
       ) : (
         <div className={styles.container}>
-          <h3 className={styles.title}>Add Trainer</h3>
+          <h3 className={styles.title}>{id ? 'Edit Trainer' : 'Add Trainer'}</h3>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.form}>
               <div className={styles.groupContainer}>
@@ -258,11 +258,7 @@ const FormTrainer = () => {
               </div>
             </div>
             <div className={styles.buttonContainer}>
-              <Button
-                clickAction={() => {}}
-                text={id ? 'Update' : 'Add'}
-                testId="trainer-save-btn"
-              />
+              <Button clickAction={() => {}} text="Save" testId="trainer-save-btn" />
               <Button clickAction={() => reset()} text="Reset" testId="trainer-reset-btn" />
               <Button
                 text="Cancel"
@@ -274,11 +270,11 @@ const FormTrainer = () => {
 
           {modalUpdateConfirmOpen && (
             <ModalConfirm
-              method={id ? 'Edit' : 'Create'}
+              method={id ? 'Update' : 'Create'}
               message={
                 id
                   ? 'Are you sure you want to update this trainer?'
-                  : 'Are you sure you want to add this trainer?'
+                  : 'Are you sure you want to create this trainer?'
               }
               onConfirm={formSubmit}
               setModalConfirmOpen={setModalUpdateConfirmOpen}
@@ -288,7 +284,7 @@ const FormTrainer = () => {
             <ModalSuccess
               setModalSuccessOpen={setModalSuccess}
               message={
-                id ? 'Trainer has been updated succesfully' : 'Trainer has been added succesfully'
+                id ? 'Trainer has been updated succesfully' : 'Trainer has been created succesfully'
               }
             />
           )}

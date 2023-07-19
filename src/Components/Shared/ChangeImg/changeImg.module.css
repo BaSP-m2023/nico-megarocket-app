@@ -72,6 +72,21 @@ margin: 10px;
   font-size: .6rem;
 }
 
+.warningMessageActivityContainer {
+  border-radius:5px;
+  padding:5px;
+  background-color: var(--red);
+  width:50%;
+  margin:20px 0;
+  text-align:center;
+}
+
+.warningMessageActivityContainer p{
+  font-size:10px;
+  padding:0;
+  margin:0;
+}
+
 .warningMessageActivity{
   position: absolute;
   bottom: -45px;

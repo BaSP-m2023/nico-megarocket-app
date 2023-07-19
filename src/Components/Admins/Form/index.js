@@ -259,8 +259,8 @@ const FormAdmin = () => {
             </div>
 
             <div className={styles.buttonContainer}>
-              <Button text={id ? 'Update' : 'Add'} clickAction={() => {}} testId="admin-save-btn" />
-              <Button text="reset" clickAction={() => reset()} testId="admin-reset-btn" />
+              <Button text={'Save'} clickAction={() => {}} testId="admin-save-btn" />
+              <Button text="Reset" clickAction={() => reset()} testId="admin-reset-btn" />
               <Button
                 clickAction={(e) => {
                   e.preventDefault();
@@ -274,11 +274,11 @@ const FormAdmin = () => {
 
           {modalConfirmOpen && (
             <ModalConfirm
-              method={id ? 'Edit' : 'Create'}
+              method={id ? 'Update' : 'Create'}
               message={
                 id
                   ? 'Are you sure you want to update this admin?'
-                  : 'Are you sure you want to add this admin?'
+                  : 'Are you sure you want to create this admin?'
               }
               onConfirm={submitAdmin}
               setModalConfirmOpen={setModalConfirmOpen}

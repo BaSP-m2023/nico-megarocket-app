@@ -124,7 +124,7 @@ const Form = () => {
           />
         </div>
         <div className={styles.sub_buttons}>
-          <Button clickAction={() => {}} text="Submit" />
+          <Button clickAction={() => {}} text="Save" />
           <Button clickAction={() => reset()} text="Reset" />
           <Button
             clickAction={(e) => {
@@ -138,11 +138,11 @@ const Form = () => {
 
       {modalConfirmOpen && (
         <ModalConfirm
-          method={editMode ? 'Edit' : 'Create'}
+          method={editMode ? 'Update' : 'Create'}
           message={
             editMode
-              ? 'Are you sure you want to edit the Super Admin?'
-              : 'Are you sure you want to add the Super Admin?'
+              ? 'Are you sure you want to update the Super Admin?'
+              : 'Are you sure you want to create the Super Admin?'
           }
           onConfirm={onSubmit}
           setModalConfirmOpen={setModalConfirmOpen}
@@ -152,7 +152,7 @@ const Form = () => {
         <ModalSuccess
           setModalSuccessOpen={setModalSuccessOpen}
           message={
-            editMode ? 'Super Admin edited successfully' : 'Super Admin created successfully'
+            editMode ? 'Super Admin updated successfully' : 'Super Admin created successfully'
           }
         />
       )}
