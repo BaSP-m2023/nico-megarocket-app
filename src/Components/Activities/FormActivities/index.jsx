@@ -181,11 +181,7 @@ const ModalAddActivity = () => {
               />
             )}
             <div className={style.containerAddButton}>
-              <Button
-                clickAction={() => {}}
-                text={id ? 'Save' : 'Add'}
-                testId="activity-save-btn"
-              />
+              <Button clickAction={() => {}} text="Save" testId="activity-save-btn" />
               <Button clickAction={() => reset()} text="Reset" testId="activity-reset-btn" />
               <Button
                 clickAction={() => history.goBack()}
@@ -196,12 +192,12 @@ const ModalAddActivity = () => {
           </form>
           {modalUpdateConfirmOpen && (
             <ModalConfirm
-              method={editMode ? 'Edit' : 'Create'}
+              method={editMode ? 'Update' : 'Create'}
               onConfirm={formSubmit}
               message={
                 editMode
                   ? 'Are you sure you want to update this Activity?'
-                  : 'Are you sure you want to add this Activity?'
+                  : 'Are you sure you want to create this Activity?'
               }
               setModalConfirmOpen={setModalUpdateConfirmOpen}
               testId="activity-modal-confirm"
@@ -210,7 +206,7 @@ const ModalAddActivity = () => {
           {modalSuccessOpen && (
             <ModalSuccess
               setModalSuccessOpen={setModalSuccessOpen}
-              message="Activity added successfully"
+              message={id ? 'Activity updated successfully' : 'Activity created successfully'}
               testId="activity-modal-success"
             />
           )}

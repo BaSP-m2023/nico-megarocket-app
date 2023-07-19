@@ -213,13 +213,13 @@ const MembersForm = () => {
             <div>
               {modalAddConfirmOpen && (
                 <ModalConfirm
-                  method={id ? 'Update' : 'Add'}
+                  method={id ? 'Update' : 'Create'}
                   onConfirm={() => onConfirmFunction()}
                   setModalConfirmOpen={setModalAddConfirmOpen}
                   message={
                     id
                       ? 'Are you sure you want to update this member?'
-                      : 'Are you sure you want to add this member?'
+                      : 'Are you sure you want to create this member?'
                   }
                   testId="member-modal-confirm"
                 />
@@ -230,7 +230,7 @@ const MembersForm = () => {
                   message={
                     id
                       ? 'Member has been updated succesfully'
-                      : 'Member has been updated succesfully'
+                      : 'Member has been created succesfully'
                   }
                   testId="member-modal-success"
                 />
@@ -347,11 +347,7 @@ const MembersForm = () => {
               </div>
             </section>
             <div className={styles.buttonContainer}>
-              <Button
-                clickAction={() => {}}
-                text={id ? 'Update' : 'Add'}
-                testId="member-save-btn"
-              />
+              <Button clickAction={() => {}} text="Save" testId="member-save-btn" />
               <Button clickAction={() => reset()} text="Reset" testId="member-reset-btn" />
               <Button
                 text="Cancel"

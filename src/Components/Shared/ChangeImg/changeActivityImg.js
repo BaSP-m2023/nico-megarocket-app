@@ -112,9 +112,13 @@ const ChangeActivityImg = ({ activity, send, id, setSend, setImgComing }) => {
             onChange={handlePictureChange}
           />
         </div>
-        <span className={styles.warningMessageActivity}>
+        {/* <span className={styles.warningMessageActivity}>
           ATTENTION!!!: Images (.png/.jpeg) max weight: 60kb{' '}
-        </span>
+        </span> */}
+        <div className={styles.warningMessageActivityContainer}>
+          <p>ATTENTION!!!</p>
+          <p className={styles}>Images (.png/.jpeg) max weight: 60kb </p>
+        </div>
       </div>
       {toastErrorOpen && (
         <ToastError

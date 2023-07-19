@@ -232,11 +232,7 @@ const FormClasses = () => {
             </div>
 
             <div className={formStyles.buttonContainer}>
-              <Button
-                clickAction={() => {}}
-                text={id ? 'Update' : 'Add'}
-                testId="classes-save-btn"
-              />
+              <Button clickAction={() => {}} text="Save" testId="classes-save-btn" />
               <Button clickAction={() => reset()} text="Reset" testId="classes-reset-btn" />
               <Button
                 text="Cancel"
@@ -250,13 +246,13 @@ const FormClasses = () => {
 
       {modalConfirmOpen && (
         <ModalConfirm
-          method={id ? 'Edit' : 'Create'}
+          method={id ? 'Update' : 'Create'}
           onConfirm={formSubmit}
           setModalConfirmOpen={setModalConfirmOpen}
           message={
             id
               ? 'Are you sure you want to update this class?'
-              : 'Are you sure you want to add this class?'
+              : 'Are you sure you want to create this class?'
           }
           testId="classes-modal-confirm"
         />

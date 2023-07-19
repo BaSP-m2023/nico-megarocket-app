@@ -339,14 +339,14 @@ const FormSubscription = () => {
               error={errors.date?.message}
             />
             <div className={style.containerAdd}>
-              <Button clickAction={() => {}} text={id ? 'Save' : 'Add'} />
+              <Button clickAction={() => {}} text="Save" />
               <Button clickAction={() => reset()} text="Reset" />
               <Button clickAction={goBack} text="Cancel" />
             </div>
           </form>
           {modalConfirmOpen && (
             <ModalConfirm
-              method="Confirm"
+              method="Update"
               onConfirm={onConfirm}
               message="Are you sure you want to update this subscription?"
               setModalConfirmOpen={setModalConfirmOpen}
