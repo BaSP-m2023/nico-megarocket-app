@@ -1,3 +1,9 @@
+.containerAll{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
 .tableContainer{
   width: 70%;
   height: 60%;
@@ -13,47 +19,38 @@
   border-width: 4px;
   background-color: var(--white);
 }
-
 .trContainer {
   border-radius: 10px;
 }
-
 .trContainer2 {
   background-color: rgba(170, 206, 155, 0.3);
   text-align: center;
 }
-
 .tdContainer p {
   text-align: center;
   margin: 0px 0px 0px 0px;
   padding: 0;
   border-radius: 15px;
 }
-
 .daysContainer {
   width: 8%;
   height: 73px;
   background-color: rgba(55, 56, 103, 0.3);
   border-radius: 5px;
 }
-
 .notClass {
   text-align: center;
-  margin-top: 100px;
 }
-
 .notClassTitle {
   font-size: 24px;
   margin-bottom: 20px;
   color: #333333;
 }
-
 .notClassText {
   font-size: 18px;
   color: #666666;
   margin-bottom: 40px;
 }
-
 @media screen and (max-width: 1050px) {
   .daysContainer {
     height: 2rem;

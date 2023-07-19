@@ -70,6 +70,17 @@ You will also see any lint errors in the console.
 
     npm run lint:fix
 
+
+Also you can run automatic tests over the application using WebdriverIO technology:
+
+### Run Automatic Tests
+
+    npm run wdio
+
+### Generate Allure Reports
+
+    npm run allure-report 
+
 <br>
 
 ## Members

@@ -7,6 +7,8 @@
 
 # testing
 /coverage
+/allure-report
+/allure-results
 
 # production
 /build
@@ -23,3 +25,6 @@ yarn-debug.log*
 yarn-error.log*
 
 .env
+
+allure-report
+allure-results

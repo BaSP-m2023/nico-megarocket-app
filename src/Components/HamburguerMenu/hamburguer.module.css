@@ -131,7 +131,7 @@
     right: 76px;
     height: 200px;
     width: 200px;
-    z-index: -1s;
+    z-index: -1;
   }
   .logoutButton{
     margin-top: -30px;
