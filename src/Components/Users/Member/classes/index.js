@@ -74,6 +74,10 @@ const MemberClasses = () => {
     setSelectedClass(event.target.value);
   };
 
+  const activities = classesArray.filter((item, index) => {
+    return classesArray.findIndex((i) => i.activity.name === item.activity.name) === index;
+  });
+
   return (
     <>
       {loading ? (
@@ -94,7 +98,7 @@ const MemberClasses = () => {
               <option className={styles.selectOption} value="">
                 Pick class
               </option>
-              {classesArray.map((item, index) => (
+              {activities.map((item, index) => (
                 <option className={styles.selectOption} key={index} value={item.activity.name}>
                   {item.activity.name}
                 </option>
