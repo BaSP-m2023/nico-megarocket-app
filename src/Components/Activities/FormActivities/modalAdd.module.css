@@ -94,9 +94,10 @@
 
   .containerForm {
     width: 80%;
+    height: 37rem;
   }
 
   .title {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
   }
 }
