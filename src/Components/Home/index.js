@@ -97,7 +97,6 @@ function Home() {
                   Rocket today.
                 </p>
               </article>
-              <div className={styles.divider}></div>
               <article
                 className={styles.sectionAboutContainerTwo}
                 id={styles.sectionAboutContainerBot}
