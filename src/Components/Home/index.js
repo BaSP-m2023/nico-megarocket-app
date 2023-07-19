@@ -97,7 +97,6 @@ function Home() {
                   Rocket today.
                 </p>
               </article>
-              <div className={styles.divider}></div>
               <article
                 className={styles.sectionAboutContainerTwo}
                 id={styles.sectionAboutContainerBot}
@@ -118,11 +117,6 @@ function Home() {
               </article>
             </div>
           </section>
-          <div className={styles.firstDivider}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-              <path fill="#373867" fillOpacity="1" d="M0,32L1440,256L1440,320L0,320Z"></path>
-            </svg>
-          </div>
           <section className={styles.sectionFeatures}>
             <h2 className={styles.sectionTitleWhite}>Features</h2>
             {loading ? (
@@ -209,12 +203,6 @@ function Home() {
               </div>
             )}
           </section>
-          <div className={styles.secondDivider}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-              <path fill="#373867" fillOpacity="1" d="M0,256L1440,64L1440,0L0,0Z"></path>
-            </svg>
-          </div>
-
           <section className={styles.activities}>
             <h2 className={styles.sectionTitleBlue}>Gym activities</h2>
             <article className={styles.sectionActivities}>
@@ -234,11 +222,6 @@ function Home() {
               />
             </article>
           </section>
-          <div className={styles.thirdDivider}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-              <path fill="#373867" fillOpacity="1" d="M0,256L1440,32L1440,320L0,320Z"></path>
-            </svg>
-          </div>
           <section className={styles.memberships}>
             <h2 className={styles.sectionTitleWhite}>Memberships</h2>
             <article className={styles.sectionMembership}>
@@ -310,11 +293,6 @@ function Home() {
               </div>
             </article>
           </section>
-          <div className={styles.fourthDivider}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-              <path fill="#373867" fillOpacity="1" d="M0,224L1440,64L1440,0L0,0Z"></path>
-            </svg>
-          </div>
           <section className={styles.getInTouch}>
             <h2 className={styles.sectionTitleBlue}>Get in Touch</h2>
             <article>
